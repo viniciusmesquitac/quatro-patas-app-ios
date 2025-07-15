@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AnimalDetailView: View {
-    @Environment(\.presentationMode) var presentationMode
     let animal: Animal
 
     var body: some View {
