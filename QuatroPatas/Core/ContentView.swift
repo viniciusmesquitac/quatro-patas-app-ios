@@ -9,41 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
 
-    let animals = [
-        Animal(
-            id: "0",
-            name: "Jack",
-            age: "1",
-            type: "cat",
-            description: "kitty",
-            status: ""
-        ),
-        Animal(
-            id: "2",
-            name: "Lucy",
-            age: "1",
-            type: "cat",
-            description: "kitty",
-            status: ""
-        ),
-        Animal(
-            id: "3",
-            name: "John",
-            age: "1",
-            type: "dog",
-            description: "doggy",
-            status: ""
-        )
-    ]
-
     var body: some View {
-        VStack {
-            List(animals, id: \.id) { item in
-                VStack {
-                    Text(item.name)
-                    Text(item.type)
+        TabView {
+            AnimalsView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Animais")
                 }
-            }
+
+            AdoptionView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Adoção")
+                }
+    
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Perfil")
+                }
         }
     }
 }
