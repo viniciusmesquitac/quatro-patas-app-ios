@@ -11,23 +11,21 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            AnimalsView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Animais")
-                }
-
-            AdoptionView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Adoção")
-                }
-    
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Perfil")
-                }
+            NavigationStack {
+                AnimalsView()
+            }.tabItem {
+                Label("Animais", systemImage: "pawprint")
+            }
+            NavigationStack {
+                AdoptionView()
+            }.tabItem {
+                Label("Adoção", systemImage: "pawprint")
+            }
+            NavigationStack {
+                ProfileView()
+            }.tabItem {
+                Label("Perfil", systemImage: "person.crop.circle")
+            }
         }
     }
 }

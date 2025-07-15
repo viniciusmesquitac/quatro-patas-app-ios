@@ -31,17 +31,8 @@ struct AnimalDetailView: View {
         .padding()
         .navigationTitle("Detalhes do Animal")
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                    }
-                }
-            }
-        }
+        .backButton()
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

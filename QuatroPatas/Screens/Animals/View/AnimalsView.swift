@@ -13,18 +13,15 @@ struct AnimalsView: View {
     private let cardSize: CGSize = CGSize(width: 150, height: 220)
 
     var body: some View {
-        NavigationView {
-            ScrollView(showsIndicators: false) {
-                LazyVGrid(columns: collumns, spacing: 24) {
-                    ForEach(AnimalMock.animals, id: \.id) { animal in
-                        NavigationLink(destination: AnimalDetailView(animal: animal)) {
-                            AnimalCardView(animal: animal)
-                                .frame(width: cardSize.width, height: cardSize.height)
-                        }
+        ScrollView(showsIndicators: false) {
+            LazyVGrid(columns: collumns, spacing: 24) {
+                ForEach(AnimalMock.animals, id: \.id) { animal in
+                    NavigationLink(destination: AnimalDetailView(animal: animal)) {
+                        AnimalCardView(animal: animal)
+                            .frame(width: cardSize.width, height: cardSize.height)
                     }
                 }
             }
-            .navigationTitle(navigationTitle)
-        }
+        }.navigationTitle("Para Adoção")
     }
 }
