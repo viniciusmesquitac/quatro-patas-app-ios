@@ -9,35 +9,41 @@ import SwiftUI
 
 struct AnimalsView: View {
     private let collumns = Array(repeating: GridItem(.flexible(minimum: 170, maximum: 170)), count: 2)
-    private let navigationTitle: String = "Para Adoção"
-    private let cardSize: CGSize = CGSize(width: 150, height: 220)
+    private let navigationTitle: String = "Animais"
     
-    @State private var showingFilter = false
+    @EnvironmentObject var navigator: Navigator
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            LazyVGrid(columns: collumns, spacing: 24) {
+            LazyVGrid(columns: collumns, spacing: Padding.xLarge.rawValue) {
                 ForEach(AnimalMock.animals, id: \.id) { animal in
-                    NavigationLink(destination: AnimalDetailView(animal: animal)) {
-                        AnimalCardView(animal: animal)
-                            .frame(width: cardSize.width, height: cardSize.height)
-                    }
+                    AnimalCardView(animal: animal)
+                        .onTapGesture {
+                            navigator.navigate(to: .details(animal))
+                        }
                 }
             }
+        }.refreshable {
+            await waitFiveSeconds()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
-                    showingFilter = true
+                    navigator.present(sheet: .filter)
                 }) {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
-                        .imageScale(.large)
+                    SFIcons.image(.filter)
                 }
             }
         }
-        .sheet(isPresented: $showingFilter) {
-            AnimalFilterView()
-        }
-        .navigationTitle("Para Adoção")
+        .navigationTitle(navigationTitle)
     }
+    
+    func waitFiveSeconds() async {
+         do {
+             try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
+             print("Atualização após 5 segundos.")
+         } catch {
+             print("A tarefa de atualização foi cancelada.")
+         }
+     }
 }

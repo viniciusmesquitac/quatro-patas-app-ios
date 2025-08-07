@@ -20,7 +20,7 @@ struct BackButtonToolbarModifier: ViewModifier {
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
-                            Image(systemName: "chevron.left")
+                            SFIcons.image(.back)
                             if let label = label {
                                 Text(label)
                             }

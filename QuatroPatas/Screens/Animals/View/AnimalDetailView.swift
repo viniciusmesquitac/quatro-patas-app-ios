@@ -9,29 +9,52 @@ import SwiftUI
 
 struct AnimalDetailView: View {
     let animal: Animal
+    @EnvironmentObject var navigator: Navigator
 
     var body: some View {
-        VStack(spacing: 20) {
-            Image(animal.photo ?? "default-animal-card.png")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 300)
+        ScrollView {
+            VStack(spacing: 20) {
+                Image(animal.photo ?? "default-animal-card.png")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 300)
 
-            Text(animal.name)
-                .font(.largeTitle)
-                .fontWeight(.bold)
+                Text(animal.name)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
 
-            Text("Idade: \(animal.age)")
-            Text(animal.description)
-                .padding()
+                Text("Idade: \(animal.age)")
+                Text(animal.description)
+                    .padding()
 
-            Spacer()
+                Spacer()
+                
+                Button(action: {
+                    print("adotar")
+                }) {
+                    Text("Adotar")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
+            .padding()
+            .navigationBarBackButtonHidden(true)
+            .backButton()
+            .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        print("share")
+                    }) {
+                        SFIcons.image(.share)
+                    }
+                }
+            }
+            
         }
-        .padding()
-        .navigationTitle("Detalhes do Animal")
-        .navigationBarBackButtonHidden(true)
-        .backButton()
-        .toolbar(.hidden, for: .tabBar)
     }
 }
 

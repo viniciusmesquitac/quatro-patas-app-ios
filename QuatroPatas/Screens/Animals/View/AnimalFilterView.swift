@@ -55,7 +55,6 @@ struct AnimalFilterView: View {
 
                 Section {
                     Button(action: {
-                        // aplicar filtros e fechar
                         dismiss()
                     }) {
                         Text("Filtrar")
@@ -85,8 +84,7 @@ struct AnimalFilterView: View {
                 Text(title)
                 Spacer()
                 if selection.wrappedValue == title {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.accentColor)
+                    SFIcons.image(.checkmark)
                 }
             }
         }
