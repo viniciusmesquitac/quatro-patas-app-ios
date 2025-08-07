@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct BackButtonToolbarModifier: ViewModifier {
-    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var navigator: Navigator
     var label: String?
+    var data: Any? = nil
     
     func body(content: Content) -> some View {
         content
@@ -17,7 +18,7 @@ struct BackButtonToolbarModifier: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
+                        navigator.dismiss(data: data)
                     }) {
                         HStack {
                             SFIcons.image(.back)

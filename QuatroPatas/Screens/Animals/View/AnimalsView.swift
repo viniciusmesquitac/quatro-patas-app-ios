@@ -19,12 +19,15 @@ struct AnimalsView: View {
                 ForEach(AnimalMock.animals, id: \.id) { animal in
                     AnimalCardView(animal: animal)
                         .onTapGesture {
-                            navigator.navigate(to: .details(animal))
+                            navigator.navigate(to: .details(animal)) { data in
+                                let animal = data as? Animal
+                                print("dismissed \(animal?.name ?? "none")")
+                            }
                         }
                 }
             }
         }.refreshable {
-            await waitFiveSeconds()
+            await refresh()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -38,12 +41,11 @@ struct AnimalsView: View {
         .navigationTitle(navigationTitle)
     }
     
-    func waitFiveSeconds() async {
+    func refresh() async {
          do {
              try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
-             print("Atualização após 5 segundos.")
          } catch {
-             print("A tarefa de atualização foi cancelada.")
+             
          }
      }
 }

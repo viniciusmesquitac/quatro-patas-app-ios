@@ -25,7 +25,7 @@ struct RouteDestinationView: View {
 }
 
 extension View {
-    func applyNavigationDestination() -> some View {
+    func applyRoute() -> some View {
         self.navigationDestination(for: Route.self) { route in
             RouteDestinationView(route: route)
         }

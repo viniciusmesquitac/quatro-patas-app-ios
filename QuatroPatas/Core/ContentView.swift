@@ -14,26 +14,23 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationStack(path: $navigator.path) {
-                AnimalsView().applyNavigationDestination()
+                AnimalsView().applyRoute()
             }.tabItem {
                 Label("Animais", systemImage: SFIcons.paw.rawValue)
             }
             NavigationStack(path: $navigator.path) {
-                AdoptionView().applyNavigationDestination()
+                AdoptionView().applyRoute()
             }.tabItem {
                 Label("Adoção", systemImage: SFIcons.paw.rawValue)
             }
             NavigationStack(path: $navigator.path) {
-                ProfileView().applyNavigationDestination()
+                ProfileView().applyRoute()
             }.tabItem {
                 Label("Perfil", systemImage:  SFIcons.person.rawValue)
             }
         }
-        .sheet(item: $navigator.presentedSheet) { route in
-            switch route {
-            case .filter:
-                AnimalFilterView()
-            }
+        .sheet(item: $navigator.presentedSheet) { sheet in
+            SheetDestinationView(sheet: sheet)
         }
         .environmentObject(navigator)
         .tint(.red)

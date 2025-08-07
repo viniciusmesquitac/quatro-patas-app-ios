@@ -42,12 +42,12 @@ struct AnimalDetailView: View {
             }
             .padding()
             .navigationBarBackButtonHidden(true)
-            .backButton()
+            .backButton(data: animal)
             .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        print("share")
+                        navigator.present(sheet: .share(items: [animal.photo ?? "default-animal-card.png", animal.name, animal.description]))
                     }) {
                         SFIcons.image(.share)
                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    func backButton(label: String? = "") -> some View {
-        self.modifier(BackButtonToolbarModifier(label: label))
+    func backButton(label: String? = "", data: Any? = nil) -> some View {
+        self.modifier(BackButtonToolbarModifier(label: label, data: data))
     }
 }
