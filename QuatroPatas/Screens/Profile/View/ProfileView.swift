@@ -32,7 +32,7 @@ struct ProfileView: View {
                     .font(.headline)
                 Text("Ver Perfil")
                     .font(.subheadline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.accentColor)
                 
             }
             Spacer()
@@ -64,7 +64,7 @@ struct ProfileView: View {
                 Spacer()
                 Text("veja mais")
                     .font(.subheadline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.accentColor)
             }
 
             ScrollView(.horizontal, showsIndicators: false) {

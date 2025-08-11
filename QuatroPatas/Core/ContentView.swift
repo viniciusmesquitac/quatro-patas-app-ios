@@ -33,7 +33,7 @@ struct ContentView: View {
             SheetDestinationView(sheet: sheet)
         }
         .environmentObject(navigator)
-        .tint(.red)
+        .tint(Color.primaryColor)
     }
 }
 

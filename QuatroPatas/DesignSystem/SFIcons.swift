@@ -14,11 +14,13 @@ enum SFIcons: String {
     case checkmark = "checkmark"
     case person = "person.circle.fill"
     case paw = "pawprint"
+    case circle_filled = "largecircle.fill.circle"
+    case circle = "circle"
 
-    static func image(_ value: SFIcons) -> some View {
+    static func image(_ value: SFIcons, scale: Image.Scale = .large, color: Color = .accentColor) -> some View {
         Image(systemName: value.rawValue)
             .resizable()
-            .foregroundColor(.accentColor)
-            .imageScale(.large)
+            .foregroundColor(color)
+            .imageScale(scale)
     }
 }

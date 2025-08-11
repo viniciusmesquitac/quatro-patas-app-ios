@@ -12,8 +12,10 @@ struct Animal: Hashable {
     let age: String
     let gender: Gender
     let type: AnimalType
+    let breed: String? = nil
+    let size: AnimalSize? = nil
     let description: String
-    var status: AnimalStatus = .readyForAdoption
+    let status: AnimalStatus = .readyForAdoption
 }
 
 enum AnimalMock {

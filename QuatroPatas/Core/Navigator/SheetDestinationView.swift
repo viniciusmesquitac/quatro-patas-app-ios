@@ -13,8 +13,8 @@ struct SheetDestinationView: View {
 
     var body: some View {
         switch sheet {
-        case .filter:
-            AnimalFilterView()
+        case .animalFilter(let animals, let filter):
+            AnimalFilterView(animals: animals, filter: filter)
         case .share(let items):
             ShareSheet(items: items)
         }

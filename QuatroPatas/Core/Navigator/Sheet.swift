@@ -7,7 +7,7 @@
 
 
 enum Sheet: Hashable, Identifiable {
-    case filter
+    case animalFilter([Animal], AnimalFilter)
     case share(items: [String])
 
     var id: String {

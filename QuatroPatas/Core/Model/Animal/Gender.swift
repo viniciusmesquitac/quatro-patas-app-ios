@@ -5,7 +5,7 @@
 //  Created by Vinicius Mesquita Coelho on 14/07/25.
 //
 
-enum Gender: String {
-    case male
-    case female
+enum Gender: String, CaseIterable {
+    case male = "Macho"
+    case female = "Fêmea"
 }

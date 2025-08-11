@@ -7,55 +7,57 @@
 
 import SwiftUI
 
+struct AnimalFilter: Hashable {
+    var animalType: String?
+    var gender: String?
+    var breed: String?
+    var size: String?
+}
+
 struct AnimalFilterView: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var navigator: Navigator
+    let animals: [Animal]
 
-    @State private var selectedAnimalType: String? = nil
-    @State private var selectedGender: String? = nil
-    @State private var selectedBreed: String? = nil
-    @State private var selectedSize: String? = nil
-    @State private var selectedColor: String? = nil
-
-    let breeds = ["Sem raça definida", "Labrador", "Siamês"]
-    let sizes = ["Pequeno", "Médio", "Grande"]
-    let colors = ["Preto", "Branco", "Caramelo", "Cinza", "Mesclado"]
+    @State var filter: AnimalFilter
 
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("41 disponíveis").font(.headline)) {}
+                Section(header: Text("\(animals.count) disponíveis").font(.headline)) { }
 
                 Section(header: Text("Cachorro ou gato?")) {
-                    filterOption(title: "Cachorro", selection: $selectedAnimalType)
-                    filterOption(title: "Gato", selection: $selectedAnimalType)
+                    ForEach(AnimalType.allCases, id: \.self) { type in
+                        
+                        filterOption(title: type.rawValue, selection: $filter.animalType)
+                    }
                 }
 
                 Section(header: Text("Qual o gênero?")) {
-                    filterOption(title: "Macho", selection: $selectedGender)
-                    filterOption(title: "Fêmea", selection: $selectedGender)
+                    ForEach(Gender.allCases, id: \.self) { gender in
+                        filterOption(title: gender.rawValue, selection: $filter.gender)
+                    }
                 }
 
                 Section(header: Text("Qual a raça?")) {
-                    ForEach(breeds, id: \.self) { breed in
-                        filterOption(title: breed, selection: $selectedBreed)
+                    ForEach(Breed.allCases, id: \.self) { breed in
+                        filterOption(title: breed.rawValue, selection: $filter.breed)
                     }
                 }
 
                 Section(header: Text("Porte")) {
-                    ForEach(sizes, id: \.self) { size in
-                        filterOption(title: size, selection: $selectedSize)
-                    }
-                }
-
-                Section(header: Text("Cor")) {
-                    ForEach(colors, id: \.self) { color in
-                        filterOption(title: color, selection: $selectedColor)
+                    ForEach(AnimalSize.allCases, id: \.self) { size in
+                        filterOption(title: size.rawValue, selection: $filter.size)
                     }
                 }
 
                 Section {
                     Button(action: {
-                        dismiss()
+                        var filteredAnimals = animals
+                        if let gender = filter.gender {
+                            filteredAnimals = animals.filter { $0.gender == Gender(rawValue: gender) }
+                        }
+                        let data = ["animals": filteredAnimals, "filter": filter]
+                        navigator.dismiss(data: data)
                     }) {
                         Text("Filtrar")
                             .frame(maxWidth: .infinity)
@@ -64,7 +66,7 @@ struct AnimalFilterView: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
             .navigationTitle("Filtrar")
             .navigationBarTitleDisplayMode(.inline)
@@ -74,20 +76,17 @@ struct AnimalFilterView: View {
     @ViewBuilder
     func filterOption(title: String, selection: Binding<String?>) -> some View {
         Button(action: {
-            if selection.wrappedValue == title {
-                selection.wrappedValue = nil
-            } else {
-                selection.wrappedValue = title
-            }
+            selection.wrappedValue = title
         }) {
             HStack {
+                Image(systemName: selection.wrappedValue == title ? SFIcons.circle_filled.rawValue : SFIcons.circle.rawValue)
+                    .foregroundColor(selection.wrappedValue == title ? .accentColor : .secondary)
                 Text(title)
+                    .foregroundColor(.primary)
                 Spacer()
-                if selection.wrappedValue == title {
-                    SFIcons.image(.checkmark)
-                }
             }
+            .contentShape(Rectangle())
         }
-        .foregroundColor(.primary)
+        .buttonStyle(.plain)
     }
 }
