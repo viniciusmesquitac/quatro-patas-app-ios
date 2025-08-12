@@ -21,7 +21,7 @@ struct ContentView: View {
             NavigationStack(path: $navigator.path) {
                 AdoptionView().applyRoute()
             }.tabItem {
-                Label("Adoção", systemImage: SFIcons.paw.rawValue)
+                Label("Adoção", systemImage: SFIcons.heart_filled.rawValue)
             }
             NavigationStack(path: $navigator.path) {
                 ProfileView().applyRoute()

@@ -75,6 +75,7 @@ struct AnimalCardView_Preview: PreviewProvider {
             age: "2 anos",
             gender: .female,
             type: .cat,
+            breed: .mixed,
             description: "Castrada, vermifugada, Vacinada"
         ))
         .previewLayout(PreviewLayout.fixed(width: 150, height: 180))

@@ -49,6 +49,7 @@ struct AnimalsView: View {
          do {
              try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
              animals = AnimalMock.animals
+             filter = nil
          } catch {
              
          }

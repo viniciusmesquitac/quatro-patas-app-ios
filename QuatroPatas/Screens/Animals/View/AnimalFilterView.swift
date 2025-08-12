@@ -20,46 +20,64 @@ struct AnimalFilterView: View {
 
     @State var filter: AnimalFilter
 
+    enum Constants: String, Localizable {
+        case navigationTitle
+        case formTitle
+        case sectionAnimalType
+        case sectionGender
+        case sectionBreed
+        case sectionSize
+        case filterButton
+    }
+
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("\(animals.count) disponíveis").font(.headline)) { }
+                Section(header: Text("\(animals.count) \(Constants.localized(.formTitle))").font(.headline)) { }
 
-                Section(header: Text("Cachorro ou gato?")) {
+                Section(header: Text(Constants.localized(.sectionAnimalType))) {
                     ForEach(AnimalType.allCases, id: \.self) { type in
-                        
-                        filterOption(title: type.rawValue, selection: $filter.animalType)
+                        option(title: AnimalType.localized(type), selection: $filter.animalType)
                     }
                 }
 
-                Section(header: Text("Qual o gênero?")) {
+                Section(header: Text(Constants.localized(.sectionGender))) {
                     ForEach(Gender.allCases, id: \.self) { gender in
-                        filterOption(title: gender.rawValue, selection: $filter.gender)
+                        option(title: Gender.localized(gender), selection: $filter.gender)
                     }
                 }
 
-                Section(header: Text("Qual a raça?")) {
+                Section(header: Text(Constants.localized(.sectionBreed))) {
                     ForEach(Breed.allCases, id: \.self) { breed in
-                        filterOption(title: breed.rawValue, selection: $filter.breed)
+                        option(title: Breed.localized(breed), selection: $filter.breed)
                     }
                 }
 
-                Section(header: Text("Porte")) {
+                Section(header: Text(Constants.localized(.sectionSize))) {
                     ForEach(AnimalSize.allCases, id: \.self) { size in
-                        filterOption(title: size.rawValue, selection: $filter.size)
+                        option(title: AnimalSize.localized(size), selection: $filter.size)
                     }
                 }
 
                 Section {
                     Button(action: {
-                        var filteredAnimals = animals
+                        var filteredAnimals = AnimalMock.animals
+                        if let type = filter.animalType {
+                            filteredAnimals = filteredAnimals.filter { AnimalType.localized($0.type) == type }
+                        }
                         if let gender = filter.gender {
-                            filteredAnimals = animals.filter { $0.gender == Gender(rawValue: gender) }
+                            filteredAnimals = filteredAnimals.filter { Gender.localized($0.gender) == gender }
+                        }
+                        if let breed = filter.breed {
+                            filteredAnimals = filteredAnimals.filter { Breed.localized($0.breed) == breed }
+                        }
+                        if let size = filter.size {
+                            filteredAnimals = filteredAnimals.filter { AnimalSize.localized($0.size ?? .small) == size }
                         }
                         let data = ["animals": filteredAnimals, "filter": filter]
                         navigator.dismiss(data: data)
                     }) {
-                        Text("Filtrar")
+                        Text(Constants.localized(.filterButton))
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.accentColor)
@@ -68,15 +86,19 @@ struct AnimalFilterView: View {
                     }
                 }.listRowBackground(Color.clear)
             }
-            .navigationTitle("Filtrar")
+            .navigationTitle(Constants.localized(.navigationTitle))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
 
     @ViewBuilder
-    func filterOption(title: String, selection: Binding<String?>) -> some View {
+    func option(title: String, selection: Binding<String?>) -> some View {
         Button(action: {
-            selection.wrappedValue = title
+            if selection.wrappedValue == title {
+                selection.wrappedValue = nil
+            } else {
+                selection.wrappedValue = title
+            }
         }) {
             HStack {
                 Image(systemName: selection.wrappedValue == title ? SFIcons.circle_filled.rawValue : SFIcons.circle.rawValue)

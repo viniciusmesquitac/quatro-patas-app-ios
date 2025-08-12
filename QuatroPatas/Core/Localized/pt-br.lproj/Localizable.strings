@@ -1,0 +1,22 @@
+"gender.male" = "Macho";
+"gender.female" = "Fêmea";
+
+"animaltype.cat" = "Gato";
+"animaltype.dog" = "Cachorro";
+
+"breed.mixed" = "Sem raça definida";
+"breed.labrador" = "Labrador";
+"breed.siamese" = "Siames";
+
+"animalsize.small" = "Pequeno";
+"animalsize.medium" = "Médio";
+"animalsize.large" = "Grande";
+
+
+"animalfilterview.constants.navigationtitle" = "Filtrar";
+"animalfilterview.constants.formtitle" = "disponíveis";
+"animalfilterview.constants.filterbutton" = "Filtrar";
+"animalfilterview.constants.sectionanimaltype" = "Cachorro ou Gato?";
+"animalfilterview.constants.sectiongender" = "Macho ou Fêmea?";
+"animalfilterview.constants.sectionbreed" = "Qual Raça?";
+"animalfilterview.constants.sectionsize" = "Qual Porte?";
