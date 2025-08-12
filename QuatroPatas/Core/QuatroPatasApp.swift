@@ -9,9 +9,33 @@ import SwiftUI
 
 @main
 struct QuatroPatasApp: App {
+
+    @StateObject private var navigator = Navigator()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                NavigationStack(path: $navigator.path) {
+                    AnimalsView().applyRoute()
+                }.tabItem {
+                    Label("Animais", systemImage: SFIcons.paw.rawValue)
+                }
+                NavigationStack(path: $navigator.path) {
+                    AdoptionView().applyRoute()
+                }.tabItem {
+                    Label("Adoção", systemImage: SFIcons.heart_filled.rawValue)
+                }
+                NavigationStack(path: $navigator.path) {
+                    ProfileView().applyRoute()
+                }.tabItem {
+                    Label("Perfil", systemImage:  SFIcons.person.rawValue)
+                }
+            }
+            .sheet(item: $navigator.presentedSheet) { sheet in
+                SheetDestinationView(sheet: sheet)
+            }
+            .environmentObject(navigator)
+            .tint(Color.primaryColor)
         }
     }
 }
