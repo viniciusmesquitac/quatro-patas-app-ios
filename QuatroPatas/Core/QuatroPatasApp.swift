@@ -25,17 +25,17 @@ struct QuatroPatasApp: App {
                 NavigationStack(path: $navigator.path) {
                     AnimalsView().applyRoute()
                 }.tabItem {
-                    Label("Animais", systemImage: SFIcons.paw.rawValue)
+                    Label(AppTab.localized(.animals), systemImage: SFIcons.paw.rawValue)
                 }
                 NavigationStack(path: $navigator.path) {
                     AdoptionView().applyRoute()
                 }.tabItem {
-                    Label("Adoção", systemImage: SFIcons.heart_filled.rawValue)
+                    Label(AppTab.localized(.adoption), systemImage: SFIcons.heart_filled.rawValue)
                 }
                 NavigationStack(path: $navigator.path) {
                     ProfileView().applyRoute()
                 }.tabItem {
-                    Label("Perfil", systemImage:  SFIcons.person.rawValue)
+                    Label(AppTab.localized(.profile), systemImage:  SFIcons.person.rawValue)
                 }
             }
             .sheet(item: $navigator.presentedSheet) { sheet in

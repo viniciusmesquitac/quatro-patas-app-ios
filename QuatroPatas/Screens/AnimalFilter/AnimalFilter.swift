@@ -11,3 +11,27 @@ struct AnimalFilter: Hashable {
     var breed: String?
     var size: String?
 }
+
+extension AnimalFilter: Filter {
+    typealias Item = Animal
+
+    func apply(to items: [Animal]) -> [Animal] {
+        items.filter { animal in
+            var matches = true
+            if let type = animalType {
+                matches = matches && AnimalType.localized(animal.type) == type
+            }
+            if let gender = gender {
+                matches = matches && Gender.localized(animal.gender) == gender
+            }
+            if let breed = breed {
+                matches = matches && Breed.localized(animal.breed) == breed
+            }
+            if let size = size {
+                matches = matches && AnimalSize.localized(animal.size ?? .small) == size
+            }
+            
+            return matches
+        }
+    }
+}

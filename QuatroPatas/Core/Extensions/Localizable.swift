@@ -1,6 +1,6 @@
 import Foundation
 
-protocol Localizable: CaseIterable, RawRepresentable where RawValue == String {}
+protocol Localizable: Identifiable, CaseIterable, RawRepresentable where RawValue == String {}
 
 extension Localizable {
     
@@ -28,5 +28,9 @@ extension Localizable {
 
     static var allLocalized: [String] {
         allCases.map { localized($0) }
+    }
+    
+    var id: String {
+        String(describing: self)
     }
 }

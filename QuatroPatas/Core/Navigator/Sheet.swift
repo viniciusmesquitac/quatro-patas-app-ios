@@ -5,8 +5,10 @@
 //  Created by Vinicius Mesquita Coelho on 27/07/25.
 //
 
-enum Sheet: Hashable, Identifiable {
-    case animalFilter([Animal], AnimalFilter)
+import SwiftUI
+
+enum Sheet: Identifiable {
+    case animalFilter([Animal], Binding<AnimalFilter>)
     case share(items: [String])
 
     var id: String {

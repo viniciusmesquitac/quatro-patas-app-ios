@@ -10,9 +10,8 @@ import SwiftUI
 struct AnimalFilterView: View {
     @EnvironmentObject var navigator: Navigator
     let animals: [Animal]
+    @Binding var filter: AnimalFilter
 
-    @State var filter: AnimalFilter
-    
     enum Constants: String, Localizable {
         case navigationTitle
         case formTitle
@@ -24,22 +23,7 @@ struct AnimalFilterView: View {
     }
 
     var filteredAnimals: [Animal] {
-        animals.filter { animal in
-            var matches = true
-            if let type = filter.animalType {
-                matches = matches && AnimalType.localized(animal.type) == type
-            }
-            if let gender = filter.gender {
-                matches = matches && Gender.localized(animal.gender) == gender
-            }
-            if let breed = filter.breed {
-                matches = matches && Breed.localized(animal.breed) == breed
-            }
-            if let size = filter.size {
-                matches = matches && AnimalSize.localized(animal.size ?? .small) == size
-            }
-            return matches
-        }
+        filter.apply(to: animals)
     }
 
     var body: some View {
@@ -70,26 +54,32 @@ struct AnimalFilterView: View {
                         option(title: AnimalSize.localized(size), selection: $filter.size)
                     }
                 }
-
-                Section {
-                    Button(action: {
-                        let data: [String: Any] = [
-                            "animals": filteredAnimals,
-                            "filter": filter
-                        ]
-                        navigator.dismiss(with: data)
-                    }) {
-                        Text(Constants.localized(.filterButton) + "(\(filteredAnimals.count))")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.accentColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                }.listRowBackground(Color.clear)
             }
             .navigationTitle(Constants.localized(.navigationTitle))
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        navigator.dismiss()
+                    }) {
+                        SFIcons.image(.close, scale: .large)
+                    }
+                }
+            }
+    
+            Button(action: {
+                navigator.dismiss()
+            }) {
+                Text(Constants.localized(.filterButton) + " (\(filteredAnimals.count))")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+            }
+            .background(.clear)
         }
     }
 

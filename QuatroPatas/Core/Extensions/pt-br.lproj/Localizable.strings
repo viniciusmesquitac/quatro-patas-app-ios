@@ -1,3 +1,7 @@
+"apptab.animals" = "Animais";
+"apptab.adoption" = "Adoção";
+"apptab.profile" = "Perfil";
+
 "gender.male" = "Macho";
 "gender.female" = "Fêmea";
 
@@ -11,7 +15,6 @@
 "animalsize.small" = "Pequeno";
 "animalsize.medium" = "Médio";
 "animalsize.large" = "Grande";
-
 
 "animalfilterview.constants.navigationtitle" = "Filtrar";
 "animalfilterview.constants.formtitle" = "disponíveis";
