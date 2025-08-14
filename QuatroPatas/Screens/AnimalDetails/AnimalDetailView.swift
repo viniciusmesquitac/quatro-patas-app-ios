@@ -13,7 +13,7 @@ struct AnimalDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: Spacing.xLarge.rawValue) {
                 Image(animal.photo ?? "default-animal-card.png")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -37,17 +37,17 @@ struct AnimalDetailView: View {
                         .padding()
                         .background(Color.primaryColor)
                         .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .cornerRadius(CornerRadius.medium.rawValue)
                 }
             }
             .padding()
             .navigationBarBackButtonHidden(true)
-            .backButton(data: animal)
+            .backButton()
             .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        navigator.present(sheet: .share(items: [animal.photo ?? "default-animal-card.png", animal.name, animal.description]))
+                        navigator.present(sheet: .share(items: []))
                     }) {
                         SFIcons.image(.share)
                     }

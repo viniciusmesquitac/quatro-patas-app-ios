@@ -60,7 +60,7 @@ struct AnimalCardView: View {
                     .overlay(content: {
                         AnimalNameView
                     })
-                    .cornerRadius(Constants.cornerRadius)
+                    .cornerRadius(CornerRadius.small.rawValue)
             }
         }.frame(width: Constants.width, height: Constants.height)
     }

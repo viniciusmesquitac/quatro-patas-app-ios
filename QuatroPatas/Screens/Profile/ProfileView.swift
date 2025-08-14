@@ -18,10 +18,18 @@ struct ProfileView: View {
     
     @State var user: User
     
-    var UserProfile: some View {
+    enum Constants: String, Localizable {
+        case adoptionTerm
+        case happyEndings
+        case whoWeAre
+        case termsOfService
+    }
+    
+    var UserProfileCard: some View {
         HStack {
             Image(systemName: SFIcons.person.rawValue)
                 .resizable()
+                .foregroundStyle(Color.primaryColor)
                 .frame(width: 64, height: 64)
 
             VStack(alignment: .leading) {
@@ -36,55 +44,39 @@ struct ProfileView: View {
         }
         .padding()
         .background(Color.secundaryColor)
-        .cornerRadius(16)
+        .cornerRadius(CornerRadius.medium.rawValue)
     }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xLarge.rawValue) {
-                UserProfile
-
-                HStack(spacing: 16) {
-                    Button(action: {}) {
-                        Text("Termo de adoção")
-                            .frame(maxWidth: .infinity, minHeight: 150)
-                            .padding()
-                            .background(Color.secundaryColor)
-                            .cornerRadius(16)
-                    }
-
-                    Button(action: {}) {
-                        Text("Finais Felizes")
-                            .frame(maxWidth: .infinity,  minHeight: 150)
-                            .padding()
-                            .background(Color.secundaryColor)
-                            .cornerRadius(16)
-                    }
+                UserProfileCard
+                HStack(spacing: Spacing.large.rawValue) {
+                    card(title: Constants.localized(.termsOfService))
+                    card(title: Constants.localized(.happyEndings))
                 }
 
-                HStack(spacing: 16) {
-                    Button(action: {}) {
-                        Text("Quem Somos")
-                            .frame(maxWidth: .infinity, minHeight: 150)
-                            .padding()
-                            .background(Color.secundaryColor)
-                            .cornerRadius(16)
-                    }
-
-                    Button(action: {}) {
-                        Text("Termos de Serviço")
-                            .frame(maxWidth: .infinity,  minHeight: 150)
-                            .padding()
-                            .background(Color.secundaryColor)
-                            .cornerRadius(16)
-                    }
+                HStack(spacing: Spacing.large.rawValue) {
+                    card(title: Constants.localized(.whoWeAre))
+                    card(title: Constants.localized(.adoptionTerm))
                 }
-
                 Spacer()
             }
             .padding()
         }
         .navigationTitle(AppTab.localized(.profile))
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    @ViewBuilder
+    func card(title: String) -> some View {
+        Button(action: {}) {
+            Text(title)
+                .foregroundStyle(Color.secundaryColor)
+                .frame(maxWidth: .infinity, minHeight: 150)
+                .padding()
+                .background(Color.primaryColor)
+                .cornerRadius(CornerRadius.medium.rawValue)
+        }
     }
 }

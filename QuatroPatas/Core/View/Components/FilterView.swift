@@ -15,7 +15,7 @@ struct FilterView<AnyFilter: Filter>: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Spacing.medium.rawValue) {
                 ForEach(filter.values(), id: \.self) { item in
-                    HStack(spacing: 6) {
+                    HStack(spacing: Spacing.medium.rawValue) {
                         Text(item)
                             .foregroundColor(.primaryColor)
                         

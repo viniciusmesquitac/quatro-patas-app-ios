@@ -73,9 +73,9 @@ struct AnimalFilterView: View {
                     .padding()
                     .background(Color.primaryColor)
                     .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .cornerRadius(CornerRadius.small.rawValue)
                     .padding(.horizontal)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, Padding.medium.rawValue)
             }
             .background(.clear)
         }
