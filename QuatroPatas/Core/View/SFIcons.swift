@@ -20,9 +20,8 @@ enum SFIcons: String {
     case search = "magnifyingglass"
     case close = "xmark.circle"
 
-    static func image(_ value: SFIcons, scale: Image.Scale = .large, color: Color = .accentColor) -> some View {
+    static func image(_ value: SFIcons, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)
-            .resizable()
             .foregroundColor(color)
             .imageScale(scale)
     }

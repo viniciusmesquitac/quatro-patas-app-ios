@@ -13,6 +13,7 @@ struct AnimalFilter: Hashable {
 }
 
 extension AnimalFilter: Filter {
+
     typealias Item = Animal
 
     func apply(to items: [Animal]) -> [Animal] {
@@ -34,4 +35,17 @@ extension AnimalFilter: Filter {
             return matches
         }
     }
+
+    mutating func remove(value: String) {
+        if animalType == value {
+            animalType = nil
+        } else if gender == value {
+            gender = nil
+        } else if breed == value {
+            breed = nil
+        } else if size == value {
+            size = nil
+        }
+    }
+    
 }

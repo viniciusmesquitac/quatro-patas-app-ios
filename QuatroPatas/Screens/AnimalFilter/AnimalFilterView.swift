@@ -29,8 +29,6 @@ struct AnimalFilterView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("\(filteredAnimals.count) \(Constants.localized(.formTitle))").font(.headline)) { }
-
                 Section(header: Text(Constants.localized(.sectionAnimalType))) {
                     ForEach(AnimalType.allCases, id: \.self) { type in
                         option(title: AnimalType.localized(type), selection: $filter.animalType)
@@ -73,7 +71,7 @@ struct AnimalFilterView: View {
                 Text(Constants.localized(.filterButton) + " (\(filteredAnimals.count))")
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.accentColor)
+                    .background(Color.primaryColor)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                     .padding(.horizontal)
@@ -90,7 +88,7 @@ struct AnimalFilterView: View {
         }) {
             HStack {
                 Image(systemName: selection.wrappedValue == title ? SFIcons.circle_filled.rawValue : SFIcons.circle.rawValue)
-                    .foregroundColor(selection.wrappedValue == title ? .accentColor : .secondary)
+                    .foregroundColor(selection.wrappedValue == title ? .primaryColor : .secondary)
                 Text(title)
                     .foregroundColor(.primary)
                 Spacer()

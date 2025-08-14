@@ -5,7 +5,7 @@
 //  Created by Vinicius Mesquita Coelho on 25/05/25.
 //
 
-struct Animal: Hashable {
+struct Animal: Hashable, Identifiable {
     let id: String
     let name: String
     let photo: String? = nil

@@ -35,7 +35,7 @@ struct AnimalDetailView: View {
                     Text("Adotar")
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.accentColor)
+                        .background(Color.primaryColor)
                         .foregroundColor(.white)
                         .cornerRadius(8)
                 }

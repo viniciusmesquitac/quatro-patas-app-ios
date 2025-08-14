@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AnimalsView: View {
     private let collumns = Array(repeating: GridItem(.flexible(minimum: 170, maximum: 170)), count: 2)
-    private let navigationTitle: String = "Animais"
 
     @State private var animals = AnimalMock.animals
     @State private var filter = AnimalFilter()
@@ -22,6 +21,7 @@ struct AnimalsView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
+            FilterView(filter: $filter)
             LazyVGrid(columns: collumns, spacing: Padding.xLarge.rawValue) {
                 ForEach(filteredAnimals, id: \.id) { animal in
                     AnimalCardView(animal: animal)
@@ -42,7 +42,7 @@ struct AnimalsView: View {
                 }
             }
         }
-        .navigationTitle(navigationTitle)
+        .navigationTitle(AppTab.localized(.animals))
     }
     
     func refresh() async {

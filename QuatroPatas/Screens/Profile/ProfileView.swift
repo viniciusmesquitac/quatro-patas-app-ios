@@ -16,82 +16,58 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    let user: User = User(id: "0", name: "Chrystian Abarzua", email: "chrystian_abarzua124@gmail.com", type: .adopter)
-    
-    
-    private let navigationTitle: String = "Perfil"
-    
+    @State var user: User
     
     var UserProfile: some View {
         HStack {
-            SFIcons.image(.person)
+            Image(systemName: SFIcons.person.rawValue)
+                .resizable()
                 .frame(width: 64, height: 64)
-            
+
             VStack(alignment: .leading) {
-                Text(user.name)
+                Text("Humano")
                     .font(.headline)
+                    .foregroundColor(.primaryColor)
                 Text("Ver Perfil")
                     .font(.subheadline)
-                    .foregroundColor(.accentColor)
-                
+                    .foregroundColor(.primaryColor)
             }
             Spacer()
         }
         .padding()
-        .background(Color(UIColor.systemGray5))
+        .background(Color.secundaryColor)
         .cornerRadius(16)
-    }
-    
-    
-    var AdoptionForm: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Formulário de adoção")
-                .font(.headline)
-            Text("Nunc pretium, diam at vulputate tincidunt, augue sapien ultrices dui, et dapibus tortor nibh vel mi.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-        .padding()
-        .background(Color(UIColor.systemGray5))
-        .cornerRadius(16)
-    }
-    
-    var HappyEnding: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Finais Felizes")
-                    .font(.headline)
-                Spacer()
-                Text("veja mais")
-                    .font(.subheadline)
-                    .foregroundColor(.accentColor)
-            }
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    ForEach(0..<5) { _ in
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.gray.opacity(0.3))
-                            .frame(width: 100, height: 100)
-                    }
-                }
-            }
-        }
     }
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: Spacing.xLarge.rawValue) {
                 UserProfile
-                HappyEnding
-                AdoptionForm
+
+                HStack(spacing: 16) {
+                    Button(action: {}) {
+                        Text("Termo de adoção")
+                            .frame(maxWidth: .infinity, minHeight: 150)
+                            .padding()
+                            .background(Color.secundaryColor)
+                            .cornerRadius(16)
+                    }
+
+                    Button(action: {}) {
+                        Text("Finais Felizes")
+                            .frame(maxWidth: .infinity,  minHeight: 150)
+                            .padding()
+                            .background(Color.secundaryColor)
+                            .cornerRadius(16)
+                    }
+                }
 
                 HStack(spacing: 16) {
                     Button(action: {}) {
                         Text("Quem Somos")
                             .frame(maxWidth: .infinity, minHeight: 150)
                             .padding()
-                            .background(Color(UIColor.systemGray5))
+                            .background(Color.secundaryColor)
                             .cornerRadius(16)
                     }
 
@@ -99,7 +75,7 @@ struct ProfileView: View {
                         Text("Termos de Serviço")
                             .frame(maxWidth: .infinity,  minHeight: 150)
                             .padding()
-                            .background(Color(UIColor.systemGray5))
+                            .background(Color.secundaryColor)
                             .cornerRadius(16)
                     }
                 }
@@ -108,7 +84,7 @@ struct ProfileView: View {
             }
             .padding()
         }
-        .navigationTitle(navigationTitle)
+        .navigationTitle(AppTab.localized(.profile))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

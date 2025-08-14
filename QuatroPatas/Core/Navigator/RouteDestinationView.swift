@@ -14,7 +14,7 @@ struct RouteDestinationView: View {
         switch route {
         case .animals: AnimalsView()
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .profile: ProfileView()
+        case .profile(let user): ProfileView(user: user)
         case .adoption:  AdoptionView()
         }
     }

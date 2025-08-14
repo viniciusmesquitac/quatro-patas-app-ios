@@ -18,6 +18,7 @@ enum AppTab: String, Localizable {
 struct QuatroPatasApp: App {
 
     @StateObject private var navigator = Navigator()
+    @State private var user = User(id: String(), name: String(), email: String(), type: .adopter)
 
     var body: some Scene {
         WindowGroup {
@@ -33,7 +34,7 @@ struct QuatroPatasApp: App {
                     Label(AppTab.localized(.adoption), systemImage: SFIcons.heart_filled.rawValue)
                 }
                 NavigationStack(path: $navigator.path) {
-                    ProfileView().applyRoute()
+                    ProfileView(user: user).applyRoute()
                 }.tabItem {
                     Label(AppTab.localized(.profile), systemImage:  SFIcons.person.rawValue)
                 }
