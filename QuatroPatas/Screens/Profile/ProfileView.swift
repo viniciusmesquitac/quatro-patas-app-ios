@@ -5,24 +5,18 @@
 //  Created by Vinicius Mesquita Coelho on 31/05/25.
 //
 
-//
-//  ContentView.swift
-//  QuatroPatas
-//
-//  Created by Vinicius Mesquita Coelho on 21/03/25.
-//
-
 import SwiftUI
 
 struct ProfileView: View {
     
     @State var user: User
     
-    enum Constants: String, Localizable {
+    private enum Constants: String, Localizable {
         case adoptionTerm
         case happyEndings
         case whoWeAre
         case termsOfService
+        case seeProfile
     }
     
     var UserProfileCard: some View {
@@ -33,10 +27,10 @@ struct ProfileView: View {
                 .frame(width: 64, height: 64)
 
             VStack(alignment: .leading) {
-                Text("Humano")
+                Text(user.name)
                     .font(.headline)
                     .foregroundColor(.primaryColor)
-                Text("Ver Perfil")
+                Text(Constants.localized(.seeProfile))
                     .font(.subheadline)
                     .foregroundColor(.primaryColor)
             }
