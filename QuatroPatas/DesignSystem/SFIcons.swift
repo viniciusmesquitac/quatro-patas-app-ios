@@ -17,6 +17,7 @@ enum SFIcons: String {
     case circle_filled = "largecircle.fill.circle"
     case circle = "circle"
     case heart_filled = "heart.fill"
+    case search = "magnifyingglass"
 
     static func image(_ value: SFIcons, scale: Image.Scale = .large, color: Color = .accentColor) -> some View {
         Image(systemName: value.rawValue)

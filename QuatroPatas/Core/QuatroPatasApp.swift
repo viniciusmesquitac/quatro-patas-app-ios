@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+enum AppTab: String, Localizable {
+    case animals
+    case adoption
+    case profile
+    case search
+}
+
 @main
 struct QuatroPatasApp: App {
 

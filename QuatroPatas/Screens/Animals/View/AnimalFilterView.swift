@@ -19,7 +19,7 @@ struct AnimalFilterView: View {
     let animals: [Animal]
 
     @State var filter: AnimalFilter
-
+    
     enum Constants: String, Localizable {
         case navigationTitle
         case formTitle
@@ -30,10 +30,29 @@ struct AnimalFilterView: View {
         case filterButton
     }
 
+    var filteredAnimals: [Animal] {
+        animals.filter { animal in
+            var matches = true
+            if let type = filter.animalType {
+                matches = matches && AnimalType.localized(animal.type) == type
+            }
+            if let gender = filter.gender {
+                matches = matches && Gender.localized(animal.gender) == gender
+            }
+            if let breed = filter.breed {
+                matches = matches && Breed.localized(animal.breed) == breed
+            }
+            if let size = filter.size {
+                matches = matches && AnimalSize.localized(animal.size ?? .small) == size
+            }
+            return matches
+        }
+    }
+
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("\(animals.count) \(Constants.localized(.formTitle))").font(.headline)) { }
+                Section(header: Text("\(filteredAnimals.count) \(Constants.localized(.formTitle))").font(.headline)) { }
 
                 Section(header: Text(Constants.localized(.sectionAnimalType))) {
                     ForEach(AnimalType.allCases, id: \.self) { type in
@@ -61,23 +80,13 @@ struct AnimalFilterView: View {
 
                 Section {
                     Button(action: {
-                        var filteredAnimals = AnimalMock.animals
-                        if let type = filter.animalType {
-                            filteredAnimals = filteredAnimals.filter { AnimalType.localized($0.type) == type }
-                        }
-                        if let gender = filter.gender {
-                            filteredAnimals = filteredAnimals.filter { Gender.localized($0.gender) == gender }
-                        }
-                        if let breed = filter.breed {
-                            filteredAnimals = filteredAnimals.filter { Breed.localized($0.breed) == breed }
-                        }
-                        if let size = filter.size {
-                            filteredAnimals = filteredAnimals.filter { AnimalSize.localized($0.size ?? .small) == size }
-                        }
-                        let data = ["animals": filteredAnimals, "filter": filter]
+                        let data: [String: Any] = [
+                            "animals": filteredAnimals,
+                            "filter": filter
+                        ]
                         navigator.dismiss(data: data)
                     }) {
-                        Text(Constants.localized(.filterButton))
+                        Text(Constants.localized(.filterButton) + "(\(filteredAnimals.count))")
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.accentColor)
@@ -94,11 +103,7 @@ struct AnimalFilterView: View {
     @ViewBuilder
     func option(title: String, selection: Binding<String?>) -> some View {
         Button(action: {
-            if selection.wrappedValue == title {
-                selection.wrappedValue = nil
-            } else {
-                selection.wrappedValue = title
-            }
+            selection.wrappedValue = (selection.wrappedValue == title) ? nil : title
         }) {
             HStack {
                 Image(systemName: selection.wrappedValue == title ? SFIcons.circle_filled.rawValue : SFIcons.circle.rawValue)
