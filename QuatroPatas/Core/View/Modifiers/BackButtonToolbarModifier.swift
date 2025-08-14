@@ -18,7 +18,7 @@ struct BackButtonToolbarModifier: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        navigator.dismiss(data: data)
+                        navigator.dismiss(with: data)
                     }) {
                         HStack {
                             SFIcons.image(.back)

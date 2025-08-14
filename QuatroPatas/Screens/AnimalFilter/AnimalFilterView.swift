@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct AnimalFilter: Hashable {
-    var animalType: String?
-    var gender: String?
-    var breed: String?
-    var size: String?
-}
-
 struct AnimalFilterView: View {
     @EnvironmentObject var navigator: Navigator
     let animals: [Animal]
@@ -84,7 +77,7 @@ struct AnimalFilterView: View {
                             "animals": filteredAnimals,
                             "filter": filter
                         ]
-                        navigator.dismiss(data: data)
+                        navigator.dismiss(with: data)
                     }) {
                         Text(Constants.localized(.filterButton) + "(\(filteredAnimals.count))")
                             .frame(maxWidth: .infinity)

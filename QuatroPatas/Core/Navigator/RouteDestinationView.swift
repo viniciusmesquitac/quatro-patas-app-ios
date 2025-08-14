@@ -12,14 +12,10 @@ struct RouteDestinationView: View {
 
     var body: some View {
         switch route {
-        case .animals:
-            AnimalsView()
-        case .details(let animal):
-            AnimalDetailView(animal: animal)
-        case .profile:
-            ProfileView()
-        case .adoption:
-            AdoptionView()
+        case .animals: AnimalsView()
+        case .details(let animal): AnimalDetailView(animal: animal)
+        case .profile: ProfileView()
+        case .adoption:  AdoptionView()
         }
     }
 }

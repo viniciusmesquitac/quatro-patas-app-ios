@@ -34,7 +34,7 @@ class Navigator: ObservableObject {
         }
     }
 
-    func dismiss(data: Any? = nil) {
+    func dismiss(with data: Any? = nil) {
         if let sheet = presentedSheet {
             sheetCallbacks[sheet.id]?(data)
             sheetCallbacks[sheet.id] = nil
@@ -43,7 +43,7 @@ class Navigator: ObservableObject {
         }
         else if let route = routes.last {
             routeCallbacks[route.id]?(data)
-            sheetCallbacks[route.id] = nil
+            routeCallbacks[route.id] = nil
             path.removeLast()
             routes.removeLast()
         }

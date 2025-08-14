@@ -13,8 +13,7 @@ extension Localizable {
     init?(rawValue: String) {
         let parts = rawValue.split(separator: ".").map { String($0) }
         guard let caseName = parts.last else { return nil }
-        
-        // Encontra o case com o mesmo nome do último segmento
+
         guard let match = Self.allCases.first(where: {
             String(reflecting: $0).split(separator: ".").last.map(String.init) == caseName
         }) else {
@@ -26,7 +25,7 @@ extension Localizable {
     static func localized(_ value: Self) -> String {
         NSLocalizedString(value.rawValue, comment: "")
     }
-    
+
     static var allLocalized: [String] {
         allCases.map { localized($0) }
     }
