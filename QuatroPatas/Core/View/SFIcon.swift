@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum SFIcons: String {
+enum SFIcon: String {
     case filter = "line.3.horizontal.decrease.circle"
     case back = "chevron.left"
     case share = "square.and.arrow.up"
@@ -19,8 +19,9 @@ enum SFIcons: String {
     case heart_filled = "heart.fill"
     case search = "magnifyingglass"
     case close = "xmark.circle"
+    case tip = "lightbulb.circle"
 
-    static func image(_ value: SFIcons, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
+    static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)
             .foregroundColor(color)
             .imageScale(scale)

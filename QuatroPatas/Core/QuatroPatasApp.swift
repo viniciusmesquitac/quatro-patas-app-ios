@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-enum AppTab: String, Localizable {
-    case animals
-    case adoption
-    case profile
-    case search
-}
-
 @main
 struct QuatroPatasApp: App {
 
@@ -23,25 +16,20 @@ struct QuatroPatasApp: App {
     var body: some Scene {
         WindowGroup {
             TabView {
-                NavigationStack(path: $navigator.path) {
-                    AnimalsView().applyRoute()
-                }.tabItem {
-                    Label(AppTab.localized(.animals), systemImage: SFIcons.paw.rawValue)
+                TabItem(label: .animals, icon: .paw) {
+                    AnimalsView()
                 }
-                NavigationStack(path: $navigator.path) {
-                    AdoptionView().applyRoute()
-                }.tabItem {
-                    Label(AppTab.localized(.adoption), systemImage: SFIcons.heart_filled.rawValue)
+                TabItem(label: .adoption, icon: .heart_filled) {
+                    AdoptionView()
                 }
-                NavigationStack(path: $navigator.path) {
-                    ProfileView(user: user).applyRoute()
-                }.tabItem {
-                    Label(AppTab.localized(.profile), systemImage:  SFIcons.person.rawValue)
+                TabItem(label: .profile, icon: .person) {
+                    ProfileView(user: user)
                 }
             }
             .sheet(item: $navigator.presentedSheet) { sheet in
                 SheetDestinationView(sheet: sheet)
             }
+            .tabBarMinimizeBehavior(.onScrollDown)
             .environmentObject(navigator)
             .tint(Color.primaryColor)
         }

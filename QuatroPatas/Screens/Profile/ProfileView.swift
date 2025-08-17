@@ -21,7 +21,7 @@ struct ProfileView: View {
     
     var UserProfileCard: some View {
         HStack {
-            Image(systemName: SFIcons.person.rawValue)
+            Image(systemName: SFIcon.person.rawValue)
                 .resizable()
                 .foregroundStyle(Color.primaryColor)
                 .frame(width: 64, height: 64)

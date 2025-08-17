@@ -8,7 +8,15 @@
 import SwiftUI
 
 struct AdoptionView: View {
+    @EnvironmentObject private var navigator: Navigator
+
     var body: some View {
-       Text("Hello!")
+        ScrollView {
+            
+        }
+        .navigationTitle(AppTab.localized(.adoption))
+        .toolbarItem(icon: .tip) {
+            navigator.present(sheet: .tip)
+        }
     }
 }

@@ -22,7 +22,7 @@ struct FilterView<AnyFilter: Filter>: View {
                         Button(action: {
                             filter.remove(value: item)
                         }) {
-                            SFIcons.image(.close, scale: .small)
+                            SFIcon.image(.close, scale: .small)
                         }
                         .buttonStyle(.plain)
                         

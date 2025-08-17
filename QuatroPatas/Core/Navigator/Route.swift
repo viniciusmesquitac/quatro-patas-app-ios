@@ -11,7 +11,5 @@ enum Route: Hashable, Identifiable {
     case profile(User)
     case adoption
     
-    var id: String {
-        String(describing: self)
-    }
+    var id: String { String(describing: self) }
 }

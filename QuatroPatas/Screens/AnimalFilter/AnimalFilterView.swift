@@ -55,14 +55,8 @@ struct AnimalFilterView: View {
             }
             .navigationTitle(Constants.localized(.navigationTitle))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        navigator.dismiss()
-                    }) {
-                        SFIcons.image(.close, scale: .large)
-                    }
-                }
+            .toolbarItem(icon: .close,placement: .topBarTrailing) {
+                navigator.dismiss()
             }
     
             Button(action: {
@@ -87,7 +81,7 @@ struct AnimalFilterView: View {
             selection.wrappedValue = (selection.wrappedValue == title) ? nil : title
         }) {
             HStack {
-                Image(systemName: selection.wrappedValue == title ? SFIcons.circle_filled.rawValue : SFIcons.circle.rawValue)
+                Image(systemName: selection.wrappedValue == title ? SFIcon.circle_filled.rawValue : SFIcon.circle.rawValue)
                     .foregroundColor(selection.wrappedValue == title ? .primaryColor : .secondary)
                 Text(title)
                     .foregroundColor(.primary)

@@ -7,21 +7,20 @@
 
 import SwiftUI
 
-struct BackButtonToolbarModifier: ViewModifier {
+struct ToolbarItemModifier: ViewModifier {
     @EnvironmentObject var navigator: Navigator
     var label: String?
-    var data: Any? = nil
-    
+    var icon: SFIcon
+    var placement: ToolbarItemPlacement
+    var action: (() -> Void)
+
     func body(content: Content) -> some View {
         content
-            .navigationBarBackButtonHidden(true)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        navigator.dismiss(with: data)
-                    }) {
+                ToolbarItem(placement: placement) {
+                    Button(action: action) {
                         HStack {
-                            SFIcons.image(.back)
+                            SFIcon.image(icon)
                             if let label = label {
                                 Text(label)
                             }

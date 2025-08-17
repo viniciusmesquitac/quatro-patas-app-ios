@@ -33,15 +33,9 @@ struct AnimalsView: View {
         }.refreshable {
             await refresh()
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    navigator.present(sheet: .animalFilter(animals, $filter))
-                }) {
-                    SFIcons.image(.filter)
-                }
-            }
-        }
+        .toolbarItem(icon: .filter, action: {
+            navigator.present(sheet: .animalFilter(animals, $filter))
+        })
         .navigationTitle(AppTab.localized(.animals))
     }
     

@@ -42,18 +42,13 @@ struct AnimalDetailView: View {
             }
             .padding()
             .navigationBarBackButtonHidden(true)
-            .backButton()
             .toolbar(.hidden, for: .tabBar)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        navigator.present(sheet: .share(items: []))
-                    }) {
-                        SFIcons.image(.share)
-                    }
-                }
-            }
-            
+            .toolbarItem(icon: .share, placement: .topBarTrailing, action: {
+                navigator.present(sheet: .share(items: []))
+            })
+            .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+                navigator.dismiss()
+            })
         }
     }
 }
