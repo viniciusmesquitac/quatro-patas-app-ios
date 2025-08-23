@@ -10,15 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @State var user: User
-    
-    private enum Constants: String, Localizable {
-        case adoptionTerm
-        case happyEndings
-        case whoWeAre
-        case termsOfService
-        case seeProfile
-    }
-    
+
     var UserProfileCard: some View {
         HStack {
             Image(systemName: SFIcon.person.rawValue)
@@ -30,7 +22,7 @@ struct ProfileView: View {
                 Text(user.name)
                     .font(.headline)
                     .foregroundColor(.primaryColor)
-                Text(Constants.localized(.seeProfile))
+                Text("ver perfil")
                     .font(.subheadline)
                     .foregroundColor(.primaryColor)
             }
@@ -46,13 +38,13 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: Spacing.xLarge.rawValue) {
                 UserProfileCard
                 HStack(spacing: Spacing.large.rawValue) {
-                    card(title: Constants.localized(.termsOfService))
-                    card(title: Constants.localized(.happyEndings))
+                    CardView(title: ProfileCard.termsOfService, route: .adoption)
+                    CardView(title: ProfileCard.happyEndings, route: .adoption)
                 }
 
                 HStack(spacing: Spacing.large.rawValue) {
-                    card(title: Constants.localized(.whoWeAre))
-                    card(title: Constants.localized(.adoptionTerm))
+                    CardView(title: ProfileCard.whoWeAre, route: .adoption)
+                    CardView(title: ProfileCard.adoptionTerm, route: .adoption)
                 }
                 Spacer()
             }
@@ -60,17 +52,5 @@ struct ProfileView: View {
         }
         .navigationTitle(AppTab.localized(.profile))
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    @ViewBuilder
-    func card(title: String) -> some View {
-        Button(action: {}) {
-            Text(title)
-                .foregroundStyle(Color.secundaryColor)
-                .frame(maxWidth: .infinity, minHeight: 150)
-                .padding()
-                .background(Color.primaryColor)
-                .cornerRadius(CornerRadius.medium.rawValue)
-        }
     }
 }

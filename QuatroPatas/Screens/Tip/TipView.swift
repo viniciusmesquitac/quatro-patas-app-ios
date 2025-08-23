@@ -14,7 +14,7 @@ struct TipView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Dicas") {
+                Section("tips") {
                     
                 }
             }.toolbarItem(icon: .close, placement: .topBarTrailing) {

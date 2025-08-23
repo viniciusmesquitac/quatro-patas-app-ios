@@ -11,7 +11,7 @@ import SwiftUI
 struct QuatroPatasApp: App {
 
     @StateObject private var navigator = Navigator()
-    @State private var user = User(id: String(), name: String(), email: String(), type: .adopter)
+    @State private var user = User(id: String(), name: "Cristano Barros", email: String(), type: .adopter)
 
     var body: some Scene {
         WindowGroup {

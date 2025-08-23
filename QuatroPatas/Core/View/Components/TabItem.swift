@@ -10,13 +10,13 @@ import SwiftUI
 struct TabItem<Content: View>: View {
 
     let content: Content
-    let label: AppTab
+    let tab: AppTab
     let icon: SFIcon
 
     @EnvironmentObject var navigator: Navigator
 
     init(label: AppTab, icon: SFIcon, @ViewBuilder content: () -> Content) {
-        self.label = label
+        self.tab = label
         self.icon = icon
         self.content = content()
     }
@@ -26,7 +26,7 @@ struct TabItem<Content: View>: View {
             content.applyRoute()
         }
         .tabItem {
-            Label(AppTab.localized(label), systemImage: icon.rawValue)
+            Label(AppTab.localized(tab), systemImage: icon.rawValue)
         }
     }
 }
