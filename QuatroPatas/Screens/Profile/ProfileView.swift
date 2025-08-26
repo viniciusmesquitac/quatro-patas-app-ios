@@ -44,7 +44,7 @@ struct ProfileView: View {
 
                 HStack(spacing: Spacing.large.rawValue) {
                     CardView(title: ProfileCard.whoWeAre, route: .adoption)
-                    CardView(title: ProfileCard.adoptionTerm, route: .adoption)
+                    CardView(title: ProfileCard.adoptionTerm, route: .adoptionForm)
                 }
                 Spacer()
             }

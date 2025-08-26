@@ -1,0 +1,273 @@
+{
+  "sections": [
+    {
+      "title": "Section 1",
+      "id": 1,
+      "questions": [
+        {
+          "title": "Qual o seu nome?",
+          "id": "entry.509884738",
+          "type": "short_answer"
+        },
+        {
+          "title": "Qual sua idade?",
+          "id": "entry.1381353689",
+          "type": "short_answer"
+        },
+        {
+          "title": "Qual seu Gênero?",
+          "id": "entry.1529161907",
+          "type": "single_selection",
+          "options": ["Masculino", "Feminino", "Prefiro não dizer"]
+        },
+        {
+          "title": "Como prefere ser chamado?",
+          "id": "entry.1813898675",
+          "type": "single_selection",
+          "options": ["no masculino (ele, dele)", "no feminino (ela, dela)", "em linguagem neutra"]
+        },
+        {
+          "title": "Qual o seu número de telefone?",
+          "id": "entry.108172991",
+          "type": "short_answer"
+        },
+        {
+          "title": "Qual o seu instragram?",
+          "id": "entry.1750004051",
+          "type": "short_answer"
+        },
+        {
+          "title": "Qual o seu endereço?",
+          "id": "entry.1808710657",
+          "type": "short_answer"
+        }
+      ]
+    },
+    {
+      "title": "Section 2",
+      "id": 2,
+      "questions": [
+        {
+          "title": "No local onde o animalzinho irá morar já existe(m) outros animais?",
+          "id": "entry.1345409347",
+          "type": "single_selection",
+          "options": ["Sim, gato(s)", "Sim, cachorro(s)", "Sim, ambos", "Não"]
+        },
+        {
+          "title": "Quem será o principal responsável pelo cuidado com o animal?",
+          "id": "entry.1244899683",
+          "type": "single_selection",
+          "options": ["Apenas eu", "Eu e outra pessoa", "Apenas outra pessoa"]
+        },
+        {
+          "title": "Essa pessoa que será a responsável está empregada atualmente?",
+          "id": "entry.813965808",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Quantas pessoas moram na residência? Especifique a quantidade de ADULTOS e CRIANÇAS",
+          "id": "entry.1527459072",
+          "type": "long_answer"
+        },
+        {
+          "title": "Se houver criança(s) em casa, como você pretende fazer a adaptação entre elas e o animal?",
+        "subtitle": "Como você irá ensina-la(s) que o animal não é um brinquedo, que sente dor e deve ser respeitado, evitando que ambos se machuquem? Se não há crianças em casa, coloque \"não se aplica\"",
+          "id": "entry.1552394752",
+          "type": "long_answer"
+        },
+        {
+          "title": "Por que você quer adotar?",
+          "id": "entry.755972423",
+          "type": "long_answer"
+        },
+        {
+          "title": "Qual seria sua atitude se alguém da residência não se adaptasse ao gatinho?",
+          "id": "entry.1583298526",
+          "type": "long_answer"
+        },
+        {
+          "title": "A ONG 4Patas Fortaleza, atualmente responsável pelo animal a ser adotado, mantém o contato com os adotantes para: \n 1. Saber se está se adaptando ao novo lar;\n 2. Verificar se todos os itens que constam no Termo de Adoção estão sendo respeitados; \n3. Pedir fotos e vídeos do animal, caso não sejam enviados espontaneamente. \n Você concorda em ser contatado(a) e enviar as fotos e vídeos do animalzinho?",
+          "id": "entry.1898511248",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Como você espera que seu novo amiguinho seja?",
+          "subtitle": "Conta pra gente qual temperamento, comportamento ou características físicas você espera que ele tenha, se tem alguma preferência de idade ou gênero",
+          "id": "entry.1482008509",
+          "type": "long_answer"
+        },
+        {
+          "title": "O gatinho irá morar com você no endereço informado nessa entrevista? ",
+          "id": "entry.2122833763",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Caso não, pedimos que informe o \nENDEREÇO COMPLETO de onde o gatinho vai morar com: (número/complemento/bairro/cidade/cep)",
+          "id": "entry.136100962",
+          "type": "short_answer"
+        },
+        {
+          "title": "Caso adote, você concorda em castrá-lo, conforme prevê o Termo de Adoção? \n(Castração é obrigatória e indispensável)",
+          "id": "entry.1681710743",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Se o seu gatinho se perdesse, o que faria para encontrá-lo?",
+          "id": "entry.559705114",
+          "type": "short_answer"
+        },
+        {
+          "title": "Você já entregou algum animal seu para adoção? Se a resposta for afirmativa, quando e por qual motivo?",
+          "id": "entry.1155361265",
+          "type": "long_answer"
+        },
+        {
+          "title": "Está disposto a enriquecer o ambiente e buscar soluções para o caso do gatinho precisar ficar muitas horas por dia sozinho?",
+          "id": "entry.924761893",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Caso você ou algum familiar vir a engravidar, o animal continuará sendo tratado da mesma maneira?",
+          "id": "entry.1430483154",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Se o adotante mora com namorado(a)/cônjuge/companheiro(a), com quem ficará o animal em caso de separação?",
+          "id": "entry.837765231",
+          "type": "short_answer"
+        },
+        {
+          "title": "Você por algum motivo cogitaria passar a guarda do seu gatinho a outra pessoa? Qual sua opinião?",
+          "id": "entry.1773382926",
+          "type": "long_answer"
+        },
+        {
+          "title": "Existe algum motivo que poderia te levar a não conseguir mais cuidar do gatinho que você vai adotar?",
+            "subtitle": "Em caso de resposta ser \"sim\", o que faria com o animalzinho?",
+          "id": "entry.1213146298",
+          "type": "long_answer"
+        },
+        {
+          "title": "Caso você precise viajar, quem cuidará do seu gatinho?",
+          "id": "entry.1487675876",
+          "type": "short_answer"
+        },
+        {
+          "title": "Você tem condições de arcar com os gastos de alimentação de qualidade, vermifugação, vacinação e atendimentos veterinários, quando necessário?",
+          "id": "entry.376942958",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Gatos domésticos podem viver 15 anos ou mais, você se sente preparado para este compromisso a longo prazo?",
+          "id": "entry.833945247",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "O que você faria caso seu animalzinho ficasse doente?",
+          "id": "entry.891823122",
+          "type": "long_answer"
+        },
+        {
+          "title": "Caso você precise mudar de residência, casa, cidade ou país, o que fará com seu animal?",
+          "id": "entry.1942086473",
+          "type": "short_answer"
+        },
+        {
+          "title": "Quando um animal é adotado e muda de ambiente, ele pode apresentar algumas mudanças de comportamento, como miados/latidos constantes, medo, fazer necessidades fora local adequado, queda de imunidade, irritabilidade, estresse e até mesmo agressividade. O período de adaptação em um novo local, com uma nova família, pode demorar algumas semanas e exige muita paciência e preparo. Você está ciente e disposto a passar por essa situação junto com o animal adotado?",
+          "id": "entry.1196602972",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Você já escolheu o animal que pretende adotar?",
+          "id": "entry.73065065",
+          "type": "long_answer"
+        },
+        {
+          "title": "Caso já tenha escolhido, nos conte o que motivou a esta escolha.",
+          "subtitle": "Caso ainda não tenha escolhido, pode responder esta pergunta com \"Ainda não escolhi\"",
+          "id": "entry.1189464925",
+          "type": "long_answer"
+        }
+      ]
+    },
+    {
+      "title": "Section 3",
+      "id": 3,
+      "questions": [
+        {
+          "title": "Todas as pessoas que habitam sua residência estão cientes e de acordo com a adoção de um novo animal?",
+          "id": "entry.1287379749",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Alguém da sua casa possui problemas respiratórios ou alérgicos?",
+          "id": "entry.1633269776",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Depois da adoção do seu animal, o que você fará caso algum membro de sua família apresente alergias ou problemas respiratórios?",
+          "id": "entry.666854074",
+          "type": "long_answer"
+        }
+      ]
+    },
+    {
+      "title": "Section 4",
+      "id": 4,
+      "questions": [
+        {
+          "title": "Qual seu tipo de moradia?",
+          "id": "entry.129128449",
+          "type": "single_selection",
+          "options": ["Casa", "Apartamento", "Sitio/Chacara"]
+        },
+        {
+          "title": "Caso more de aluguel, o proprietário permite animais?",
+          "id": "entry.1231732568",
+          "type": "single_selection",
+          "options": ["Sim", "Não", "Moro em residência propria"]
+        },
+        {
+          "title": "Sobre o lar onde o animal irá morar, como você classificaria o risco dele se perder/fugir?",
+          "id": "entry.599440237",
+          "type": "single_selection",
+          "options": ["Alto", "Médio", "Baixo", "Impossivel"]
+        },
+        {
+          "title": "Sua residência possui redes de proteção própria para gatos e/ou limitadores de abertura em TODAS as janelas, incluindo vitrôs, basculantes, varandas, área externa e portão?",
+          "id": "entry.606421594",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Caso seu imóvel não tenha telas protetoras, você está disposto a instalar?",
+          "id": "entry.799662939",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Declaro que as informações fornecidas neste questionário são verdadeiras",
+          "id": "entry.1296480744",
+          "type": "single_selection",
+          "options": ["Sim", "Não"]
+        },
+        {
+          "title": "Escreva a baixo tudo que julgar necessário, bem como suas dúvidas em relação à adoção.",
+          "id": "entry.92842822",
+          "type": "long_answer"
+        }
+      ]
+    }
+  ]
+}

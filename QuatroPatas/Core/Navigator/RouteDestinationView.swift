@@ -16,6 +16,7 @@ struct RouteDestinationView: View {
         case .details(let animal): AnimalDetailView(animal: animal)
         case .profile(let user): ProfileView(user: user)
         case .adoption:  AdoptionView()
+        case .adoptionForm: AdoptionFormView()
         }
     }
 }

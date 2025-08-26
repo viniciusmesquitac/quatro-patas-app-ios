@@ -310,6 +310,12 @@
         }
       }
     },
+    "Digite sua resposta" : {
+
+    },
+    "Enviar Formulário" : {
+
+    },
     "gender.female" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -396,6 +402,9 @@
           }
         }
       }
+    },
+    "Termo de Adoção" : {
+
     },
     "tips" : {
 
