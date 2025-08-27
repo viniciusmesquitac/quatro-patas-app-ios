@@ -46,6 +46,7 @@ struct AdoptionFormView: View {
             .listRowBackground(Color(UIColor.systemGroupedBackground))
             .listRowInsets(.init())
         }
+        .toolbar(.hidden, for: .tabBar)
         .navigationTitle("Termo de Adoção")
         .onAppear {
             loadForm()

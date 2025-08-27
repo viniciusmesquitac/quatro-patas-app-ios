@@ -8,87 +8,137 @@
 import SwiftUI
 
 struct AnimalFilterView: View {
-    @EnvironmentObject var navigator: Navigator
-    let animals: [Animal]
-    @Binding var filter: AnimalFilter
+@EnvironmentObject var navigator: Navigator
+let animals: [Animal]
+@Binding var filter: AnimalFilter
 
-    enum Constants: String, Localizable {
-        case navigationTitle
-        case formTitle
-        case sectionAnimalType
-        case sectionGender
-        case sectionBreed
-        case sectionSize
-        case filterButton
-    }
+enum Constants: String, Localizable {
+    case navigationTitle
+    case sectionAnimalType
+    case sectionGender
+    case sectionBreed
+    case sectionSize
+    case filterButton
+}
 
-    var filteredAnimals: [Animal] {
-        filter.apply(to: animals)
-    }
+var filteredAnimals: [Animal] {
+    filter.apply(to: animals)
+}
 
-    var body: some View {
-        NavigationStack {
-            Form {
-                Section(header: Text(Constants.localized(.sectionAnimalType))) {
-                    ForEach(AnimalType.allCases, id: \.self) { type in
-                        option(title: AnimalType.localized(type), selection: $filter.animalType)
+var body: some View {
+    NavigationStack {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+
+                // MARK: Tipo
+                filterSection(title: Constants.localized(.sectionAnimalType)) {
+                    HStack {
+                        ForEach(AnimalType.allCases, id: \.self) { type in
+                            SelectableButton(
+                                title: AnimalType.localized(type),
+                                isSelected: filter.animalType == AnimalType.localized(type)
+                            ) {
+                                filter.animalType = (filter.animalType == AnimalType.localized(type)) ? nil : AnimalType.localized(type)
+                            }
+                        }
                     }
                 }
-
-                Section(header: Text(Constants.localized(.sectionGender))) {
-                    ForEach(Gender.allCases, id: \.self) { gender in
-                        option(title: Gender.localized(gender), selection: $filter.gender)
+                
+                // MARK: Gênero
+                filterSection(title: Constants.localized(.sectionGender)) {
+                    HStack {
+                        ForEach(Gender.allCases, id: \.self) { gender in
+                            SelectableButton(
+                                title: Gender.localized(gender),
+                                isSelected: filter.gender == Gender.localized(gender)
+                            ) {
+                                filter.gender = (filter.gender == Gender.localized(gender)) ? nil : Gender.localized(gender)
+                            }
+                        }
                     }
                 }
-
-                Section(header: Text(Constants.localized(.sectionBreed))) {
-                    ForEach(Breed.allCases, id: \.self) { breed in
-                        option(title: Breed.localized(breed), selection: $filter.breed)
+                
+                // MARK: Porte
+                filterSection(title: Constants.localized(.sectionSize)) {
+                    HStack {
+                        ForEach(AnimalSize.allCases, id: \.self) { size in
+                            SelectableButton(
+                                title: AnimalSize.localized(size),
+                                isSelected: filter.size == AnimalSize.localized(size)
+                            ) {
+                                filter.size = (filter.size == AnimalSize.localized(size)) ? nil : AnimalSize.localized(size)
+                            }
+                        }
                     }
                 }
-
-                Section(header: Text(Constants.localized(.sectionSize))) {
-                    ForEach(AnimalSize.allCases, id: \.self) { size in
-                        option(title: AnimalSize.localized(size), selection: $filter.size)
+                
+                // MARK: Raça
+                filterSection(title: Constants.localized(.sectionBreed)) {
+                    Picker(Breed.localized(.mixed), selection: Binding(
+                        get: { filter.breed ?? Breed.localized(.mixed) },
+                        set: { newValue in
+                            filter.breed = newValue.isEmpty ? nil : newValue
+                        }
+                    )) {
+                        ForEach(Breed.allCases, id: \.self) { breed in
+                            Text(Breed.localized(breed)).tag(Breed.localized(breed))
+                                .font(.system(size: 24, weight: .medium))
+                        }
                     }
+                    .pickerStyle(MenuPickerStyle())
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                
+                // MARK: Botão aplicar filtro
+                Button(action: {
+                    navigator.dismiss()
+                }) {
+                    Text(Constants.localized(.filterButton) + " (\(filteredAnimals.count))")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.primaryColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(CornerRadius.small.rawValue)
+                }
+                .padding(.top, 16)
             }
-            .navigationTitle(Constants.localized(.navigationTitle))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarItem(icon: .close,placement: .topBarTrailing) {
-                navigator.dismiss()
-            }
-    
-            Button(action: {
-                navigator.dismiss()
-            }) {
-                Text(Constants.localized(.filterButton) + " (\(filteredAnimals.count))")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.primaryColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(CornerRadius.small.rawValue)
-                    .padding(.horizontal)
-                    .padding(.vertical, Padding.medium.rawValue)
-            }
-            .background(.clear)
+            .padding()
+        }
+        .navigationTitle(Constants.localized(.navigationTitle))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarItem(icon: .close, placement: .topBarTrailing) {
+            navigator.dismiss()
         }
     }
+}
 
-    @ViewBuilder
-    func option(title: String, selection: Binding<String?>) -> some View {
-        Button(action: {
-            selection.wrappedValue = (selection.wrappedValue == title) ? nil : title
-        }) {
-            HStack {
-                Image(systemName: selection.wrappedValue == title ? SFIcon.circle_filled.rawValue : SFIcon.circle.rawValue)
-                    .foregroundColor(selection.wrappedValue == title ? .primaryColor : .secondary)
-                Text(title)
-                    .foregroundColor(.primary)
-                Spacer()
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
+// MARK: View auxiliar para título de seção
+private func filterSection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+    VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
+        Text(title)
+            .font(.headline)
+            .foregroundColor(.primary)
+        content()
     }
+}
+}
+
+// MARK: Botão de seleção customizado
+struct SelectableButton: View {
+let title: String
+let isSelected: Bool
+let action: () -> Void
+
+var body: some View {
+    Button(action: action) {
+        Text(title)
+            .font(.system(size: 24, weight: .medium))
+            .padding(.vertical, 8)
+            .padding(.horizontal, 16)
+            .background(isSelected ? Color.primaryColor.opacity(0.2) : Color.gray.opacity(0.1))
+            .foregroundColor(isSelected ? .primaryColor : .primary)
+            .cornerRadius(8)
+    }
+    .buttonStyle(.plain)
+}
 }

@@ -20,7 +20,9 @@ struct FilterView<AnyFilter: Filter>: View {
                             .foregroundColor(.primaryColor)
                         
                         Button(action: {
-                            filter.remove(value: item)
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+                                filter.remove(value: item)
+                            }
                         }) {
                             SFIcon.image(.close, scale: .small)
                         }

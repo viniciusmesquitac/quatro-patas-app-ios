@@ -24,10 +24,9 @@ struct AnimalsView: View {
             FilterView(filter: $filter)
             LazyVGrid(columns: collumns, spacing: Padding.xLarge.rawValue) {
                 ForEach(filteredAnimals, id: \.id) { animal in
-                    AnimalCardView(animal: animal)
-                        .onTapGesture {
-                            navigator.navigate(to: .details(animal))
-                        }
+                    AnimalCardView(animal: animal) {
+                        navigator.navigate(to: .details(animal))
+                    }
                 }
             }
         }.refreshable {

@@ -30,3 +30,10 @@ struct ToolbarItemModifier: ViewModifier {
             }
     }
 }
+
+extension View {
+    func toolbarItem(label: String? = "", icon: SFIcon, placement: ToolbarItemPlacement = .automatic, action: @escaping () -> Void) -> some View {
+        self.modifier(ToolbarItemModifier(label: label, icon: icon, placement: placement, action: action))
+    }
+}
+

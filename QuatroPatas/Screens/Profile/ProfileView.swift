@@ -11,32 +11,10 @@ struct ProfileView: View {
     
     @State var user: User
 
-    var UserProfileCard: some View {
-        HStack {
-            Image(systemName: SFIcon.person.rawValue)
-                .resizable()
-                .foregroundStyle(Color.primaryColor)
-                .frame(width: 64, height: 64)
-
-            VStack(alignment: .leading) {
-                Text(user.name)
-                    .font(.headline)
-                    .foregroundColor(.primaryColor)
-                Text("ver perfil")
-                    .font(.subheadline)
-                    .foregroundColor(.primaryColor)
-            }
-            Spacer()
-        }
-        .padding()
-        .background(Color.secundaryColor)
-        .cornerRadius(CornerRadius.medium.rawValue)
-    }
-
     var body: some View {
         ScrollView {
+            UserProfileCard(name: user.name).padding()
             VStack(alignment: .leading, spacing: Spacing.xLarge.rawValue) {
-                UserProfileCard
                 HStack(spacing: Spacing.large.rawValue) {
                     CardView(title: ProfileCard.termsOfService, route: .adoption)
                     CardView(title: ProfileCard.happyEndings, route: .adoption)

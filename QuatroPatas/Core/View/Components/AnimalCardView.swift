@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AnimalCardView: View {
     let animal: Animal
+    let action: () -> Void
     
     private enum Constants {
         // Font
@@ -42,7 +43,7 @@ struct AnimalCardView: View {
         VStack {
             Spacer()
             Text(animal.name)
-                .padding(Padding.left(.medium))
+                .padding(.leading, 8)
                 .font(.system(size: Constants.animalNameFontSize, weight: .bold))
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -51,20 +52,25 @@ struct AnimalCardView: View {
     }
 
     var body: some View {
-        VStack {
-            GeometryReader { geometry in
-                Image(animal.photo ?? "default-animal-card.png")
-                    .resizable()
-                    .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-                    .aspectRatio(contentMode: .fill)
-                    .overlay(content: {
-                        AnimalNameView
-                    })
-                    .cornerRadius(CornerRadius.small.rawValue)
+        Button(action: action) {
+            VStack {
+                GeometryReader { geometry in
+                    Image(animal.photo ?? "default-animal-card.png")
+                        .resizable()
+                        .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+                        .aspectRatio(contentMode: .fill)
+                        .overlay(content: {
+                            AnimalNameView
+                        })
+                        .cornerRadius(CornerRadius.small.rawValue)
+                }
             }
-        }.frame(width: Constants.width, height: Constants.height)
+            .frame(width: Constants.width, height: Constants.height)
+        }
+        .buttonStyle(CardButtonStyle())
     }
 }
+
 
 struct AnimalCardView_Preview: PreviewProvider {
 
@@ -77,7 +83,7 @@ struct AnimalCardView_Preview: PreviewProvider {
             type: .cat,
             breed: .mixed,
             description: "Castrada, vermifugada, Vacinada"
-        ))
+        ), action: {})
         .previewLayout(PreviewLayout.fixed(width: 150, height: 180))
     }
 }

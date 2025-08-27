@@ -25,5 +25,6 @@ struct CardView<T: Localizable>: View {
                 .background(Color.primaryColor)
                 .cornerRadius(CornerRadius.medium.rawValue)
         }
+        .buttonStyle(CardButtonStyle())
     }
 }
