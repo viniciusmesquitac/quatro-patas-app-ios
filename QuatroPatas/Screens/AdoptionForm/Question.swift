@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Question: Decodable, Identifiable {
+struct Question: Decodable, Identifiable, Hashable {
     let id: String
     let title: String
     let subtitle: String?

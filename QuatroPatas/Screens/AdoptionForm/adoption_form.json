@@ -37,6 +37,11 @@
           "type": "short_answer"
         },
         {
+          "title": "Qual o seu email?",
+          "id": "entry.498752817",
+          "type": "short_answer"
+        },
+        {
           "title": "Qual o seu endereço?",
           "id": "entry.1808710657",
           "type": "short_answer"

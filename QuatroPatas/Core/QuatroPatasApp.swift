@@ -11,6 +11,9 @@ import SwiftUI
 struct QuatroPatasApp: App {
 
     @StateObject private var navigator = Navigator()
+    @StateObject private var requestProvider = RequestProvider()
+    @StateObject private var formObservable = FormObservable()
+
     @State private var user = User(id: String(), name: "Anônimo", email: String(), type: .adopter)
 
     var body: some Scene {
@@ -31,6 +34,8 @@ struct QuatroPatasApp: App {
             }
             .tabBarMinimizeBehavior(.onScrollDown)
             .environmentObject(navigator)
+            .environmentObject(requestProvider)
+            .environmentObject(formObservable)
             .tint(Color.primaryColor)
         }
     }

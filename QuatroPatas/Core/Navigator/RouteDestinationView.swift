@@ -17,6 +17,7 @@ struct RouteDestinationView: View {
         case .profile(let user): ProfileView(user: user)
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
+        case .formPage(let form): FormPageView(form: form)
         }
     }
 }

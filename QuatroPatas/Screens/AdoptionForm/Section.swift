@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SectionForm: Decodable, Identifiable {
+struct SectionForm: Decodable, Identifiable, Hashable {
     var id: Int
     let title: String
     let questions: [Question]
