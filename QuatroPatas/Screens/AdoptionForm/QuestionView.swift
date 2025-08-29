@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct QuestionView: View {
     let question: Question
     @Binding var answer: String
