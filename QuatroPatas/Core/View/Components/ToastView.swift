@@ -10,10 +10,10 @@ import SwiftUI
 struct ToastView: View {
    
     @Binding var toast: ToastItem?
-    
+
     var body: some View {
         HStack {
-            Image(systemName: toast?.type == .success ? "checkmark.circle.fill" : "xmark.octagon.fill")
+            Image(systemName: toast?.type == .success ? SFIcon.success.rawValue : SFIcon.failure.rawValue)
                 .foregroundColor(.white)
                 .font(.title2)
             

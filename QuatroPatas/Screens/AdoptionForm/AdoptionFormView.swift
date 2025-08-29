@@ -10,28 +10,30 @@ import SwiftUI
 struct AdoptionFormView: View {
 
     @EnvironmentObject var navigator: Navigator
-
+    @State private var isLoading = false
+    
     var body: some View {
-        Button(action: {
+        VStack {
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding()
+            }
+        }.onAppear {
             loadForm()
-        }) {
-            Text("Enviar Formulário")
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.primaryColor)
-                .foregroundColor(.white)
-                .cornerRadius(CornerRadius.small.rawValue)
-                .padding(.horizontal)
-                .padding(.vertical, Padding.medium.rawValue)
         }
     }
 
     private func loadForm() {
+        isLoading = true
         if let url = Bundle.main.url(forResource: "adoption_form", withExtension: "json"),
            let data = try? Data(contentsOf: url) {
             do {
                 let decoded = try JSONDecoder().decode(AdoptionForm.self, from: data)
-                navigator.navigate(to: .formPage(decoded))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                    isLoading = false
+                    navigator.navigate(to: .formPage(decoded))
+                })
             } catch {
                 print("Erro no decode:", error)
             }

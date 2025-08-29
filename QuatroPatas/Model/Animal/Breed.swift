@@ -8,5 +8,9 @@
 enum Breed: String, Localizable {
     case mixed
     case labrador
-    case siamese
+    case golden
+    case bulldog
+    case beagle
+    case poodle
+    
 }

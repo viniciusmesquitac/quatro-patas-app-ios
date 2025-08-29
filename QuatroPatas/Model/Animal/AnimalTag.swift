@@ -6,7 +6,7 @@
 //
 
 enum AnimalTag: String {
-    case neuthered
+    case neutered
     case vaccinated
     case microchipped
     case fiv

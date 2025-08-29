@@ -75,14 +75,6 @@ struct AnimalDetailView: View {
             .navigationBarBackButtonHidden(true)
             .toolbar(.hidden, for: .tabBar)
             .toolbarMenu(icon: .more, placement: .topBarTrailing, actions: [
-                ToolbarMenuAction(label: "Editar", icon:.share) {
-                    navigator.dismiss()
-                    toast("Editado com sucesso!", .success)
-                },
-                ToolbarMenuAction(label: "Deletar", icon: .share) {
-                    navigator.dismiss()
-                    toast("Deletado com sucesso!", .success)
-                },
                 ToolbarMenuAction(label: "Compartilhar", icon: .share) {
                     navigator.present(sheet: .share(items: []))
                 },

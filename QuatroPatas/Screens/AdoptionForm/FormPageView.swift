@@ -14,6 +14,7 @@ struct FormPageView: View {
     @EnvironmentObject var formManager: FormManager
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var requestProvider: RequestProvider
+    @Environment(\.toast) var toast
 
     var body: some View {
         ScrollView {
@@ -52,10 +53,12 @@ struct FormPageView: View {
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            navigator.dismiss()
             if formManager.page > 0 {
+                navigator.dismiss()
                 formManager.page -= 1
+                return
             }
+            navigator.popToRoot()
         })
         
     }
@@ -65,8 +68,9 @@ struct FormPageView: View {
         requestProvider.post(url: formUrl, parameters: formManager.answers) { result in
             switch result {
             case .success:
-                print("Enviado com sucesso ✅")
+                toast("Enviado com sucesso", .success)
                 formManager.page = 0
+                formManager.answers = [:]
                 navigator.popToRoot()
             case .failure(let error):
                 print("Erro: \(error.localizedDescription)")

@@ -8,30 +8,33 @@
 import SwiftUI
 
 struct UserProfileCard: View {
-
     @State var name: String
     @EnvironmentObject var navigator: Navigator
 
     var body: some View {
         Button(action: {
             navigator.navigate(to: .adoption)
-        }){
-            Image(systemName: SFIcon.person.rawValue)
-                .resizable()
-                .frame(width: 64, height: 64)
+        }) {
+            HStack {
+                Image(systemName: SFIcon.person.rawValue)
+                    .resizable()
+                    .frame(width: 64, height: 64)
 
-            VStack(alignment: .leading) {
-                Text(name)
-                    .font(.headline)
-                Text("ver perfil")
-                    .font(.subheadline)
+                VStack(alignment: .leading) {
+                    Text(name)
+                        .font(.headline)
+                    Text("ver perfil")
+                        .font(.subheadline)
+                }
+                Spacer()
             }
-            Spacer()
+            .padding()
+            .frame(maxWidth: .infinity) // largura total
+            .background(Color.primaryColor)
+            .cornerRadius(CornerRadius.medium.rawValue)
         }
         .foregroundColor(.secundaryColor)
-        .padding()
-        .background(Color.primaryColor)
-        .cornerRadius(CornerRadius.medium.rawValue)
+        .buttonStyle(.plain) // mantém sem highlight azul
+        .contentShape(Rectangle()) // garante que toda a área seja clicável
     }
 }
-    
