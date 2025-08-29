@@ -60,6 +60,6 @@ struct QuestionView: View {
             }
             .contentShape(Rectangle())
         }
-        .buttonStyle(FilterButtonStyle())
+        .buttonStyle(NoneButtonStyle())
     }
 }

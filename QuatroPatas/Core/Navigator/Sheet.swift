@@ -10,7 +10,7 @@ import SwiftUI
 enum Sheet: Identifiable {
     case animalFilter([Animal], Binding<AnimalFilter>)
     case share(items: [String])
-    case tip
+    case tip(String, String)
 
     var id: String {
         String(describing: self)

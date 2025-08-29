@@ -29,6 +29,26 @@ struct AnimalsView: View {
                     }
                 }
             }
+            
+            if filteredAnimals.isEmpty {
+                ContentUnavailableView {
+                    Spacer()
+                    Image("empty-state-animals")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                } description: {
+                    Text("Hmmm... \nNão tem nada por aqui!")
+                        .font(.system(size: 24))
+                } actions: {
+                    Button("Buscar todos") {
+                        for value in filter.values() {
+                            withAnimation(.bouncy) {
+                                filter.remove(value: value)
+                            }
+                        }
+                    }
+                }
+            }
         }.refreshable {
             await refresh()
         }

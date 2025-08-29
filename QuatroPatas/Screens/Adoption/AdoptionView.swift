@@ -16,7 +16,7 @@ struct AdoptionView: View {
         }
         .navigationTitle(AppTab.localized(.adoption))
         .toolbarItem(icon: .tip) {
-            navigator.present(sheet: .tip)
+            navigator.present(sheet: .tip("dicas", "dicas"))
         }
     }
 }

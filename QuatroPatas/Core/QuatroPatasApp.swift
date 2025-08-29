@@ -12,7 +12,7 @@ struct QuatroPatasApp: App {
 
     @StateObject private var navigator = Navigator()
     @StateObject private var requestProvider = RequestProvider()
-    @StateObject private var formObservable = FormObservable()
+    @StateObject private var formManager = FormManager()
 
     @State private var user = User(id: String(), name: "Anônimo", email: String(), type: .adopter)
 
@@ -35,8 +35,9 @@ struct QuatroPatasApp: App {
             .tabBarMinimizeBehavior(.onScrollDown)
             .environmentObject(navigator)
             .environmentObject(requestProvider)
-            .environmentObject(formObservable)
+            .environmentObject(formManager)
             .tint(Color.primaryColor)
+            .toast()
         }
     }
 }

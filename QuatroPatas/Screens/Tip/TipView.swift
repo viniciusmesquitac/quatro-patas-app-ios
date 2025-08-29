@@ -10,17 +10,30 @@ import SwiftUI
 struct TipView: View {
     
     @EnvironmentObject var navigator: Navigator
+    var title: String
+    var descripition: String
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("tips") {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+
+                    Text(title)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
                     
+                    Text(descripition)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
                 }
-            }.toolbarItem(icon: .close, placement: .topBarTrailing) {
+                .padding()
+            }
+            .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()
             }
         }
     }
-    
 }

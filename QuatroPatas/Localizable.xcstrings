@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "Adotar" : {
 
     },
@@ -310,6 +313,9 @@
         }
       }
     },
+    "Buscar todos" : {
+
+    },
     "Digite sua resposta" : {
 
     },
@@ -353,7 +359,7 @@
         }
       }
     },
-    "Idade: %@" : {
+    "Hmmm... \nNão tem nada por aqui!" : {
 
     },
     "profilecard.adoptionterm" : {
@@ -407,9 +413,6 @@
       }
     },
     "Próximo" : {
-
-    },
-    "tips" : {
 
     },
     "ver perfil" : {

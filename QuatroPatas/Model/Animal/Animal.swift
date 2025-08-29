@@ -15,5 +15,6 @@ struct Animal: Hashable, Identifiable {
     let breed: Breed
     let size: AnimalSize? = nil
     let description: String
-    let status: AnimalStatus = .readyForAdoption
+    var status: AnimalStatus = .readyForAdoption
+    var tags: [AnimalTag] = []
 }

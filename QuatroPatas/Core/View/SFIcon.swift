@@ -20,6 +20,7 @@ enum SFIcon: String {
     case search = "magnifyingglass"
     case close = "xmark.circle"
     case tip = "lightbulb.circle"
+    case more = "ellipsis"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)
