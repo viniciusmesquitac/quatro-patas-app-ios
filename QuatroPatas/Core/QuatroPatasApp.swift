@@ -25,8 +25,8 @@ struct QuatroPatasApp: App {
                 TabItem(label: .adoption, icon: .heart_filled) {
                     AdoptionView()
                 }
-                TabItem(label: .profile, icon: .person) {
-                    ProfileView(user: user)
+                TabItem(label: .menu, icon: .menu) {
+                    MenuView(user: user)
                 }
             }
             .sheet(item: $navigator.presentedSheet) { sheet in

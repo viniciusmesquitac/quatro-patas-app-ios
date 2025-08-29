@@ -14,10 +14,13 @@ struct RouteDestinationView: View {
         switch route {
         case .animals: AnimalsView()
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .profile(let user): ProfileView(user: user)
+        case .menu(let user): MenuView(user: user)
         case .adoption:  AdoptionView()
-        case .adoptionForm: AdoptionFormView()
-        case .formPage(let form): FormPageView(form: form)
+        case .adoptionForm: LoadingFormView()
+        case .formPage(let form):
+            VStack {
+                FormPageView(form: form)
+            }.transition(.opacity)
         }
     }
 }

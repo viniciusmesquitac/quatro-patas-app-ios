@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileView: View {
+struct MenuView: View {
     
     @State var user: User
 
@@ -28,7 +28,7 @@ struct ProfileView: View {
             }
             .padding()
         }
-        .navigationTitle(AppTab.localized(.profile))
+        .navigationTitle(AppTab.localized(.menu))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -31,7 +31,7 @@ struct AnimalDetailView: View {
                             navigator.present(sheet: .tip("Vacinação", ""))
                         })
                     }
-                    if $0 == .neuthered {
+                    if $0 == .neutered {
                         return TagItem(tag: $0, action: {
                             navigator.present(sheet: .tip("Castração", ""))
                         })
