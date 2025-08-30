@@ -17,10 +17,7 @@ struct RouteDestinationView: View {
         case .menu(let user): MenuView(user: user)
         case .adoption:  AdoptionView()
         case .adoptionForm: LoadingFormView()
-        case .formPage(let form):
-            VStack {
-                FormPageView(form: form)
-            }.transition(.opacity)
+        case .formPage(let form): FormPageView(form: form)
         }
     }
 }

@@ -28,26 +28,17 @@ struct AnimalDetailView: View {
                 TagsView(tags: animal.tags.map {
                     if $0 == .vaccinated {
                         return TagItem(tag: $0, action: {
-                            navigator.present(sheet: .tip("Vacinação", ""))
+                            navigator.present(sheet: .tip(Tip(title:"Vacinação", descripition: "")))
                         })
                     }
                     if $0 == .neutered {
                         return TagItem(tag: $0, action: {
-                            navigator.present(sheet: .tip("Castração", ""))
+                            navigator.present(sheet: .tip(Tip(title: "Castração", descripition: "")))
                         })
                     }
                     if $0 == .felv {
                         return TagItem(tag: $0, action: {
-                            navigator.present(sheet: .tip("O que é FeLV?", """
-                                                          O vírus da leucemia felina (FeLV) é uma doença viral grave que afeta gatos.
-                                                          Ele compromete o sistema imunológico, tornando o animal mais suscetível a outras doenças e podendo levar ao desenvolvimento de câncer.
-                                                          
-                                                          A transmissão ocorre principalmente pelo contato direto com saliva, secreções nasais, ou por arranhões e mordidas de gatos infectados.
-                                                          Gatos que vivem em ambientes com múltiplos felinos têm maior risco de infecção.
-                                                          
-                                                          Não há cura definitiva, mas a prevenção é possível através da vacinação, testes regulares e evitando contato com gatos infectados.
-                                                        """
-                                                         ))
+                            navigator.present(sheet: .tip(Tip.felv))
                         })
                     }
                     return TagItem(tag: $0, action: {

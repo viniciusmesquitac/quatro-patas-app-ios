@@ -33,11 +33,28 @@ struct FormPageView: View {
             }
             
             Button(action: {
-                if form.sections.indices.contains(formManager.page + 1) {
-                    formManager.page += 1
-                    self.navigator.navigate(to: .formPage(form))
+                formManager.didSubmit = true // marca que o usuário tentou enviar
+
+                let currentSection = form.sections[formManager.page]
+                
+                // Pega as obrigatórias que não foram respondidas
+                let emptyQuestions = currentSection.questions
+                    .filter { (formManager.answers[$0.id] ?? "").isEmpty }
+                    .map { $0.id }
+                
+                if emptyQuestions.isEmpty {
+                    // limpa erros
+                    formManager.errors.removeAll()
+                    
+                    if form.sections.indices.contains(formManager.page + 1) {
+                        formManager.page += 1
+                        self.navigator.navigate(to: .formPage(form))
+                    } else {
+                        sendForm()
+                    }
                 } else {
-                    sendForm()
+                    // marca erros
+                    formManager.errors = Set(emptyQuestions)
                 }
             }) {
                 Text(form.sections.indices.contains(formManager.page + 1) ? "Próximo" : "Enviar")
@@ -49,6 +66,7 @@ struct FormPageView: View {
                     .padding(.horizontal)
                     .padding(.vertical, Padding.medium.rawValue)
             }
+
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true)

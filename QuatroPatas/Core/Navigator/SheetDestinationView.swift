@@ -17,8 +17,8 @@ struct SheetDestinationView: View {
             AnimalFilterView(animals: animals, filter: filter)
         case .share(let items):
             ShareSheet(items: items)
-        case .tip(let title, let description):
-            TipView(title: title, descripition: description)
+        case .tip(let tip):
+            TipView(tip: tip)
         }
     }
 }

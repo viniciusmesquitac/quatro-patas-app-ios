@@ -25,7 +25,8 @@ struct LoadingFormView: View {
         .onAppear {
             loadForm()
         }
-        .animation(.easeInOut, value: form)
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .tabBar)
     }
 
     private func loadForm() {

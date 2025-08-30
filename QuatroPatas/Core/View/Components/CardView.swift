@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CardView<T: Localizable>: View {
+struct CardView: View {
 
-    var title: T
+    var title: String
     var icon: SFIcon = .paw
     var route: Route
     
@@ -33,7 +33,7 @@ struct CardView<T: Localizable>: View {
                     }
                     Spacer()
                     HStack {
-                        Text(T.localized(title))
+                        Text(title)
                             .foregroundStyle(Color.secundaryColor)
                             .multilineTextAlignment(.leading)
                         Spacer()
@@ -41,7 +41,7 @@ struct CardView<T: Localizable>: View {
                 }
                 .padding()
             }
-            .frame(maxWidth: .infinity, minHeight: 150)
+            .frame(maxWidth: .infinity, minHeight: 162)
         }
         .buttonStyle(CardButtonStyle())
     }

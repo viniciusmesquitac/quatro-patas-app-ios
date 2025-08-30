@@ -18,6 +18,7 @@ struct AnimalFilterView: View {
         case sectionGender
         case sectionBreed
         case sectionSize
+        case sectionColor
         case filterButton
     }
     
@@ -78,6 +79,18 @@ struct AnimalFilterView: View {
                             selection: Binding(
                                 get: { filter.breed ?? "Selecione" },
                                 set: { newValue in filter.breed = newValue }
+                            )
+                        )
+                    }
+                    
+                    // MARK: Cor
+                    filterSection(title: Constants.localized(.sectionColor)) {
+                        Dropdown(
+                            title: Constants.localized(.sectionColor),
+                            options: AnimalColor.allCases.map { AnimalColor.localized($0) },
+                            selection: Binding(
+                                get: { filter.color ?? "Selecione" },
+                                set: { newValue in filter.color = newValue }
                             )
                         )
                     }

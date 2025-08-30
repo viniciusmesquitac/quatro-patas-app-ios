@@ -10,6 +10,7 @@ struct AnimalFilter: Hashable {
     var gender: String?
     var breed: String?
     var size: String?
+    var color: String?
 }
 
 extension AnimalFilter: Filter {
@@ -31,7 +32,11 @@ extension AnimalFilter: Filter {
             if let size = size {
                 matches = matches && AnimalSize.localized(animal.size ?? .small) == size
             }
-            
+
+            if let color = color {
+                matches = matches && AnimalColor.localized(animal.color) == color
+            }
+
             return matches
         }
     }
@@ -45,6 +50,8 @@ extension AnimalFilter: Filter {
             breed = nil
         } else if size == value {
             size = nil
+        } else if color == value {
+            color = nil
         }
     }
     

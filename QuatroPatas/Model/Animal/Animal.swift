@@ -13,6 +13,7 @@ struct Animal: Hashable, Identifiable {
     let gender: Gender
     let type: AnimalType
     let breed: Breed
+    let color: AnimalColor
     let size: AnimalSize? = nil
     let description: String
     var status: AnimalStatus = .readyForAdoption

@@ -12,7 +12,7 @@
         {
           "title": "Qual sua idade?",
           "id": "entry.1381353689",
-          "type": "short_answer"
+          "type": "age"
         },
         {
           "title": "Qual seu Gênero?",
@@ -29,17 +29,17 @@
         {
           "title": "Qual o seu número de telefone?",
           "id": "entry.108172991",
-          "type": "short_answer"
+          "type": "phone"
         },
         {
-          "title": "Qual o seu instragram?",
+          "title": "Qual o seu instagram?",
           "id": "entry.1750004051",
           "type": "short_answer"
         },
         {
           "title": "Qual o seu email?",
           "id": "entry.498752817",
-          "type": "short_answer"
+          "type": "email"
         },
         {
           "title": "Qual o seu endereço?",

@@ -10,26 +10,37 @@ import SwiftUI
 struct TipView: View {
     
     @EnvironmentObject var navigator: Navigator
-    var title: String
-    var descripition: String
+    var tip: Tip
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
 
-                    Text(title)
+                    Text(tip.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
                     
-                    Text(descripition)
+                    Text(tip.descripition)
                         .font(.body)
                         .foregroundColor(.secondary)
                     
                     Spacer()
+                }.padding()
+                
+                if tip.buttonText != nil {
+                    Button(action: {
+                        tip.buttonAction?()
+                    }) {
+                        Text(tip.buttonText ?? String())
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .init(horizontal: .center, vertical: .center))
+                            .background(Color.primaryColor)
+                    }
                 }
-                .padding()
             }
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()

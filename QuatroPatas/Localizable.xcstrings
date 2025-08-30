@@ -7,6 +7,74 @@
     "Adotar" : {
 
     },
+    "animalcolor.black" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Black"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preto"
+          }
+        }
+      }
+    },
+    "animalcolor.blackandwhite" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Black and White"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preto com Branco"
+          }
+        }
+      }
+    },
+    "animalcolor.white" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "White"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Branco"
+          }
+        }
+      }
+    },
+    "animalcolor.yellow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yellow"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Amarelo"
+          }
+        }
+      }
+    },
     "animalfilterview.constants.filterbutton" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -88,6 +156,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Qual Raça?"
+          }
+        }
+      }
+    },
+    "animalfilterview.constants.sectioncolor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which Color?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Qual Cor?"
           }
         }
       }
@@ -245,6 +330,23 @@
         }
       }
     },
+    "apptab.menu" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu"
+          }
+        }
+      }
+    },
     "apptab.profile" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -316,10 +418,22 @@
     "Buscar todos" : {
 
     },
+    "Digite seu email" : {
+
+    },
+    "Digite seu telefone" : {
+
+    },
+    "Digite sua idade" : {
+
+    },
     "Digite sua resposta" : {
 
     },
     "Enviar" : {
+
+    },
+    "Este campo é obrigatório" : {
 
     },
     "gender.female" : {
