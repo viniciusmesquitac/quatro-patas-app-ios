@@ -10,48 +10,25 @@ import SwiftUI
 class Navigator: ObservableObject {
 
     @Published var path = NavigationPath()
-    @Published var routes: [Route] = []
     @Published var presentedSheet: Sheet? = nil
-    @Published var parameters: [String: Any] = [:]
-    
-    private var sheetCallbacks: [String: (Any?) -> Void] = [:]
-    private var routeCallbacks: [String: (Any?) -> Void] = [:]
 
-    func navigate(to route: Route, onDismiss: ((Any?) -> Void)? = nil) {
+    func navigate(to route: Route) {
         path.append(route)
-        routes.append(route)
-
-        if let callback = onDismiss {
-            routeCallbacks[route.id] = callback
-        }
     }
 
-    func present(sheet: Sheet, onDismiss: ((Any?) -> Void)? = nil) {
+    func present(sheet: Sheet) {
         presentedSheet = sheet
-
-        if let callback = onDismiss {
-            sheetCallbacks[sheet.id] = callback
-        }
     }
 
-    func dismiss(with data: Any? = nil) {
-        if let sheet = presentedSheet {
-            sheetCallbacks[sheet.id]?(data)
-            sheetCallbacks[sheet.id] = nil
-
+    func dismiss() {
+        if presentedSheet != nil {
             presentedSheet = nil
-        }
-        else if let route = routes.last {
-            routeCallbacks[route.id]?(data)
-            routeCallbacks[route.id] = nil
+        } else if !path.isEmpty {
             path.removeLast()
-            routes.removeLast()
         }
     }
 
     func popToRoot() {
-        routes.removeLast(routes.count)
         path.removeLast(path.count)
     }
 }
-
