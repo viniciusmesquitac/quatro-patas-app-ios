@@ -37,13 +37,7 @@ struct TipView: View {
                         tip.buttonAction?()
                     }) {
                         Text(buttonText)
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .background(Color.primaryColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                    }
+                    }.buttonStyle(PrimaryButtonStyle())
                 }
             }
             .padding()

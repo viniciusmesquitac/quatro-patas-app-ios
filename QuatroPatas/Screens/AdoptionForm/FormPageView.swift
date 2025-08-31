@@ -58,14 +58,9 @@ struct FormPageView: View {
                 }
             }) {
                 Text(form.sections.indices.contains(formManager.page + 1) ? "Próximo" : "Enviar")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.primaryColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(CornerRadius.small.rawValue)
-                    .padding(.horizontal)
-                    .padding(.vertical, Padding.medium.rawValue)
             }
+            .padding(.horizontal)
+            .buttonStyle(PrimaryButtonStyle())
 
         }
         .toolbar(.hidden, for: .tabBar)
@@ -77,6 +72,10 @@ struct FormPageView: View {
                 return
             }
             navigator.dismiss()
+        })
+        
+        .toolbarItem(icon: .close, placement: .topBarTrailing, action: {
+            navigator.popToRoot()
         })
         
     }

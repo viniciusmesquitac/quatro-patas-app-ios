@@ -18,6 +18,7 @@ enum AnimalMock {
         Animal(
             id: "1",
             name: "Luizinha",
+            photos: ["default-animal-card.png", "default-animal-card.png", "default-animal-card.png"],
             age: "2 anos",
             gender: .female,
             type: .cat, breed: .mixed, color: .blackAndWhite,

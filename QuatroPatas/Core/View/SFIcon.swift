@@ -10,6 +10,7 @@ import SwiftUI
 enum SFIcon: String {
     case filter = "line.3.horizontal.decrease.circle"
     case back = "chevron.left"
+    case next = "chevron.right"
     case share = "square.and.arrow.up"
     case checkmark = "checkmark"
     case person = "person.circle.fill"

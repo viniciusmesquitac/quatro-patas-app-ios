@@ -5,7 +5,7 @@
 //  Created by Vinicius Mesquita Coelho on 28/08/25.
 //
 
-enum AnimalTag: String {
+enum AnimalTag: String, Localizable {
     case neutered
     case vaccinated
     case microchipped

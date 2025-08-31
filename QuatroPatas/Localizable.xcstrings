@@ -262,6 +262,62 @@
         }
       }
     },
+    "animaltag.felv" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Felv"
+          }
+        }
+      }
+    },
+    "animaltag.fiv" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiv"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fiv"
+          }
+        }
+      }
+    },
+    "animaltag.neutered" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neutered"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Castrado"
+          }
+        }
+      }
+    },
+    "animaltag.vaccinated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vacinado(a)"
+          }
+        }
+      }
+    },
     "animaltype.cat" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -436,6 +492,9 @@
     "Este campo é obrigatório" : {
 
     },
+    "Formulário de adoção" : {
+
+    },
     "gender.female" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -473,22 +532,8 @@
     "Hmmm... \nNão tem nada por aqui!" : {
 
     },
-    "profilecard.adoptionterm" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "teste"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Termo de adoção"
-          }
-        }
-      }
+    "Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.\n\nLembre-se que adotar um animal requer muita responsabilidade." : {
+
     },
     "profilecard.happyendings" : {
       "extractionState" : "manual",

@@ -8,7 +8,7 @@
 struct Animal: Hashable, Identifiable {
     let id: String
     let name: String
-    let photo: String? = nil
+    var photos: [String] = []
     let age: String
     let gender: Gender
     let type: AnimalType

@@ -18,59 +18,52 @@ struct AnimalDetailView: View {
             ScrollView {
                 VStack(spacing: Spacing.small.rawValue) {
                     
-                    // Imagem ocupando toda largura da tela
-                    Image(animal.photo ?? "default-animal-card.png")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: UIScreen.main.bounds.width, height: 500)
-                        .clipped()
-                        .ignoresSafeArea(edges: .top)
+                    ZStack(alignment: .bottomTrailing) {
+                        Image(animal.photos.first ?? "default-animal-card.png")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: UIScreen.main.bounds.width, height: 500)
+                            .clipped()
+                            .ignoresSafeArea(edges: .top)
+                        
+                        // Botão flutuante
+                        Button(action: {
+                            toast("Adicionado aos favoritos!", .success)
+                        }) {
+                            Image(systemName: "heart")
+                        }
+                        .buttonStyle(CircleButtonStyle())
+                        .offset(x: -25, y: 25) // joga metade pra baixo, sobre o texto
+                    }
 
-                    // Conteúdo abaixo da imagem
+                    // conteúdo abaixo da imagem
                     VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
+
                         Text(animal.name + ", " + animal.age)
                             .font(.largeTitle)
                             .fontWeight(.bold)
 
-                        TagsView(tags: animal.tags.map {
-                            if $0 == .vaccinated {
-                                return TagItem(tag: $0, action: {
-                                    navigator.present(sheet: .tip(Tip.vaccinated))
-                                })
-                            }
-                            if $0 == .neutered {
-                                return TagItem(tag: $0, action: {
-                                    navigator.present(sheet: .tip(Tip.neutered))
-                                })
-                            }
-                            if $0 == .felv {
-                                return TagItem(tag: $0, action: {
-                                    navigator.present(sheet: .tip(Tip.felv))
-                                })
-                            }
-                            return TagItem(tag: $0, action: {})
-                        })
+                        TagsView(tags: loadTags())
 
                         Text(animal.description)
                             .padding(.top)
-                        
+
                         Spacer()
-                        
+
                         Button(action: {
                             navigator.present(sheet: .tip(
-                                Tip(title: Tip.adoption.title, description: Tip.adoption.description, buttonText: "Entendi!", buttonAction: {
-                                    navigator.dismiss()
-                                    navigator.navigate(to: .adoptionForm)
-                                })
+                                Tip(title: Tip.adoption.title,
+                                    description: Tip.adoption.description,
+                                    buttonText: "Entendi!",
+                                    buttonAction: {
+                                        navigator.dismiss()
+                                        navigator.navigate(to: .adoptionForm)
+                                    })
                             ))
                         }) {
                             Text("Adotar")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.primaryColor)
-                                .foregroundColor(.white)
-                                .cornerRadius(CornerRadius.medium.rawValue)
                         }
+                        .buttonStyle(PrimaryButtonStyle())
                     }
                     .padding()
                 }
@@ -87,5 +80,26 @@ struct AnimalDetailView: View {
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
+    }
+    
+    func loadTags() -> [TagItem] {
+        animal.tags.map {
+            if $0 == .vaccinated {
+                return TagItem(tag: $0, action: {
+                    navigator.present(sheet: .tip(Tip.vaccinated))
+                })
+            }
+            if $0 == .neutered {
+                return TagItem(tag: $0, action: {
+                    navigator.present(sheet: .tip(Tip.neutered))
+                })
+            }
+            if $0 == .felv {
+                return TagItem(tag: $0, action: {
+                    navigator.present(sheet: .tip(Tip.felv))
+                })
+            }
+            return TagItem(tag: $0, action: {})
+        }
     }
 }

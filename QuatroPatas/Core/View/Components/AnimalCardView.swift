@@ -55,7 +55,7 @@ struct AnimalCardView: View {
         Button(action: action) {
             VStack {
                 GeometryReader { geometry in
-                    Image(animal.photo ?? "default-animal-card.png")
+                    Image(animal.photos.first ?? "default-animal-card.png")
                         .resizable()
                         .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
                         .aspectRatio(contentMode: .fill)
