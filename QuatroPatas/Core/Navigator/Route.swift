@@ -14,7 +14,6 @@ enum Route: Hashable, Identifiable {
     case adoption
     case adoptionForm
     case formPage(AdoptionForm)
-    case tip(Tip)
     
     var id: String { String(describing: self) }
 }

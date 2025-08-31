@@ -18,7 +18,6 @@ struct RouteDestinationView: View {
         case .adoption:  AdoptionView()
         case .adoptionForm: LoadingFormView()
         case .formPage(let form): FormPageView(form: form)
-        case .tip(let tip): TipView(tip: tip)
         }
     }
 }
