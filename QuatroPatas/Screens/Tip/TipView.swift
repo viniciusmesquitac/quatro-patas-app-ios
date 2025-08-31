@@ -21,27 +21,32 @@ struct TipView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
-                    
-                    Text(tip.descripition)
-                        .font(.body)
-                        .foregroundColor(.secondary)
+                    ForEach(tip.description) { fragment in
+                        Text(fragment.content)
+                            .fontWeight(fragment.isBold ? .bold : .regular)
+                    }
+                    .font(.body)
+                    .foregroundColor(.secondary)
                     
                     Spacer()
-                }.padding()
+                }
+                .padding()
                 
-                if tip.buttonText != nil {
+                if let buttonText = tip.buttonText {
                     Button(action: {
                         tip.buttonAction?()
                     }) {
-                        Text(tip.buttonText ?? String())
+                        Text(buttonText)
                             .font(.headline)
                             .foregroundColor(.white)
                             .padding()
-                            .frame(maxWidth: .infinity, alignment: .init(horizontal: .center, vertical: .center))
+                            .frame(maxWidth: .infinity, alignment: .center)
                             .background(Color.primaryColor)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
                 }
             }
+            .padding()
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()
             }

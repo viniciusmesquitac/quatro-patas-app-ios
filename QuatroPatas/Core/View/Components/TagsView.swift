@@ -35,6 +35,5 @@ struct TagsView: View {
                 .buttonStyle(.plain)
             }
         }
-        .padding(.horizontal, Padding.large.rawValue)
     }
 }

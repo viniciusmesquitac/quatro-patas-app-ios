@@ -76,7 +76,7 @@ struct FormPageView: View {
                 formManager.page -= 1
                 return
             }
-            navigator.popToRoot()
+            navigator.dismiss()
         })
         
     }

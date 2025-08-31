@@ -9,6 +9,13 @@ import SwiftUI
 
 struct AdoptionView: View {
     @EnvironmentObject private var navigator: Navigator
+    
+    let adoptionTip = Tip(
+        title: "dicas",
+        description: [
+            TextFragment(content: "dicas", isBold: true)
+        ]
+    )
 
     var body: some View {
         ScrollView {
@@ -16,7 +23,7 @@ struct AdoptionView: View {
         }
         .navigationTitle(AppTab.localized(.adoption))
         .toolbarItem(icon: .tip) {
-            navigator.present(sheet: .tip(Tip(title: "dicas", descripition: "dicas")))
+            navigator.present(sheet: .tip(adoptionTip))
         }
     }
 }
