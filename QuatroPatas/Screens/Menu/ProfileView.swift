@@ -22,7 +22,7 @@ struct MenuView: View {
                 .padding()
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
                 CardView(title: "Meus Animais", route: .adoption)
-                CardView(title: "Doe", route: .adoption)
+                CardView(title: "Doe", route: .donate)
                 CardView(title: "Quem Somos?", route: .adoption)
                 CardView(title: "Formulário de Adoção", route: .adoptionForm)
             }.padding()

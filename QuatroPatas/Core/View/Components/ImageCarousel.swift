@@ -10,6 +10,7 @@ import SwiftUI
 struct ImageCarousel: View {
     let images: [String]
     @Binding var selectedIndex: Int
+    @State var cachedImages: [Int: UIImage] = [:]
     var frame = CGSize(width: UIScreen.main.bounds.width, height: 500)
 
     var body: some View {

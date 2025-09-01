@@ -14,6 +14,8 @@ struct AnimalDetailView: View {
     @Environment(\.toast) private var toast
     
     @State private var selectedImageIndex = 0
+    @State var cachedImages: [Int: UIImage] = [:]
+    @State private var showFullScreen = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -24,7 +26,9 @@ struct AnimalDetailView: View {
                         ImageCarousel(
                             images: animal.photos,
                             selectedIndex: $selectedImageIndex
-                        )
+                        ).onTapGesture {
+                            showFullScreen = true
+                        }
                         
                         // Botão flutuante
                         Button(action: {
@@ -64,6 +68,10 @@ struct AnimalDetailView: View {
                             Text("Adotar")
                         }
                         .buttonStyle(PrimaryButtonStyle())
+                    }
+                    .fullScreenCover(isPresented: $showFullScreen) {
+                        ZoomableCarouselView(images: animal.photos,
+                                             selectedIndex: $selectedImageIndex)
                     }
                     .padding()
                 }

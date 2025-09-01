@@ -64,23 +64,18 @@ struct AnimalCardView: View {
                             case .success(let image):
                                 image
                                     .resizable()
+                                    .scaledToFill()
                                     .frame(width: geometry.size.width, height: geometry.size.height)
-                                    .aspectRatio(contentMode: .fill)
+                                    .clipped()
                                     .overlay {
                                         AnimalNameView
                                     }
                                     .cornerRadius(CornerRadius.small.rawValue)
-                            case .failure(_):
-                                Color.gray
-                                    .frame(width: geometry.size.width, height: geometry.size.height)
-                                    .overlay {
-                                        Text("Imagem não carregou")
-                                    }
-                            @unknown default:
+                            default:
                                 Image("default-animal-card.png")
                                     .resizable()
+                                    .scaledToFill()
                                     .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-                                    .aspectRatio(contentMode: .fill)
                                     .overlay(content: {
                                         AnimalNameView
                                     })

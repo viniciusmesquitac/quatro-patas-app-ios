@@ -78,7 +78,6 @@ struct AdoptionFormView: View {
                         }
                     }
                 } catch {
-                    print("Erro no decode:", error)
                     DispatchQueue.main.async {
                         isLoading = false
                     }

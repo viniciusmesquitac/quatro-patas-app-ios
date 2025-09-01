@@ -18,6 +18,7 @@ struct RouteDestinationView: View {
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form): FormPageView(form: form)
+        case .donate: DonateView()
         }
     }
 }
