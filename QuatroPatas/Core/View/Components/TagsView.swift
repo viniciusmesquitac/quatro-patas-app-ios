@@ -23,7 +23,7 @@ struct TagsView: View {
             ForEach(tags) { item in
                 Button(action: { item.action() }) {
                     HStack(spacing: Spacing.medium.rawValue) {
-                        Text(item.tag.rawValue)
+                        Text(AnimalTag.localized(item.tag))
                             .foregroundColor(.primary)
                         item.icon
                     }

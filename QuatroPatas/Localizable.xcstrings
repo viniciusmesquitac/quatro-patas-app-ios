@@ -270,6 +270,12 @@
             "state" : "translated",
             "value" : "Felv"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Felv"
+          }
         }
       }
     },

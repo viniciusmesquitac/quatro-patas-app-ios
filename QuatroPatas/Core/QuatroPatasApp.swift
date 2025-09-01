@@ -6,15 +6,21 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct QuatroPatasApp: App {
 
     @StateObject private var navigator = Navigator()
     @StateObject private var requestProvider = RequestProvider()
+    @StateObject private var databaseProvider = FirestoreProvider()
     @StateObject private var formManager = FormManager()
 
     @State private var user = User(id: String(), name: "Anônimo", email: String(), type: .adopter)
+    
+    init() {
+        FirebaseApp.configure()
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -35,6 +41,7 @@ struct QuatroPatasApp: App {
             .tabBarMinimizeBehavior(.onScrollDown)
             .environmentObject(navigator)
             .environmentObject(requestProvider)
+            .environmentObject(databaseProvider)
             .environmentObject(formManager)
             .tint(Color.primaryColor)
             .toast()

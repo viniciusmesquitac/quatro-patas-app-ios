@@ -5,8 +5,10 @@
 //  Created by Vinicius Mesquita Coelho on 25/05/25.
 //
 
-struct Animal: Hashable, Identifiable {
-    let id: String
+@preconcurrency import FirebaseFirestore
+
+struct Animal: Hashable, Identifiable, Sendable, Codable {
+    @DocumentID var id: String?
     let name: String
     var photos: [String] = []
     let age: String
@@ -14,8 +16,8 @@ struct Animal: Hashable, Identifiable {
     let type: AnimalType
     let breed: Breed
     let color: AnimalColor
-    let size: AnimalSize? = nil
+    var size: AnimalSize? = nil
     let description: String
-    var status: AnimalStatus = .readyForAdoption
+    var status: AnimalStatus?
     var tags: [AnimalTag] = []
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct AnimalsView: View {
     private let collumns = Array(repeating: GridItem(.flexible(minimum: 170, maximum: 170)), count: 2)
 
-    @State private var animals = AnimalMock.animals
+    @State private var animals: [Animal] = []
     @State private var filter = AnimalFilter()
 
     var filteredAnimals: [Animal] {
@@ -18,6 +18,7 @@ struct AnimalsView: View {
     }
     
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var databaseProvider: FirestoreProvider
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -36,6 +37,9 @@ struct AnimalsView: View {
     
         }.refreshable {
             await refresh()
+        }
+        .task {
+            await fetchAllAnimals()
         }
         .toolbarItem(icon: .filter, action: {
             navigator.present(sheet: .animalFilter(animals, $filter))
@@ -68,10 +72,20 @@ struct AnimalsView: View {
     func refresh() async {
          do {
              try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
-             animals = AnimalMock.animals
+             await fetchAllAnimals()
              filter = AnimalFilter()
          } catch {
              
          }
      }
+    
+    @MainActor
+    func fetchAllAnimals() async {
+        do {
+            let items: [Animal] = try await databaseProvider.fetch(from: "animals")
+            self.animals = items
+        } catch {
+            print("❌ Fetch error: \(error.localizedDescription)")
+        }
+    }
 }

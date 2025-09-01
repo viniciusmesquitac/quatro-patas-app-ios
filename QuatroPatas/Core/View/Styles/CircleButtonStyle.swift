@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CircleButtonStyle: ButtonStyle {
-    var backgroundColor: Color = Color.primaryColor.opacity(0.2)
+    var backgroundColor: Color = Color.primaryColor2
     var foregroundColor: Color = .black
     var size: CGFloat = 56
     

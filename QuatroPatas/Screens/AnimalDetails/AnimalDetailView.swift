@@ -12,6 +12,8 @@ struct AnimalDetailView: View {
     @EnvironmentObject var navigator: Navigator
     
     @Environment(\.toast) private var toast
+    
+    @State private var selectedImageIndex = 0
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -19,12 +21,10 @@ struct AnimalDetailView: View {
                 VStack(spacing: Spacing.small.rawValue) {
                     
                     ZStack(alignment: .bottomTrailing) {
-                        Image(animal.photos.first ?? "default-animal-card.png")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: UIScreen.main.bounds.width, height: 500)
-                            .clipped()
-                            .ignoresSafeArea(edges: .top)
+                        ImageCarousel(
+                            images: animal.photos,
+                            selectedIndex: $selectedImageIndex
+                        )
                         
                         // Botão flutuante
                         Button(action: {

@@ -54,6 +54,7 @@ struct FormPageView: View {
                     }
                 } else {
                     // marca erros
+                    toast("Campos obrigatórios precisam ser preenchidos!", .error)
                     formManager.errors = Set(emptyQuestions)
                 }
             }) {
