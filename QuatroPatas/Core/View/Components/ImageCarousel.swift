@@ -15,12 +15,32 @@ struct ImageCarousel: View {
     var body: some View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
-                Image(images[index])
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: frame.width, height: frame.height)
-                    .clipped()
-                    .tag(index)
+                if let url = URL(string: images[index]) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: frame.width, height: frame.height)
+                                .clipped()
+                        case .failure(_):
+                            Image("default-animal-card.png")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: frame.width, height: frame.height)
+                                .clipped()
+                        @unknown default:
+                            Image("default-animal-card.png")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: frame.width, height: frame.height)
+                                .clipped()
+                        }
+                    }.tag(index)
+                }
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))

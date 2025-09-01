@@ -55,16 +55,42 @@ struct AnimalCardView: View {
         Button(action: action) {
             VStack {
                 GeometryReader { geometry in
-                    Image(animal.photos.first ?? "default-animal-card.png")
-                        .resizable()
-                        .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-                        .aspectRatio(contentMode: .fill)
-                        .overlay(content: {
-                            AnimalNameView
-                        })
-                        .cornerRadius(CornerRadius.small.rawValue)
+                    if let firstURL = animal.photos.first, let url = URL(string: firstURL) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .aspectRatio(contentMode: .fill)
+                                    .overlay {
+                                        AnimalNameView
+                                    }
+                                    .cornerRadius(CornerRadius.small.rawValue)
+                            case .failure(_):
+                                Color.gray
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .overlay {
+                                        Text("Imagem não carregou")
+                                    }
+                            @unknown default:
+                                Image("default-animal-card.png")
+                                    .resizable()
+                                    .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+                                    .aspectRatio(contentMode: .fill)
+                                    .overlay(content: {
+                                        AnimalNameView
+                                    })
+                                    .cornerRadius(CornerRadius.small.rawValue)
+                            }
+                        }
+                    }
                 }
             }
+
             .frame(width: Constants.width, height: Constants.height)
         }
         .buttonStyle(CardButtonStyle())

@@ -39,7 +39,7 @@ struct AnimalDetailView: View {
                     // conteúdo abaixo da imagem
                     VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
 
-                        Text(animal.name + ", " + animal.age)
+                        Text(animal.name + ", " + formatAge(animal.age))
                             .font(.largeTitle)
                             .fontWeight(.bold)
 
@@ -102,4 +102,20 @@ struct AnimalDetailView: View {
             return TagItem(tag: $0, action: {})
         }
     }
+    
+    func formatAge(_ age: String) -> String {
+        if age.hasSuffix("y") {
+            if let years = Int(age.dropLast()) {
+                let suffixYear =  years > 1 ? "s" : ""
+                return "\(years) ano\(suffixYear)"
+            }
+        } else if age.hasSuffix("m") {
+            if let count = Int(age.dropLast()) {
+                let suffixMonth =  count > 1 ? "s" : ""
+                return "\(count) mese\(suffixMonth)"
+            }
+        }
+        return age
+    }
+
 }
