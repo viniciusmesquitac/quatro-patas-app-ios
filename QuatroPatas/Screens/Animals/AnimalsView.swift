@@ -20,6 +20,8 @@ struct AnimalsView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
 
+    @State private var isLoading = true
+
     var body: some View {
         ScrollView(showsIndicators: false) {
             FilterView(filter: $filter)
@@ -31,10 +33,15 @@ struct AnimalsView: View {
                 }
             }
     
-            if filteredAnimals.isEmpty {
+            if filteredAnimals.isEmpty && isLoading == false {
                 buildEmptyStateView()
             }
     
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .transition(.opacity)
+            }
         }.refreshable {
             await refresh()
         }
@@ -84,6 +91,7 @@ struct AnimalsView: View {
         do {
             let items: [Animal] = try await databaseProvider.fetch(from: "animals")
             self.animals = items
+            isLoading = false
         } catch {
             print("❌ Fetch error: \(error.localizedDescription)")
         }

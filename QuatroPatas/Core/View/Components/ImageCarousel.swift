@@ -26,19 +26,25 @@ struct ImageCarousel: View {
                                     .frame(width: frame.width, height: frame.height)
                                     .clipped()
                     } else {
-                        AsyncImage(url: url) { phase in
+                        AsyncImage(url: url, transaction: .init(animation: .spring(duration: 2))) { phase in
                             switch phase {
                             case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
+                                RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
                                     .frame(width: frame.width, height: frame.height)
-                                    .clipped()
-                                    .onAppear {
-                                        saveImageData(url: url)
-                                    }
+                                    .modifier(ShimmerModifier())
+                            case .success(let image):
+                                withAnimation {
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: frame.width, height: frame.height)
+                                        .clipped()
+                                        .transition(.scale)
+                                        .onAppear {
+                                            saveImageData(url: url)
+                                        }
+                                }
+                              
                             default:
                                 Image("default-animal-card.png")
                                     .resizable()
@@ -46,7 +52,8 @@ struct ImageCarousel: View {
                                     .frame(width: frame.width, height: frame.height)
                                     .clipped()
                             }
-                        }.tag(index)
+                        }
+                        .tag(index)
                     }
                 }
             }

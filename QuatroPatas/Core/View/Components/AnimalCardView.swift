@@ -73,8 +73,9 @@ struct AnimalCardView: View {
                             AsyncImage(url: url) { phase in
                                 switch phase {
                                 case .empty:
-                                    ProgressView()
+                                    RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
                                         .frame(width: geometry.size.width, height: geometry.size.height)
+                                        .modifier(ShimmerModifier())
                                 case .success(let image):
                                     image
                                         .resizable()
