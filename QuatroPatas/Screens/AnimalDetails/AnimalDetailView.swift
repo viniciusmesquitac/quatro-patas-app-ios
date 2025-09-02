@@ -14,7 +14,6 @@ struct AnimalDetailView: View {
     @Environment(\.toast) private var toast
     
     @State private var selectedImageIndex = 0
-    @State var cachedImages: [Int: UIImage] = [:]
     @State private var showFullScreen = false
 
     var body: some View {
@@ -29,15 +28,14 @@ struct AnimalDetailView: View {
                         ).onTapGesture {
                             showFullScreen = true
                         }
-                        
-                        // Botão flutuante
+
                         Button(action: {
                             toast("Adicionado aos favoritos!", .success)
                         }) {
                             Image(systemName: "heart")
                         }
                         .buttonStyle(CircleButtonStyle())
-                        .offset(x: -25, y: 25) // joga metade pra baixo, sobre o texto
+                        .offset(x: -25, y: 25)
                     }
 
                     // conteúdo abaixo da imagem

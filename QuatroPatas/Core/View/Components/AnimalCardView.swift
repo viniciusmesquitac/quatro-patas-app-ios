@@ -12,6 +12,9 @@ struct AnimalCardView: View {
     let animal: Animal
     let action: () -> Void
     
+    @CacheProvider(type: .fileManager)
+    var cacheProvider
+    
     private enum Constants {
         // Font
         static let gradientOpacity: CGFloat = 0.6
@@ -56,32 +59,48 @@ struct AnimalCardView: View {
             VStack {
                 GeometryReader { geometry in
                     if let firstURL = animal.photos.first, let url = URL(string: firstURL) {
-                        AsyncImage(url: url) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(width: geometry.size.width, height: geometry.size.height)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: geometry.size.width, height: geometry.size.height)
-                                    .clipped()
-                                    .overlay {
-                                        AnimalNameView
-                                    }
-                                    .cornerRadius(CornerRadius.small.rawValue)
-                            default:
-                                Image("default-animal-card.png")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-                                    .overlay(content: {
-                                        AnimalNameView
-                                    })
-                                    .cornerRadius(CornerRadius.small.rawValue)
+                        
+                        if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data, let uii = UIImage(data: imageData) {
+                            Image(uiImage: uii)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: geometry.size.width, height: geometry.size.height)
+                                .overlay {
+                                    AnimalNameView
+                                }
+                                .cornerRadius(CornerRadius.small.rawValue)
+                        } else {
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: geometry.size.width, height: geometry.size.height)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: geometry.size.width, height: geometry.size.height)
+                                        .clipped()
+                                        .overlay {
+                                            AnimalNameView
+                                        }
+                                        .cornerRadius(CornerRadius.small.rawValue)
+                                        .onAppear {
+                                            saveImageData(url: url)
+                                        }
+                                default:
+                                    Image("default-animal-card.png")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
+                                        .overlay(content: {
+                                            AnimalNameView
+                                        })
+                                        .cornerRadius(CornerRadius.small.rawValue)
+                                }
                             }
                         }
+
                     }
                 }
             }
@@ -89,6 +108,27 @@ struct AnimalCardView: View {
             .frame(width: Constants.width, height: Constants.height)
         }
         .buttonStyle(CardButtonStyle())
+    }
+    
+    func getToken(url: URL) -> String {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
+                  return url.absoluteString
+              }
+        return token
+    }
+
+    func saveImageData(url: URL) {
+        let token = getToken(url: url)
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data {
+                do {
+                    try cacheProvider.save(data, for: token)
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
     }
 }
 

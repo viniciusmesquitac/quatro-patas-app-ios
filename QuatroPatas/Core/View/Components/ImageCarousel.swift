@@ -10,42 +10,71 @@ import SwiftUI
 struct ImageCarousel: View {
     let images: [String]
     @Binding var selectedIndex: Int
-    @State var cachedImages: [Int: UIImage] = [:]
     var frame = CGSize(width: UIScreen.main.bounds.width, height: 500)
+    
+    @CacheProvider(type: .fileManager)
+    var cacheProvider
 
     var body: some View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
                 if let url = URL(string: images[index]) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: frame.width, height: frame.height)
-                                .clipped()
-                        case .failure(_):
-                            Image("default-animal-card.png")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: frame.width, height: frame.height)
-                                .clipped()
-                        @unknown default:
-                            Image("default-animal-card.png")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: frame.width, height: frame.height)
-                                .clipped()
-                        }
-                    }.tag(index)
+                    if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data, let uiImage = UIImage(data: imageData) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: frame.width, height: frame.height)
+                                    .clipped()
+                    } else {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: frame.width, height: frame.height)
+                                    .clipped()
+                                    .onAppear {
+                                        saveImageData(url: url)
+                                    }
+                            default:
+                                Image("default-animal-card.png")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: frame.width, height: frame.height)
+                                    .clipped()
+                            }
+                        }.tag(index)
+                    }
                 }
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
         .frame(height: frame.height)
         .ignoresSafeArea(edges: .top)
+    }
+    
+    
+    func getToken(url: URL) -> String {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
+                  return url.absoluteString
+              }
+        return token
+    }
+
+    func saveImageData(url: URL) {
+        let token = getToken(url: url)
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data {
+                do {
+                    try cacheProvider.save(data, for: token)
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
     }
 }

@@ -12,28 +12,34 @@ struct ZoomableImage: View {
     @State private var scale: CGFloat = 1.0
     @State private var lastScale: CGFloat = 1.0
     
+    @CacheProvider(type: .fileManager)
+    var cacheProvider
+    
     var body: some View {
         GeometryReader { geo in
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: geo.size.width, height: geo.size.height)
-                .scaleEffect(scale)
-                .gesture(
-                    MagnificationGesture()
-                        .onChanged { value in
-                            scale = lastScale * value
+            if let imageData = cacheProvider.get(key: imageName) as? Data, let uii = UIImage(data: imageData) {
+                Image(uiImage: uii)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .scaleEffect(scale)
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                scale = lastScale * value
+                            }
+                            .onEnded { _ in
+                                lastScale = scale
+                            }
+                    )
+                    .onTapGesture(count: 2) {
+                        withAnimation {
+                            scale = 1.0
+                            lastScale = 1.0
                         }
-                        .onEnded { _ in
-                            lastScale = scale
-                        }
-                )
-                .onTapGesture(count: 2) {
-                    withAnimation {
-                        scale = 1.0
-                        lastScale = 1.0
                     }
-                }
+            }
+
         }
     }
 }
@@ -46,8 +52,10 @@ struct ZoomableCarouselView: View {
     var body: some View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
-                ZoomableImage(imageName: images[index])
-                    .tag(index)
+                if let url = URL(string: images[index]) {
+                    ZoomableImage(imageName: getToken(url: url))
+                        .tag(index)
+                }
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
@@ -62,5 +70,13 @@ struct ZoomableCarouselView: View {
                     .padding()
             }
         }
+    }
+    
+    func getToken(url: URL) -> String {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
+                  return url.absoluteString
+              }
+        return token
     }
 }
