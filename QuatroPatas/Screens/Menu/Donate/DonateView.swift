@@ -11,17 +11,18 @@ import WebKit
 struct DonateView: View {
 
     @State var url: URL = URL(string: "https://apoia.se/quatropatasfortaleza")!
-    @State private var webPage = WebPage()
+    @State private var page = WebPage()
     @EnvironmentObject var navigator: Navigator
-    
+    @Environment(\.toast) var toast
+        
     var body: some View {
         content
             .onAppear {
                 let request = URLRequest(url: url)
-                webPage.load(request)
+                page.load(request)
             }
             .onDisappear {
-                webPage.stopLoading()
+                page.stopLoading()
             }
             .toolbar(.hidden, for: .tabBar)
             .edgesIgnoringSafeArea(.all)
@@ -32,14 +33,27 @@ struct DonateView: View {
     }
 
     private var content: some View {
-           ZStack {
-               Color.white
-               if webPage.isLoading {
-                   DotsLoader()
-                       .padding()
-               } else {
-                   WebView(webPage)
-               }
-           }
-       }
+        ZStack {
+            Color.white
+            if page.isLoading {
+                DotsLoader()
+                    .padding()
+            } else {
+                WebView(page)
+                    .onReceive(page.currentNavigationEvent.publisher) { event in
+                        switch event.kind {
+                        case .failed, .failedProvisionalNavigation:
+                            DispatchQueue.main.async {
+                                toast("Falha ao carregar a página", .error)
+                                navigator.dismiss()
+                            }
+                        case .finished:
+                            
+                        default:
+                            print(event.kind)
+                        }
+                    }
+            }
+        }
+    }
 }

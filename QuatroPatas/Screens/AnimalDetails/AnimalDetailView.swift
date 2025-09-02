@@ -32,7 +32,7 @@ struct AnimalDetailView: View {
                         Button(action: {
                             toast("Adicionado aos favoritos!", .success)
                         }) {
-                            Image(systemName: "heart")
+                            SFIcon.image(.heart)
                         }
                         .buttonStyle(CircleButtonStyle())
                         .offset(x: -25, y: 25)

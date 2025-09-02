@@ -17,6 +17,7 @@ enum SFIcon: String {
     case paw = "pawprint"
     case circle_filled = "largecircle.fill.circle"
     case circle = "circle"
+    case heart = "heart"
     case heart_filled = "heart.fill"
     case search = "magnifyingglass"
     case close = "xmark.circle"
