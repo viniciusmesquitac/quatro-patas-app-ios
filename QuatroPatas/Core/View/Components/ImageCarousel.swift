@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageCarousel: View {
-    let images: [String]
+    let images: [URL]
     @Binding var selectedIndex: Int
     var frame = CGSize(width: UIScreen.main.bounds.width, height: 500)
     
@@ -18,13 +18,30 @@ struct ImageCarousel: View {
     var body: some View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
-                if let url = URL(string: images[index]) {
-                    if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data, let uiImage = UIImage(data: imageData) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: frame.width, height: frame.height)
-                                    .clipped()
+                let url = images[index]
+                
+                // 🚀 caso local (file://) → sem cache
+                if url.isFileURL {
+                    if let uiImage = UIImage(contentsOfFile: url.path) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: frame.width, height: frame.height)
+                            .clipped()
+                            .tag(index)
+                    }
+                }
+                
+                // 🌐 caso remoto → com cache
+                else {
+                    if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
+                       let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: frame.width, height: frame.height)
+                            .clipped()
+                            .tag(index)
                     } else {
                         AsyncImage(url: url, transaction: .init(animation: .spring(duration: 2))) { phase in
                             switch phase {
@@ -44,7 +61,6 @@ struct ImageCarousel: View {
                                             saveImageData(url: url)
                                         }
                                 }
-                              
                             default:
                                 Image("default-animal-card.png")
                                     .resizable()
@@ -63,12 +79,12 @@ struct ImageCarousel: View {
         .ignoresSafeArea(edges: .top)
     }
     
-    
+    // MARK: - Helpers
     func getToken(url: URL) -> String {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-                  return url.absoluteString
-              }
+            return url.absoluteString
+        }
         return token
     }
 

@@ -23,7 +23,7 @@ struct AnimalDetailView: View {
                     
                     ZStack(alignment: .bottomTrailing) {
                         ImageCarousel(
-                            images: animal.photos,
+                            images: animal.photos.compactMap { URL(string: $0) },
                             selectedIndex: $selectedImageIndex
                         ).onTapGesture {
                             showFullScreen = true

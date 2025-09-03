@@ -11,9 +11,9 @@ import PhotosUI
 struct AddAnimalView: View {
     
     @State private var selectedImageIndex = 0
-    @State private var images: [String] = []
+    @State private var images: [URL] = []
     
-    @State private var selectedPhoto: PhotosPickerItem? = nil
+    @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var showPhotoPicker = false
     
     @State private var name = ""
@@ -92,15 +92,28 @@ struct AddAnimalView: View {
             }
         }
         .navigationTitle("Cadastrar Animal")
-        .photosPicker(isPresented: $showPhotoPicker, selection: $selectedPhoto, matching: .images)
-        .onChange(of: selectedPhoto) { newValue, nextValue in
+        .photosPicker(
+            isPresented: $showPhotoPicker,
+            selection: $selectedPhotos,
+            maxSelectionCount: 4,
+            matching: .images,
+            photoLibrary: .shared()
+        )
+        .onChange(of: selectedPhotos) { newItems in
             Task {
-                if let data = try? await newValue?.loadTransferable(type: Data.self),
-                   let uiImage = UIImage(data: data),
-                   let path = saveImageToTemp(uiImage) {
-                    images.append(path.absoluteString)
-                    selectedImageIndex = images.count - 1
+                var newURLs: [URL] = []
+                
+                for item in newItems {
+                    if let data = try? await item.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data),
+                       let path = saveImageToTemp(uiImage) {
+                        newURLs.append(path)
+                    }
                 }
+                
+                // sobrescreve mantendo consistência com o que foi selecionado
+                images = newURLs
+                selectedImageIndex = images.count - 1
             }
         }
     }
