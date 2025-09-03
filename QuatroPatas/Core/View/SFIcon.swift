@@ -26,6 +26,7 @@ enum SFIcon: String {
     case success = "checkmark.circle.fill"
     case failure = "xmark.octagon.fill"
     case menu = "square.grid.2x2"
+    case add = "plus.circle"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)

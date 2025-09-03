@@ -47,8 +47,6 @@ struct DonateView: View {
                                 toast("Falha ao carregar a página", .error)
                                 navigator.dismiss()
                             }
-                        case .finished:
-                            
                         default:
                             print(event.kind)
                         }

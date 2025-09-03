@@ -63,7 +63,7 @@ struct AnimalFilterView: View {
                     filterSection(title: Constants.localized(.sectionSize)) {
                         Dropdown(
                             title: Constants.localized(.sectionSize),
-                            options: AnimalSize.allCases.map { AnimalSize.localized($0) },
+                            options: AnimalSize.allLocalized,
                             selection: Binding(
                                 get: { filter.size ?? "Selecione" },
                                 set: { newValue in filter.size = newValue }
@@ -75,7 +75,7 @@ struct AnimalFilterView: View {
                     filterSection(title: Constants.localized(.sectionBreed)) {
                         Dropdown(
                             title: Constants.localized(.sectionBreed),
-                            options: Breed.allCases.map { Breed.localized($0) },
+                            options: Breed.allLocalized,
                             selection: Binding(
                                 get: { filter.breed ?? "Selecione" },
                                 set: { newValue in filter.breed = newValue }
@@ -87,7 +87,7 @@ struct AnimalFilterView: View {
                     filterSection(title: Constants.localized(.sectionColor)) {
                         Dropdown(
                             title: Constants.localized(.sectionColor),
-                            options: AnimalColor.allCases.map { AnimalColor.localized($0) },
+                            options: AnimalColor.allLocalized,
                             selection: Binding(
                                 get: { filter.color ?? "Selecione" },
                                 set: { newValue in filter.color = newValue }
@@ -145,7 +145,7 @@ struct SelectableButton: View {
                 .font(.system(size: 18, weight: .medium))
                 .frame(maxWidth: .infinity, minHeight: 50) // garante metade da largura
                 .background(isSelected ? Color.primaryColor.opacity(0.2) : Color.gray.opacity(0.1))
-                .foregroundColor(isSelected ? .primaryColor : .primary)
+                .foregroundColor(isSelected ? .secundaryColor : .primary)
                 .cornerRadius(12)
         }
         .buttonStyle(FilterButtonStyle())

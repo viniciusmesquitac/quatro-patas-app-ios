@@ -21,9 +21,8 @@ struct MenuView: View {
             UserProfileCard(name: user.name)
                 .padding()
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-                CardView(title: "Meus Animais", route: .adoption)
+                CardView(title: "Meus Animais", route: .animalsList)
                 CardView(title: "Doe", route: .donate)
-                CardView(title: "Quem Somos?", route: .adoption)
                 CardView(title: "Formulário de Adoção", route: .adoptionForm)
             }.padding()
         }

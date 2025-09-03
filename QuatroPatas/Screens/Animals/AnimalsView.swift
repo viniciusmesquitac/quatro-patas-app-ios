@@ -23,20 +23,22 @@ struct AnimalsView: View {
     @State private var isLoading = true
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            FilterView(filter: $filter)
-            LazyVGrid(columns: collumns, spacing: Padding.xLarge.rawValue) {
-                ForEach(filteredAnimals, id: \.id) { animal in
-                    AnimalCardView(animal: animal) {
-                        navigator.navigate(to: .details(animal))
+        ZStack {
+            ScrollView(showsIndicators: false) {
+                FilterView(filter: $filter)
+                LazyVGrid(columns: collumns, spacing: Padding.xLarge.rawValue) {
+                    ForEach(filteredAnimals, id: \.id) { animal in
+                        AnimalCardView(animal: animal) {
+                            navigator.navigate(to: .details(animal))
+                        }
                     }
                 }
+
+                if filteredAnimals.isEmpty && isLoading == false {
+                    buildEmptyStateView()
+                }
             }
-    
-            if filteredAnimals.isEmpty && isLoading == false {
-                buildEmptyStateView()
-            }
-    
+
             if isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())

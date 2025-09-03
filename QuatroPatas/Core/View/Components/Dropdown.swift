@@ -24,16 +24,16 @@ struct Dropdown: View {
             }) {
                 HStack {
                     Text(selection.isEmpty ? title : selection)
-                        .foregroundColor(selection.isEmpty || selection == "Selecione" ? .primary : Color.primaryColor)
+                        .foregroundColor(selection.isEmpty || selection == "Selecione" ? .primary : Color.secundaryColor)
                         .font(.system(size: 16, weight: .medium))
                     Spacer()
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .foregroundColor(selection.isEmpty || selection == "Selecione" ? .secondary : Color.primaryColor)
+                        .foregroundColor(selection.isEmpty || selection == "Selecione" ? .secondary : Color.secundaryColor)
                 }
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background(selection.isEmpty || selection == "Selecione" ? Color.gray.opacity(0.2): Color.primaryColor.opacity(0.2))
-                .cornerRadius(12)
+                .cornerRadius(CornerRadius.medium.rawValue)
             }
             .buttonStyle(FilterButtonStyle()) // tira highlight default do botão
             
@@ -49,7 +49,7 @@ struct Dropdown: View {
                         }) {
                             HStack {
                                 Text(option)
-                                    .foregroundColor(selection == option ? Color.primaryColor : .primary)
+                                    .foregroundColor(selection == option ? Color.secundaryColor : .primary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding()
                             }

@@ -480,6 +480,18 @@
     "Buscar todos" : {
 
     },
+    "Cadastrar" : {
+
+    },
+    "Cadastrar Animal" : {
+
+    },
+    "Cor" : {
+
+    },
+    "Descrição" : {
+
+    },
     "Digite seu email" : {
 
     },
@@ -538,6 +550,15 @@
     "Hmmm... \nNão tem nada por aqui!" : {
 
     },
+    "Idade" : {
+
+    },
+    "Meus Animais" : {
+
+    },
+    "Nome" : {
+
+    },
     "Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.\n\nLembre-se que adotar um animal requer muita responsabilidade." : {
 
     },
@@ -575,6 +596,12 @@
       }
     },
     "Próximo" : {
+
+    },
+    "Raça" : {
+
+    },
+    "Tamanho" : {
 
     },
     "ver perfil" : {
