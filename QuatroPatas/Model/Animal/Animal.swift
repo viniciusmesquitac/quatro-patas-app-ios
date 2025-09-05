@@ -12,12 +12,12 @@ struct Animal: Hashable, Identifiable, Sendable, Codable {
     let name: String
     var photos: [String] = []
     let age: String
-    let gender: Gender
-    let type: AnimalType
-    let breed: Breed
-    let color: AnimalColor
-    var size: AnimalSize? = nil
+    let gender: String
+    let type: String
+    let breed: String
+    let color: String
+    var size: String? = nil
     let description: String
-    var status: AnimalStatus?
-    var tags: [AnimalTag] = []
+    var status: String?
+    var tags: [String] = []
 }

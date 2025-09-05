@@ -14,6 +14,7 @@ struct QuatroPatasApp: App {
     @StateObject private var navigator = Navigator()
     @StateObject private var requestProvider = RequestProvider()
     @StateObject private var databaseProvider = FirestoreProvider()
+    @StateObject private var storageProvider = FirebaseStorageProvider()
     @StateObject private var formManager = FormManager()
 
     @State private var user = User(id: String(), name: "Anônimo", email: String(), type: .adopter)
@@ -42,6 +43,7 @@ struct QuatroPatasApp: App {
             .environmentObject(navigator)
             .environmentObject(requestProvider)
             .environmentObject(databaseProvider)
+            .environmentObject(storageProvider)
             .environmentObject(formManager)
             .tint(Color.primaryColor)
             .toast()

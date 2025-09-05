@@ -10,7 +10,7 @@ import SwiftUI
 enum FormElement: Identifiable {
     case textField(title: String, placeholder: String, binding: Binding<String>, keyboard: UIKeyboardType = .default)
     case textEditor(title: String, binding: Binding<String>)
-    case selectable(title: String, options: [String], binding: Binding<String?>)
+    case selectable(title: String, options: [String], binding: Binding<String>)
     case dropdown(title: String, options: [String], binding: Binding<String>)
     
     var id: String {

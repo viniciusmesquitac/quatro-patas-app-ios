@@ -89,7 +89,8 @@ struct AnimalDetailView: View {
     }
     
     func loadTags() -> [TagItem] {
-        animal.tags.map {
+        let tags = animal.tags.compactMap { AnimalTag(rawValue: $0) }
+        return tags.map {
             if $0 == .vaccinated {
                 return TagItem(tag: $0, action: {
                     navigator.present(sheet: .tip(Tip.vaccinated))

@@ -15,11 +15,12 @@ struct AddAnimalView: View {
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var showPhotoPicker = false
+    @State private var isLoading = false
     
     @State private var name = ""
     @State private var age = ""
-    @State private var gender: String? = nil
-    @State private var type: String? = nil
+    @State private var gender = ""
+    @State private var type = ""
     
     @State private var breed = ""
     @State private var color = ""
@@ -29,7 +30,9 @@ struct AddAnimalView: View {
     
     @Environment(\.toast) var toast
     @EnvironmentObject var navigator: Navigator
-    
+    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var firebaseStorage: FirebaseStorageProvider
+
     var formElements: [FormElement] {
         [
             .textField(title: "Nome", placeholder: "Digite o nome", binding: $name),
@@ -78,17 +81,59 @@ struct AddAnimalView: View {
                 // Add button
                 Button(action: {
                     if validateFields() {
-                        navigator.dismiss()
-                        toast("animal adicionado com sucesso!", .success)
+                        var animal = Animal(
+                            name: name,
+                            age: age,
+                            gender: gender,
+                            type: type,
+                            breed: breed,
+                            color: color,
+                            description: description
+                        )
+                        
+                        Task {
+                            isLoading = true
+                            do {
+                                var uploadedURLs: [String] = []
+                                
+                                for imageURL in images {
+                                    let data = try Data(contentsOf: imageURL)
+                                    if let uiImage = UIImage(data: data) {
+                                        let resized = uiImage.resized(toMax: 1024)
+                                        if let compressedData = resized.jpegData(compressionQuality: 0.7) {
+                                            let fileName = "animals/\(UUID().uuidString).jpg"
+                                            let url = try await firebaseStorage.uploadFile(data: compressedData, path: fileName)
+                                            uploadedURLs.append(url.absoluteString)
+                                        }
+                                    }
+                                }
+                                
+                                animal.photos = uploadedURLs
+                                try await firestoreProvider.add(animal, to: "animals")
+                                toast("animal adicionado com sucesso!", .success)
+                                navigator.dismiss()
+                            } catch {
+                                toast("erro ao salvar!", .error)
+                            }
+                            isLoading = false
+                        }
                     } else {
                         toast("Preencha todos os campos obrigatórios!", .error)
                     }
                 }) {
-                    Text("Cadastrar")
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .frame(maxWidth: .infinity)
+                    } else {
+                        Text("Cadastrar")
+                            .frame(maxWidth: .infinity)
+                    }
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal)
                 .padding(.top, Padding.medium.rawValue)
+                .disabled(isLoading)
             }
         }
         .navigationTitle("Cadastrar Animal")
@@ -132,7 +177,7 @@ struct AddAnimalView: View {
     }
     
     func validateFields() -> Bool {
-        if name.isEmpty || age.isEmpty || gender == nil || type == nil ||
+        if name.isEmpty || age.isEmpty || gender.isEmpty || type.isEmpty ||
             breed.isEmpty || color.isEmpty || size.isEmpty || description.isEmpty || images.isEmpty {
             return false
         }

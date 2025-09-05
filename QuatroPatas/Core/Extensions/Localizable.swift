@@ -26,6 +26,10 @@ extension Localizable {
         NSLocalizedString(value.rawValue, comment: "")
     }
 
+    static func fromLocalized(_ string: String) -> Self? {
+        return allCases.first { localized($0) == string }
+    }
+
     static var allLocalized: [String] {
         allCases.map { localized($0) }
     }

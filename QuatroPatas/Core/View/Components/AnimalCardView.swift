@@ -134,18 +134,18 @@ struct AnimalCardView: View {
 }
 
 
-struct AnimalCardView_Preview: PreviewProvider {
-
-    static var previews: some View {
-        AnimalCardView(animal: Animal(
-            id: "0",
-            name: "Priscila",
-            age: "2 anos",
-            gender: .female,
-            type: .cat,
-            breed: .mixed, color: .blackAndWhite,
-            description: "Castrada, vermifugada, Vacinada"
-        ), action: {})
-        .previewLayout(PreviewLayout.fixed(width: 150, height: 180))
-    }
-}
+//struct AnimalCardView_Preview: PreviewProvider {
+//
+//    static var previews: some View {
+//        AnimalCardView(animal: Animal(
+//            id: "0",
+//            name: "Priscila",
+//            age: "2 anos",
+//            gender: .female,
+//            type: .cat,
+//            breed: .mixed, color: .blackAndWhite,
+//            description: "Castrada, vermifugada, Vacinada"
+//        ), action: {})
+//        .previewLayout(PreviewLayout.fixed(width: 150, height: 180))
+//    }
+//}
