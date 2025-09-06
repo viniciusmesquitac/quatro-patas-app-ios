@@ -24,7 +24,7 @@ struct AnimalsView: View {
 
     var body: some View {
         ZStack {
-            ScrollView(showsIndicators: false) {
+            ScrollView() {
                 FilterView(filter: $filter)
                 LazyVGrid(columns: collumns, spacing: Padding.xLarge.rawValue) {
                     ForEach(filteredAnimals, id: \.id) { animal in
@@ -53,7 +53,7 @@ struct AnimalsView: View {
         .toolbarItem(icon: .filter, action: {
             navigator.present(sheet: .animalFilter(animals, $filter))
         })
-        .navigationTitle(AppTab.localized(.animals))
+        .navigationTitle(AppTab.localized(.animals) + " (\(filteredAnimals.count))")
     }
     
     

@@ -29,9 +29,9 @@ struct QuatroPatasApp: App {
                 TabItem(label: .animals, icon: .paw) {
                     AnimalsView()
                 }
-                TabItem(label: .adoption, icon: .heart_filled) {
-                    AdoptionView()
-                }
+//                TabItem(label: .adoption, icon: .heart_filled) {
+//                    AdoptionView()
+//                }
                 TabItem(label: .menu, icon: .menu) {
                     MenuView(user: user)
                 }

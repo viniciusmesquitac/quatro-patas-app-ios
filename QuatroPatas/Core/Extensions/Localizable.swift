@@ -10,6 +10,10 @@ extension Localizable {
         return components.joined(separator: ".")
     }
     
+    var caseName: String {
+        String(describing: self).lowercased()
+    }
+    
     init?(rawValue: String) {
         let parts = rawValue.split(separator: ".").map { String($0) }
         guard let caseName = parts.last else { return nil }

@@ -13,8 +13,9 @@ struct FormField<Content: View>: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.caption).bold()
+            Text(title).font(.headline).bold()
             content()
+            Spacer()
         }
     }
 }

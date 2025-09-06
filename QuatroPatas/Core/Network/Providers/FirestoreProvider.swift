@@ -31,11 +31,21 @@ class FirestoreProvider: ObservableObject {
         }
     }
 
-    func add<T: Codable>(_ item: T, to collection: String) async throws {
+    func add<T: Codable>(_ item: T, to collection: String, withID id: String? = nil) async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
             do {
-                _ = try db.collection(collection).addDocument(from: item)
-                continuation.resume()
+                if let id = id {
+                    try db.collection(collection).document(id).setData(from: item) { error in
+                        if let error = error {
+                            continuation.resume(throwing: error)
+                        } else {
+                            continuation.resume(returning: id)
+                        }
+                    }
+                } else {
+                    let ref = try db.collection(collection).addDocument(from: item)
+                    continuation.resume(returning: ref.documentID)
+                }
             } catch {
                 continuation.resume(throwing: error)
             }

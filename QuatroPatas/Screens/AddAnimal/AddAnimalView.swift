@@ -76,13 +76,12 @@ struct AddAnimalView: View {
                     }
                 }
 
-                // === FORM ===
                 DynamicFormView(elements: formElements)
                     .padding(.horizontal)
                 
-                // Add button
                 Button(action: {
                     if validateFields() {
+                        isLoading = true
                         var animal = Animal(
                             name: name,
                             age: age,
@@ -91,11 +90,10 @@ struct AddAnimalView: View {
                             breed: breed,
                             color: color,
                             description: description,
-                            tags: tags
+                            tags: tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
                         )
                         
                         Task {
-                            isLoading = true
                             do {
                                 var uploadedURLs: [String] = []
                                 
@@ -114,11 +112,12 @@ struct AddAnimalView: View {
                                 animal.photos = uploadedURLs
                                 try await firestoreProvider.add(animal, to: "animals")
                                 toast("animal adicionado com sucesso!", .success)
+                                isLoading = false
                                 navigator.dismiss()
                             } catch {
                                 toast("erro ao salvar!", .error)
+                                isLoading = false
                             }
-                            isLoading = false
                         }
                     } else {
                         toast("Preencha todos os campos obrigatórios!", .error)
