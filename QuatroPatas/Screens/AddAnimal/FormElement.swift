@@ -12,6 +12,7 @@ enum FormElement: Identifiable {
     case textEditor(title: String, binding: Binding<String>)
     case selectable(title: String, options: [String], binding: Binding<String>)
     case dropdown(title: String, options: [String], binding: Binding<String>)
+    case multiselection(title: String, options: [String], binding: Binding<[String]>)
     
     var id: String {
         switch self {
@@ -19,6 +20,7 @@ enum FormElement: Identifiable {
         case .textEditor(let title, _): return title
         case .selectable(let title, _, _): return title
         case .dropdown(let title, _, _): return title
+        case .multiselection(let title, _, _): return title
         }
     }
 }

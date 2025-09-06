@@ -15,6 +15,9 @@ struct AnimalDetailView: View {
     
     @State private var selectedImageIndex = 0
     @State private var showFullScreen = false
+    @State private var isFavorite = false
+
+    let repository = FavoritesRepository()
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -30,9 +33,9 @@ struct AnimalDetailView: View {
                         }
 
                         Button(action: {
-                            toast("Adicionado aos favoritos!", .success)
+                            toggleFavorite()
                         }) {
-                            SFIcon.image(.heart, scale: .medium, color: .black)
+                            SFIcon.image(isFavorite ? .heart_filled : .heart, scale: .medium, color: isFavorite ? .red : .black)
                         }
                         .buttonStyle(CircleButtonStyle())
                         .offset(x: -25, y: 25)
@@ -86,6 +89,9 @@ struct AnimalDetailView: View {
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
+        .onAppear {
+            isFavorite = repository.isFavorite(id: animal.id ?? String())
+        }
     }
     
     func loadTags() -> [TagItem] {
@@ -123,6 +129,17 @@ struct AnimalDetailView: View {
             }
         }
         return age
+    }
+    
+    private func toggleFavorite() {
+        guard let animalId = animal.id else { return }
+        if isFavorite {
+            repository.removeFavorite(id: animalId)
+        } else {
+            repository.addFavorite(id: animalId)
+            toast("Adicionado aos favoritos!", .success)
+        }
+        isFavorite.toggle()
     }
 
 }

@@ -25,6 +25,7 @@ struct AddAnimalView: View {
     @State private var breed = ""
     @State private var color = ""
     @State private var size = ""
+    @State private var tags: [String] = []
     @State private var description = ""
     
     
@@ -42,6 +43,7 @@ struct AddAnimalView: View {
             .dropdown(title: "Raça", options: Breed.allLocalized, binding: $breed),
             .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $color),
             .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $size),
+            .multiselection(title: "Caracteristicas", options: AnimalTag.allLocalized, binding: $tags),
             .textEditor(title: "Descrição", binding: $description)
         ]
     }
@@ -88,7 +90,8 @@ struct AddAnimalView: View {
                             type: type,
                             breed: breed,
                             color: color,
-                            description: description
+                            description: description,
+                            tags: tags
                         )
                         
                         Task {
@@ -100,8 +103,8 @@ struct AddAnimalView: View {
                                     let data = try Data(contentsOf: imageURL)
                                     if let uiImage = UIImage(data: data) {
                                         let resized = uiImage.resized(toMax: 1024)
-                                        if let compressedData = resized.jpegData(compressionQuality: 0.7) {
-                                            let fileName = "animals/\(UUID().uuidString).jpg"
+                                        if let compressedData = resized.jpegData(compressionQuality: 0.5) {
+                                            let fileName = "animals/\(animal.id)/\(UUID().uuidString).jpg"
                                             let url = try await firebaseStorage.uploadFile(data: compressedData, path: fileName)
                                             uploadedURLs.append(url.absoluteString)
                                         }

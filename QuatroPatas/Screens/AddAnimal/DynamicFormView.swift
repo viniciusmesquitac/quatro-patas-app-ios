@@ -42,6 +42,11 @@ struct DynamicFormView: View {
                         }
                     }
                     
+                case .multiselection(let title, let options, let binding):
+                    FormField(title: title) {
+                        MultiSelectDropdown(title: "Selecione", options: options, selections: binding)
+                    }
+
                 case .dropdown(let title, let options, let binding):
                     FormField(title: title) {
                         Dropdown(title: "Selecione", options: options, selection: binding)
