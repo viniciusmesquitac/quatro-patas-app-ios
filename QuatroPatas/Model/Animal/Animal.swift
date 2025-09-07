@@ -8,7 +8,7 @@
 @preconcurrency import FirebaseFirestore
 
 struct Animal: Hashable, Identifiable, Sendable, Codable {
-    @DocumentID var id: String? = UUID().uuidString
+    @DocumentID var id: String?
     var name: String
     var photos: [String] = []
     var age: String

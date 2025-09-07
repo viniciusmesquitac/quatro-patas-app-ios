@@ -27,7 +27,8 @@ struct Dropdown: View {
                         .foregroundColor(selection.isEmpty || selection == "Selecione" ? .primary : Color.secundaryColor)
                         .font(.system(size: 16, weight: .medium))
                     Spacer()
-                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                    Image(systemName: "chevron.down")
+                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
                         .foregroundColor(selection.isEmpty || selection == "Selecione" ? .secondary : Color.secundaryColor)
                 }
                 .padding()
@@ -35,7 +36,7 @@ struct Dropdown: View {
                 .background(selection.isEmpty || selection == "Selecione" ? Color.gray.opacity(0.2): Color.primaryColor.opacity(0.2))
                 .cornerRadius(CornerRadius.medium.rawValue)
             }
-            .buttonStyle(FilterButtonStyle()) // tira highlight default do botão
+            .buttonStyle(FilterButtonStyle())
             
             // Lista de opções
             if isExpanded {

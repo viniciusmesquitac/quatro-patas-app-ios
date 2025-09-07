@@ -5,7 +5,7 @@
 //  Created by Vinicius Mesquita Coelho on 28/08/25.
 //
 
-enum AnimalTag: String, Localizable {
+enum AnimalTag: String, Localizable, Codable {
     // cat
     case fiv
     case felv

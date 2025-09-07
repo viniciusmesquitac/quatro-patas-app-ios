@@ -116,19 +116,36 @@ struct AnimalDetailView: View {
         }
     }
     
-    func formatAge(_ age: String) -> String {
-        if age.hasSuffix("y") {
-            if let years = Int(age.dropLast()) {
-                let suffixYear =  years > 1 ? "s" : ""
-                return "\(years) ano\(suffixYear)"
-            }
-        } else if age.hasSuffix("m") {
-            if let count = Int(age.dropLast()) {
-                let suffixMonth =  count > 1 ? "s" : ""
-                return "\(count) mese\(suffixMonth)"
-            }
+    func formatAge(_ timestampString: String) -> String {
+        guard let timestamp = TimeInterval(timestampString) else { return "Idade desconhecida" }
+        let birthDate = Date(timeIntervalSince1970: timestamp)
+        let now = Date()
+        let calendar = Calendar.current
+        
+        let components = calendar.dateComponents([.year, .month], from: birthDate, to: now)
+        let years = components.year ?? 0
+        let months = components.month ?? 0
+        
+        switch (years, months) {
+        case (0, 0):
+            return "Menos de 1 mês"
+        case (0, 1):
+            return "1 mês"
+        case (0, let m):
+            return "\(m) meses"
+        case (1, 0):
+            return "1 ano"
+        case (let y, 0):
+            return "\(y) anos"
+        case (1, 1):
+            return "1 ano e 1 mês"
+        case (1, let m):
+            return "1 ano e \(m) meses"
+        case (let y, 1):
+            return "\(y) anos e 1 mês"
+        default:
+            return "\(years) anos e \(months) meses"
         }
-        return age
     }
     
     private func toggleFavorite() {

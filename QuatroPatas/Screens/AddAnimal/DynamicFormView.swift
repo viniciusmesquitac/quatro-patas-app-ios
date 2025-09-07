@@ -11,7 +11,7 @@ struct DynamicFormView: View {
     let elements: [FormElement]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
             ForEach(elements) { element in
                 switch element {
                 case .textField(let title, let placeholder, let binding, let keyboard):
@@ -50,6 +50,10 @@ struct DynamicFormView: View {
                 case .dropdown(let title, let options, let binding):
                     FormField(title: title) {
                         Dropdown(title: "Selecione", options: options, selection: binding)
+                    }
+                case .agePicker(years: let years, months: let months):
+                    FormField(title: "Idade") {
+                        AgePickerView(years: years, months: months)
                     }
                 }
             }

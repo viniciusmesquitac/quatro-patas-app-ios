@@ -13,6 +13,7 @@ enum FormElement: Identifiable {
     case selectable(title: String, options: [String], binding: Binding<String>)
     case dropdown(title: String, options: [String], binding: Binding<String>)
     case multiselection(title: String, options: [String], binding: Binding<[String]>)
+    case agePicker(years: Binding<Int>, months: Binding<Int>)
     
     var id: String {
         switch self {
@@ -21,6 +22,7 @@ enum FormElement: Identifiable {
         case .selectable(let title, _, _): return title
         case .dropdown(let title, _, _): return title
         case .multiselection(let title, _, _): return title
+        case .agePicker: return "AgePicker"
         }
     }
 }

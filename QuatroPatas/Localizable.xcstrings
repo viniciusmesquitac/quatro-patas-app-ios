@@ -4,6 +4,19 @@
     "" : {
 
     },
+    "%lld" : {
+
+    },
+    "%lld anos, %lld meses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld anos, %2$lld meses"
+          }
+        }
+      }
+    },
     "Adotar" : {
       "localizations" : {
         "en" : {
@@ -377,6 +390,9 @@
         }
       }
     },
+    "Anos" : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -632,6 +648,23 @@
         }
       }
     },
+    "breed.sphynx" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sphynx"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sphynx"
+          }
+        }
+      }
+    },
     "Buscar todos" : {
       "localizations" : {
         "en" : {
@@ -826,6 +859,9 @@
         }
       }
     },
+    "Meses" : {
+
+    },
     "Meus Animais" : {
       "localizations" : {
         "en" : {
@@ -865,23 +901,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Breed"
-          }
-        }
-      }
-    },
-    "sphynx.sphynx" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sphynx"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sphynx"
           }
         }
       }

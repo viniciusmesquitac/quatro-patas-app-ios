@@ -12,7 +12,7 @@ struct FormField<Content: View>: View {
     @ViewBuilder let content: () -> Content
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
             Text(title).font(.headline).bold()
             content()
             Spacer()

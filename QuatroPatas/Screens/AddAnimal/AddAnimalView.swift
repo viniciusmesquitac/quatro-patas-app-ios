@@ -25,7 +25,10 @@ struct AddAnimalView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
     @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
-    
+
+    @State private var years = 0
+    @State private var months = 0
+
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
             return [Breed.localized(.mixed)]
@@ -43,7 +46,7 @@ struct AddAnimalView: View {
     var formElements: [FormElement] {
         [
             .textField(title: "Nome", placeholder: "Digite o nome", binding: $animal.name),
-            .textField(title: "Idade", placeholder: "Digite a idade", binding: $animal.age, keyboard: .numberPad),
+            .agePicker(years: $years, months: $months),
             .selectable(title: "Gênero", options: [Gender.localized(.male), Gender.localized(.female)], binding: $animal.gender),
             .selectable(title: "Tipo", options: [AnimalType.localized(.cat), AnimalType.localized(.dog)], binding: $animal.type),
             .dropdown(title: "Raça", options: filteredBreeds, binding: $animal.breed),
@@ -63,7 +66,7 @@ struct AddAnimalView: View {
                                   isLoading: isLoadingImage)
 
                 DynamicFormView(elements: formElements)
-                    .padding(.horizontal)
+                    .padding(.horizontal, Padding.xxLarge.rawValue)
                 
                 Button(action: {
                     addAnimal()
@@ -153,7 +156,21 @@ struct AddAnimalView: View {
         return true
     }
 
+    func calculateAgeTimestamp(years: Int, months: Int) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if let date = calendar.date(byAdding: .year, value: -years, to: now),
+           let finalDate = calendar.date(byAdding: .month, value: -months, to: date) {
+            let timestamp = finalDate.timeIntervalSince1970
+            return String(Int(timestamp))
+        }
+        
+        return "0"
+    }
+
     func addAnimal() {
+        animal.age = calculateAgeTimestamp(years: years, months: months)
         if validateFields(of: animal) {
             isLoading = true
             
