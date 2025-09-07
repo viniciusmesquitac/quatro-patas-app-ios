@@ -9,130 +9,68 @@ import SwiftUI
 import PhotosUI
 
 struct AddAnimalView: View {
-    
+
     @State private var selectedImageIndex = 0
     @State private var images: [URL] = []
-    
+
     @State private var selectedPhotos: [PhotosPickerItem] = []
+    @State private var uploadedURLs: [String] = []
     @State private var showPhotoPicker = false
     @State private var isLoading = false
+    @State private var isLoadingImage = false
     
-    @State private var name = ""
-    @State private var age = ""
-    @State private var gender = ""
-    @State private var type = ""
-    
-    @State private var breed = ""
-    @State private var color = ""
-    @State private var size = ""
-    @State private var tags: [String] = []
-    @State private var description = ""
-    
+    @State private var animal = Animal.empty
     
     @Environment(\.toast) var toast
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
-    @EnvironmentObject var firebaseStorage: FirebaseStorageProvider
+    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    
+    var filteredBreeds: [String] {
+        guard let type = AnimalType.fromLocalized(animal.type) else {
+            return [Breed.localized(.mixed)]
+        }
+        return Breed.localizedByType(type)
+    }
+    
+    var filteredTags: [String] {
+        guard let type = AnimalType.fromLocalized(animal.type) else {
+            return [AnimalTag.localized(.neutered), AnimalTag.localized(.vaccinated)]
+        }
+        return AnimalTag.localizedByType(type)
+    }
 
     var formElements: [FormElement] {
         [
-            .textField(title: "Nome", placeholder: "Digite o nome", binding: $name),
-            .textField(title: "Idade", placeholder: "Digite a idade", binding: $age, keyboard: .numberPad),
-            .selectable(title: "Gênero", options: [Gender.localized(.male), Gender.localized(.female)], binding: $gender),
-            .selectable(title: "Tipo", options: [AnimalType.localized(.cat), AnimalType.localized(.dog)], binding: $type),
-            .dropdown(title: "Raça", options: Breed.allLocalized, binding: $breed),
-            .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $color),
-            .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $size),
-            .multiselection(title: "Caracteristicas", options: AnimalTag.allLocalized, binding: $tags),
-            .textEditor(title: "Descrição", binding: $description)
+            .textField(title: "Nome", placeholder: "Digite o nome", binding: $animal.name),
+            .textField(title: "Idade", placeholder: "Digite a idade", binding: $animal.age, keyboard: .numberPad),
+            .selectable(title: "Gênero", options: [Gender.localized(.male), Gender.localized(.female)], binding: $animal.gender),
+            .selectable(title: "Tipo", options: [AnimalType.localized(.cat), AnimalType.localized(.dog)], binding: $animal.type),
+            .dropdown(title: "Raça", options: filteredBreeds, binding: $animal.breed),
+            .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $animal.color),
+            .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $animal.size),
+            .multiselection(title: "Caracteristicas", options: filteredTags, binding: $animal.tags),
+            .textEditor(title: "Descrição", binding: $animal.description)
         ]
     }
 
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.medium.rawValue) {
-                ZStack {
-                    if images.isEmpty {
-                        RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(height: 250)
-                            .overlay(
-                                Image(systemName: "plus")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.gray)
-                            )
-                            .onTapGesture {
-                                showPhotoPicker = true
-                            }
-                    } else {
-                        ImageCarousel(
-                            images: images,
-                            selectedIndex: $selectedImageIndex,
-                            frame: CGSize(width: UIScreen.main.bounds.width, height: 250)
-                        )
-                        .onTapGesture {
-                            showPhotoPicker = true
-                        }
-                    }
-                }
+                ImageSelectorView(images: images,
+                                  selectedIndex: $selectedImageIndex,
+                                  showPhotoPicker: $showPhotoPicker,
+                                  isLoading: isLoadingImage)
 
                 DynamicFormView(elements: formElements)
                     .padding(.horizontal)
                 
                 Button(action: {
-                    if validateFields() {
-                        isLoading = true
-                        var animal = Animal(
-                            name: name,
-                            age: age,
-                            gender: gender,
-                            type: type,
-                            breed: breed,
-                            color: color,
-                            description: description,
-                            tags: tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
-                        )
-                        
-                        Task {
-                            do {
-                                var uploadedURLs: [String] = []
-                                
-                                for imageURL in images {
-                                    let data = try Data(contentsOf: imageURL)
-                                    if let uiImage = UIImage(data: data) {
-                                        let resized = uiImage.resized(toMax: 1024)
-                                        if let compressedData = resized.jpegData(compressionQuality: 0.5) {
-                                            let fileName = "animals/\(animal.id)/\(UUID().uuidString).jpg"
-                                            let url = try await firebaseStorage.uploadFile(data: compressedData, path: fileName)
-                                            uploadedURLs.append(url.absoluteString)
-                                        }
-                                    }
-                                }
-                                
-                                animal.photos = uploadedURLs
-                                try await firestoreProvider.add(animal, to: "animals")
-                                toast("animal adicionado com sucesso!", .success)
-                                isLoading = false
-                                navigator.dismiss()
-                            } catch {
-                                toast("erro ao salvar!", .error)
-                                isLoading = false
-                            }
-                        }
-                    } else {
-                        toast("Preencha todos os campos obrigatórios!", .error)
-                    }
+                    addAnimal()
                 }) {
-                    if isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .frame(maxWidth: .infinity)
-                    } else {
-                        Text("Cadastrar")
-                            .frame(maxWidth: .infinity)
-                    }
+                    Text("Cadastrar")
                 }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
                 .padding(.horizontal)
                 .padding(.top, Padding.medium.rawValue)
                 .disabled(isLoading)
@@ -146,22 +84,20 @@ struct AddAnimalView: View {
             matching: .images,
             photoLibrary: .shared()
         )
-        .onChange(of: selectedPhotos) { newItems in
+        .onChange(of: selectedPhotos) { _, newItems in
             Task {
-                var newURLs: [URL] = []
-                
+                isLoadingImage = true
+                images.removeAll()
                 for item in newItems {
-                    if let data = try? await item.loadTransferable(type: Data.self),
-                       let uiImage = UIImage(data: data),
-                       let path = saveImageToTemp(uiImage) {
-                        newURLs.append(path)
-                    }
+                    await loadImage(from: item)
                 }
-                
-                // sobrescreve mantendo consistência com o que foi selecionado
-                images = newURLs
-                selectedImageIndex = images.count - 1
+                selectedImageIndex = max(images.count - 1, 0)
+                isLoadingImage = false
             }
+        }
+        .onChange(of: animal.type) { _, _ in
+            animal.breed = ""
+            animal.tags.removeAll()
         }
     }
     
@@ -178,12 +114,68 @@ struct AddAnimalView: View {
         }
     }
     
-    func validateFields() -> Bool {
-        if name.isEmpty || age.isEmpty || gender.isEmpty || type.isEmpty ||
-            breed.isEmpty || color.isEmpty || size.isEmpty || description.isEmpty || images.isEmpty {
-            return false
+    
+    @MainActor
+    func loadImage(from item: PhotosPickerItem) async {
+        do {
+            if let data = try await item.loadTransferable(type: Data.self),
+               let uiImage = UIImage(data: data),
+               let path = saveImageToTemp(uiImage) {
+                images.append(path)
+            }
+        } catch {
+            print("Erro ao carregar imagem: \(error)")
+        }
+    }
+    
+    func uploadImage(imageURL: URL) async throws {
+        let data = try Data(contentsOf: imageURL)
+        if let uiImage = UIImage(data: data) {
+            let resized = uiImage.resized(toMax: 1024)
+            if let compressedData = resized.jpegData(compressionQuality: 0.5), let id = animal.id {
+                let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
+                let url = try await firebaseStorageProvider.uploadFile(data: compressedData, path: fileName)
+                uploadedURLs.append(url.absoluteString)
+            }
+        }
+    }
+    
+    func validateFields(of animal: Animal) -> Bool {
+        let mirror = Mirror(reflecting: animal)
+
+        for (_, value) in mirror.children {
+            if let str = value as? String {
+                if str.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    return false
+                }
+            }
         }
         return true
+    }
+
+    func addAnimal() {
+        if validateFields(of: animal) {
+            isLoading = true
+            
+            Task {
+                do {
+                    for imageURL in images {
+                        try await uploadImage(imageURL: imageURL)
+                    }
+                    
+                    animal.photos = uploadedURLs
+                    _ = try await firestoreProvider.add(animal, to: "animals", withID: animal.id)
+                    toast("animal adicionado com sucesso!", .success)
+                    isLoading = false
+                    navigator.dismiss()
+                } catch {
+                    toast("erro ao salvar!", .error)
+                    isLoading = false
+                }
+            }
+        } else {
+            toast("Preencha todos os campos obrigatórios!", .error)
+        }
     }
 }
 

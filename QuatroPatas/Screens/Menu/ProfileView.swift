@@ -18,8 +18,6 @@ struct MenuView: View {
     
     var body: some View {
         ScrollView {
-            UserProfileCard(name: user.name)
-                .padding()
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
                 CardView(title: "Meus Animais", route: .animalsList)
                 CardView(title: "Doe", route: .donate)

@@ -5,7 +5,20 @@
 
     },
     "Adotar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adopt"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adotar"
+          }
+        }
+      }
     },
     "animalcolor.black" : {
       "extractionState" : "manual",
@@ -41,6 +54,91 @@
         }
       }
     },
+    "animalcolor.cream" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cream"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Creme"
+          }
+        }
+      }
+    },
+    "animalcolor.gray" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gray"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cinza"
+          }
+        }
+      }
+    },
+    "animalcolor.orange" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orange"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Laranja"
+          }
+        }
+      }
+    },
+    "animalcolor.tabby" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tabby"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tigrado"
+          }
+        }
+      }
+    },
+    "animalcolor.tricolor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tricolor"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tricolor"
+          }
+        }
+      }
+    },
     "animalcolor.white" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -71,142 +169,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Amarelo"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.filterbutton" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtrar"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.formtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "available"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "disponíveis"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.navigationtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtrar"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.sectionanimaltype" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dog or Cat?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cachorro ou Gato?"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.sectionbreed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Which Breed?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qual Raça?"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.sectioncolor" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Which Color?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Qual Cor?"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.sectiongender" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Male or Female?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Macho ou Fêmea?"
-          }
-        }
-      }
-    },
-    "animalfilterview.constants.sectionsize" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Which Size?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qual Porte?"
           }
         }
       }
@@ -262,6 +224,23 @@
         }
       }
     },
+    "animaltag.dewormed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dewormed"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vermifugado"
+          }
+        }
+      }
+    },
     "animaltag.felv" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -296,6 +275,23 @@
         }
       }
     },
+    "animaltag.microchipped" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microchipped"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Microchipado"
+          }
+        }
+      }
+    },
     "animaltag.neutered" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -308,7 +304,24 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Castrado"
+            "value" : "Castrado(a)"
+          }
+        }
+      }
+    },
+    "animaltag.specialneeds" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpecialNeeds"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cuidados Especiais"
           }
         }
       }
@@ -316,9 +329,15 @@
     "animaltag.vaccinated" : {
       "extractionState" : "manual",
       "localizations" : {
-        "pt-BR" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Vaccinated"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Vacinado(a)"
           }
         }
@@ -426,6 +445,91 @@
         }
       }
     },
+    "breed.beagle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beagle"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Beagle"
+          }
+        }
+      }
+    },
+    "breed.bordercollie" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Border Collie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Border Collie"
+          }
+        }
+      }
+    },
+    "breed.bulldog" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bulldog"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bulldog"
+          }
+        }
+      }
+    },
+    "breed.dalmata" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dalmata"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dalmata"
+          }
+        }
+      }
+    },
+    "breed.golden" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golden"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Golden"
+          }
+        }
+      }
+    },
     "breed.labrador" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -439,6 +543,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Labrador"
+          }
+        }
+      }
+    },
+    "breed.mainecoon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mainecoon"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mainecoon"
           }
         }
       }
@@ -460,6 +581,40 @@
         }
       }
     },
+    "breed.persian" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persian"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Persa"
+          }
+        }
+      }
+    },
+    "breed.poodle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poodle"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Poodle"
+          }
+        }
+      }
+    },
     "breed.siamese" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -472,49 +627,150 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Siames"
+            "value" : "Siamês"
           }
         }
       }
     },
     "Buscar todos" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search all"
+          }
+        }
+      }
     },
     "Cadastrar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register"
+          }
+        }
+      }
     },
     "Cadastrar Animal" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register Animal"
+          }
+        }
+      }
+    },
+    "Carregando fotos..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading photos…"
+          }
+        }
+      }
     },
     "Cor" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        }
+      }
     },
     "Descrição" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
     },
     "Digite seu email" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type your e-mail"
+          }
+        }
+      }
     },
     "Digite seu telefone" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type your phone"
+          }
+        }
+      }
     },
     "Digite sua idade" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type your age"
+          }
+        }
+      }
     },
     "Digite sua resposta" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type your answer"
+          }
+        }
+      }
     },
     "Enviar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send"
+          }
+        }
+      }
     },
     "Este campo é obrigatório" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is a required field!"
+          }
+        }
+      }
     },
     "Filtrar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        }
+      }
     },
     "Formulário de adoção" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adoption Form"
+          }
+        }
+      }
     },
     "gender.female" : {
       "extractionState" : "manual",
@@ -551,64 +807,94 @@
       }
     },
     "Hmmm... \nNão tem nada por aqui!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There’s nothing here!"
+          }
+        }
+      }
     },
     "Idade" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Age"
+          }
+        }
+      }
     },
     "Meus Animais" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Animals"
+          }
+        }
+      }
     },
     "Nome" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
     },
     "Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.\n\nLembre-se que adotar um animal requer muita responsabilidade." : {
 
     },
-    "profilecard.happyendings" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finais Felizes"
-          }
-        }
-      }
-    },
-    "profilecard.termsofservice" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Termos de Serviço"
-          }
-        }
-      }
-    },
-    "profilecard.whoweare" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quem Somos"
-          }
-        }
-      }
-    },
     "Próximo" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
     },
     "Raça" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Breed"
+          }
+        }
+      }
+    },
+    "sphynx.sphynx" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sphynx"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sphynx"
+          }
+        }
+      }
     },
     "Tamanho" : {
-
-    },
-    "ver perfil" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -10,4 +10,9 @@ enum AnimalColor: Localizable, Codable {
     case blackAndWhite
     case white
     case yellow
+    case gray
+    case orange
+    case cream
+    case tabby
+    case tricolor
 }

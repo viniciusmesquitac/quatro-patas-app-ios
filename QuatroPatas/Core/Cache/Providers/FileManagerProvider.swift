@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class FileManagerProvider: StorageProvider {
+final class FileManagerProvider: SACache {
     private let fileManager = FileManager.default
     private let directory: URL
 

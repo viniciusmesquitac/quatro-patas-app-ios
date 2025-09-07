@@ -7,9 +7,9 @@
 
 @propertyWrapper
 struct CacheProvider {
-    private let provider: any StorageProvider
+    private let provider: any SACache
 
-    var wrappedValue: any StorageProvider {
+    var wrappedValue: any SACache {
         provider
     }
 

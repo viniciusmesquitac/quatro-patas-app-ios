@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserDefaultsProvider: StorageProvider {
+final class UserDefaultsProvider: SACache {
     private let defaults: UserDefaults
 
     init(suiteName: String? = nil) {

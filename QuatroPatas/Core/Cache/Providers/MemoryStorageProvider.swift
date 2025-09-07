@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MemoryStorageProvider: StorageProvider {
+final class MemoryStorageProvider: SACache {
 
     private let cache = NSCache<NSString, AnyObject>()
     

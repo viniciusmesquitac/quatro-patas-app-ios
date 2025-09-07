@@ -9,15 +9,19 @@
 
 struct Animal: Hashable, Identifiable, Sendable, Codable {
     @DocumentID var id: String? = UUID().uuidString
-    let name: String
+    var name: String
     var photos: [String] = []
-    let age: String
-    let gender: String
-    let type: String
-    let breed: String
-    let color: String
-    var size: String? = nil
-    let description: String
+    var age: String
+    var gender: String
+    var type: String
+    var breed: String
+    var color: String
+    var size: String
+    var description: String
     var status: String?
     var tags: [String] = []
+}
+
+extension Animal {
+    static let empty = Animal(name: "", age: "", gender: "", type: "", breed: "", color: "", size: "", description: "")
 }
