@@ -21,6 +21,7 @@ struct RouteDestinationView: View {
         case .donate: DonateView()
         case .animalsList: AnimalsListView()
         case .addAnimal: AddAnimalView()
+        case .edit(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months)
         }
     }
 }

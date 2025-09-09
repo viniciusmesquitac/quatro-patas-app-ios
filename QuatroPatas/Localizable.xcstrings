@@ -17,6 +17,9 @@
         }
       }
     },
+    "Adicionar" : {
+
+    },
     "Adotar" : {
       "localizations" : {
         "en" : {
@@ -260,13 +263,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Felv"
+            "value" : "FeLV"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Felv"
+            "value" : "FeLV"
           }
         }
       }
@@ -277,13 +280,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fiv"
+            "value" : "FIV"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fiv"
+            "value" : "FIV"
           }
         }
       }
@@ -765,6 +768,9 @@
         }
       }
     },
+    "Editar Animal" : {
+
+    },
     "Enviar" : {
       "localizations" : {
         "en" : {
@@ -904,6 +910,9 @@
           }
         }
       }
+    },
+    "Salvar" : {
+
     },
     "Tamanho" : {
       "localizations" : {

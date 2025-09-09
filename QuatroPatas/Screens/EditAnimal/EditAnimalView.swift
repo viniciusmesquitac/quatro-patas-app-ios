@@ -1,14 +1,14 @@
 //
-//  AddAnimalView.swift
+//  EditAnimalView.swift
 //  QuatroPatas
 //
-//  Created by Vinicius Mesquita Coelho on 02/09/25.
+//  Created by Vinicius Mesquita Coelho on 07/09/25.
 //
 
 import SwiftUI
 import PhotosUI
 
-struct AddAnimalView: View {
+struct EditAnimalView: View {
 
     @State private var selectedImageIndex = 0
     @State private var images: [URL] = []
@@ -18,16 +18,16 @@ struct AddAnimalView: View {
     @State private var showPhotoPicker = false
     @State private var isLoading = false
     @State private var isLoadingImage = false
-    
-    @State private var animal = Animal.empty
+
+    @State public var animal: Animal
     
     @Environment(\.toast) var toast
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
     @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
 
-    @State private var years = 0
-    @State private var months = 0
+    @State var years: Int
+    @State var months: Int
 
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
@@ -47,8 +47,8 @@ struct AddAnimalView: View {
         [
             .textField(title: "Nome", placeholder: "Digite o nome", binding: $animal.name),
             .agePicker(years: $years, months: $months),
-            .selectable(title: "Gênero", options: [Gender.localized(.male), Gender.localized(.female)], binding: $animal.gender),
-            .selectable(title: "Tipo", options: [AnimalType.localized(.cat), AnimalType.localized(.dog)], binding: $animal.type),
+            .selectable(title: "Gênero", options: Gender.allLocalized, binding: $animal.gender),
+            .selectable(title: "Tipo", options: AnimalType.allLocalized, binding: $animal.type),
             .dropdown(title: "Raça", options: filteredBreeds, binding: $animal.breed),
             .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $animal.color),
             .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $animal.size),
@@ -60,18 +60,28 @@ struct AddAnimalView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.medium.rawValue) {
-                ImageSelectorView(images: images,
-                                  selectedIndex: $selectedImageIndex,
-                                  showPhotoPicker: $showPhotoPicker,
-                                  isLoading: isLoadingImage)
+                AnimalImagesCarousel(
+                    existingPhotos: $animal.photos,
+                    newImages: $images,
+                    selectedPhotos: $selectedPhotos,
+                    showPhotoPicker: $showPhotoPicker,
+                    selectedIndex: $selectedImageIndex,
+                    onRemoveExisting: { index in
+                        animal.photos.remove(at: index)
+                    },
+                    onRemoveNew: { index in
+                        images.remove(at: index)
+                        selectedPhotos.remove(at: index)
+                    }
+                )
 
                 DynamicFormView(elements: formElements)
                     .padding(.horizontal, Padding.xxLarge.rawValue)
                 
                 Button(action: {
-                    addAnimal()
+                    editAnimal()
                 }) {
-                    Text("Cadastrar")
+                    Text("Salvar")
                 }
                 .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
                 .padding(.horizontal)
@@ -79,11 +89,11 @@ struct AddAnimalView: View {
                 .disabled(isLoading)
             }
         }
-        .navigationTitle("Cadastrar Animal")
+        .navigationTitle("Editar Animal")
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,
-            maxSelectionCount: 4,
+            maxSelectionCount: min(4, 4 - (animal.photos.count)),
             matching: .images,
             photoLibrary: .shared()
         )
@@ -169,7 +179,7 @@ struct AddAnimalView: View {
         return "0"
     }
 
-    func addAnimal() {
+    func editAnimal() {
         animal.age = calculateAgeTimestamp(years: years, months: months)
         if validateFields(of: animal) {
             isLoading = true
@@ -179,16 +189,18 @@ struct AddAnimalView: View {
                     for imageURL in images {
                         try await uploadImage(imageURL: imageURL)
                     }
+                    var copy = animal
+                    copy.gender = Gender.fromLocalized(animal.gender)?.caseName ?? String()
+                    copy.type   = AnimalType.fromLocalized(animal.type)?.caseName ?? String()
+                    copy.breed  = Breed.fromLocalized(animal.breed)?.caseName ?? String()
+                    copy.color  = AnimalColor.fromLocalized(animal.color)?.caseName ?? String()
+                    copy.size   = AnimalSize.fromLocalized(animal.size)?.caseName ?? String()
+                    copy.tags   = animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
 
-                    animal.gender = Gender.fromLocalized(animal.gender)?.caseName ?? String()
-                    animal.type   = AnimalType.fromLocalized(animal.type)?.caseName ?? String()
-                    animal.breed  = Breed.fromLocalized(animal.breed)?.caseName ?? String()
-                    animal.color  = AnimalColor.fromLocalized(animal.color)?.caseName ?? String()
-                    animal.size   = AnimalSize.fromLocalized(animal.size)?.caseName ?? String()
-                    animal.tags   = animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
-
-                    animal.photos = uploadedURLs
-                    _ = try await firestoreProvider.add(animal, to: "animals", withID: animal.id)
+                    // 👉 mantém as fotos existentes e adiciona as novas
+                    copy.photos = animal.photos + uploadedURLs
+                    
+                    _ = try await firestoreProvider.update(copy, in: "animals", withID: animal.id!)
                     toast("animal adicionado com sucesso!", .success)
                     isLoading = false
                     navigator.dismiss()
@@ -201,5 +213,6 @@ struct AddAnimalView: View {
             toast("Preencha todos os campos obrigatórios!", .error)
         }
     }
+
 }
 

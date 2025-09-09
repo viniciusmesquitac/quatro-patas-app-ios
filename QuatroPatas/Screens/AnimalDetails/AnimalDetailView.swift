@@ -112,6 +112,18 @@ struct AnimalDetailView: View {
                     navigator.present(sheet: .tip(Tip.felv))
                 })
             }
+            
+            if $0 == .dewormed {
+                return TagItem(tag: $0, action: {
+                    navigator.present(sheet: .tip(Tip.dewormed))
+                })
+            }
+            
+            if $0 == .fiv {
+                return TagItem(tag: $0, action: {
+                    navigator.present(sheet: .tip(Tip.fiv))
+                })
+            }
             return TagItem(tag: $0, action: {})
         }
     }

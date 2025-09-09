@@ -19,6 +19,7 @@ struct AnimalsView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
+    @Environment(\.toast) var toast
 
     @State private var isLoading = true
 
@@ -80,11 +81,13 @@ struct AnimalsView: View {
     
     func refresh() async {
          do {
+             isLoading = true
              try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
              await fetchAllAnimals()
              filter = AnimalFilter()
          } catch {
-             
+             toast(error.localizedDescription, .error)
+             isLoading = false
          }
      }
     
@@ -95,7 +98,8 @@ struct AnimalsView: View {
             self.animals = items
             isLoading = false
         } catch {
-            print("❌ Fetch error: \(error.localizedDescription)")
+            toast(error.localizedDescription, .error)
+            isLoading = false
         }
     }
 }

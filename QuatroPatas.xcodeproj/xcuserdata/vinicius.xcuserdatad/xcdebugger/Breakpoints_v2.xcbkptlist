@@ -50,22 +50,52 @@
             endingLineNumber = "474"
             landmarkName = "updateMetadata(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 827698f4059c96a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 6af2f78c3d2e2448"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;FirebaseStorage.StorageMetadata, Swift.Error&gt;) -&gt; () in FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B9122619-F2EF-43E0-961A-951A9368C39C"
+            uuid = "CE219C40-4D1D-40FA-9F24-B5BD52EC2316"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QuatroPatas/Screens/AnimalFilter/AnimalFilterView.swift"
+            filePath = "QuatroPatas/Screens/EditAnimal/EditAnimalView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "editAnimal()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

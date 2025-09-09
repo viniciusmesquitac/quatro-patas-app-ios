@@ -17,6 +17,7 @@ enum Route: Hashable, Identifiable {
     case donate
     case animalsList
     case addAnimal
+    case edit(Animal, Int, Int)
     
     var id: String { String(describing: self) }
 }

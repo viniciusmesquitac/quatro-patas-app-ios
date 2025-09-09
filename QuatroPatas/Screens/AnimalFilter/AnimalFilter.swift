@@ -21,20 +21,20 @@ extension AnimalFilter: Filter {
         items.filter { animal in
             var matches = true
             if let type = animalType {
-                matches = matches && animal.type == type
+                matches = matches && animal.type == AnimalType.fromLocalized(type)?.caseName
             }
             if let gender = gender {
-                matches = matches && animal.gender == gender
+                matches = matches && animal.gender == Gender.fromLocalized(gender)?.caseName
             }
             if let breed = breed {
-                matches = matches && animal.breed == breed
+                matches = matches && animal.breed == Breed.fromLocalized(breed)?.caseName
             }
             if let size = size {
-                matches = matches && animal.size == size
+                matches = matches && animal.size == AnimalSize.fromLocalized(size)?.caseName
             }
 
             if let color = color {
-                matches = matches && animal.color == color
+                matches = matches && animal.color == AnimalColor.fromLocalized(color)?.caseName
             }
 
             return matches

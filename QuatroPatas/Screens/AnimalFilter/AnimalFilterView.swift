@@ -45,7 +45,7 @@ struct AnimalFilterView: View {
         NavigationStack {
             ScrollView {
                 DynamicFormView(elements: filterElement)
-                    .padding(.horizontal)
+                    .padding(Padding.xxLarge.rawValue)
             }
             .safeAreaInset(edge: .bottom) {
                 VStack {

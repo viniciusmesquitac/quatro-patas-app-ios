@@ -52,6 +52,22 @@ class FirestoreProvider: ObservableObject {
         }
     }
 
+    func update<T: Codable & Sendable>(_ item: T, in collection: String, withID id: String) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            do {
+                try db.collection(collection).document(id).setData(from: item, merge: true) { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: id)
+                    }
+                }
+            } catch {
+                continuation.resume(throwing: error)
+            }
+        }
+    }
+
     func listen<T: Codable>(
         from collection: String,
         onUpdate: @escaping (Result<[T], Error>) -> Void
