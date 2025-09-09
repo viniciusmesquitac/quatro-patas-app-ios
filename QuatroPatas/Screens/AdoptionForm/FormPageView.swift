@@ -8,77 +8,65 @@
 import SwiftUI
 
 struct FormPageView: View {
-
+    
     @State var form: AdoptionForm
-
+    
     @EnvironmentObject var formManager: FormManager
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var requestProvider: RequestProvider
     @Environment(\.toast) var toast
-
+    
     var body: some View {
         ScrollView {
-            Text(form.sections[formManager.page].title)
-                .font(.title)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-            ForEach(form.sections[formManager.page].questions, id: \.id) { question in
-                QuestionView(
-                    question: question,
-                    answer: Binding(
-                        get: { formManager.answers[question.id] ?? "" },
-                        set: { formManager.answers[question.id] = $0 }
-                    )
-                ).padding()
-            }
-            
-            Button(action: {
-                formManager.didSubmit = true // marca que o usuário tentou enviar
-
-                let currentSection = form.sections[formManager.page]
-                
-                // Pega as obrigatórias que não foram respondidas
-                let emptyQuestions = currentSection.questions
-                    .filter { (formManager.answers[$0.id] ?? "").isEmpty }
-                    .map { $0.id }
-                
-                if emptyQuestions.isEmpty {
-                    // limpa erros
-                    formManager.errors.removeAll()
-                    
-                    if form.sections.indices.contains(formManager.page + 1) {
-                        formManager.page += 1
-                        self.navigator.navigate(to: .formPage(form))
-                    } else {
-                        sendForm()
+            VStack {
+                Text(form.sections[formManager.page].title)
+                    .font(.title)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(spacing: 8) {
+                    ForEach(form.sections[formManager.page].questions, id: \.id) { question in
+                        QuestionView(
+                            question: question,
+                            answer: Binding(
+                                get: { formManager.answers[question.id] ?? "" },
+                                set: { formManager.answers[question.id] = $0 }
+                            )
+                        )
                     }
-                } else {
-                    // marca erros
-                    toast("Campos obrigatórios precisam ser preenchidos!", .error)
-                    formManager.errors = Set(emptyQuestions)
                 }
-            }) {
-                Text(form.sections.indices.contains(formManager.page + 1) ? "Próximo" : "Enviar")
+                Button(action: {
+                    formManager.didSubmit = true // marca que o usuário tentou enviar
+                    
+                    let currentSection = form.sections[formManager.page]
+                    
+                    // Pega as obrigatórias que não foram respondidas
+                    let emptyQuestions = currentSection.questions
+                        .filter { (formManager.answers[$0.id] ?? "").isEmpty }
+                        .map { $0.id }
+                    
+                    if emptyQuestions.isEmpty {
+                        // limpa erros
+                        formManager.errors.removeAll()
+                        
+                        if form.sections.indices.contains(formManager.page + 1) {
+                            formManager.page += 1
+                            self.navigator.navigate(to: .formPage(form))
+                        } else {
+                            sendForm()
+                        }
+                    } else {
+                        // marca erros
+                        toast("Campos obrigatórios precisam ser preenchidos!", .error)
+                        formManager.errors = Set(emptyQuestions)
+                    }
+                }) {
+                    Text(form.sections.indices.contains(formManager.page + 1) ? "Próximo" : "Enviar")
+                }
+                .buttonStyle(PrimaryButtonStyle())
             }
-            .padding(.horizontal)
-            .buttonStyle(PrimaryButtonStyle())
-
         }
+        .padding(.horizontal)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            if formManager.page > 0 {
-                navigator.dismiss()
-                formManager.page -= 1
-                return
-            }
-            navigator.dismiss()
-        })
-        
-        .toolbarItem(icon: .close, placement: .topBarTrailing, action: {
-            navigator.popToRoot()
-        })
-        
     }
     
     private func sendForm() {

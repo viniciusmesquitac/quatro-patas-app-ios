@@ -106,7 +106,7 @@ struct AnimalFilterView: View {
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.primaryColor)
-                            .foregroundColor(.white)
+                            .foregroundColor(.neutralWhite)
                             .cornerRadius(CornerRadius.small.rawValue)
                     }
                 }

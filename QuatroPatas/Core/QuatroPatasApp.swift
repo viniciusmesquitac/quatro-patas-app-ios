@@ -28,9 +28,6 @@ struct QuatroPatasApp: App {
                 TabItem(label: .animals, icon: .paw) {
                     AnimalsView()
                 }
-                TabItem(label: .adoption, icon: .heart_filled) {
-                    AdoptionView()
-                }
                 TabItem(label: .menu, icon: .menu) {
                     MenuView(user: user)
                 }
@@ -38,7 +35,7 @@ struct QuatroPatasApp: App {
             .sheet(item: $navigator.presentedSheet) { sheet in
                 SheetDestinationView(sheet: sheet)
             }
-            .tabBarMinimizeBehavior(.onScrollDown)
+            //.tabBarMinimizeBehavior(.onScrollDown)
             .environmentObject(navigator)
             .environmentObject(requestProvider)
             .environmentObject(databaseProvider)

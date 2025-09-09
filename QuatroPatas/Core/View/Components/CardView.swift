@@ -19,30 +19,28 @@ struct CardView: View {
         Button(action: {
             navigator.navigate(to: route)
         }) {
-            ZStack {
-                // Fundo do card
+            VStack {
+                HStack {
+                    Image(systemName: icon.rawValue)
+                        .font(.system(size: 22))
+                        .foregroundStyle(Color.neutralWhite)
+                    Spacer()
+                }
+                Spacer()
+                HStack {
+                    Text(title)
+                        .foregroundStyle(Color.neutralWhite)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+            }
+            .padding()
+            .background {
                 Color.primaryColor
                     .cornerRadius(CornerRadius.medium.rawValue)
-
-                VStack {
-                    HStack {
-                        Image(systemName: icon.rawValue)
-                            .font(.system(size: 22))
-                            .foregroundStyle(Color.secundaryColor)
-                        Spacer()
-                    }
-                    Spacer()
-                    HStack {
-                        Text(title)
-                            .foregroundStyle(Color.secundaryColor)
-                            .multilineTextAlignment(.leading)
-                        Spacer()
-                    }
-                }
-                .padding()
             }
-            .frame(maxWidth: .infinity, minHeight: 162)
         }
         .buttonStyle(CardButtonStyle())
     }
+
 }

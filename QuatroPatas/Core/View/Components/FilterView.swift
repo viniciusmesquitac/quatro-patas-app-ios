@@ -17,21 +17,20 @@ struct FilterView<AnyFilter: Filter>: View {
                 ForEach(filter.values(), id: \.self) { item in
                     HStack(spacing: Spacing.medium.rawValue) {
                         Text(item)
-                            .foregroundColor(.primaryColor)
-                        
+                            .foregroundColor(.neutralWhite)
                         Button(action: {
                             withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
                                 filter.remove(value: item)
                             }
                         }) {
-                            SFIcon.image(.close, scale: .small)
+                            SFIcon.image(.close, scale: .small, color: .neutralWhite)
                         }
                         .buttonStyle(.plain)
                         
                     }
                     .padding(.vertical, Padding.medium.rawValue)
                     .padding(.horizontal, Padding.large.rawValue)
-                    .background(Color.secundaryColor)
+                    .background(Color.primaryColor)
                     .clipShape(Capsule())
                 }
             }

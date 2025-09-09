@@ -18,12 +18,15 @@ struct MenuView: View {
     
     var body: some View {
         ScrollView {
-            UserProfileCard(name: user.name)
-                .padding()
+//            UserProfileCard(name: user.name)
+//                .padding()
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-                CardView(title: "Meus Animais", route: .animalsList)
-                CardView(title: "Doe", route: .donate)
+                //CardView(title: "Meus Animais", route: .animalsList)
+                //CardView(title: "Doe", route: .donate)
                 CardView(title: "Formulário de Adoção", route: .adoptionForm)
+                if let url = URL(string: "https://4patasfortaleza.org") {
+                    CardView(title: "Sobre o abrigo", route: .webView(url))
+                }
             }.padding()
         }
         .navigationTitle(AppTab.localized(.menu))

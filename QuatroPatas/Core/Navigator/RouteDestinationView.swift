@@ -18,9 +18,10 @@ struct RouteDestinationView: View {
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form): FormPageView(form: form)
-        case .donate: DonateView()
+        //case .donate: DonateView()
         case .animalsList: AnimalsListView()
         case .addAnimal: AddAnimalView()
+        case .webView(let url): WebView(url)
         }
     }
 }
@@ -31,4 +32,23 @@ extension View {
             RouteDestinationView(route: route)
         }
     }
+}
+
+import WebKit
+
+struct WebView: UIViewRepresentable {
+    let url: URL
+    
+    init(_ url: URL) {
+        self.url = url
+    }
+    
+    func makeUIView(context: Context) -> some UIView {
+        let webView = WKWebView()
+        webView.load(URLRequest(url: url))
+        
+        return webView
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {}
 }
