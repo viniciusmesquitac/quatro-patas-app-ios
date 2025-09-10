@@ -21,7 +21,7 @@ struct RouteDestinationView: View {
         case .animalsList: AnimalsListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months)
-        case .webView(let url): WebView(url)
+        case .webView(let url): WebViewContainer(url: url)
         }
     }
 }

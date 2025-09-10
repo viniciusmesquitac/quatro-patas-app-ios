@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct CardView: View {
 
     var title: String
