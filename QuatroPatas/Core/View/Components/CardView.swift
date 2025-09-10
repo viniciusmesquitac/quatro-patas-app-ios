@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct CardView: View {
 
     var title: String
@@ -20,7 +19,6 @@ struct CardView: View {
             navigator.navigate(to: route)
         }) {
             ZStack {
-                // Fundo do card
                 Color.primaryColor
                     .cornerRadius(CornerRadius.medium.rawValue)
 
@@ -28,13 +26,14 @@ struct CardView: View {
                     HStack {
                         Image(systemName: icon.rawValue)
                             .font(.system(size: 22))
-                            .foregroundStyle(Color.secundaryColor)
+                            .foregroundStyle(Color.white)
                         Spacer()
                     }
                     Spacer()
                     HStack {
                         Text(title)
-                            .foregroundStyle(Color.secundaryColor)
+                            .foregroundStyle(Color.white)
+                            .font(.headline)
                             .multilineTextAlignment(.leading)
                         Spacer()
                     }

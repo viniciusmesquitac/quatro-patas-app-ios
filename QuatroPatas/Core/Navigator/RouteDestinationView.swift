@@ -18,10 +18,10 @@ struct RouteDestinationView: View {
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form): FormPageView(form: form)
-        case .donate: DonateView()
         case .animalsList: AnimalsListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months)
+        case .webView(let url): WebView(url)
         }
     }
 }

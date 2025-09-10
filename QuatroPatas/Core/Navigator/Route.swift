@@ -14,10 +14,10 @@ enum Route: Hashable, Identifiable {
     case adoption
     case adoptionForm
     case formPage(AdoptionForm)
-    case donate
     case animalsList
     case addAnimal
     case edit(Animal, Int, Int)
+    case webView(URL)
     
     var id: String { String(describing: self) }
 }

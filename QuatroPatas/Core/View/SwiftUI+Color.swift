@@ -13,6 +13,7 @@ extension Color {
     static let secundaryColor = Color(UIColor.systemPurple)
     static let label = Color(UIColor.customLabel)
     static let systemBackground = Color(UIColor.customBackground)
+    static let neutralWhite = Color(hex: "#FAFAFA")
 }
 
 extension Color {
