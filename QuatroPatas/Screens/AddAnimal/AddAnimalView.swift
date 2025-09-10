@@ -131,16 +131,30 @@ struct AddAnimalView: View {
         }
     }
     
-    func uploadImage(imageURL: URL) async throws {
-        let data = try Data(contentsOf: imageURL)
-        if let uiImage = UIImage(data: data) {
-            let resized = uiImage.resized(toMax: 1024)
-            if let compressedData = resized.jpegData(compressionQuality: 0.5), let id = animal.id {
-                let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
-                let url = try await firebaseStorageProvider.uploadFile(data: compressedData, path: fileName)
-                uploadedURLs.append(url.absoluteString)
+    func uploadImages(forAnimalId id: String) async throws -> [String] {
+        var uploadedURLs: [String] = []
+
+        for imageURL in images {
+            do {
+                let data = try Data(contentsOf: imageURL)
+                if let uiImage = UIImage(data: data) {
+                    let resized = uiImage.resized(toMax: 1024)
+                    if let compressedData = resized.jpegData(compressionQuality: 0.5) {
+                        let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
+                        let url = try await firebaseStorageProvider.uploadFile(
+                            data: compressedData,
+                            path: fileName
+                        )
+                        uploadedURLs.append(url.absoluteString)
+                    }
+                }
+            } catch {
+                print("Erro ao enviar imagem \(imageURL.lastPathComponent): \(error)")
+                throw error // interrompe se algum upload falhar
             }
         }
+
+        return uploadedURLs
     }
     
     func validateFields(of animal: Animal) -> Bool {
@@ -176,22 +190,31 @@ struct AddAnimalView: View {
             
             Task {
                 do {
-                    for imageURL in images {
-                        try await uploadImage(imageURL: imageURL)
-                    }
-
-                    animal.gender = Gender.fromLocalized(animal.gender)?.caseName ?? String()
-                    animal.type   = AnimalType.fromLocalized(animal.type)?.caseName ?? String()
-                    animal.breed  = Breed.fromLocalized(animal.breed)?.caseName ?? String()
-                    animal.color  = AnimalColor.fromLocalized(animal.color)?.caseName ?? String()
-                    animal.size   = AnimalSize.fromLocalized(animal.size)?.caseName ?? String()
-                    animal.tags   = animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
-
-                    animal.photos = uploadedURLs
-                    _ = try await firestoreProvider.add(animal, to: "animals", withID: animal.id)
-                    toast("animal adicionado com sucesso!", .success)
-                    isLoading = false
+                    let id = UUID().uuidString
+                    
+                    // 1️⃣ Faz upload de todas as imagens primeiro
+                    let uploaded = try await uploadImages(forAnimalId: id)
+                    
+                    // 2️⃣ Cria o animal já com as URLs das imagens
+                    let copy = Animal(
+                        id: id,
+                        name: animal.name,
+                        photos: uploaded,
+                        age: animal.age,
+                        gender: Gender.fromLocalized(animal.gender)?.caseName ?? "",
+                        type: AnimalType.fromLocalized(animal.type)?.caseName ?? "",
+                        breed: Breed.fromLocalized(animal.breed)?.caseName ?? "",
+                        color: AnimalColor.fromLocalized(animal.color)?.caseName ?? "",
+                        size: AnimalSize.fromLocalized(animal.size)?.caseName ?? "",
+                        description: animal.description,
+                        status: animal.status,
+                        tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
+                    )
+                    
+                    // 3️⃣ Salva no Firestore somente depois que tudo foi enviado
+                    _ = try await firestoreProvider.add(copy, to: "animals", withID: id)
                     navigator.dismiss()
+                    toast("Animal cadastrado com sucesso!", .success)
                 } catch {
                     toast("erro ao salvar!", .error)
                     isLoading = false
