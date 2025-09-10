@@ -10,6 +10,7 @@ import SwiftUI
 struct AnimalDetailView: View {
     let animal: Animal
     @EnvironmentObject var navigator: Navigator
+    @CacheProvider(type: .fileManager) var cacheProvider
     
     @Environment(\.toast) private var toast
     
@@ -81,11 +82,22 @@ struct AnimalDetailView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarMenu(icon: .more, placement: .topBarTrailing, actions: [
-            ToolbarMenuAction(label: "Compartilhar", icon: .share) {
-                navigator.present(sheet: .share(items: []))
-            },
-        ])
+        .toolbarItem(icon: .share, placement: .topBarTrailing, action: {
+            Task {
+                var items: [Any] = []
+                let message = "🐾 Conheça \(animal.name)! Ele(a) está disponível para adoção pelo @4patasfortaleza. ❤️\n\nAdotar é salvar uma vida!"
+                items.append(message)
+                
+                if let url = URL(string: animal.photos.first ?? String()),
+                   let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
+                   let uiImage = UIImage(data: imageData) {
+                    items.append(uiImage)
+                }
+                navigator.present(sheet: .share(items: items))
+                
+            }
+            
+        })
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
@@ -169,6 +181,14 @@ struct AnimalDetailView: View {
             toast("Adicionado aos favoritos!", .success)
         }
         isFavorite.toggle()
+    }
+    
+    func getToken(url: URL) -> String {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
+            return url.absoluteString
+        }
+        return token
     }
 
 }
