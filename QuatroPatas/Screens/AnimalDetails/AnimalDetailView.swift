@@ -36,7 +36,7 @@ struct AnimalDetailView: View {
                         Button(action: {
                             toggleFavorite()
                         }) {
-                            SFIcon.image(isFavorite ? .heart_filled : .heart, scale: .medium, color: isFavorite ? .red : .black)
+                            SFIcon.image(isFavorite ? .heart_filled : .heart, scale: .large, color: isFavorite ? .red : .black)
                         }
                         .buttonStyle(CircleButtonStyle())
                         .offset(x: -25, y: 25)

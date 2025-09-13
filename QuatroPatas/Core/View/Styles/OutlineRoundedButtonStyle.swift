@@ -13,7 +13,7 @@ struct OutlineRoundedButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding()
-            .background(Color.clear)
+            .background(Color.customBackground)
             .cornerRadius(CornerRadius.large.rawValue)
             .foregroundStyle(Color.customLabel)
             .contentShape(Rectangle())

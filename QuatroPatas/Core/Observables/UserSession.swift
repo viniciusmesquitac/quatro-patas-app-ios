@@ -14,27 +14,37 @@ class UserSession: ObservableObject {
     @Published var user: User? = nil
     @Published var isLoggedIn: Bool = false
 
-    init() {
-        checkAuth()
-    }
-
     /// Checa se já existe usuário logado no Firebase
-    func checkAuth() {
+    func checkAuth() async {
         if let currentUser = Auth.auth().currentUser {
-            self.user = User(
-                id: currentUser.uid,
-                name: currentUser.displayName ?? "Usuário",
-                email: currentUser.email ?? "",
-                type: .adopter // ou buscar do Firestore
-            )
-            self.isLoggedIn = true
+            do {
+                // força revalidação no servidor
+                try await currentUser.reload()
+
+                // depois do reload o currentUser pode ter sido invalidado
+                if Auth.auth().currentUser == nil {
+                    // usuário não existe mais
+                    self.user = nil
+                    self.isLoggedIn = false
+                    return
+                }
+                // se ainda existe, monta o seu User
+                
+                let user: User? = try await FirestoreProvider().fetchDocument(from: "users", id: currentUser.uid)
+                self.user = user
+                self.isLoggedIn = true
+            } catch {
+                // erro no reload (ex.: usuário removido, token inválido, etc)
+                print("Erro ao recarregar usuário: \(error.localizedDescription)")
+                self.user = nil
+                self.isLoggedIn = false
+            }
         } else {
             self.user = nil
             self.isLoggedIn = false
         }
     }
 
-    /// Atualiza sessão quando login for feito
     func login(user: FirebaseAuth.User) {
         self.user = User(
             id: user.uid,
@@ -45,7 +55,6 @@ class UserSession: ObservableObject {
         self.isLoggedIn = true
     }
 
-    /// Faz logout
     func logout() {
         do {
             try Auth.auth().signOut()

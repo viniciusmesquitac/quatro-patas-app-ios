@@ -19,110 +19,64 @@ struct LoginView: View {
     @State private var nonce: String?
     @State private var isLoading: Bool = false
     @Environment(\.colorScheme) private var scheme
-
+    
     var body: some View {
-        NavigationStack {
-            ZStack {
-                VStack {
-                    Rectangle()
-                        .fill(Color.primaryColor)
-                        .frame(height: UIScreen.main.bounds.height / 3)
-                        .ignoresSafeArea(edges: .top)
-                    Spacer()
-                }
-                
-                VStack(spacing: Spacing.large.rawValue) {
-                    Spacer(minLength: UIScreen.main.bounds.height / 6)
-                    LoginCardView {
-                        Text("Encontre seu\nnovo melhor amigo 🐾")
-                            .font(.title2.bold())
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.primary)
-                            .padding(.horizontal, Padding.large.rawValue)
-                        
-                        SignInWithAppleButton(.signIn) { request in
-                            let nonce = randomNonceString()
-                            self.nonce = nonce
-                            request.requestedScopes = [.fullName, .email]
-                            request.nonce = sha256(nonce)
-                        } onCompletion: { result in
-                            switch result {
-                            case .success(let authorization):
-                                loginWithFirebase(authorization: authorization)
-                            case .failure(let error):
-                                toast(error.localizedDescription, .error)
-                            }
-                        }
-                        .signInWithAppleButtonStyle(scheme == .dark ? .white : .black)
-                        .frame(height: 50)
-                        .cornerRadius(CornerRadius.large.rawValue)
-                        .padding(.horizontal, Padding.xxLarge.rawValue)
-                        
-                        Button("Criar uma conta") {
-                            // ação para criar conta / cadastro
-                        }
-                        .padding(.horizontal, Padding.xxLarge.rawValue)
-                        .buttonStyle(PrimaryButtonStyle())
-                        
-                        // Entrar
-                        Button("Entrar") {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                withAnimation(.easeInOut) {
-                                    userSession.isLoggedIn = true
-                                }
-                            }
-                        }
-                        .padding(.horizontal, Padding.xxLarge.rawValue)
-                        .buttonStyle(OutlineRoundedButtonStyle())
-                        
-                        Text("Ao continuar, você concorda com nossos termos de uso e política de privacidade.")
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal, Padding.xxLarge.rawValue)
-                            .padding(.top, Padding.medium.rawValue)
-                    }
-                    Spacer()
-                    Spacer()
-                }
-                .toolbarItem(icon: .close, placement: .topBarTrailing) {
-                    navigator.dismiss()
-                }
-            }
-            .overlay {
-                if isLoading {
-                    LoadingView()
-                }
-            }
+        VStack {
+            Rectangle()
+                .fill(Color.primaryColor)
+                .frame(height: UIScreen.main.bounds.height / 2)
+                .ignoresSafeArea(edges: .top)
+            Spacer()
         }
-    }
-    
-    
-    @ViewBuilder
-    func LoginCardView<Content: View>(
-        @ViewBuilder content: () -> Content
-    ) -> some View {
+        
         VStack(spacing: Spacing.large.rawValue) {
-            content()
-        }
-        .padding(.vertical, Padding.medium.rawValue)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
-                .fill(Color.customBackground)
-                .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
-        )
-        .padding(.horizontal, Padding.medium.rawValue)
-    }
-    
-    
-    @ViewBuilder
-    func LoadingView() -> some View {
-        ZStack {
-            Rectangle().fill(.ultraThinMaterial)
-            ProgressView().frame(width: 45, height: 45)
-                .background(.background, in: .rect(cornerRadius: 5))
             
+            SignInWithAppleButton(.signIn) { request in
+                let nonce = randomNonceString()
+                self.nonce = nonce
+                request.requestedScopes = [.fullName, .email]
+                request.nonce = sha256(nonce)
+            } onCompletion: { result in
+                switch result {
+                case .success(let authorization):
+                    loginWithFirebase(authorization: authorization)
+                case .failure(let error):
+                    toast(error.localizedDescription, .error)
+                }
+            }
+            .signInWithAppleButtonStyle(scheme == .dark ? .white : .black)
+            .frame(height: 50)
+            .cornerRadius(CornerRadius.large.rawValue)
+            .padding(.horizontal, Padding.xxLarge.rawValue)
+            
+            Button("Criar uma conta") {
+                navigator.navigate(to: .register)
+            }
+            .padding(.horizontal, Padding.xxLarge.rawValue)
+            .buttonStyle(PrimaryButtonStyle())
+
+            Button("Entrar") {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation(.easeInOut) {
+                        navigator.navigate(to: .loginWithEmailAndPassword)
+                    }
+                }
+            }
+            .padding(.horizontal, Padding.xxLarge.rawValue)
+            .buttonStyle(OutlineRoundedButtonStyle())
+            
+            Text("Ao continuar, você concorda com nossos termos de uso e política de privacidade.")
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.secondary)
+                .padding(.horizontal, Padding.xxLarge.rawValue)
+                .padding(.top, Padding.medium.rawValue)
+            Spacer()
+        }
+        .overlay {
+            if isLoading {
+                LoadingView()
+            }
         }
     }
     
@@ -162,35 +116,35 @@ struct LoginView: View {
     }
     
     private func randomNonceString(length: Int = 32) -> String {
-      precondition(length > 0)
-      var randomBytes = [UInt8](repeating: 0, count: length)
-      let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
-      if errorCode != errSecSuccess {
-        fatalError(
-          "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-        )
-      }
-
-      let charset: [Character] =
+        precondition(length > 0)
+        var randomBytes = [UInt8](repeating: 0, count: length)
+        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+        if errorCode != errSecSuccess {
+            fatalError(
+                "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+            )
+        }
+        
+        let charset: [Character] =
         Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-
-      let nonce = randomBytes.map { byte in
-        // Pick a random character from the set, wrapping around if needed.
-        charset[Int(byte) % charset.count]
-      }
-
-      return String(nonce)
+        
+        let nonce = randomBytes.map { byte in
+            // Pick a random character from the set, wrapping around if needed.
+            charset[Int(byte) % charset.count]
+        }
+        
+        return String(nonce)
     }
     
     @available(iOS 13, *)
     private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        String(format: "%02x", $0)
-      }.joined()
-
-      return hashString
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
     }
-
+    
 }

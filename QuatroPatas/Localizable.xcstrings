@@ -399,6 +399,9 @@
     "Ao continuar, você concorda com nossos termos de uso e política de privacidade." : {
 
     },
+    "Apelido" : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -780,7 +783,7 @@
     "Editar Animal" : {
 
     },
-    "Encontre seu\nnovo melhor amigo 🐾" : {
+    "Email" : {
 
     },
     "Entrar" : {
@@ -883,6 +886,9 @@
         }
       }
     },
+    "Limpar" : {
+
+    },
     "Meses" : {
 
     },
@@ -929,10 +935,16 @@
         }
       }
     },
+    "Repetir senha" : {
+
+    },
     "Sair" : {
 
     },
     "Salvar" : {
+
+    },
+    "Senha" : {
 
     },
     "Tamanho" : {
@@ -944,6 +956,9 @@
           }
         }
       }
+    },
+    "Vamos Lá" : {
+
     },
     "Você tem certeza que quer sair?" : {
 

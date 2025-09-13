@@ -20,7 +20,7 @@ struct LogoutView: View {
                 navigator.dismiss()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation {
-                        userSession.isLoggedIn = false
+                        userSession.logout()
                     }
                 }
             }
@@ -33,9 +33,8 @@ struct LogoutView: View {
 
         }
         .interactiveDismissDisabled(false)
-        .presentationDetents([.fraction(0.3)]) // 30% da tela
-        .presentationCornerRadius(24)          // bordas arredondadas
-//        .presentationBackgroundInteraction(.enabled)
+        .presentationDetents([.fraction(0.3)])
+        .presentationCornerRadius(24)
         .padding()
     }
 }

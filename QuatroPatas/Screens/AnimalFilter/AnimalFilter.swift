@@ -55,4 +55,13 @@ extension AnimalFilter: Filter {
         }
     }
     
+    mutating func removeAll() {
+        animalType = nil
+        gender = nil
+        breed = nil
+        size = nil
+        color = nil
+    }
+    
+    
 }

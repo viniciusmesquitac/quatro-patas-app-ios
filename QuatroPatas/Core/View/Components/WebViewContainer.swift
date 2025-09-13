@@ -16,7 +16,7 @@ struct WebViewContainer: View {
             WebView(url, isLoading: $isLoading)
             
             if isLoading {
-                DotsLoader()
+                LoadingDotsView()
             }
         }
     }

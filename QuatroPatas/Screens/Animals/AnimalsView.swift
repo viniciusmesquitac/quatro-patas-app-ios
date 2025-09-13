@@ -41,9 +41,7 @@ struct AnimalsView: View {
             }
 
             if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .transition(.opacity)
+                LoadingDotsView()
             }
         }.refreshable {
             await refresh()

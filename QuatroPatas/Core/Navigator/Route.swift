@@ -18,6 +18,8 @@ enum Route: Hashable, Identifiable {
     case addAnimal
     case edit(Animal, Int, Int)
     case webView(URL)
+    case register
+    case loginWithEmailAndPassword
     
     var id: String { String(describing: self) }
 }

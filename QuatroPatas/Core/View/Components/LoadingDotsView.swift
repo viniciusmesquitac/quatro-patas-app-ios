@@ -1,5 +1,5 @@
 //
-//  DotsLoader.swift
+//  LoadingDotsView.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 01/09/25.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct DotsLoader: View {
+struct LoadingDotsView: View {
     @State private var scales: [CGFloat] = [1, 1, 1]
     
     let dotCount = 3
@@ -42,6 +42,6 @@ struct DotsLoader: View {
 
 struct DotsLoader_Previews: PreviewProvider {
     static var previews: some View {
-        DotsLoader()
+        LoadingDotsView()
     }
 }

@@ -11,6 +11,7 @@ protocol Filter {
     func apply(to items: [Item]) -> [Item]
     func values() -> [String]
     mutating func remove(value: String)
+    mutating func removeAll()
 }
 
 extension Filter {

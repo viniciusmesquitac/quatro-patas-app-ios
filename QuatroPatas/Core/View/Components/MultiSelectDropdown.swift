@@ -64,7 +64,7 @@ struct MultiSelectDropdown: View {
                 }
             }
         }
-        .background(Color.white)
+        .background(Color.gray.opacity(0.2))
         .cornerRadius(12)
         .shadow(radius: 4)
     }

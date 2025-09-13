@@ -16,6 +16,13 @@ struct AnimalFilterView: View {
         filter.apply(to: animals)
     }
     
+    var filteredBreeds: [String] {
+        guard let type = AnimalType.fromLocalized(filter.animalType ?? "") else {
+            return [Breed.localized(.mixed)]
+        }
+        return Breed.localizedByType(type)
+    }
+    
     var filterElement: [FormElement] {
         [
             .selectable(title: "Cachorro ou gato?", options: AnimalType.allLocalized, binding: Binding<String>(
@@ -30,7 +37,7 @@ struct AnimalFilterView: View {
                 get: { filter.size ?? "Selecione" },
                 set: { newValue in filter.size = newValue }
             )),
-            .dropdown(title: "Qual Raça?", options: Breed.allLocalized, binding: Binding(
+            .dropdown(title: "Qual Raça?", options: filteredBreeds, binding: Binding(
                 get: { filter.breed ?? "Selecione" },
                 set: { newValue in filter.breed = newValue }
             )),
@@ -48,11 +55,19 @@ struct AnimalFilterView: View {
                     .padding(Padding.xxLarge.rawValue)
             }
             .safeAreaInset(edge: .bottom) {
-                Button("Filtrar") {
-                    navigator.dismiss()
+                HStack {
+                    Button("Limpar") {
+                        filter.removeAll()
+                    }
+                    .padding(.leading, Padding.xxLarge.rawValue)
+                    .buttonStyle(OutlineRoundedButtonStyle())
+                    Spacer()
+                    Button("Filtrar") {
+                        navigator.dismiss()
+                    }
+                    .padding(.trailing, Padding.xxLarge.rawValue)
+                    .buttonStyle(PrimaryButtonStyle())
                 }
-                .padding(.horizontal, Padding.xxLarge.rawValue)
-                .buttonStyle(PrimaryButtonStyle())
             }
             .navigationTitle("Filtrar Animais")
             .navigationBarTitleDisplayMode(.inline)

@@ -19,6 +19,7 @@ struct QuatroPatasApp: App {
     @StateObject private var userSession = UserSession()
 
     @State private var isLoggedIn: Bool = false
+    @State private var isLoading: Bool = false
     
     init() {
         FirebaseApp.configure()
@@ -26,7 +27,7 @@ struct QuatroPatasApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
+            Group {
                 if userSession.isLoggedIn {
                     TabView {
                         TabItem(label: .animals, icon: .paw) {
@@ -39,12 +40,25 @@ struct QuatroPatasApp: App {
                     .sheet(item: $navigator.presentedSheet) { sheet in
                         SheetDestinationView(sheet: sheet)
                     }
-                    .id("loggedIn")
                     .transition(.move(edge: .trailing))
                 } else {
-                    LoginView()
-                        .id("login")
+                    NavigationStack(path: $navigator.path) {
+                        LoginView()
+                        .applyRoute()
                         .transition(.move(edge: .leading))
+                    }
+                }
+            }
+            .overlay {
+                if isLoading {
+                    LoadingView()
+                }
+            }
+            .onAppear {
+                Task {
+                    isLoading = true
+                    await userSession.checkAuth()
+                    isLoading = false
                 }
             }
             .animation(.easeInOut(duration: 0.5), value: userSession.isLoggedIn)

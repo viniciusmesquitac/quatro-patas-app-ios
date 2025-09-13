@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuView: View {
 
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var userSession: UserSession
 
     let columns = [
         GridItem(.flexible(), spacing: Spacing.large.rawValue),
@@ -30,7 +31,21 @@ struct MenuView: View {
                 CardView(title: "Sair") {
                     navigator.present(sheet: .logout)
                 }
-            }.padding()
+                
+                if userSession.user?.type == .admin {
+                    CardView(title: "Adicionar Animal") {
+                            navigator.navigate(to: .addAnimal)
+                        }
+                        .transition(.scale.combined(with: .opacity))
+                }
+            }
+            .animation(.spring(), value: userSession.user?.type)
+            .padding()
+        }
+        .onAppear {
+            Task {
+                await userSession.checkAuth()
+            }
         }
         .navigationTitle(AppTab.localized(.menu))
         .navigationBarTitleDisplayMode(.inline)
