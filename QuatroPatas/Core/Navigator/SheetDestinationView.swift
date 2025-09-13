@@ -19,6 +19,8 @@ struct SheetDestinationView: View {
             ShareSheet(items: items)
         case .tip(let tip):
             TipView(tip: tip)
+        case .logout:
+            LogoutView()
         }
     }
 }

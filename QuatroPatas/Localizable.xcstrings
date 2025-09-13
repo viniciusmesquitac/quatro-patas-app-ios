@@ -396,6 +396,9 @@
     "Anos" : {
 
     },
+    "Ao continuar, você concorda com nossos termos de uso e política de privacidade." : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -698,6 +701,9 @@
         }
       }
     },
+    "Cancelar" : {
+
+    },
     "Carregando fotos..." : {
       "localizations" : {
         "en" : {
@@ -717,6 +723,9 @@
           }
         }
       }
+    },
+    "Criar uma conta" : {
+
     },
     "Descrição" : {
       "localizations" : {
@@ -771,6 +780,12 @@
     "Editar Animal" : {
 
     },
+    "Encontre seu\nnovo melhor amigo 🐾" : {
+
+    },
+    "Entrar" : {
+
+    },
     "Enviar" : {
       "localizations" : {
         "en" : {
@@ -800,6 +815,9 @@
           }
         }
       }
+    },
+    "Filtrar Animais" : {
+
     },
     "Formulário de adoção" : {
       "localizations" : {
@@ -911,6 +929,9 @@
         }
       }
     },
+    "Sair" : {
+
+    },
     "Salvar" : {
 
     },
@@ -923,6 +944,9 @@
           }
         }
       }
+    },
+    "Você tem certeza que quer sair?" : {
+
     }
   },
   "version" : "1.0"

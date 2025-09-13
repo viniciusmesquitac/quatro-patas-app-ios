@@ -16,8 +16,9 @@ struct QuatroPatasApp: App {
     @StateObject private var databaseProvider = FirestoreProvider()
     @StateObject private var storageProvider = FirebaseStorageProvider()
     @StateObject private var formManager = FormManager()
+    @StateObject private var userSession = UserSession()
 
-    @State private var user = User(id: String(), name: "Anônimo", email: String(), type: .adopter)
+    @State private var isLoggedIn: Bool = false
     
     init() {
         FirebaseApp.configure()
@@ -25,24 +26,37 @@ struct QuatroPatasApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabView {
-                TabItem(label: .animals, icon: .paw) {
-                    AnimalsView()
-                }
-                TabItem(label: .menu, icon: .menu) {
-                    MenuView(user: user)
+            ZStack {
+                if userSession.isLoggedIn {
+                    TabView {
+                        TabItem(label: .animals, icon: .paw) {
+                            AnimalsView()
+                        }
+                        TabItem(label: .menu, icon: .menu) {
+                            MenuView()
+                        }
+                    }
+                    .sheet(item: $navigator.presentedSheet) { sheet in
+                        SheetDestinationView(sheet: sheet)
+                    }
+                    .id("loggedIn")
+                    .transition(.move(edge: .trailing))
+                } else {
+                    LoginView()
+                        .id("login")
+                        .transition(.move(edge: .leading))
                 }
             }
-            .sheet(item: $navigator.presentedSheet) { sheet in
-                SheetDestinationView(sheet: sheet)
-            }
+            .animation(.easeInOut(duration: 0.5), value: userSession.isLoggedIn)
             .environmentObject(navigator)
             .environmentObject(requestProvider)
             .environmentObject(databaseProvider)
             .environmentObject(storageProvider)
             .environmentObject(formManager)
+            .environmentObject(userSession)
             .tint(Color.primaryColor)
             .toast()
         }
     }
+
 }

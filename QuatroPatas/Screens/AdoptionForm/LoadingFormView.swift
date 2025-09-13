@@ -39,21 +39,33 @@ struct AdoptionFormView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 }
-            } else if isLoading {
+            }
+        }
+        .overlay {
+             if isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .transition(.opacity)
             }
         }
-
         .onAppear {
             loadForm()
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            navigator.dismiss()
-        })
+        .safeAreaInset(edge: .top) {
+            if !isLoading {
+                HStack {
+                    Button {
+                        navigator.dismiss()
+                    } label: {
+                        SFIcon.image(.back)
+                    }
+                    .buttonStyle(FloatingButtonStyle())
+                    Spacer()
+                }.padding(.horizontal)
+            }
+        }
     }
 
     private func loadForm() {

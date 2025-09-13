@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ToolbarItemModifier: ViewModifier {
     @EnvironmentObject var navigator: Navigator
     var label: String?

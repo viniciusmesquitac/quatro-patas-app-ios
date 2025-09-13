@@ -10,7 +10,7 @@ import SwiftUI
 struct PrimaryButtonStyle: ButtonStyle {
     var backgroundColor: Color = .primaryColor
     var foregroundColor: Color = .white
-    var cornerRadius: CGFloat = CornerRadius.medium.rawValue
+    var cornerRadius: CGFloat = CornerRadius.large.rawValue
     var isLoading: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {

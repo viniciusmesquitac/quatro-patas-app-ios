@@ -82,27 +82,29 @@ struct AnimalDetailView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .share, placement: .topBarTrailing, action: {
-            Task {
-                var items: [Any] = []
-                let message = "🐾 Conheça \(animal.name)! Ele(a) está disponível para adoção pelo @4patasfortaleza. ❤️\n\nAdotar é salvar uma vida!"
-                items.append(message)
-                
-                if let url = URL(string: animal.photos.first ?? String()),
-                   let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
-                   let uiImage = UIImage(data: imageData) {
-                    items.append(uiImage)
-                }
-                navigator.present(sheet: .share(items: items))
-                
-            }
-            
-        })
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            navigator.dismiss()
-        })
+        .navigationBarHidden(true)
+
         .onAppear {
             isFavorite = repository.isFavorite(id: animal.id ?? String())
+        }
+        .safeAreaInset(edge: .top) {
+            HStack {
+                Button {
+                    navigator.dismiss()
+                } label: {
+                    SFIcon.image(.back)
+                }
+                .buttonStyle(FloatingButtonStyle())
+                
+                Spacer()
+                
+                Button {
+                    shareAnimal()
+                } label: {
+                    SFIcon.image(.share)
+                }
+                .buttonStyle(FloatingButtonStyle())
+            }.padding(.horizontal)
         }
     }
     
@@ -189,6 +191,22 @@ struct AnimalDetailView: View {
             return url.absoluteString
         }
         return token
+    }
+    
+    func shareAnimal() {
+        Task {
+            var items: [Any] = []
+            let message = "🐾 Conheça \(animal.name)! Ele(a) está disponível para adoção pelo @4patasfortaleza. ❤️\n\nAdotar é salvar uma vida!"
+            items.append(message)
+            
+            if let url = URL(string: animal.photos.first ?? String()),
+               let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
+               let uiImage = UIImage(data: imageData) {
+                items.append(uiImage)
+            }
+            navigator.present(sheet: .share(items: items))
+            
+        }
     }
 
 }

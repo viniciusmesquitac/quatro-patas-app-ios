@@ -9,12 +9,13 @@ import SwiftUI
 
 struct RouteDestinationView: View {
     let route: Route
+    @EnvironmentObject var navigator: Navigator
 
     var body: some View {
         switch route {
         case .animals: AnimalsView()
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .menu(let user): MenuView(user: user)
+        case .menu: MenuView()
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form): FormPageView(form: form)

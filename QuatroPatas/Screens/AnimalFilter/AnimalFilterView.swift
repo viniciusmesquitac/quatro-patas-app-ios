@@ -48,23 +48,13 @@ struct AnimalFilterView: View {
                     .padding(Padding.xxLarge.rawValue)
             }
             .safeAreaInset(edge: .bottom) {
-                VStack {
-                    Button(action: {
-                        navigator.dismiss()
-                    }) {
-                        Text("Filtrar" + " (\(filteredAnimals.count))")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.primaryColor)
-                            .foregroundColor(.neutralWhite)
-                            .cornerRadius(CornerRadius.small.rawValue)
-                    }
+                Button("Filtrar") {
+                    navigator.dismiss()
                 }
-                .padding(.horizontal)
-                .padding(.vertical, Padding.medium.rawValue)
-                .background(.ultraThinMaterial)
+                .padding(.horizontal, Padding.xxLarge.rawValue)
+                .buttonStyle(PrimaryButtonStyle())
             }
-            .navigationTitle("Filtrar")
+            .navigationTitle("Filtrar Animais")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()

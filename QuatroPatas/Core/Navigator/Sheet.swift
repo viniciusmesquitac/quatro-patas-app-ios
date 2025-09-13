@@ -11,6 +11,7 @@ enum Sheet: Identifiable {
     case animalFilter([Animal], Binding<AnimalFilter>)
     case share(items: [Any])
     case tip(Tip)
+    case logout
 
     var id: String {
         String(describing: self)

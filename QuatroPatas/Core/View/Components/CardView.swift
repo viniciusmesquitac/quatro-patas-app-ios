@@ -11,14 +11,10 @@ struct CardView: View {
 
     var title: String
     var icon: SFIcon = .paw
-    var route: Route
-    
-    @EnvironmentObject var navigator: Navigator
+    var action: () -> Void
 
     var body: some View {
-        Button(action: {
-            navigator.navigate(to: route)
-        }) {
+        Button(action: action) {
             ZStack {
                 Color.primaryColor
                     .cornerRadius(CornerRadius.medium.rawValue)
