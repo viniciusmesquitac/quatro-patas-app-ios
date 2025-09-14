@@ -50,7 +50,7 @@ class UserSession: ObservableObject {
             id: user.uid,
             name: user.displayName ?? "Anônimo",
             email: user.email ?? "",
-            type: .anonymous
+            type: .adopter
         )
         self.isLoggedIn = true
     }
