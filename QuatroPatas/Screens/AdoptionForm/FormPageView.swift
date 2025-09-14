@@ -67,6 +67,17 @@ struct FormPageView: View {
         .padding(.horizontal)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true)
+        .safeAreaInset(edge: .top) {
+            HStack {
+                Button {
+                    navigator.dismiss()
+                } label: {
+                    SFIcon.image(.back)
+                }
+                .buttonStyle(FloatingButtonStyle())
+                Spacer()
+            }.padding(.horizontal)
+        }
     }
     
     private func sendForm() {

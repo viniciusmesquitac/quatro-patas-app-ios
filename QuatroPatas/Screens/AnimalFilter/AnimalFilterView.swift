@@ -71,7 +71,7 @@ struct AnimalFilterView: View {
                     }
                     .padding(.trailing, Padding.xxLarge.rawValue)
                     .buttonStyle(PrimaryButtonStyle())
-                }
+                }.padding(.vertical, Padding.medium.rawValue)
             }
             .navigationTitle("Filtrar Animais")
             .navigationBarTitleDisplayMode(.inline)
