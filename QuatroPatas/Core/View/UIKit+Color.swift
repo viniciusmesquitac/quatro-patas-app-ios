@@ -11,13 +11,15 @@ extension UIColor {
     
     static var primaryColor: UIColor {
         return UIColor { traitCollection in
-            (traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#FFA500") : .systemYellow)!
+            (traitCollection.userInterfaceStyle == .dark ?
+             UIColor(hex: "#FFCB1B") : UIColor(hex: "#FFCB1B"))!
         }
     }
 
     static var secondaryColor: UIColor {
         return UIColor { traitCollection in
-            (traitCollection.userInterfaceStyle == .dark ? .systemPurple : .systemPurple)
+            (traitCollection.userInterfaceStyle == .dark ?
+             UIColor(hex: "#AC1B7D") : UIColor(hex: "#AC1B7D"))!
         }
     }
 

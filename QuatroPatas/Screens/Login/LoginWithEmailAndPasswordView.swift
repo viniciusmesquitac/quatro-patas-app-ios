@@ -36,6 +36,12 @@ struct LoginWithEmailAndPasswordView: View {
                     login()
                 }
                 .buttonStyle(PrimaryButtonStyle())
+                
+                Button("Entrar como Anônimo") {
+                    userSession.loginAnonymous()
+                    navigator.dismiss()
+                }
+                .buttonStyle(OutlineRoundedButtonStyle())
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
         }

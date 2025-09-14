@@ -48,9 +48,19 @@ class UserSession: ObservableObject {
     func login(user: FirebaseAuth.User) {
         self.user = User(
             id: user.uid,
-            name: user.displayName ?? "Usuário",
+            name: user.displayName ?? "Anônimo",
             email: user.email ?? "",
-            type: .adopter
+            type: .anonymous
+        )
+        self.isLoggedIn = true
+    }
+    
+    func loginAnonymous() {
+        self.user = User(
+            id: "",
+            name: "Anônimo",
+            email: "",
+            type: .anonymous
         )
         self.isLoggedIn = true
     }

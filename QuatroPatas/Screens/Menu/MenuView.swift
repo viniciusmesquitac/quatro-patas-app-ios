@@ -28,10 +28,20 @@ struct MenuView: View {
                         navigator.navigate(to: .webView(url))
                     }
                 }
-                CardView(title: "Sair") {
-                    navigator.present(sheet: .logout)
+                if !(userSession.user?.type == .anonymous) {
+                    CardView(title: "Sair") {
+                        navigator.present(sheet: .logout)
+                    }
                 }
                 
+                if userSession.user?.type == .anonymous {
+                    CardView(title: "Fazer Login") {
+                        userSession.isLoggedIn = false
+                        userSession.user = nil
+                        navigator.popToRoot()
+                    }
+                }
+
                 if userSession.user?.type == .admin {
                     CardView(title: "Adicionar Animal") {
                             navigator.navigate(to: .addAnimal)
@@ -51,10 +61,17 @@ struct MenuView: View {
         }
         .onAppear {
             Task {
-                await userSession.checkAuth()
+                await checkUser()
             }
         }
         .navigationTitle(AppTab.localized(.menu))
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    
+    func checkUser() async {
+        if !(userSession.user?.type == .anonymous) {
+            await userSession.checkAuth()
+        }
     }
 }

@@ -140,5 +140,65 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "06062719-D967-447A-9B46-14646E0FEC96"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Screens/Menu/MenuView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "checkUser()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "06062719-D967-447A-9B46-14646E0FEC96 - c1d780fb6782d5b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for QuatroPatas.MenuView.checkUser() async -&gt; ()"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/Menu/MenuView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74">
+               </Location>
+               <Location
+                  uuid = "06062719-D967-447A-9B46-14646E0FEC96 - aabb2f3aa5e48da7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for QuatroPatas.MenuView.checkUser() async -&gt; ()"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/Menu/MenuView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74">
+               </Location>
+               <Location
+                  uuid = "06062719-D967-447A-9B46-14646E0FEC96 - ddce06393d9079b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for QuatroPatas.MenuView.checkUser() async -&gt; ()"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/Menu/MenuView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

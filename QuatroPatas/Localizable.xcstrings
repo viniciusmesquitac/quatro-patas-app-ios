@@ -789,6 +789,9 @@
     "Entrar" : {
 
     },
+    "Entrar como Anônimo" : {
+
+    },
     "Enviar" : {
       "localizations" : {
         "en" : {
@@ -823,6 +826,7 @@
 
     },
     "Formulário de adoção" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -831,6 +835,9 @@
           }
         }
       }
+    },
+    "Formulário de Adoção" : {
+
     },
     "gender.female" : {
       "extractionState" : "manual",
@@ -911,9 +918,6 @@
           }
         }
       }
-    },
-    "Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.\n\nLembre-se que adotar um animal requer muita responsabilidade." : {
-
     },
     "Próximo" : {
       "localizations" : {

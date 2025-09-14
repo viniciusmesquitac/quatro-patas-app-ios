@@ -18,22 +18,6 @@ struct AdoptionFormView: View {
             if let form = form {
                 ScrollView {
                     VStack {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Formulário de adoção")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .foregroundColor(.primary)
-
-                            Text("""
-                            Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.
-                            
-                            Lembre-se que adotar um animal requer muita responsabilidade.
-                            """)
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.horizontal)
-                        .padding(.top)
                         Spacer()
                         FormPageView(form: form)
                     }
@@ -43,8 +27,7 @@ struct AdoptionFormView: View {
         }
         .overlay {
              if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
+                 LoadingDotsView()
                     .transition(.opacity)
             }
         }
@@ -53,6 +36,7 @@ struct AdoptionFormView: View {
         }
         .navigationBarHidden(true)
         .toolbar(.hidden, for: .tabBar)
+        .navigationTitle("Formulário de Adoção")
         .safeAreaInset(edge: .top) {
             if !isLoading {
                 HStack {
