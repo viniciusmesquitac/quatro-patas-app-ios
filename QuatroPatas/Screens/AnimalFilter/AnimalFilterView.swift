@@ -29,7 +29,11 @@ struct AnimalFilterView: View {
                 get: { filter.animalType ?? String() },
                 set: { filter.animalType = $0 }
             )),
-            .selectable(title:  "Macho ou fêmea?", options: Gender.allLocalized, binding: Binding<String>(
+            .selectable(title: "Filhote ou adulto?", options: ["Filhote", "Adulto"], binding: Binding<String>(
+                get: { filter.age ?? String() },
+                set: { filter.age = $0 }
+            )),
+            .selectable(title: "Macho ou fêmea?", options: Gender.allLocalized, binding: Binding<String>(
                 get: { filter.gender ?? String() },
                 set: { filter.gender = $0 }
             )),

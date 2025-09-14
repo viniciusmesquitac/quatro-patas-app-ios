@@ -21,6 +21,8 @@ struct SheetDestinationView: View {
             TipView(tip: tip)
         case .logout:
             LogoutView()
+        case .alert(let title, let action):
+            AlertView(title: title, action: action)
         }
     }
 }

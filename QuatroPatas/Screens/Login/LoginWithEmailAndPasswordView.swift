@@ -68,7 +68,8 @@ struct LoginWithEmailAndPasswordView: View {
         isLoading = true
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
-                toast(error.localizedDescription, .error)
+                toast("Email ou senha incorreta", .error)
+                isLoading = false
                 return
             }
 

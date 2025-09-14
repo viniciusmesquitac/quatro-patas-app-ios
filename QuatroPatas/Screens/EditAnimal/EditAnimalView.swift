@@ -67,7 +67,9 @@ struct EditAnimalView: View {
                     showPhotoPicker: $showPhotoPicker,
                     selectedIndex: $selectedImageIndex,
                     onRemoveExisting: { index in
-                        animal.photos.remove(at: index)
+                        navigator.present(sheet: .alert(title: "Deseja realmente remover essa imagem?", action: {
+                            animal.photos.remove(at: index)
+                        }))
                     },
                     onRemoveNew: { index in
                         images.remove(at: index)
@@ -90,6 +92,10 @@ struct EditAnimalView: View {
             }
         }
         .navigationTitle("Editar Animal")
+        .navigationBarBackButtonHidden(true)
+        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+            navigator.dismiss()
+        })
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,
@@ -201,7 +207,7 @@ struct EditAnimalView: View {
                     copy.photos = animal.photos + uploadedURLs
                     
                     _ = try await firestoreProvider.update(copy, in: "animals", withID: animal.id!)
-                    toast("animal adicionado com sucesso!", .success)
+                    toast("animal editado com sucesso!", .success)
                     isLoading = false
                     navigator.dismiss()
                 } catch {

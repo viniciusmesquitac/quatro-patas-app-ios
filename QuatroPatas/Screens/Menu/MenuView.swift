@@ -38,6 +38,13 @@ struct MenuView: View {
                         }
                         .transition(.scale.combined(with: .opacity))
                 }
+                
+                if userSession.user?.type == .admin {
+                    CardView(title: "Animais da ONG") {
+                        navigator.navigate(to: .animalsList)
+                    }
+                    .transition(.scale.combined(with: .opacity))
+                }
             }
             .animation(.spring(), value: userSession.user?.type)
             .padding()

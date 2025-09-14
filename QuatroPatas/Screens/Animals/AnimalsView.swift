@@ -80,12 +80,8 @@ struct AnimalsView: View {
     func refresh() async {
          do {
              isLoading = true
-             try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
              await fetchAllAnimals()
              filter = AnimalFilter()
-         } catch {
-             toast(error.localizedDescription, .error)
-             isLoading = false
          }
      }
     

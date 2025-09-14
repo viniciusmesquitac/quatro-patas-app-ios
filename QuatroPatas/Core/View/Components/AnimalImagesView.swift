@@ -29,7 +29,7 @@ struct AnimalImagesCarousel: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
             TabView(selection: $selectedIndex) {
                 ForEach(allImages.indices, id: \.self) { index in
                     let url = allImages[index]
@@ -96,6 +96,7 @@ struct AnimalImagesCarousel: View {
                             }
                         } label: {
                             Image(systemName: "xmark.circle.fill")
+                                .imageScale(.large)
                                 .foregroundStyle(Color.primaryColor)
                         }
                         .padding(8)

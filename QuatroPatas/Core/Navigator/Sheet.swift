@@ -12,6 +12,7 @@ enum Sheet: Identifiable {
     case share(items: [Any])
     case tip(Tip)
     case logout
+    case alert(title: String, action: () -> Void)
 
     var id: String {
         String(describing: self)

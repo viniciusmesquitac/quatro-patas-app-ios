@@ -98,6 +98,10 @@ struct AddAnimalView: View {
                 isLoadingImage = false
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+            navigator.dismiss()
+        })
         .onChange(of: animal.type) { _, _ in
             animal.breed = ""
             animal.tags.removeAll()
