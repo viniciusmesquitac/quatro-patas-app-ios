@@ -37,19 +37,6 @@ struct AdoptionFormView: View {
         .navigationBarHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .navigationTitle("Formulário de Adoção")
-        .safeAreaInset(edge: .top) {
-            if !isLoading {
-                HStack {
-                    Button {
-                        navigator.dismiss()
-                    } label: {
-                        SFIcon.image(.back)
-                    }
-                    .buttonStyle(FloatingButtonStyle())
-                    Spacer()
-                }.padding(.horizontal)
-            }
-        }
     }
 
     private func loadForm() {
