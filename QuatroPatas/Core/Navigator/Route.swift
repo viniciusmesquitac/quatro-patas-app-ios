@@ -10,7 +10,7 @@ import SwiftUI
 enum Route: Hashable, Identifiable {
     case animals
     case details(Animal)
-    case menu(User)
+    case menu
     case adoption
     case adoptionForm
     case formPage(AdoptionForm)
@@ -18,6 +18,8 @@ enum Route: Hashable, Identifiable {
     case addAnimal
     case edit(Animal, Int, Int)
     case webView(URL)
+    case register
+    case loginWithEmailAndPassword
     
     var id: String { String(describing: self) }
 }

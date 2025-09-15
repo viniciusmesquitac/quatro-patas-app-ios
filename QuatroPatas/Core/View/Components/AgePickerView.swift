@@ -23,10 +23,10 @@ struct AgePickerView: View {
                 HStack {
                     Text("\(years) anos, \(months) meses")
                     Spacer()
-                    Image(systemName: "chevron.down")
+                    SFIcon.image(.arrow_down)
                         .rotationEffect(.degrees(showPicker ? 180 : 0))
                 }
-                .foregroundStyle((years == 0 && months == 0) ? Color.gray : Color.secundaryColor)
+                .foregroundStyle((years == 0 && months == 0) ? Color.gray : Color.secondaryColor)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background((years == 0 && months == 0) ? Color.gray.opacity(0.2) : Color.primaryColor.opacity(0.2))

@@ -16,13 +16,24 @@ struct AnimalFilterView: View {
         filter.apply(to: animals)
     }
     
+    var filteredBreeds: [String] {
+        guard let type = AnimalType.fromLocalized(filter.animalType ?? "") else {
+            return [Breed.localized(.mixed)]
+        }
+        return Breed.localizedByType(type)
+    }
+    
     var filterElement: [FormElement] {
         [
             .selectable(title: "Cachorro ou gato?", options: AnimalType.allLocalized, binding: Binding<String>(
                 get: { filter.animalType ?? String() },
                 set: { filter.animalType = $0 }
             )),
-            .selectable(title:  "Macho ou fêmea?", options: Gender.allLocalized, binding: Binding<String>(
+            .selectable(title: "Filhote ou adulto?", options: ["Filhote", "Adulto"], binding: Binding<String>(
+                get: { filter.age ?? String() },
+                set: { filter.age = $0 }
+            )),
+            .selectable(title: "Macho ou fêmea?", options: Gender.allLocalized, binding: Binding<String>(
                 get: { filter.gender ?? String() },
                 set: { filter.gender = $0 }
             )),
@@ -30,7 +41,7 @@ struct AnimalFilterView: View {
                 get: { filter.size ?? "Selecione" },
                 set: { newValue in filter.size = newValue }
             )),
-            .dropdown(title: "Qual Raça?", options: Breed.allLocalized, binding: Binding(
+            .dropdown(title: "Qual Raça?", options: filteredBreeds, binding: Binding(
                 get: { filter.breed ?? "Selecione" },
                 set: { newValue in filter.breed = newValue }
             )),
@@ -48,23 +59,21 @@ struct AnimalFilterView: View {
                     .padding(Padding.xxLarge.rawValue)
             }
             .safeAreaInset(edge: .bottom) {
-                VStack {
-                    Button(action: {
-                        navigator.dismiss()
-                    }) {
-                        Text("Filtrar" + " (\(filteredAnimals.count))")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.primaryColor)
-                            .foregroundColor(.neutralWhite)
-                            .cornerRadius(CornerRadius.small.rawValue)
+                HStack {
+                    Button("Limpar") {
+                        filter.removeAll()
                     }
-                }
-                .padding(.horizontal)
-                .padding(.vertical, Padding.medium.rawValue)
-                .background(.ultraThinMaterial)
+                    .padding(.leading, Padding.xxLarge.rawValue)
+                    .buttonStyle(OutlineRoundedButtonStyle())
+                    Spacer()
+                    Button("Filtrar") {
+                        navigator.dismiss()
+                    }
+                    .padding(.trailing, Padding.xxLarge.rawValue)
+                    .buttonStyle(PrimaryButtonStyle())
+                }.padding(.vertical, Padding.medium.rawValue)
             }
-            .navigationTitle("Filtrar")
+            .navigationTitle("Filtrar Animais")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()

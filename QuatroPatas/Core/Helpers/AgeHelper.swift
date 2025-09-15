@@ -54,4 +54,12 @@ struct AgeHelper {
         
         return "0"
     }
+
+    static func calculateAgeMonth(timestamp: String) -> Int? {
+        let formatter = ISO8601DateFormatter()
+        guard let timestamp = TimeInterval(timestamp) else { return nil }
+        let date = Date(timeIntervalSince1970: timestamp)
+        let meses = Calendar.current.dateComponents([.month], from: date, to: Date()).month ?? 0
+        return meses
+    }
 }

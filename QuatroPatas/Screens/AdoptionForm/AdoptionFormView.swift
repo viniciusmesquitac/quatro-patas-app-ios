@@ -15,45 +15,20 @@ struct AdoptionFormView: View {
 
     var body: some View {
         ZStack {
-            if let form = form {
-                ScrollView {
-                    VStack {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Formulário de adoção")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .foregroundColor(.primary)
-
-                            Text("""
-                            Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.
-                            
-                            Lembre-se que adotar um animal requer muita responsabilidade.
-                            """)
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.horizontal)
-                        .padding(.top)
-                        Spacer()
-                        FormPageView(form: form)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                }
-            } else if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
+           
+        }
+        .overlay {
+             if isLoading {
+                 LoadingDotsView()
                     .transition(.opacity)
             }
         }
-
         .onAppear {
             loadForm()
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            navigator.dismiss()
-        })
+        .navigationTitle("Formulário de Adoção")
     }
 
     private func loadForm() {
@@ -67,6 +42,10 @@ struct AdoptionFormView: View {
                         withAnimation {
                             isLoading = false
                             form = decoded
+                            if let form = form {
+                                navigator.dismiss()
+                                navigator.navigate(to: .formPage(form))
+                            }
                         }
                     }
                 } catch {

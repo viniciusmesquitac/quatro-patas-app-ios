@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct CircleButtonStyle: ButtonStyle {
-    var backgroundColor: Color = Color.primaryColor2
+    var backgroundColor: Color = Color.primaryColor
     var foregroundColor: Color = .black
-    var size: CGFloat = 56
+    var size: CGFloat = 32
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundColor(foregroundColor)
-            .font(.title)
-            .frame(width: size, height: size)
+            .frame(width: size * 2, height: size * 2)
             .background(backgroundColor)
             .clipShape(Circle())
             .scaleEffect(configuration.isPressed ? 0.9 : 1.0)

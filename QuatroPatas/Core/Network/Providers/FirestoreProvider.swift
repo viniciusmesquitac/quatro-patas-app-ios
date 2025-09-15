@@ -30,6 +30,30 @@ class FirestoreProvider: ObservableObject {
             }
         }
     }
+    
+       func fetchDocument<T: Codable & Sendable>(
+           from collection: String,
+           id: String
+       ) async throws -> T? {
+           try await withCheckedThrowingContinuation { continuation in
+               db.collection(collection).document(id).getDocument { snapshot, error in
+                   if let error = error {
+                       continuation.resume(throwing: error)
+                   } else {
+                       do {
+                           if let snapshot = snapshot, snapshot.exists {
+                               let item = try snapshot.data(as: T.self)
+                               continuation.resume(returning: item)
+                           } else {
+                               continuation.resume(returning: nil) // documento não existe
+                           }
+                       } catch {
+                           continuation.resume(throwing: error)
+                       }
+                   }
+               }
+           }
+       }
 
     func add<T: Codable>(_ item: T, to collection: String, withID id: String? = nil) async throws -> String {
         try await withCheckedThrowingContinuation { continuation in

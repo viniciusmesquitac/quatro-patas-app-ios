@@ -396,6 +396,12 @@
     "Anos" : {
 
     },
+    "Ao continuar, você concorda com nossos termos de uso e política de privacidade." : {
+
+    },
+    "Apelido" : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -698,6 +704,9 @@
         }
       }
     },
+    "Cancelar" : {
+
+    },
     "Carregando fotos..." : {
       "localizations" : {
         "en" : {
@@ -717,6 +726,9 @@
           }
         }
       }
+    },
+    "Criar uma conta" : {
+
     },
     "Descrição" : {
       "localizations" : {
@@ -771,6 +783,15 @@
     "Editar Animal" : {
 
     },
+    "Email" : {
+
+    },
+    "Entrar" : {
+
+    },
+    "Entrar como Anônimo" : {
+
+    },
     "Enviar" : {
       "localizations" : {
         "en" : {
@@ -801,7 +822,11 @@
         }
       }
     },
+    "Filtrar Animais" : {
+
+    },
     "Formulário de adoção" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -810,6 +835,9 @@
           }
         }
       }
+    },
+    "Formulário de Adoção" : {
+
     },
     "gender.female" : {
       "extractionState" : "manual",
@@ -865,6 +893,9 @@
         }
       }
     },
+    "Limpar" : {
+
+    },
     "Meses" : {
 
     },
@@ -888,9 +919,6 @@
         }
       }
     },
-    "Para adotar é preciso responder a um questionário que leva em torno de 5 minutos.\n\nLembre-se que adotar um animal requer muita responsabilidade." : {
-
-    },
     "Próximo" : {
       "localizations" : {
         "en" : {
@@ -911,7 +939,19 @@
         }
       }
     },
+    "Repetir senha" : {
+
+    },
+    "Sair" : {
+
+    },
     "Salvar" : {
+
+    },
+    "Senha" : {
+
+    },
+    "Sim" : {
 
     },
     "Tamanho" : {
@@ -923,6 +963,12 @@
           }
         }
       }
+    },
+    "Vamos Lá" : {
+
+    },
+    "Você tem certeza que quer sair?" : {
+
     }
   },
   "version" : "1.0"

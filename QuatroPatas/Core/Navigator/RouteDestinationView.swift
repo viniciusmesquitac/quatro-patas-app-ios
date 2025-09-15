@@ -9,19 +9,22 @@ import SwiftUI
 
 struct RouteDestinationView: View {
     let route: Route
+    @EnvironmentObject var navigator: Navigator
 
     var body: some View {
         switch route {
         case .animals: AnimalsView()
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .menu(let user): MenuView(user: user)
+        case .menu: MenuView()
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form): FormPageView(form: form)
         case .animalsList: AnimalsListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months)
-        case .webView(let url): WebView(url)
+        case .webView(let url): WebViewContainer(url: url)
+        case .register: RegisterView()
+        case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
         }
     }
 }

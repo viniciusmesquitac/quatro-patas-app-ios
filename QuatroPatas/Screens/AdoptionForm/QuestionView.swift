@@ -121,7 +121,6 @@ struct QuestionView: View {
 
             case .singleSelection:
                 if let options = question.options {
-                    Spacer()
                     ForEach(options, id: \.self) { title in
                         option(title: title, selection: $answer)
                     }

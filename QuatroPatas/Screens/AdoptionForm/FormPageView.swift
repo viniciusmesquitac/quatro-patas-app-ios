@@ -19,9 +19,6 @@ struct FormPageView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text(form.sections[formManager.page].title)
-                    .font(.title)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 VStack(spacing: 8) {
                     ForEach(form.sections[formManager.page].questions, id: \.id) { question in
                         QuestionView(
@@ -62,11 +59,15 @@ struct FormPageView: View {
                     Text(form.sections.indices.contains(formManager.page + 1) ? "Próximo" : "Enviar")
                 }
                 .buttonStyle(PrimaryButtonStyle())
-            }
+            }.padding(.horizontal, Padding.large.rawValue)
         }
-        .padding(.horizontal)
         .toolbar(.hidden, for: .tabBar)
+        .navigationTitle(form.sections[formManager.page].title)
         .navigationBarBackButtonHidden(true)
+        .toolbarItem(icon: .back, placement: .topBarLeading) {
+            if formManager.page > 0 { formManager.page -= 1 }
+            navigator.dismiss()
+        }
     }
     
     private func sendForm() {
