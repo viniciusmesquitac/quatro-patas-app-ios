@@ -16,10 +16,22 @@ struct FormPageView: View {
     @EnvironmentObject var requestProvider: RequestProvider
     @Environment(\.toast) var toast
     
+    private var progressValue: Double {
+        let total = Double(form.sections.count)
+        let current = Double(formManager.page + 1)
+        return current / total
+    }
+    
     var body: some View {
         ScrollView {
             VStack {
-                VStack(spacing: 8) {
+                // Barra de progresso no topo
+                ProgressView(value: progressValue, total: 1.0)
+                    .progressViewStyle(LinearProgressViewStyle(tint: Color.primaryColor))
+                    .frame(height: 4)
+                    .padding(.bottom, Padding.medium.rawValue)
+        
+                VStack(spacing: Spacing.medium.rawValue) {
                     ForEach(form.sections[formManager.page].questions, id: \.id) { question in
                         QuestionView(
                             question: question,
@@ -30,36 +42,31 @@ struct FormPageView: View {
                         )
                     }
                 }
-                Button(action: {
-                    formManager.didSubmit = true // marca que o usuário tentou enviar
-                    
-                    let currentSection = form.sections[formManager.page]
-                    
-                    // Pega as obrigatórias que não foram respondidas
-                    let emptyQuestions = currentSection.questions
-                        .filter { (formManager.answers[$0.id] ?? "").isEmpty }
-                        .map { $0.id }
-                    
-                    if emptyQuestions.isEmpty {
-                        // limpa erros
-                        formManager.errors.removeAll()
-                        
-                        if form.sections.indices.contains(formManager.page + 1) {
-                            formManager.page += 1
-                            self.navigator.navigate(to: .formPage(form))
-                        } else {
-                            sendForm()
-                        }
-                    } else {
-                        // marca erros
-                        toast("Campos obrigatórios precisam ser preenchidos!", .error)
-                        formManager.errors = Set(emptyQuestions)
-                    }
-                }) {
-                    Text(form.sections.indices.contains(formManager.page + 1) ? "Próximo" : "Enviar")
-                }
-                .buttonStyle(PrimaryButtonStyle())
             }.padding(.horizontal, Padding.large.rawValue)
+        }
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                if form.sections.indices.contains(formManager.page + 1) {
+                    Spacer()
+                    Button(action: {
+                        didPressButton()
+                    }) {
+                        SFIcon.image(.next, color: .neutralWhite)
+                    }
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .padding(.vertical, Padding.medium.rawValue)
+                    .buttonStyle(CircleButtonStyle())
+                } else {
+                    Button(action: {
+                        didPressButton()
+                    }) {
+                        Text("Enviar")
+                    }
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .padding(.vertical, Padding.medium.rawValue)
+                    .buttonStyle(PrimaryButtonStyle())
+                }
+            }
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationTitle(form.sections[formManager.page].title)
@@ -82,6 +89,33 @@ struct FormPageView: View {
             case .failure(let error):
                 print("Erro: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func didPressButton() {
+        formManager.didSubmit = true // marca que o usuário tentou enviar
+        
+        let currentSection = form.sections[formManager.page]
+        
+        // Pega as obrigatórias que não foram respondidas
+        let emptyQuestions = currentSection.questions
+            .filter { (formManager.answers[$0.id] ?? "").isEmpty }
+            .map { $0.id }
+        
+        if emptyQuestions.isEmpty {
+            // limpa erros
+            formManager.errors.removeAll()
+            
+            if form.sections.indices.contains(formManager.page + 1) {
+                formManager.page += 1
+                self.navigator.navigate(to: .formPage(form))
+            } else {
+                sendForm()
+            }
+        } else {
+            // marca erros
+            toast("Campos obrigatórios precisam ser preenchidos!", .error)
+            formManager.errors = Set(emptyQuestions)
         }
     }
 }

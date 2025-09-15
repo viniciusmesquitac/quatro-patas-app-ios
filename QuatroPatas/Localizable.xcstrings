@@ -920,6 +920,7 @@
       }
     },
     "Próximo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

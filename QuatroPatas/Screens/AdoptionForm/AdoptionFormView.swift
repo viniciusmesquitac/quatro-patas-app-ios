@@ -28,7 +28,6 @@ struct AdoptionFormView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .navigationTitle("Formulário de Adoção")
     }
 
     private func loadForm() {
