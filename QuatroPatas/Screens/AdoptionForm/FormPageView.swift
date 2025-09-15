@@ -71,7 +71,7 @@ struct FormPageView: View {
             HStack {
                 Button {
                     navigator.dismiss()
-                    formManager.page -= 1
+                    if formManager.page > 0 { formManager.page -= 1 }
                 } label: {
                     SFIcon.image(.back)
                 }
