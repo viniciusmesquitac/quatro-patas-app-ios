@@ -16,9 +16,11 @@ struct FormPageView: View {
     @EnvironmentObject var requestProvider: RequestProvider
     @Environment(\.toast) var toast
     
+    var currentPage: Int
+    
     private var progressValue: Double {
         let total = Double(form.sections.count)
-        let current = Double(formManager.page + 1)
+        let current = Double(currentPage + 1)
         return current / total
     }
     
@@ -32,7 +34,7 @@ struct FormPageView: View {
                     .padding(.bottom, Padding.medium.rawValue)
         
                 VStack(spacing: Spacing.medium.rawValue) {
-                    ForEach(form.sections[formManager.page].questions, id: \.id) { question in
+                    ForEach(form.sections[currentPage].questions, id: \.id) { question in
                         QuestionView(
                             question: question,
                             answer: Binding(
@@ -46,7 +48,7 @@ struct FormPageView: View {
         }
         .safeAreaInset(edge: .bottom) {
             HStack {
-                if form.sections.indices.contains(formManager.page + 1) {
+                if form.sections.indices.contains(currentPage + 1) {
                     Spacer()
                     Button(action: {
                         didPressButton()
@@ -69,10 +71,9 @@ struct FormPageView: View {
             }
         }
         .toolbar(.hidden, for: .tabBar)
-        .navigationTitle(form.sections[formManager.page].title)
+        .navigationTitle(form.sections[currentPage].title)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading) {
-            if formManager.page > 0 { formManager.page -= 1 }
             navigator.dismiss()
         }
     }
@@ -83,7 +84,6 @@ struct FormPageView: View {
             switch result {
             case .success:
                 toast("Enviado com sucesso", .success)
-                formManager.page = 0
                 formManager.answers = [:]
                 navigator.popToRoot()
             case .failure(let error):
@@ -95,7 +95,7 @@ struct FormPageView: View {
     private func didPressButton() {
         formManager.didSubmit = true // marca que o usuário tentou enviar
         
-        let currentSection = form.sections[formManager.page]
+        let currentSection = form.sections[currentPage]
         
         // Pega as obrigatórias que não foram respondidas
         let emptyQuestions = currentSection.questions
@@ -106,9 +106,8 @@ struct FormPageView: View {
             // limpa erros
             formManager.errors.removeAll()
             
-            if form.sections.indices.contains(formManager.page + 1) {
-                formManager.page += 1
-                self.navigator.navigate(to: .formPage(form))
+            if form.sections.indices.contains(currentPage + 1) {
+                self.navigator.navigate(to: .formPage(form, currentPage + 1))
             } else {
                 sendForm()
             }

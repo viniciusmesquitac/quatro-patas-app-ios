@@ -43,7 +43,7 @@ struct AdoptionFormView: View {
                             form = decoded
                             if let form = form {
                                 navigator.dismiss()
-                                navigator.navigate(to: .formPage(form))
+                                navigator.navigate(to: .formPage(form, 0))
                             }
                         }
                     }

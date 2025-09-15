@@ -45,7 +45,7 @@ struct QuestionView: View {
                 TextField("Digite seu email", text: $answer)
                     .onChange(of: answer) { _, newValue in
                         answer = newValue
-                        if answer.count > 0 {
+                        if answer.count > 0 || !Validator.isValidEmail(answer) {
                             formManager.errors.remove(question.id)
                         } else {
                             formManager.errors.insert(question.id)
@@ -63,7 +63,7 @@ struct QuestionView: View {
                 TextField("Digite sua idade", text: $answer)
                     .onChange(of: answer) { _, newValue in
                         answer = newValue
-                        if answer.count > 0 {
+                        if answer.count > 0 || !Validator.isValidAge(answer) {
                             formManager.errors.remove(question.id)
                         } else {
                             formManager.errors.insert(question.id)
@@ -90,7 +90,7 @@ struct QuestionView: View {
                         answer = PhoneFormatter.applyMask(digits)
                         
                         // validação dinâmica
-                        if !digits.isEmpty {
+                        if !digits.isEmpty || !Validator.isValidPhone(answer) {
                             formManager.errors.remove(question.id)
                         } else {
                             formManager.errors.insert(question.id)

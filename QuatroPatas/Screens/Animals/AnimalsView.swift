@@ -53,7 +53,7 @@ struct AnimalsView: View {
         .toolbarItem(icon: .filter, action: {
             navigator.present(sheet: .animalFilter(animals, $filter))
         })
-        .navigationTitle(AppTab.localized(.animals) + " (\(filteredAnimals.count))")
+        .navigationTitle(!isLoading ? AppTab.localized(.animals) + " (\(filteredAnimals.count))" : "")
     }
 
     

@@ -15,6 +15,8 @@ struct AnimalCardView: View {
     @CacheProvider(type: .fileManager)
     var cacheProvider
     
+    @State private var attempt = 0 // 🔄 contador de tentativas automáticas
+    
     private enum Constants {
         // Font
         static let gradientOpacity: CGFloat = 0.6
@@ -73,7 +75,7 @@ struct AnimalCardView: View {
                             AsyncImage(url: url) { phase in
                                 switch phase {
                                 case .empty:
-                                    RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
+                                    Rectangle()
                                         .frame(width: geometry.size.width, height: geometry.size.height)
                                         .modifier(ShimmerModifier())
                                 case .success(let image):
@@ -89,7 +91,7 @@ struct AnimalCardView: View {
                                         .onAppear {
                                             saveImageData(url: url)
                                         }
-                                default:
+                                case .failure(_):
                                     Image("default-animal-card.png")
                                         .resizable()
                                         .scaledToFill()
@@ -97,9 +99,17 @@ struct AnimalCardView: View {
                                         .overlay(content: {
                                             AnimalNameView
                                         })
+                                    
+                                        .onAppear {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                attempt += 1
+                                            }
+                                        }
                                         .cornerRadius(CornerRadius.small.rawValue)
+                                @unknown default:
+                                    Spacer()
                                 }
-                            }
+                            }.id(attempt)
                         }
 
                     }

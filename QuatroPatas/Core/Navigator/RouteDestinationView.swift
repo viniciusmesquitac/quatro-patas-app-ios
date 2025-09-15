@@ -18,7 +18,7 @@ struct RouteDestinationView: View {
         case .menu: MenuView()
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
-        case .formPage(let form): FormPageView(form: form)
+        case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)
         case .animalsList: AnimalsListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months)

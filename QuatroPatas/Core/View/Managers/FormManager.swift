@@ -8,7 +8,6 @@
 import SwiftUI
 
 class FormManager: ObservableObject {
-    @Published var page: Int = 0
     @Published var answers: [String: String] = [:]
     @Published var errors: Set<String> = []
     @Published var didSubmit: Bool = false

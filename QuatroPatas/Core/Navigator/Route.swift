@@ -13,7 +13,7 @@ enum Route: Hashable, Identifiable {
     case menu
     case adoption
     case adoptionForm
-    case formPage(AdoptionForm)
+    case formPage(AdoptionForm, Int)
     case animalsList
     case addAnimal
     case edit(Animal, Int, Int)

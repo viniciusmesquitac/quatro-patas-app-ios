@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct ImageCarousel: View {
     let images: [URL]
     @Binding var selectedIndex: Int
@@ -14,13 +13,15 @@ struct ImageCarousel: View {
     
     @CacheProvider(type: .fileManager)
     var cacheProvider
-
+    
+    @State private var attempt = 0
+    
     var body: some View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
                 let url = images[index]
                 
-                // 🚀 caso local (file://) → sem cache
+                // 🚀 caso local (file://)
                 if url.isFileURL {
                     if let uiImage = UIImage(contentsOfFile: url.path) {
                         Image(uiImage: uiImage)
@@ -32,7 +33,7 @@ struct ImageCarousel: View {
                     }
                 }
                 
-                // 🌐 caso remoto → com cache
+                // 🌐 caso remoto
                 else {
                     if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
                        let uiImage = UIImage(data: imageData) {
@@ -61,14 +62,20 @@ struct ImageCarousel: View {
                                             saveImageData(url: url)
                                         }
                                 }
-                            default:
+                            case .failure(_):
                                 Image("default-animal-card.png")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: frame.width, height: frame.height)
                                     .clipped()
+                                    .onAppear {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                            attempt += 1
+                                        }
+                                    }
                             }
                         }
+                        .id(attempt) // recria AsyncImage → força retry
                         .tag(index)
                     }
                 }
