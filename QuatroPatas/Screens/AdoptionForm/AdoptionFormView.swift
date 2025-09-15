@@ -15,15 +15,7 @@ struct AdoptionFormView: View {
 
     var body: some View {
         ZStack {
-            if let form = form {
-                ScrollView {
-                    VStack {
-                        Spacer()
-                        FormPageView(form: form)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                }
-            }
+           
         }
         .overlay {
              if isLoading {
@@ -34,7 +26,7 @@ struct AdoptionFormView: View {
         .onAppear {
             loadForm()
         }
-        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .navigationTitle("Formulário de Adoção")
     }
@@ -50,6 +42,10 @@ struct AdoptionFormView: View {
                         withAnimation {
                             isLoading = false
                             form = decoded
+                            if let form = form {
+                                navigator.dismiss()
+                                navigator.navigate(to: .formPage(form))
+                            }
                         }
                     }
                 } catch {
