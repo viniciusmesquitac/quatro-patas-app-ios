@@ -62,7 +62,7 @@ struct AnimalImagesCarousel: View {
                                 AsyncImage(url: url, transaction: .init(animation: .spring(duration: 2))) { phase in
                                     switch phase {
                                     case .empty:
-                                        RoundedRectangle(cornerRadius: 8)
+                                        Rectangle()
                                             .frame(width: frame.width, height: frame.height)
                                             .modifier(ShimmerModifier())
                                     case .success(let image):

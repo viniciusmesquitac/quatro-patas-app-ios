@@ -72,10 +72,10 @@ struct AnimalCardView: View {
                                 }
                                 .cornerRadius(CornerRadius.small.rawValue)
                         } else {
-                            AsyncImage(url: url) { phase in
+                            AsyncImage(url: url, transaction: .init(animation: .spring(duration: 1))) { phase in
                                 switch phase {
                                 case .empty:
-                                    Rectangle()
+                                    RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
                                         .frame(width: geometry.size.width, height: geometry.size.height)
                                         .modifier(ShimmerModifier())
                                 case .success(let image):
