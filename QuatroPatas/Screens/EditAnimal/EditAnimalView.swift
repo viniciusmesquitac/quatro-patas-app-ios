@@ -91,7 +91,8 @@ struct EditAnimalView: View {
                 .disabled(isLoading)
             }
         }
-        .navigationTitle("Editar Animal")
+        .navigationTitle("Editar")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()

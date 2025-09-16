@@ -17,6 +17,7 @@ struct AnimalsListView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var userSession: UserSession
 
     @State private var animals: [Animal] = []
     @State private var isLoading: Bool = false
@@ -64,10 +65,16 @@ struct AnimalsListView: View {
             }.padding(Padding.medium.rawValue)
         }
         .task {
-            await fetchAllAnimals()
-            if listType == .favorites {
+            switch listType {
+            case .allAnimals:
+                await fetchAllAnimals()
+            case .myAnimals:
+                await fetchMyAnimals()
+            case .favorites:
+                await fetchAllAnimals()
                 filterFavoriteAnimals()
             }
+
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(navigationBarTitle)
@@ -77,7 +84,12 @@ struct AnimalsListView: View {
         }
         .if(listType == .allAnimals) { view in
             view.toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.navigate(to: .addAnimal)
+                navigator.navigate(to: .addAnimal(.ongAnimals))
+            }
+        }
+        .if(listType == .myAnimals) { view in
+            view.toolbarItem(icon: .add, placement: .topBarTrailing) {
+                navigator.navigate(to: .addAnimal(.myAnimals))
             }
         }
     }
@@ -108,6 +120,20 @@ struct AnimalsListView: View {
             print("❌ Fetch error: \(error.localizedDescription)")
         }
     }
+    
+    @MainActor
+    func fetchMyAnimals() async {
+        do {
+            isLoading = true
+            let userId = userSession.user?.id ?? ""
+            let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
+            self.animals = items
+            isLoading = false
+        } catch {
+            print("❌ Fetch error: \(error.localizedDescription)")
+        }
+    }
+
 
     func filterFavoriteAnimals() {
         let animalsIds: [String] = repository.getFavorites()

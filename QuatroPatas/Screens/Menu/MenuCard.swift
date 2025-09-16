@@ -15,7 +15,8 @@ struct MenuCard {
 
 enum MenuCardType: CaseIterable {
     case login
-    case addAnimal
+    case addOngAnimal
+    case addMyAnimal
     case animalsList
     case adoptionForm
     case aboutShelter
@@ -28,7 +29,8 @@ extension MenuCardType {
     var title: String {
         switch self {
         case .login: return "Fazer Login"
-        case .addAnimal: return "Adicionar Animal"
+        case .addOngAnimal: return "Adicionar Animal"
+        case .addMyAnimal: return "Adicionar Animal"
         case .animalsList: return "Animais da ONG"
         case .adoptionForm: return "Formulário de Adoção"
         case .aboutShelter: return "Sobre o abrigo"
@@ -42,8 +44,8 @@ extension MenuCardType {
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .anonymous: [.login, .adoptionForm, .aboutShelter],
-    .admin: [.addAnimal, .animalsList, .adoptionForm, .aboutShelter, .logout],
-    .adopter: [.adoptionForm, .aboutShelter, .logout, .favorites],
+    .admin: [.addOngAnimal, .animalsList, .aboutShelter, .logout],
+    .adopter: [.adoptionForm, .aboutShelter, .logout, .favorites, .myAnimals],
 ]
 
 struct MenuCardFactory {
@@ -64,9 +66,9 @@ struct MenuCardFactory {
                     navigator.popToRoot()
                 })
 
-            case .addAnimal:
+            case .addOngAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .addAnimal)
+                    navigator.navigate(to: .addAnimal(.ongAnimals))
                 })
 
             case .animalsList:
@@ -96,6 +98,10 @@ struct MenuCardFactory {
             case .myAnimals:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .animalsList(.myAnimals))
+                })
+            case .addMyAnimal:
+                return MenuCard(title: cardType.title, action: {
+                    navigator.navigate(to: .addAnimal(.myAnimals))
                 })
             }
         }

@@ -8,6 +8,12 @@
 import SwiftUI
 import PhotosUI
 
+
+enum AddAnimalType {
+    case myAnimals
+    case ongAnimals
+}
+
 struct AddAnimalView: View {
 
     @State private var selectedImageIndex = 0
@@ -24,10 +30,13 @@ struct AddAnimalView: View {
     @Environment(\.toast) var toast
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var userSession: UserSession
     @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
 
     @State private var years = 0
     @State private var months = 0
+    
+    var addAnimalType: AddAnimalType
 
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
@@ -99,6 +108,7 @@ struct AddAnimalView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
@@ -216,7 +226,13 @@ struct AddAnimalView: View {
                     )
                     
                     // 3️⃣ Salva no Firestore somente depois que tudo foi enviado
-                    _ = try await firestoreProvider.add(copy, to: "animals", withID: id)
+                    switch addAnimalType {
+                    case .ongAnimals:
+                        _ = try await firestoreProvider.add(copy, to: "animals", withID: id)
+                    case .myAnimals:
+                        let userId = userSession.user?.id ?? ""
+                        _ = try await firestoreProvider.add(copy, to: "users/\(userId)/animals")
+                    }
                     navigator.dismiss()
                     toast("Animal cadastrado com sucesso!", .success)
                 } catch {
