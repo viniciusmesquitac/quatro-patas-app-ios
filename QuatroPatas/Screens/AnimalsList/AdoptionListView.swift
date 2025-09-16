@@ -9,6 +9,7 @@ import SwiftUI
 
 enum AnimalListType {
     case allAnimals
+    case myAnimals
     case favorites
 }
 
@@ -22,6 +23,17 @@ struct AnimalsListView: View {
     
     var listType: AnimalListType
     let repository = FavoritesRepository()
+    
+    var navigationBarTitle: String {
+        switch listType {
+        case .allAnimals:
+            return "Animais da ONG"
+        case .favorites:
+            return "Meus Favoritos"
+        case .myAnimals:
+            return "Meus Animais"
+        }
+    }
         
     var body: some View {
         ScrollView {
@@ -29,7 +41,7 @@ struct AnimalsListView: View {
                 ForEach(animals, id: \.id) { animal in
                     AnimalCardViewRow(animal: animal) {
                         switch listType {
-                        case .allAnimals:
+                        case .allAnimals, .myAnimals:
                             didSelectEditAnimal(animal: animal)
                         case .favorites:
                             didSelectFavoriteAnimal(animal: animal)
@@ -58,7 +70,7 @@ struct AnimalsListView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle(listType == .allAnimals ? "Meus Animais": "Animais Favoritos")
+        .navigationTitle(navigationBarTitle)
         .toolbar(.hidden, for: .tabBar)
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()

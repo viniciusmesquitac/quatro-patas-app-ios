@@ -11,74 +11,41 @@ struct MenuView: View {
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
-
+    
     let columns = [
         GridItem(.flexible(), spacing: Spacing.large.rawValue),
         GridItem(.flexible(), spacing: Spacing.large.rawValue)
     ]
+
+    private var cards: [MenuCard] {
+        guard let type = userSession.user?.type else { return [] }
+        return MenuCardFactory().allCases(
+            for: type,
+            navigator: navigator,
+            userSession: userSession
+        )
+    }
     
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-                
-                if !(userSession.user?.type == .admin) {
-                    CardView(title: "Formulário de Adoção") {
-                        navigator.navigate(to: .adoptionForm)
+                ForEach(cards, id: \.title) { card in
+                    CardView(title: card.title) {
+                        card.action()
                     }
-                }
-
-                if let url = URL(string: "https://4patasfortaleza.org") {
-                    CardView(title: "Sobre o abrigo") {
-                        navigator.navigate(to: .webView(url))
-                    }
-                }
-                if !(userSession.user?.type == .anonymous) {
-                    CardView(title: "Sair") {
-                        navigator.present(sheet: .logout)
-                    }
-                }
-                
-                if userSession.user?.type == .anonymous {
-                    CardView(title: "Fazer Login") {
-                        userSession.isLoggedIn = false
-                        userSession.user = nil
-                        navigator.popToRoot()
-                    }
-                }
-
-                if userSession.user?.type == .admin {
-                    CardView(title: "Adicionar Animal") {
-                            navigator.navigate(to: .addAnimal)
-                        }
-                        .transition(.scale.combined(with: .opacity))
-                }
-                
-                if userSession.user?.type == .admin {
-                    CardView(title: "Animais da ONG") {
-                        navigator.navigate(to: .animalsList(.allAnimals))
-                    }
-                    .transition(.scale.combined(with: .opacity))
-                }
-                
-                if !(userSession.user?.type == .anonymous) {
-                    CardView(title: "Meus Favoritos") {
-                        navigator.navigate(to: .animalsList(.favorites))
-                    }
+                    .transition(card.transition ?? .identity)
                 }
             }
             .animation(.spring(), value: userSession.user?.type)
             .padding()
         }
         .onAppear {
-            Task {
-                await checkUser()
-            }
+            Task { await checkUser() }
         }
         .navigationTitle(AppTab.localized(.menu))
         .navigationBarTitleDisplayMode(.inline)
     }
-    
-    
+
     func checkUser() async {
         if !(userSession.user?.type == .anonymous) {
             await userSession.checkAuth()
