@@ -25,7 +25,7 @@ struct RegisterView: View {
         ZStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Vamos Lá")
+                    Text("Vamos Lá!")
                         .font(.title)
                         .bold()
                         .padding(.top, 60)
@@ -44,17 +44,6 @@ struct RegisterView: View {
                         .textFieldStyle(PrimaryTextFieldStyle())
                     
                     Spacer(minLength: 100)
-                    
-                    HStack {
-                        Spacer()
-                        Button {
-                            registerUser()
-                        } label: {
-                            SFIcon.image(.next, scale: .large, color: .neutralWhite)
-                        }
-                        .buttonStyle(CircleButtonStyle())
-                        .disabled(isLoading)
-                    }
                 }
                 .padding(.horizontal, 20)
             }
@@ -64,17 +53,25 @@ struct RegisterView: View {
                 LoadingView()
             }
         }
-        .navigationBarHidden(true)
-        .safeAreaInset(edge: .top) {
+        .navigationTitle("Cadastro")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarItem(icon: .back, placement: .topBarLeading) {
+            navigator.dismiss()
+        }
+        .safeAreaInset(edge: .bottom) {
             HStack {
-                Button {
-                    navigator.dismiss()
-                } label: {
-                    SFIcon.image(.back)
-                }
-                .buttonStyle(FloatingButtonStyle())
                 Spacer()
-            }.padding(.horizontal)
+                Button {
+                    registerUser()
+                } label: {
+                    SFIcon.image(.next, scale: .large, color: .neutralWhite)
+                }
+                .padding(.horizontal, Padding.large.rawValue)
+                .padding(.vertical, Padding.medium.rawValue)
+                .buttonStyle(CircleButtonStyle())
+                .disabled(isLoading)
+            }
         }
     }
     
