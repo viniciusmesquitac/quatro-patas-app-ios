@@ -20,9 +20,13 @@ struct MenuView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-                CardView(title: "Formulário de Adoção") {
-                    navigator.navigate(to: .adoptionForm)
+                
+                if !(userSession.user?.type == .admin) {
+                    CardView(title: "Formulário de Adoção") {
+                        navigator.navigate(to: .adoptionForm)
+                    }
                 }
+
                 if let url = URL(string: "https://4patasfortaleza.org") {
                     CardView(title: "Sobre o abrigo") {
                         navigator.navigate(to: .webView(url))
@@ -51,9 +55,15 @@ struct MenuView: View {
                 
                 if userSession.user?.type == .admin {
                     CardView(title: "Animais da ONG") {
-                        navigator.navigate(to: .animalsList)
+                        navigator.navigate(to: .animalsList(.allAnimals))
                     }
                     .transition(.scale.combined(with: .opacity))
+                }
+                
+                if !(userSession.user?.type == .anonymous) {
+                    CardView(title: "Meus Favoritos") {
+                        navigator.navigate(to: .animalsList(.favorites))
+                    }
                 }
             }
             .animation(.spring(), value: userSession.user?.type)

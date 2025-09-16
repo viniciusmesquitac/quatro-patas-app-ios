@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum AnimalListType {
+    case allAnimals
+    case favorites
+}
+
 struct AnimalsListView: View {
     
     @EnvironmentObject var navigator: Navigator
@@ -14,21 +19,21 @@ struct AnimalsListView: View {
 
     @State private var animals: [Animal] = []
     @State private var isLoading: Bool = false
+    
+    var listType: AnimalListType
+    let repository = FavoritesRepository()
         
     var body: some View {
         ScrollView {
             LazyVStack(spacing: Padding.medium.rawValue) {
                 ForEach(animals, id: \.id) { animal in
                     AnimalCardViewRow(animal: animal) {
-                        var localizedAnimal = animal
-                        localizedAnimal.breed = Breed.localized(Breed(rawValue: animal.breed) ?? .mixed)
-                        localizedAnimal.color = AnimalColor.localized(AnimalColor(rawValue: animal.color) ?? .black)
-                        localizedAnimal.gender = Gender.localized(Gender(rawValue: animal.gender) ?? .female)
-                        localizedAnimal.size = AnimalSize.localized(AnimalSize(rawValue: animal.size) ?? .small)
-                        localizedAnimal.type = AnimalType.localized(AnimalType(rawValue: animal.type) ?? .cat)
-                        localizedAnimal.tags = animal.tags.compactMap { AnimalTag(rawValue: $0) }.map { AnimalTag.localized($0) }
-                        let (years, month) = AgeHelper.toAgeComponents(from: animal.age) ?? (0, 0)
-                        navigator.navigate(to: .edit(localizedAnimal, years, month))
+                        switch listType {
+                        case .allAnimals:
+                            didSelectEditAnimal(animal: animal)
+                        case .favorites:
+                            didSelectFavoriteAnimal(animal: animal)
+                        }
                     }
                     .padding(.horizontal, Padding.medium.rawValue)
                 }
@@ -48,15 +53,20 @@ struct AnimalsListView: View {
         }
         .task {
             await fetchAllAnimals()
+            if listType == .favorites {
+                filterFavoriteAnimals()
+            }
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("Meus Animais")
+        .navigationTitle(listType == .allAnimals ? "Meus Animais": "Animais Favoritos")
         .toolbar(.hidden, for: .tabBar)
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }
-        .toolbarItem(icon: .add, placement: .topBarTrailing) {
-            navigator.navigate(to: .addAnimal)
+        .if(listType == .allAnimals) { view in
+            view.toolbarItem(icon: .add, placement: .topBarTrailing) {
+                navigator.navigate(to: .addAnimal)
+            }
         }
     }
 
@@ -86,5 +96,20 @@ struct AnimalsListView: View {
             print("❌ Fetch error: \(error.localizedDescription)")
         }
     }
+
+    func filterFavoriteAnimals() {
+        let animalsIds: [String] = repository.getFavorites()
+        self.animals = animals.filter { animalsIds.contains($0.id ?? String()) }
+    }
+    
+    func didSelectEditAnimal(animal: Animal) {
+        let (years, month) = AgeHelper.toAgeComponents(from: animal.age) ?? (0, 0)
+        navigator.navigate(to: .edit(animal.localized, years, month))
+    }
+
+    func didSelectFavoriteAnimal(animal: Animal) {
+        print("Seleciona animal")
+    }
+
     
 }

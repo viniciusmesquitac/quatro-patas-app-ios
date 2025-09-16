@@ -195,23 +195,17 @@ struct EditAnimalView: View {
                     for imageURL in images {
                         try await uploadImage(imageURL: imageURL)
                     }
-                    var copy = animal
-                    copy.gender = Gender.fromLocalized(animal.gender)?.caseName ?? String()
-                    copy.type   = AnimalType.fromLocalized(animal.type)?.caseName ?? String()
-                    copy.breed  = Breed.fromLocalized(animal.breed)?.caseName ?? String()
-                    copy.color  = AnimalColor.fromLocalized(animal.color)?.caseName ?? String()
-                    copy.size   = AnimalSize.fromLocalized(animal.size)?.caseName ?? String()
-                    copy.tags   = animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
+                    var copy = animal.deslocalized
 
                     // 👉 mantém as fotos existentes e adiciona as novas
                     copy.photos = animal.photos + uploadedURLs
                     
                     _ = try await firestoreProvider.update(copy, in: "animals", withID: animal.id!)
-                    toast("animal editado com sucesso!", .success)
+                    toast("Animal editado com sucesso!", .success)
                     isLoading = false
                     navigator.dismiss()
                 } catch {
-                    toast("erro ao salvar!", .error)
+                    toast("Erro ao salvar!", .error)
                     isLoading = false
                 }
             }

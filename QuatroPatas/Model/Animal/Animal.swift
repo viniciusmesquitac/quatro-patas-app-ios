@@ -26,3 +26,31 @@ struct Animal: Hashable, Identifiable, Sendable, Codable {
 extension Animal {
     static let empty = Animal(name: "", age: "", gender: "", type: "", breed: "", color: "", size: "", description: "")
 }
+
+extension Animal {
+    var localized: Animal {
+        var copy = self
+        copy.breed = Breed.localized(Breed(rawValue: self.breed) ?? .mixed)
+        copy.color = AnimalColor.localized(AnimalColor(rawValue: self.color) ?? .black)
+        copy.gender = Gender.localized(Gender(rawValue: self.gender) ?? .female)
+        copy.size = AnimalSize.localized(AnimalSize(rawValue: self.size) ?? .small)
+        copy.type = AnimalType.localized(AnimalType(rawValue: self.type) ?? .cat)
+        copy.tags = self.tags
+            .compactMap { AnimalTag(rawValue: $0) }
+            .map { AnimalTag.localized($0) }
+        return copy
+    }
+}
+
+extension Animal {
+    var deslocalized: Animal {
+        var copy = self
+        copy.gender = Gender.fromLocalized(self.gender)?.caseName ?? ""
+        copy.type   = AnimalType.fromLocalized(self.type)?.caseName ?? ""
+        copy.breed  = Breed.fromLocalized(self.breed)?.caseName ?? ""
+        copy.color  = AnimalColor.fromLocalized(self.color)?.caseName ?? ""
+        copy.size   = AnimalSize.fromLocalized(self.size)?.caseName ?? ""
+        copy.tags   = self.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
+        return copy
+    }
+}
