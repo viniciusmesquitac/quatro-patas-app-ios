@@ -73,7 +73,7 @@ struct LoginWithEmailAndPasswordView: View {
         }
         isLoading = true
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if let error = error {
+            if error != nil {
                 toast("Email ou senha incorreta", .error)
                 isLoading = false
                 return

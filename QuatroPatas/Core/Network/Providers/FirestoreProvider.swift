@@ -11,9 +11,15 @@ class FirestoreProvider: ObservableObject {
 
     private let db = Firestore.firestore()
 
-    func fetch<T: Codable & Sendable>(from collection: String) async throws -> [T] {
+    func fetch<T: Codable & Sendable>(
+        from collection: String,
+        query: ((CollectionReference) -> Query)? = nil
+    ) async throws -> [T] {
         try await withCheckedThrowingContinuation { continuation in
-            db.collection(collection).getDocuments { snapshot, error in
+            let base = db.collection(collection)
+            let ref = query?(base) ?? base
+            
+            ref.getDocuments { snapshot, error in
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else {
@@ -23,7 +29,6 @@ class FirestoreProvider: ObservableObject {
                         } ?? []
                         continuation.resume(returning: items)
                     } catch {
-                        print("❌ Erro decodificando Animal:", error)
                         continuation.resume(throwing: error)
                     }
                 }
