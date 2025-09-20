@@ -10,11 +10,6 @@ import SwiftUI
 struct AnimalsView: View {
 
     @State private var animals: [Animal] = []
-    @State private var filter = AnimalFilter()
-
-    var filteredAnimals: [Animal] {
-        filter.apply(to: animals)
-    }
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
@@ -22,38 +17,45 @@ struct AnimalsView: View {
 
     @State private var isLoading = true
 
-    private let columns = Array(repeating: GridItem(.flexible(minimum: 170, maximum: 170)), count: 2)
-
     var body: some View {
-        ZStack {
-            ScrollView() {
-                FilterView(filter: $filter)
-                LazyVGrid(columns: columns, spacing: Padding.xLarge.rawValue) {
-                    ForEach(filteredAnimals, id: \.id) { animal in
-                        AnimalCardView(animal: animal) {
-                            navigator.navigate(to: .details(animal))
-                        }
+        VStack {
+            ScrollView {
+                HStack {
+                    Text("Animais")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                        .padding(.top, 20) // Adjust padding as needed
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                }
+            
+                if isLoading == false {
+                    Spacer()
+                    AnimalsHorizontalSection(
+                        title: "Disponiveis para adoção",
+                        animals: Array(animals.prefix(7))
+                    ) { animal in
+                        navigator.navigate(to: .details(animal))
+                    } onAcessoryItem: {
+                        navigator.navigate(to: .seeAllAnimals(animals))
                     }
                 }
 
-                if filteredAnimals.isEmpty && isLoading == false {
+                if animals.isEmpty && isLoading == false {
                     buildEmptyStateView()
                 }
             }
 
             if isLoading {
                 LoadingDotsView()
+                Spacer()
             }
-        }.refreshable {
-            await refresh()
         }
+        .background(Color.primaryBackground)
         .task {
             await fetchAllAnimals()
         }
-        .toolbarItem(icon: .filter, action: {
-            navigator.present(sheet: .animalFilter(animals, $filter))
-        })
-        .navigationTitle(!isLoading ? AppTab.localized(.animals) + " (\(filteredAnimals.count))" : "")
     }
 
     
@@ -69,13 +71,6 @@ struct AnimalsView: View {
             Text("Hmmm... \nNão tem nada por aqui!")
                 .font(.system(size: 24))
         } actions: {
-            Button("Buscar todos") {
-                for value in filter.values() {
-                    withAnimation(.bouncy) {
-                        filter.remove(value: value)
-                    }
-                }
-            }
         }
     }
     
@@ -83,7 +78,6 @@ struct AnimalsView: View {
          do {
              isLoading = true
              await fetchAllAnimals()
-             filter = AnimalFilter()
          }
      }
     

@@ -25,6 +25,9 @@ struct RouteDestinationView: View {
         case .webView(let url): WebViewContainer(url: url)
         case .register: RegisterView()
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
+        case .seeAllAnimals(let animals):
+            AnimalSectionListView(animals: animals)
+        case .editProfile(let user): EditProfileView(user: user)
         }
     }
 }

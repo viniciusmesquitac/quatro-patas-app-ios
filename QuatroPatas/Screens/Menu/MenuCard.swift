@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuCard {
     let title: String
     let action: () -> Void
+    var icon: SFIcon = .paw
     let transition: AnyTransition? = .scale.combined(with: .opacity)
 }
 
@@ -20,7 +21,6 @@ enum MenuCardType: CaseIterable {
     case animalsList
     case adoptionForm
     case aboutShelter
-    case logout
     case favorites
     case myAnimals
 }
@@ -33,8 +33,7 @@ extension MenuCardType {
         case .addMyAnimal: return "Adicionar Animal"
         case .animalsList: return "Animais da ONG"
         case .adoptionForm: return "Formulário de Adoção"
-        case .aboutShelter: return "Sobre o abrigo"
-        case .logout: return "Sair"
+        case .aboutShelter: return "Quem Somos"
         case .favorites: return "Meus Favoritos"
         case .myAnimals: return "Meus Animais"
         }
@@ -44,8 +43,8 @@ extension MenuCardType {
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .anonymous: [.login, .adoptionForm, .aboutShelter],
-    .admin: [.addOngAnimal, .animalsList, .aboutShelter, .logout],
-    .adopter: [.adoptionForm, .aboutShelter, .logout, .favorites, .myAnimals],
+    .admin: [.addOngAnimal, .animalsList, .aboutShelter],
+    .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals],
 ]
 
 struct MenuCardFactory {
@@ -69,7 +68,7 @@ struct MenuCardFactory {
             case .addOngAnimal:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal(.ongAnimals))
-                })
+                }, icon: .add)
 
             case .animalsList:
                 return MenuCard(title: cardType.title, action: {
@@ -79,22 +78,17 @@ struct MenuCardFactory {
             case .adoptionForm:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .adoptionForm)
-                })
+                }, icon: .form)
 
             case .aboutShelter:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .webView(URL(string: "https://4patasfortaleza.org")!))
-                })
-
-            case .logout:
-                return MenuCard(title: cardType.title, action: {
-                    navigator.present(sheet: .logout)
-                })
+                }, icon: .about)
 
             case .favorites:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .animalsList(.favorites))
-                })
+                }, icon: .favorite)
             case .myAnimals:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .animalsList(.myAnimals))
@@ -102,7 +96,7 @@ struct MenuCardFactory {
             case .addMyAnimal:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal(.myAnimals))
-                })
+                }, icon: .add)
             }
         }
     }

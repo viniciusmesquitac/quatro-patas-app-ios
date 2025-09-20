@@ -12,7 +12,7 @@ extension UIColor {
     static var primaryColor: UIColor {
         return UIColor { traitCollection in
             (traitCollection.userInterfaceStyle == .dark ?
-             UIColor(hex: "#FFCB1B") : UIColor(hex: "#FFCB1B"))!
+             UIColor(hex: "#FFCB1B") : UIColor(hex: "#F5A623"))!
         }
     }
 
@@ -32,6 +32,12 @@ extension UIColor {
     static var customBackground: UIColor {
         return UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? .systemGray6 : .white
+        }
+    }
+
+    static var primaryBackground: UIColor {
+        return UIColor { traitCollection in
+            traitCollection.userInterfaceStyle == .dark ? .black : UIColor(hex: "#FAFAF0")!
         }
     }
 }

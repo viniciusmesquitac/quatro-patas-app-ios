@@ -36,6 +36,9 @@
         }
       }
     },
+    "Animais" : {
+
+    },
     "animalcolor.black" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -783,6 +786,9 @@
         }
       }
     },
+    "Disponiveis para adoção" : {
+
+    },
     "Editar" : {
 
     },
@@ -896,6 +902,9 @@
         }
       }
     },
+    "Instagram (Opcional)" : {
+
+    },
     "Limpar" : {
 
     },
@@ -921,6 +930,9 @@
           }
         }
       }
+    },
+    "Olá, %@" : {
+
     },
     "Próximo" : {
       "extractionState" : "stale",
@@ -968,7 +980,13 @@
         }
       }
     },
+    "Telefone (Opcional)" : {
+
+    },
     "Vamos Lá!" : {
+
+    },
+    "Ver perfil" : {
 
     },
     "Você tem certeza que quer sair?" : {

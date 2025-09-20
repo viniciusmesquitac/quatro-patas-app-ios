@@ -28,6 +28,10 @@ enum SFIcon: String {
     case menu = "square.grid.2x2"
     case add = "plus.circle"
     case arrow_down = "chevron.down"
+    case form = "text.page"
+    case about = "info.circle"
+    case signOut = "rectangle.portrait.and.arrow.forward"
+    case favorite = "star"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)

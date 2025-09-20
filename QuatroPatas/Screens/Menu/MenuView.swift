@@ -28,9 +28,18 @@ struct MenuView: View {
     
     var body: some View {
         ScrollView {
+            if let user = userSession.user {
+                Spacer()
+                ProfileCardView(user: Binding(
+                    get: { userSession.user ?? user },
+                    set: { userSession.user = $0 }
+                ))
+                    .padding(.horizontal, Padding.xxLarge.rawValue)
+
+            }
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
                 ForEach(cards, id: \.title) { card in
-                    CardView(title: card.title) {
+                    CardView(title: card.title, icon: card.icon) {
                         card.action()
                     }
                     .transition(card.transition ?? .identity)
@@ -39,11 +48,15 @@ struct MenuView: View {
             .animation(.spring(), value: userSession.user?.type)
             .padding()
         }
+        .background(Color.primaryBackground)
         .onAppear {
             Task { await checkUser() }
         }
-        .navigationTitle(AppTab.localized(.menu))
-        .navigationBarTitleDisplayMode(.inline)
+        .if(userSession.isLoggedIn && !(userSession.user?.type == .anonymous)) { view in
+            view.toolbarItem(icon: .signOut) {
+                navigator.present(sheet: .logout)
+            }
+        }
     }
 
     func checkUser() async {

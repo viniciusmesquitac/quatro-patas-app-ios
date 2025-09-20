@@ -9,8 +9,10 @@ import Foundation
 
 struct User: Hashable, Identifiable, Codable {
     let id: String
-    let name: String
+    var name: String
     let email: String
+    var phone: String?
+    var instagram: String?
     let type: UserType
     var createdAt: Date = Date()
 }

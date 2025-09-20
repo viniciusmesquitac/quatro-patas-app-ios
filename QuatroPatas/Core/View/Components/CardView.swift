@@ -16,27 +16,29 @@ struct CardView: View {
     var body: some View {
         Button(action: action) {
             ZStack {
-                Color.primaryColor
+                Color.customBackground
                     .cornerRadius(CornerRadius.medium.rawValue)
 
                 VStack {
                     HStack {
                         Image(systemName: icon.rawValue)
                             .font(.system(size: 22))
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(Color.primaryColor)
                         Spacer()
                     }
                     Spacer()
                     HStack {
                         Text(title)
-                            .foregroundStyle(Color.white)
+                            .foregroundStyle(Color.customLabel)
                             .font(.headline)
+                            .fontWeight(.light)
                             .multilineTextAlignment(.leading)
                         Spacer()
                     }
                 }
                 .padding()
             }
+            .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 3)
             .frame(maxWidth: .infinity, minHeight: 162)
         }
         .buttonStyle(CardButtonStyle())
