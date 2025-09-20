@@ -32,6 +32,7 @@ enum SFIcon: String {
     case about = "info.circle"
     case signOut = "rectangle.portrait.and.arrow.forward"
     case favorite = "star"
+    case lock = "lock"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)

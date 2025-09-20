@@ -16,16 +16,16 @@ struct ProfileCardView: View {
         HStack(alignment: .center) {
             Image("default-profile")
                 .resizable()
-                .frame(width: 64, height: 64)
-                .cornerRadius(CornerRadius.large.rawValue)
-                .foregroundColor(.gray)
+                .frame(width: 64, height: 72)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.primaryColor, lineWidth: 2))
             
             VStack(alignment: .leading, spacing: 4) {
                 Text("Olá, \(user.name)")
                     .font(.headline)
                 if !(user.type == .anonymous) {
                     Button(action: {
-                        navigator.navigate(to: .editProfile(user))
+                        navigator.navigate(to: .profile(user))
                     }) {
                         Text("Ver perfil")
                             .font(.subheadline)

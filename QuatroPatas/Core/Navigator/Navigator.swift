@@ -29,6 +29,7 @@ class Navigator: ObservableObject {
     }
 
     func popToRoot() {
+        presentedSheet = nil
         path.removeLast(path.count)
     }
 }

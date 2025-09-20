@@ -83,7 +83,7 @@ struct LoginWithEmailAndPasswordView: View {
 
             userSession.login(user: firebaseUser)
             isLoading = false
-            navigator.dismiss()
+            navigator.popToRoot()
         }
     }
 

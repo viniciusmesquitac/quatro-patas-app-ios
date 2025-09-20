@@ -48,14 +48,8 @@ struct MenuView: View {
             .animation(.spring(), value: userSession.user?.type)
             .padding()
         }
-        .background(Color.primaryBackground)
         .onAppear {
             Task { await checkUser() }
-        }
-        .if(userSession.isLoggedIn && !(userSession.user?.type == .anonymous)) { view in
-            view.toolbarItem(icon: .signOut) {
-                navigator.present(sheet: .logout)
-            }
         }
     }
 

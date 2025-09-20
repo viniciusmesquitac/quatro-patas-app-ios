@@ -27,7 +27,8 @@ struct RouteDestinationView: View {
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
         case .seeAllAnimals(let animals):
             AnimalSectionListView(animals: animals)
-        case .editProfile(let user): EditProfileView(user: user)
+        case .profile(let user): ProfileView(user: user)
+        case .personalInformation(let user): EditPersonalInformationView(user: user)
         }
     }
 }

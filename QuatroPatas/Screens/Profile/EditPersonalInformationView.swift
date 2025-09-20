@@ -1,5 +1,5 @@
 //
-//  EditProfileView.swift
+//  EditPersonalInformationView.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 17/09/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditProfileView: View {
+struct EditPersonalInformationView: View {
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider

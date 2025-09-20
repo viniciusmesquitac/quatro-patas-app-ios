@@ -47,7 +47,6 @@ struct AnimalsView: View {
         }.refreshable {
             await refresh()
         }
-        .background(Color.primaryBackground)
         .task {
             await fetchAllAnimals()
         }

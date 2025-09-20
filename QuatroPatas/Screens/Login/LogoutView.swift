@@ -17,8 +17,9 @@ struct LogoutView: View {
                 .font(.headline)
             
             Button("Sair") {
-                navigator.dismiss()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                navigator.popToRoot()
+                Task {
+                    try? await Task.sleep(nanoseconds: 300_000_000)
                     withAnimation {
                         userSession.logout()
                     }

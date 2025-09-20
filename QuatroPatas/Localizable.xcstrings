@@ -934,6 +934,9 @@
     "Olá, %@" : {
 
     },
+    "Perfil" : {
+
+    },
     "Próximo" : {
       "extractionState" : "stale",
       "localizations" : {
