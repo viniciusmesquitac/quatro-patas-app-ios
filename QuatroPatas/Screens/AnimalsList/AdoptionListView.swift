@@ -45,7 +45,7 @@ struct AnimalsListView: View {
                         case .myAnimals:
                             didSelectMyAnimal(animal: animal)
                         case .allAnimals:
-                            didSelectEditAnimal(animal: animal)
+                            didSelectMyAnimal(animal: animal)
                         case .favorites:
                             didSelectFavoriteAnimal(animal: animal)
                         }
@@ -147,8 +147,7 @@ struct AnimalsListView: View {
     }
     
     func didSelectEditAnimal(animal: Animal) {
-        let (years, month) = AgeHelper.toAgeComponents(from: animal.age) ?? (0, 0)
-        navigator.navigate(to: .edit(animal.localized, years, month))
+        navigator.navigate(to: .edit(animal.localized))
     }
     
     func didSelectMyAnimal(animal: Animal) {

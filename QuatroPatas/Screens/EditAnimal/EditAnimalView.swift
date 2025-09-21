@@ -8,11 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-enum EditAnimalType {
-    case myAnimals
-    case ongAnimals
-}
-
 struct EditAnimalView: View {
 
     @State private var selectedImageIndex = 0
@@ -32,10 +27,8 @@ struct EditAnimalView: View {
     @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
     @EnvironmentObject var userSession: UserSession
 
-    @State var years: Int
-    @State var months: Int
-
-    var editAnimalType: EditAnimalType
+    @State var years: Int = 0
+    @State var months: Int = 0
 
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
@@ -108,6 +101,12 @@ struct EditAnimalView: View {
         .toolbarItem(icon: .delete, color: .red, placement: .topBarTrailing, action: {
             navigator.present(sheet: .deleteAnimal(animal))
         })
+        .onAppear {
+             if let (y, m) = AgeHelper.toAgeComponents(from: animal.age) {
+                 years = y
+                 months = m
+             }
+         }
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,
@@ -212,13 +211,8 @@ struct EditAnimalView: View {
                     // 👉 mantém as fotos existentes e adiciona as novas
                     copy.photos = animal.photos + uploadedURLs
                     
-                    var path = ""
-                    switch editAnimalType {
-                    case .ongAnimals:
-                        path = "animals"
-                    case .myAnimals:
-                        let userId = userSession.user?.id ?? ""
-                        path = "users/\(userId)/animals"
+                    guard let path = animalPathBuilder() else {
+                        throw EditAnimalError.pathError
                     }
                     _ = try await firestoreProvider.update(copy, in: path, withID: animal.id!)
                     toast("Animal editado com sucesso!", .success)
@@ -234,6 +228,19 @@ struct EditAnimalView: View {
             toast("Preencha todos os campos obrigatórios!", .error)
         }
     }
-
+    
+    func animalPathBuilder() -> String? {
+        let userId = userSession.user?.id ?? ""
+        let userType = userSession.user?.type ?? .anonymous
+        
+        switch userType {
+        case .volunteer:
+            return "animals"
+        case .adopter:
+            return "users/\(userId)/animals"
+        default:
+            return nil
+        }
+    }
 }
 

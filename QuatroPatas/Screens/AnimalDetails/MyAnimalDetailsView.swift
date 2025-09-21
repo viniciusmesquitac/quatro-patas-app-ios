@@ -86,23 +86,22 @@ struct MyAnimalDetailsView: View {
             .padding(.horizontal)
 
 
-//            LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-//                ForEach(cards, id: \.title) { card in
-//                    CardView(title: card.title, icon: card.icon) {
-//                        card.action()
-//                    }
-//                    .transition(card.transition ?? .identity)
-//                }
-//            }
-//            .padding(.horizontal)
+            LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
+                ForEach(cards, id: \.title) { card in
+                    CardView(title: card.title, icon: card.icon) {
+                        card.action()
+                    }
+                    .transition(card.transition ?? .identity)
+                }
+            }
+            .padding(.horizontal)
         }
         .navigationBarBackButtonHidden()
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }
         .toolbarItem(label: "Editar", placement: .topBarTrailing) {
-            let (years, month) = AgeHelper.toAgeComponents(from: animal.age) ?? (0, 0)
-            navigator.navigate(to: .editMyAnimals(animal.localized, years, month))
+            navigator.navigate(to: .edit(animal.localized))
         }
     }
     
