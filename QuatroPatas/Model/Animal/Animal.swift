@@ -22,6 +22,7 @@ struct Animal: Hashable, Identifiable, Sendable, Codable {
     var status: String?
     var tags: [String] = []
     var isAdopted: Bool = false
+    var ownerId: String?
 }
 
 extension Animal {

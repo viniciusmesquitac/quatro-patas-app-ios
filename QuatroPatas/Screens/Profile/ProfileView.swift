@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var navigator: Navigator
-    @State var user: User
+    @EnvironmentObject var userSession: UserSession
     
     var body: some View {
         ScrollView {
@@ -22,13 +22,12 @@ struct ProfileView: View {
                         .scaledToFill()
                         .frame(width: 120, height: 120)
                         .clipShape(Circle())
-                    
-                    Text(user.name)
+                    Text(userSession.user?.name ?? "Anônimo")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.top, 8)
                     
-                    Text(user.type.rawValue)
+                    Text(userSession.user?.type.rawValue ?? "")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -37,7 +36,9 @@ struct ProfileView: View {
                 // MARK: - Opções
                 VStack(spacing: Spacing.small.rawValue) {
                     profileButton(title: "Informações Pessoais", icon: .person) {
-                        navigator.navigate(to: .personalInformation(user))
+                        if let user = userSession.user {
+                            navigator.navigate(to: .personalInformation(user))
+                        }
                     }
                     profileButton(title: "Sair", icon: .signOut, isDestructive: true) {
                         navigator.present(sheet: .logout)
@@ -52,6 +53,7 @@ struct ProfileView: View {
         }
         .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })

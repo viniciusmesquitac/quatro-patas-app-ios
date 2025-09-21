@@ -48,14 +48,5 @@ struct MenuView: View {
             .animation(.spring(), value: userSession.user?.type)
             .padding()
         }
-        .onAppear {
-            Task { await checkUser() }
-        }
-    }
-
-    func checkUser() async {
-        if !(userSession.user?.type == .anonymous) {
-            await userSession.checkAuth()
-        }
     }
 }

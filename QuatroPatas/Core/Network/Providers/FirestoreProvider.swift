@@ -116,4 +116,17 @@ class FirestoreProvider: ObservableObject {
             }
         }
     }
+    
+    func delete(from collection: String, id: String) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            db.collection(collection).document(id).delete { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
 }
+

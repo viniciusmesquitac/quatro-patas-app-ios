@@ -54,13 +54,6 @@ struct QuatroPatasApp: App {
                     LoadingView()
                 }
             }
-            .onAppear {
-                Task {
-                    isLoading = true
-                    await userSession.checkAuth()
-                    isLoading = false
-                }
-            }
             .animation(.easeInOut(duration: 0.5), value: userSession.isLoggedIn)
             .environmentObject(navigator)
             .environmentObject(requestProvider)

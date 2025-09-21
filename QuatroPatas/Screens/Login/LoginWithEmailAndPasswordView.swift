@@ -21,10 +21,21 @@ struct LoginWithEmailAndPasswordView: View {
 
     var body: some View {
         ScrollView {
-            Spacer(minLength: UIScreen.main.bounds.height / 4)
+            Image("logo")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 64, height: 64)
+            
+            Spacer(minLength: 100)
+    
             VStack(alignment: .center, spacing: Spacing.xLarge.rawValue) {
                 TextField("Email", text: $email)
+                    .textCase(.lowercase)
+                    .keyboardType(.emailAddress)
                     .textFieldStyle(PrimaryTextFieldStyle())
+                    .onChange(of: email) { _, newValue in
+                        email = newValue.lowercased()
+                    }
                 
                 SecureField("Senha", text: $password)
                     .keyboardType(.emailAddress)
@@ -37,11 +48,11 @@ struct LoginWithEmailAndPasswordView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 
-                Button("Entrar como Anônimo") {
-                    userSession.loginAnonymous()
-                    navigator.dismiss()
-                }
-                .buttonStyle(OutlineRoundedButtonStyle())
+//                Button("Entrar como Anônimo") {
+//                    userSession.loginAnonymous()
+//                    navigator.dismiss()
+//                }
+//                .buttonStyle(OutlineRoundedButtonStyle())
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
         }
@@ -81,7 +92,6 @@ struct LoginWithEmailAndPasswordView: View {
 
             guard let firebaseUser = result?.user else { return }
 
-            userSession.login(user: firebaseUser)
             isLoading = false
             navigator.popToRoot()
         }

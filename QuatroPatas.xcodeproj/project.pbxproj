@@ -13,6 +13,7 @@
 		813F3D832E6B75A2001F4BD2 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D822E6B75A2001F4BD2 /* FirebaseCore */; };
 		813F3D852E6B75A2001F4BD2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D842E6B75A2001F4BD2 /* FirebaseFirestore */; };
 		813F3D872E6B75A2001F4BD2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D862E6B75A2001F4BD2 /* FirebaseStorage */; };
+		817EEF0A2E7EFA0600A03C6B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 817EEF092E7EFA0600A03C6B /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				813F3D362E650EBF001F4BD2 /* FirebaseCore in Frameworks */,
+				817EEF0A2E7EFA0600A03C6B /* Lottie in Frameworks */,
 				813F3D342E650EBF001F4BD2 /* FirebaseAuth in Frameworks */,
 				813F3D832E6B75A2001F4BD2 /* FirebaseCore in Frameworks */,
 				813F3D852E6B75A2001F4BD2 /* FirebaseFirestore in Frameworks */,
@@ -87,12 +89,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		817EEF082E7EFA0600A03C6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		81DF06B22D8DED82007D23D1 = {
 			isa = PBXGroup;
 			children = (
 				81DF06BD2D8DED82007D23D1 /* QuatroPatas */,
 				81DF06CF2D8DED83007D23D1 /* QuatroPatasTests */,
 				81DF06D92D8DED83007D23D1 /* QuatroPatasUITests */,
+				817EEF082E7EFA0600A03C6B /* Frameworks */,
 				81DF06BC2D8DED82007D23D1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -133,6 +143,7 @@
 				813F3D822E6B75A2001F4BD2 /* FirebaseCore */,
 				813F3D842E6B75A2001F4BD2 /* FirebaseFirestore */,
 				813F3D862E6B75A2001F4BD2 /* FirebaseStorage */,
+				817EEF092E7EFA0600A03C6B /* Lottie */,
 			);
 			productName = QuatroPatas;
 			productReference = 81DF06BB2D8DED82007D23D1 /* QuatroPatas.app */;
@@ -220,6 +231,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				813F3D812E6B75A2001F4BD2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				817EEDED2E7EF7F600A03C6B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 81DF06BC2D8DED82007D23D1 /* Products */;
@@ -625,6 +637,14 @@
 				minimumVersion = 12.2.0;
 			};
 		};
+		817EEDED2E7EF7F600A03C6B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -654,6 +674,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 813F3D812E6B75A2001F4BD2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		817EEF092E7EFA0600A03C6B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 817EEDED2E7EF7F600A03C6B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

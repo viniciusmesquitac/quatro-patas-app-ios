@@ -21,7 +21,7 @@ enum Route: Hashable, Identifiable {
     case register
     case loginWithEmailAndPassword
     case seeAllAnimals([Animal])
-    case profile(User)
+    case profile
     case personalInformation(User)
     
     var id: String { String(describing: self) }

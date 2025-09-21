@@ -96,8 +96,10 @@ struct AnimalImagesCarousel: View {
                             }
                         } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .imageScale(.large)
-                                .foregroundStyle(Color.primaryColor)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 48, height: 48)
+                                .foregroundStyle(Color.primaryColor.opacity(0.5))
                         }
                         .padding(8)
                     }

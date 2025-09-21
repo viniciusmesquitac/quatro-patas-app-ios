@@ -23,6 +23,8 @@ struct SheetDestinationView: View {
             LogoutView()
         case .alert(let title, let action):
             AlertView(title: title, action: action)
+        case .deleteAnimal(let animal):
+            DeleteAnimalView(animal: animal)
         }
     }
 }

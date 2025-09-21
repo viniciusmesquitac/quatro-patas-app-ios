@@ -6,9 +6,8 @@
 //
 
 enum UserType: String, Codable {
-    case protector
+    case volunteer
     case ngo
     case adopter
-    case admin
     case anonymous
 }

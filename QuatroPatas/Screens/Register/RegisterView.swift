@@ -35,7 +35,11 @@ struct RegisterView: View {
                     
                     TextField("Email", text: $email)
                         .keyboardType(.emailAddress)
+                        .textCase(.lowercase)
                         .textFieldStyle(PrimaryTextFieldStyle())
+                        .onChange(of: email) { _, newValue in
+                            email = newValue.lowercased()
+                        }
                     
                     SecureField("Senha", text: $password)
                         .textFieldStyle(PrimaryTextFieldStyle())
@@ -112,8 +116,6 @@ struct RegisterView: View {
                         _ = try await firestore.add(appUser,
                                                     to: "users",
                                                     withID: firebaseUser.uid)
-                        // Atualiza sessão
-                        userSession.login(user: firebaseUser)
                         navigator.dismiss()
                     } catch {
                         toast("Erro salvando usuário: \(error.localizedDescription)", .error)

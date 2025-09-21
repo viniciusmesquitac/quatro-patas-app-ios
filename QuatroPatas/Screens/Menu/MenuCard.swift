@@ -43,7 +43,8 @@ extension MenuCardType {
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .anonymous: [.login, .adoptionForm, .aboutShelter],
-    .admin: [.addOngAnimal, .animalsList, .aboutShelter],
+    .volunteer: [.addOngAnimal, .animalsList, .aboutShelter],
+    .ngo: [.addOngAnimal, .animalsList, .aboutShelter],
     .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals],
 ]
 

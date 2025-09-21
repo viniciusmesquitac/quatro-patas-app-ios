@@ -16,27 +16,33 @@ struct LoginView: View {
     @EnvironmentObject private var userSession: UserSession
     @Environment(\.toast) var toast
     
-    @State private var nonce: String?
     @State private var isLoading: Bool = false
-    @Environment(\.colorScheme) private var scheme
     
     var body: some View {
-        VStack {
-            Rectangle()
-                .fill(Color.primaryColor)
-                .frame(height: UIScreen.main.bounds.height / 2)
-                .ignoresSafeArea(edges: .top)
-            Spacer()
-        }
+        Rectangle()
+            .fill(Color.primaryColor)
+            .frame(height: UIScreen.main.bounds.height / 2.5)
+            .overlay {
+                LottieView(name: "like_cat", loopMode: .loop)
+                    .padding(.top, 80)
+            }
+            .ignoresSafeArea(edges: .top)
         
         VStack(spacing: Spacing.large.rawValue) {
+            Text("Encontre o seu melhor amigo aqui!")
+                .font(.title2)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primary)
+                .padding(.horizontal, Padding.xxLarge.rawValue)
+                .padding(.top, Padding.medium.rawValue)
             
             Button("Criar uma conta") {
                 navigator.navigate(to: .register)
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .buttonStyle(PrimaryButtonStyle())
-
+            
             Button("Entrar") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.easeInOut) {
@@ -53,13 +59,13 @@ struct LoginView: View {
                 .foregroundColor(.secondary)
                 .padding(.horizontal, Padding.xxLarge.rawValue)
                 .padding(.top, Padding.medium.rawValue)
-            Spacer()
         }
         .overlay {
             if isLoading {
                 LoadingView()
             }
         }
+        Spacer()
     }
-    
 }
+

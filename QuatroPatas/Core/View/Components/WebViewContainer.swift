@@ -11,6 +11,8 @@ struct WebViewContainer: View {
     @State private var isLoading = true
     var url: URL
     
+    @EnvironmentObject var navigator: Navigator
+    
     var body: some View {
         ZStack {
             WebView(url, isLoading: $isLoading)
@@ -19,5 +21,10 @@ struct WebViewContainer: View {
                 LoadingDotsView()
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+            navigator.dismiss()
+        })
+        .toolbar(.hidden, for: .tabBar)
     }
 }

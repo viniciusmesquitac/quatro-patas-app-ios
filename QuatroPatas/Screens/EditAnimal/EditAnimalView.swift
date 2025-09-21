@@ -97,6 +97,9 @@ struct EditAnimalView: View {
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
+        .toolbarItem(icon: .delete, color: .red, placement: .topBarTrailing, action: {
+            navigator.present(sheet: .deleteAnimal(animal))
+        })
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,

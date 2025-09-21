@@ -25,7 +25,7 @@ struct ProfileCardView: View {
                     .font(.headline)
                 if !(user.type == .anonymous) {
                     Button(action: {
-                        navigator.navigate(to: .profile(user))
+                        navigator.navigate(to: .profile)
                     }) {
                         Text("Ver perfil")
                             .font(.subheadline)

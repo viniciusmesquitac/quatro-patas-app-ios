@@ -13,6 +13,7 @@ struct ToolbarItemModifier: ViewModifier {
     @EnvironmentObject var navigator: Navigator
     var label: String?
     var icon: SFIcon
+    var color: Color
     var placement: ToolbarItemPlacement
     var action: (() -> Void)
 
@@ -22,7 +23,7 @@ struct ToolbarItemModifier: ViewModifier {
                 ToolbarItem(placement: placement) {
                     Button(action: action) {
                         HStack {
-                            SFIcon.image(icon)
+                            SFIcon.image(icon, color: color)
                             if let label = label {
                                 Text(label)
                             }
@@ -34,8 +35,8 @@ struct ToolbarItemModifier: ViewModifier {
 }
 
 extension View {
-    func toolbarItem(label: String? = "", icon: SFIcon, placement: ToolbarItemPlacement = .automatic, action: @escaping () -> Void) -> some View {
-        self.modifier(ToolbarItemModifier(label: label, icon: icon, placement: placement, action: action))
+    func toolbarItem(label: String? = "", icon: SFIcon, color: Color = .primaryColor, placement: ToolbarItemPlacement = .automatic, action: @escaping () -> Void) -> some View {
+        self.modifier(ToolbarItemModifier(label: label, icon: icon, color: color, placement: placement, action: action))
     }
 }
 

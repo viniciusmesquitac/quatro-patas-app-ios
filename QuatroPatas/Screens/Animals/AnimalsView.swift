@@ -62,8 +62,7 @@ struct AnimalsView: View {
     func buildEmptyStateView() -> some View {
         ContentUnavailableView {
             Spacer()
-            Image("empty-state-animals")
-                .resizable()
+            LottieView(name: "cat_in_box", loopMode: .loop)
                 .frame(width: 200, height: 200)
         } description: {
             Text("Hmmm... \nNão tem nada por aqui!")

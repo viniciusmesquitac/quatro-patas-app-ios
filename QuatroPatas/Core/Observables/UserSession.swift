@@ -8,53 +8,76 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 @MainActor
 class UserSession: ObservableObject {
     @Published var user: User? = nil
     @Published var isLoggedIn: Bool = false
+    
+    private var authListener: AuthStateDidChangeListenerHandle?
+    private var userListener: ListenerRegistration?
 
-    /// Checa se já existe usuário logado no Firebase
-    func checkAuth() async {
-        if let currentUser = Auth.auth().currentUser {
-            do {
-                // força revalidação no servidor
-                try await currentUser.reload()
-
-                // depois do reload o currentUser pode ter sido invalidado
-                if Auth.auth().currentUser == nil {
-                    // usuário não existe mais
-                    self.user = nil
-                    self.isLoggedIn = false
-                    return
+    init() {
+        authListener = Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
+            guard let self = self else { return }
+            
+            if let firebaseUser = firebaseUser {
+                Task {
+                    await self.loadUserData(for: firebaseUser)
                 }
-                // se ainda existe, monta o seu User
-                
-                let user: User? = try await FirestoreProvider().fetchDocument(from: "users", id: currentUser.uid)
-                self.user = user
-                self.isLoggedIn = true
-            } catch {
-                // erro no reload (ex.: usuário removido, token inválido, etc)
-                print("Erro ao recarregar usuário: \(error.localizedDescription)")
+            } else {
+                // usuário saiu
                 self.user = nil
                 self.isLoggedIn = false
+                // cancela listener do Firestore se existir
+                self.userListener?.remove()
+                self.userListener = nil
             }
-        } else {
-            self.user = nil
-            self.isLoggedIn = false
         }
     }
 
-    func login(user: FirebaseAuth.User) {
-        self.user = User(
-            id: user.uid,
-            name: user.displayName ?? "Anônimo",
-            email: user.email ?? "",
-            type: .adopter
-        )
-        self.isLoggedIn = true
+    @MainActor
+     private func loadUserData(for firebaseUser: FirebaseAuth.User) async {
+         // primeiro carrega uma vez
+         do {
+             let fetchedUser: User? = try await FirestoreProvider()
+                 .fetchDocument(from: "users", id: firebaseUser.uid)
+             self.user = fetchedUser
+             self.isLoggedIn = true
+         } catch {
+             print("Erro ao buscar usuário: \(error)")
+         }
+         
+         // depois escuta mudanças em tempo real no documento do usuário
+         listenToUserDocument(uid: firebaseUser.uid)
+     }
+
+    private func listenToUserDocument(uid: String) {
+        // remove listener antigo se houver
+        userListener?.remove()
+        userListener = Firestore.firestore()
+            .collection("users")
+            .document(uid)
+            .addSnapshotListener { [weak self] snapshot, error in
+                guard let self = self else { return }
+                if let error = error {
+                    print("Erro no listener do usuário: \(error)")
+                    return
+                }
+                do {
+                    if let snapshot = snapshot, snapshot.exists {
+                        self.user = try snapshot.data(as: User.self)
+                    } else {
+                        self.user = nil
+                        self.isLoggedIn = false
+                    }
+                } catch {
+                    print("Erro ao decodificar User: \(error)")
+                }
+            }
     }
-    
+
     func loginAnonymous() {
         self.user = User(
             id: "",
@@ -68,8 +91,6 @@ class UserSession: ObservableObject {
     func logout() {
         do {
             try Auth.auth().signOut()
-            self.user = nil
-            self.isLoggedIn = false
         } catch {
             print("Erro ao deslogar: \(error.localizedDescription)")
         }
