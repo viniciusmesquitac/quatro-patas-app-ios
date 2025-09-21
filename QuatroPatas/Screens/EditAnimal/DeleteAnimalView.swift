@@ -10,6 +10,7 @@ import SwiftUI
 struct DeleteAnimalView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
 
     @State var animal: Animal
     @EnvironmentObject var userSession: UserSession
@@ -21,6 +22,7 @@ struct DeleteAnimalView: View {
                 .font(.headline)
             
             Button("Sim") {
+                navigator.dismiss()
                 navigator.dismiss()
                 Task {
                     let userType = userSession.user?.type ?? .anonymous
@@ -38,6 +40,8 @@ struct DeleteAnimalView: View {
                     }
                     do {
                         let result = try await firestoreProvider.delete(from: path, id: animalId)
+                        try await firebaseStorageProvider.deleteFolder(path: "animals/\(animalId)")
+
                         navigator.dismiss()
                         if result {
                             toast("Animal deletado com sucesso!", .success)

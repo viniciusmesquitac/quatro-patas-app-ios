@@ -106,7 +106,12 @@ struct AnimalsListView: View {
         } description: {
             Text("Hmmm... \nNão tem nada por aqui!")
                 .font(.system(size: 24))
-        } actions: { }
+        } actions: {
+            Button("Adicionar Animal") {
+                let listToAdd: AddAnimalType  = listType == .allAnimals ? .ongAnimals : .myAnimals
+                navigator.navigate(to: .addAnimal(listToAdd))
+            }
+        }
     }
     
     

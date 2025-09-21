@@ -36,4 +36,37 @@ class FirebaseStorageProvider: ObservableObject {
             }
         }
     }
+    
+    func deleteFile(path: String) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            let storageRef = storage.reference().child(path)
+            
+            storageRef.delete { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
+
+    func deleteFolder(path: String) async throws {
+        let folderRef = storage.reference().child(path)
+        
+        // lista todos os arquivos dentro do prefixo
+        let result = try await folderRef.listAll()
+        
+        for item in result.items {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                item.delete { error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: ())
+                    }
+                }
+            }
+        }
+    }
 }
