@@ -42,7 +42,9 @@ struct AnimalsListView: View {
                 ForEach(animals, id: \.id) { animal in
                     AnimalCardViewRow(animal: animal) {
                         switch listType {
-                        case .allAnimals, .myAnimals:
+                        case .myAnimals:
+                            didSelectMyAnimal(animal: animal)
+                        case .allAnimals:
                             didSelectEditAnimal(animal: animal)
                         case .favorites:
                             didSelectFavoriteAnimal(animal: animal)
@@ -143,6 +145,11 @@ struct AnimalsListView: View {
         let (years, month) = AgeHelper.toAgeComponents(from: animal.age) ?? (0, 0)
         navigator.navigate(to: .edit(animal.localized, years, month))
     }
+    
+    func didSelectMyAnimal(animal: Animal) {
+        navigator.navigate(to: .myAnimalDetails(animal.localized))
+    }
+
 
     func didSelectFavoriteAnimal(animal: Animal) {
         print("Seleciona animal")

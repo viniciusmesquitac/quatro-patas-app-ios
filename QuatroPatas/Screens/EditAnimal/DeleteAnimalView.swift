@@ -17,7 +17,7 @@ struct DeleteAnimalView: View {
     
     var body: some View {
         VStack(spacing: Spacing.large.rawValue) {
-            Text("Você tem certeza que quer deletar esse animal? OBS: Está opereção não pode ser desfeita.")
+            Text("Você tem certeza que quer deletar esse animal?")
                 .font(.headline)
             
             Button("Sim") {
@@ -29,7 +29,7 @@ struct DeleteAnimalView: View {
                     
                     var path = ""
                     switch userType {
-                    case .volunteer, .ngo:
+                    case .volunteer:
                         path = "animals"
                     case .adopter:
                         path = "users/\(userId)/animals"

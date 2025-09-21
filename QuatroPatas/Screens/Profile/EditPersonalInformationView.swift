@@ -72,7 +72,6 @@ struct EditPersonalInformationView: View {
                         updatedUser.instagram = instagram
                         updatedUser.phone = phone
                         try await _ = databaseProvider.update(updatedUser, in: "users", withID: user.id)
-//                        await userSession.checkAuth()
                         isLoading = false
                         toast("Atualizado com sucesso!", .success)
                     } catch {

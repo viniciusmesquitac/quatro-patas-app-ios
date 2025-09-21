@@ -10,25 +10,27 @@ import FirebaseCore
 
 @main
 struct QuatroPatasApp: App {
-
+    
     @StateObject private var navigator = Navigator()
     @StateObject private var requestProvider = RequestProvider()
     @StateObject private var databaseProvider = FirestoreProvider()
     @StateObject private var storageProvider = FirebaseStorageProvider()
     @StateObject private var formManager = FormManager()
     @StateObject private var userSession = UserSession()
-
+    
     @State private var isLoggedIn: Bool = false
     @State private var isLoading: Bool = false
     
     init() {
         FirebaseApp.configure()
     }
-
+    
     var body: some Scene {
         WindowGroup {
             Group {
-                if userSession.isLoggedIn {
+                if userSession.isLoadingAuth {
+                    LoadingView()
+                } else if userSession.isLoggedIn {
                     TabView {
                         TabItem(label: .animals, icon: .paw) {
                             AnimalsView()
@@ -44,8 +46,8 @@ struct QuatroPatasApp: App {
                 } else {
                     NavigationStack(path: $navigator.path) {
                         LoginView()
-                        .applyRoute()
-                        .transition(.move(edge: .leading))
+                            .applyRoute()
+                            .transition(.move(edge: .leading))
                     }
                 }
             }
@@ -65,5 +67,5 @@ struct QuatroPatasApp: App {
             .toast()
         }
     }
-
+    
 }

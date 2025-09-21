@@ -21,7 +21,9 @@ struct RouteDestinationView: View {
         case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)
         case .animalsList(let type): AnimalsListView(listType: type)
         case .addAnimal(let type): AddAnimalView(addAnimalType: type)
-        case .edit(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months)
+        case .edit(let animal, let years, let months):
+            EditAnimalView(animal: animal, years: years, months: months, editAnimalType: .ongAnimals)
+        case .editMyAnimals(let animal, let years, let months): EditAnimalView(animal: animal, years: years, months: months, editAnimalType: .myAnimals)
         case .webView(let url): WebViewContainer(url: url)
         case .register: RegisterView()
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
@@ -29,6 +31,7 @@ struct RouteDestinationView: View {
             AnimalSectionListView(animals: animals)
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
+        case .myAnimalDetails(let animal): MyAnimalDetailsView(animal: animal)
         }
     }
 }

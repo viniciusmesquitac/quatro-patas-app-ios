@@ -7,7 +7,6 @@
 
 enum UserType: String, Codable {
     case volunteer
-    case ngo
     case adopter
     case anonymous
 }

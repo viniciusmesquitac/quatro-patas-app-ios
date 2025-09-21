@@ -8,6 +8,11 @@
 import SwiftUI
 import PhotosUI
 
+enum EditAnimalType {
+    case myAnimals
+    case ongAnimals
+}
+
 struct EditAnimalView: View {
 
     @State private var selectedImageIndex = 0
@@ -25,9 +30,12 @@ struct EditAnimalView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
     @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    @EnvironmentObject var userSession: UserSession
 
     @State var years: Int
     @State var months: Int
+
+    var editAnimalType: EditAnimalType
 
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
@@ -204,9 +212,18 @@ struct EditAnimalView: View {
                     // 👉 mantém as fotos existentes e adiciona as novas
                     copy.photos = animal.photos + uploadedURLs
                     
-                    _ = try await firestoreProvider.update(copy, in: "animals", withID: animal.id!)
+                    var path = ""
+                    switch editAnimalType {
+                    case .ongAnimals:
+                        path = "animals"
+                    case .myAnimals:
+                        let userId = userSession.user?.id ?? ""
+                        path = "users/\(userId)/animals"
+                    }
+                    _ = try await firestoreProvider.update(copy, in: path, withID: animal.id!)
                     toast("Animal editado com sucesso!", .success)
                     isLoading = false
+                    navigator.dismiss()
                     navigator.dismiss()
                 } catch {
                     toast("Erro ao salvar!", .error)

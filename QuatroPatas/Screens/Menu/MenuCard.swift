@@ -44,7 +44,6 @@ extension MenuCardType {
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .anonymous: [.login, .adoptionForm, .aboutShelter],
     .volunteer: [.addOngAnimal, .animalsList, .aboutShelter],
-    .ngo: [.addOngAnimal, .animalsList, .aboutShelter],
     .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals],
 ]
 

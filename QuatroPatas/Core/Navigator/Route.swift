@@ -17,12 +17,14 @@ enum Route: Hashable, Identifiable {
     case animalsList(AnimalListType)
     case addAnimal(AddAnimalType)
     case edit(Animal, Int, Int)
+    case editMyAnimals(Animal, Int, Int)
     case webView(URL)
     case register
     case loginWithEmailAndPassword
     case seeAllAnimals([Animal])
     case profile
     case personalInformation(User)
+    case myAnimalDetails(Animal)
     
     var id: String { String(describing: self) }
 }

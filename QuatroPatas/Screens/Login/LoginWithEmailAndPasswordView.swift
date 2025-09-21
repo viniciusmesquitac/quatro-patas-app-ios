@@ -89,9 +89,6 @@ struct LoginWithEmailAndPasswordView: View {
                 isLoading = false
                 return
             }
-
-            guard let firebaseUser = result?.user else { return }
-
             isLoading = false
             navigator.popToRoot()
         }

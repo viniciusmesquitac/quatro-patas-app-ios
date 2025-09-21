@@ -14,7 +14,8 @@ import FirebaseFirestore
 class UserSession: ObservableObject {
     @Published var user: User? = nil
     @Published var isLoggedIn: Bool = false
-    
+    @Published var isLoadingAuth: Bool = true
+
     private var authListener: AuthStateDidChangeListenerHandle?
     private var userListener: ListenerRegistration?
 
@@ -33,6 +34,7 @@ class UserSession: ObservableObject {
                 // cancela listener do Firestore se existir
                 self.userListener?.remove()
                 self.userListener = nil
+                self.isLoadingAuth = false
             }
         }
     }
@@ -45,6 +47,7 @@ class UserSession: ObservableObject {
                  .fetchDocument(from: "users", id: firebaseUser.uid)
              self.user = fetchedUser
              self.isLoggedIn = true
+             self.isLoadingAuth = false
          } catch {
              print("Erro ao buscar usuário: \(error)")
          }
