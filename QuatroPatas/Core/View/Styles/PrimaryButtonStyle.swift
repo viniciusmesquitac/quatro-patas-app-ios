@@ -26,6 +26,7 @@ struct PrimaryButtonStyle: ButtonStyle {
                 configuration.label
                     .frame(maxWidth: .infinity)
                     .padding()
+                    .disabled(isLoading)
                     .background(backgroundColor.opacity(configuration.isPressed ? 0.8 : 1))
                     .foregroundColor(foregroundColor)
                     .cornerRadius(cornerRadius)

@@ -68,7 +68,7 @@ struct LoginWithEmailAndPasswordView: View {
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .padding(.bottom, Padding.medium.rawValue)
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
         }
     }
     
