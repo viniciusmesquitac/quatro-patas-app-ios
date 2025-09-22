@@ -98,7 +98,6 @@ extension SignInWithAppleView {
                 }
                 // User is signed in to Firebase with Apple.
                 // ...
-                userSession.isLoggedIn = true
                 isLoading = false
             }
         }

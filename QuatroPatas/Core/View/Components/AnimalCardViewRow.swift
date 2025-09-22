@@ -65,11 +65,23 @@ struct AnimalCardViewRow: View {
                         .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 }
                 
-                // Nome e idade
                 VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
-                    Text(animal.name)
-                        .font(.system(size: Constants.nameFontSize, weight: .semibold))
-                        .foregroundColor(.primary)
+                    HStack {
+                        Text(animal.name)
+                            .font(.system(size: Constants.nameFontSize, weight: .semibold))
+                            .foregroundColor(.primary)
+                        
+                        if animal.isAdopted {
+                            Spacer()
+                            Text("Adotado")
+                                .font(.system(size: 12, weight: .bold))
+                                .padding(.horizontal, Padding.medium.rawValue)
+                                .padding(.vertical, Padding.small.rawValue)
+                                .background(Color.primaryColor)
+                                .foregroundColor(.white)
+                                .clipShape(Capsule())
+                        }
+                    }
                     
                     Text(DateHelper.formatCreatedAt(animal.createdAt))
                         .font(.system(size: Constants.ageFontSize))
@@ -85,7 +97,6 @@ struct AnimalCardViewRow: View {
         .buttonStyle(NoneButtonStyle())
     }
     
-    // Reuso das funções utilitárias
     func getToken(url: URL) -> String {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {

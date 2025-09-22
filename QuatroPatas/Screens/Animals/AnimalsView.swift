@@ -82,7 +82,6 @@ struct AnimalsView: View {
          do {
              isLoading = true
              await fetchAllAnimals()
-             filter = AnimalFilter()
          }
      }
     

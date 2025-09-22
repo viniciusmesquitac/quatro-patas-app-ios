@@ -60,8 +60,7 @@ struct MenuCardFactory {
             switch cardType {
             case .login:
                 return MenuCard(title: cardType.title, action: {
-                    userSession.isLoggedIn = false
-                    userSession.user = nil
+                    userSession.logout()
                     navigator.popToRoot()
                 })
 

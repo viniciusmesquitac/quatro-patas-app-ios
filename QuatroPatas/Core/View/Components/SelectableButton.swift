@@ -16,9 +16,9 @@ struct SelectableButton: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 18, weight: .medium))
-                .frame(maxWidth: .infinity, minHeight: 50) // garante metade da largura
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .foregroundStyle(isSelected ? .primary : .secondary)
                 .background(isSelected ? Color.primaryColor.opacity(0.2) : Color.gray.opacity(0.1))
-                .foregroundColor(isSelected ? .secondaryColor : .primary)
                 .cornerRadius(12)
         }
         .buttonStyle(FilterButtonStyle())

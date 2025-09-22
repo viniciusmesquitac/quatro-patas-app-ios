@@ -44,12 +44,12 @@ struct DynamicFormView: View {
                     
                 case .multiselection(let title, let options, let binding):
                     FormField(title: title) {
-                        MultiSelectDropdown(title: "Selecione", options: options, selections: binding)
+                        DropdownView(options: options, mode: .multiple(binding: binding))
                     }
 
                 case .dropdown(let title, let options, let binding):
                     FormField(title: title) {
-                        Dropdown(title: "Selecione", options: options, selection: binding)
+                        DropdownView(options: options, mode: .single(binding: binding))
                     }
                 case .agePicker(years: let years, months: let months):
                     FormField(title: "Idade") {

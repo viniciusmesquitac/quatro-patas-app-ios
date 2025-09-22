@@ -183,21 +183,8 @@ struct EditAnimalView: View {
         return true
     }
 
-    func calculateAgeTimestamp(years: Int, months: Int) -> String {
-        let calendar = Calendar.current
-        let now = Date()
-
-        if let date = calendar.date(byAdding: .year, value: -years, to: now),
-           let finalDate = calendar.date(byAdding: .month, value: -months, to: date) {
-            let timestamp = finalDate.timeIntervalSince1970
-            return String(Int(timestamp))
-        }
-        
-        return "0"
-    }
-
     func editAnimal() {
-        animal.age = calculateAgeTimestamp(years: years, months: months)
+        animal.age = AgeHelper.calculateAgeTimestamp(years: years, months: months)
         if validateFields(of: animal) {
             isLoading = true
             

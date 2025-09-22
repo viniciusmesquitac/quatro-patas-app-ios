@@ -14,6 +14,10 @@ extension Localizable {
         String(describing: self).lowercased()
     }
     
+    var localized: String {
+        NSLocalizedString(self.rawValue, comment: "")
+    }
+    
     init?(rawValue: String) {
         let parts = rawValue.split(separator: ".").map { String($0) }
         guard let caseName = parts.last else { return nil }
@@ -31,7 +35,7 @@ extension Localizable {
     }
 
     static func fromLocalized(_ string: String) -> Self? {
-        return allCases.first { localized($0) == string }
+        return allCases.first { $0.localized == string }
     }
 
     static var allLocalized: [String] {

@@ -42,17 +42,6 @@ struct LoginWithEmailAndPasswordView: View {
                     .textFieldStyle(PrimaryTextFieldStyle())
                 
                 Spacer()
-                
-                Button("Entrar") {
-                    login()
-                }
-                .buttonStyle(PrimaryButtonStyle())
-                
-//                Button("Entrar como Anônimo") {
-//                    userSession.loginAnonymous()
-//                    navigator.dismiss()
-//                }
-//                .buttonStyle(OutlineRoundedButtonStyle())
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
         }
@@ -72,6 +61,14 @@ struct LoginWithEmailAndPasswordView: View {
                 .buttonStyle(FloatingButtonStyle())
                 Spacer()
             }.padding(.horizontal)
+        }
+        .safeAreaInset(edge: .bottom) {
+            Button("Entrar") {
+                login()
+            }
+            .padding(.horizontal, Padding.xxLarge.rawValue)
+            .padding(.bottom, Padding.medium.rawValue)
+            .buttonStyle(PrimaryButtonStyle())
         }
     }
     

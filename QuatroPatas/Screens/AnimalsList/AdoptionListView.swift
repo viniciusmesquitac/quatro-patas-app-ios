@@ -154,9 +154,8 @@ struct AnimalsListView: View {
         navigator.navigate(to: .myAnimalDetails(animal.localized))
     }
 
-
     func didSelectFavoriteAnimal(animal: Animal) {
-        print("Seleciona animal")
+        navigator.navigate(to: .details(animal.localized))
     }
 
     

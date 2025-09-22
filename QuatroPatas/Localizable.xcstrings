@@ -23,6 +23,9 @@
     "Adicionar Animal" : {
 
     },
+    "Adotado" : {
+
+    },
     "Adotar" : {
       "localizations" : {
         "en" : {
@@ -700,6 +703,9 @@
         }
       }
     },
+    "Cadastrar adoção" : {
+
+    },
     "Cadastrar Animal" : {
       "localizations" : {
         "en" : {
@@ -908,6 +914,9 @@
     "Instagram (Opcional)" : {
 
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Limpar" : {
 
     },
@@ -988,6 +997,40 @@
     },
     "Telefone (Opcional)" : {
 
+    },
+    "usertype.adopter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adopter"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adotante"
+          }
+        }
+      }
+    },
+    "usertype.volunteer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volunteer"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Voluntário"
+          }
+        }
+      }
     },
     "Vamos Lá!" : {
 

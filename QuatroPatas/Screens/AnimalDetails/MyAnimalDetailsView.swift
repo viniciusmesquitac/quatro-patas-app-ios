@@ -51,19 +51,19 @@ struct MyAnimalDetailsView: View {
 
             // Informações principais
             VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
-                infoRow(label: "Idade", value: AgeHelper.formatAge(from: animal.age))
-                infoRow(label: "Gênero", value: animal.gender)
-                infoRow(label: "Tipo", value: animal.type)
-                infoRow(label: "Raça", value: animal.breed)
-                infoRow(label: "Cor", value: animal.color)
-                infoRow(label: "Porte", value: animal.size)
+                Row(label: "Idade", value: AgeHelper.formatAge(from: animal.age))
+                Row(label: "Gênero", value: animal.gender)
+                Row(label: "Tipo", value: animal.type)
+                Row(label: "Raça", value: animal.breed)
+                Row(label: "Cor", value: animal.color)
+                Row(label: "Porte", value: animal.size)
                 
                 if !animal.tags.isEmpty {
-                    infoRow(label: "Características", value: animal.tags.joined(separator: ", "))
+                    Row(label: "Características", value: animal.tags.joined(separator: ", "))
                 }
                 
                 if let status = animal.status {
-                    infoRow(label: "Status", value: status)
+                    Row(label: "Status", value: status)
                 }
                 
                 if !animal.description.isEmpty {
@@ -84,17 +84,6 @@ struct MyAnimalDetailsView: View {
                     .stroke(Color.gray.opacity(0.2), style: .init(lineWidth: 1))
             )
             .padding(.horizontal)
-
-
-            LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-                ForEach(cards, id: \.title) { card in
-                    CardView(title: card.title, icon: card.icon) {
-                        card.action()
-                    }
-                    .transition(card.transition ?? .identity)
-                }
-            }
-            .padding(.horizontal)
         }
         .navigationBarBackButtonHidden()
         .toolbarItem(icon: .back, placement: .topBarLeading) {
@@ -107,7 +96,7 @@ struct MyAnimalDetailsView: View {
     
     
     @ViewBuilder
-    func infoRow(label: String, value: String) -> some View {
+    func Row(label: String, value: String) -> some View {
         HStack {
             Text(label + ":")
                 .fontWeight(.semibold)

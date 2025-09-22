@@ -22,12 +22,13 @@ struct ProfileView: View {
                         .scaledToFill()
                         .frame(width: 120, height: 120)
                         .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.primaryColor, lineWidth: 2))
                     Text(userSession.user?.name ?? "Anônimo")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.top, 8)
                     
-                    Text(userSession.user?.type.rawValue ?? "")
+                    Text(userSession.user?.type.localized ?? "")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct AnimalDetailView: View {
     let animal: Animal
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var userSession: UserSession
     @CacheProvider(type: .fileManager) var cacheProvider
     
     @Environment(\.toast) private var toast
@@ -57,17 +58,13 @@ struct AnimalDetailView: View {
                         Spacer()
 
                         Button(action: {
-                            navigator.present(sheet: .tip(
-                                Tip(title: Tip.adoption.title,
-                                    description: Tip.adoption.description,
-                                    buttonText: "Entendi!",
-                                    buttonAction: {
-                                        navigator.dismiss()
-                                        navigator.navigate(to: .adoptionForm)
-                                    })
-                            ))
+                            if userSession.user?.type == .volunteer {
+                                registerAdoption()
+                            } else {
+                                adopt()
+                            }
                         }) {
-                            Text("Adotar")
+                            Text(userSession.user?.type == .volunteer ? "Cadastrar adoção" : "Adotar")
                         }
                         .buttonStyle(PrimaryButtonStyle())
                     }
@@ -176,5 +173,28 @@ struct AnimalDetailView: View {
             
         }
     }
-
+    
+    func adopt() {
+        navigator.present(sheet: .tip(
+            Tip(title: Tip.adoption.title,
+                description: Tip.adoption.description,
+                buttonText: "Entendi!",
+                buttonAction: {
+                    navigator.dismiss()
+                    navigator.navigate(to: .adoptionForm)
+                })
+        ))
+    }
+    
+    func registerAdoption() {
+        navigator.present(sheet: .tip(
+            Tip(title: Tip.registerAdoption.title,
+                description: Tip.registerAdoption.description,
+                buttonText: "Tudo certo!",
+                buttonAction: {
+                    navigator.dismiss()
+                    navigator.navigate(to: .adoptionForm)
+                })
+        ))
+    }
 }

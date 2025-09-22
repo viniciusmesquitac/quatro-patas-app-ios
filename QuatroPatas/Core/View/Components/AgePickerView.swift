@@ -13,6 +13,10 @@ struct AgePickerView: View {
     
     @State private var showPicker = false
     
+    var isEmpty: Bool {
+        years == 0 && months == 0
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Button(action: {
@@ -23,13 +27,13 @@ struct AgePickerView: View {
                 HStack {
                     Text("\(years) anos, \(months) meses")
                     Spacer()
-                    SFIcon.image(.arrow_down)
+                    SFIcon.image(.arrow_down, color: isEmpty ? .secondary : .primary)
                         .rotationEffect(.degrees(showPicker ? 180 : 0))
                 }
-                .foregroundStyle((years == 0 && months == 0) ? Color.gray : Color.secondaryColor)
+                .foregroundStyle(isEmpty ? .secondary : .primary)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 48)
-                .background((years == 0 && months == 0) ? Color.gray.opacity(0.2) : Color.primaryColor.opacity(0.2))
+                .background(isEmpty ? Color.gray.opacity(0.2) : Color.primaryColor.opacity(0.2))
                 .cornerRadius(CornerRadius.medium.rawValue)
             }
             .buttonStyle(NoneButtonStyle())
@@ -42,7 +46,7 @@ struct AgePickerView: View {
                             Text("Anos")
                                 .font(.caption)
                                 .foregroundColor(.gray)
-                            Picker("", selection: $years) {
+                            Picker(String(), selection: $years) {
                                 ForEach(0...31, id: \.self) { year in
                                     Text("\(year)").tag(year)
                                 }
@@ -50,7 +54,7 @@ struct AgePickerView: View {
                             .pickerStyle(WheelPickerStyle())
                             .frame(maxWidth: .infinity, maxHeight: 120)
                             .clipped()
-                            .onChange(of: years) { _ in
+                            .onChange(of: years) {
                                 withAnimation {
                                     showPicker = false
                                 }
@@ -61,7 +65,7 @@ struct AgePickerView: View {
                             Text("Meses")
                                 .font(.caption)
                                 .foregroundColor(.gray)
-                            Picker("", selection: $months) {
+                            Picker(String(), selection: $months) {
                                 ForEach(0...12, id: \.self) { month in
                                     Text("\(month)").tag(month)
                                 }
@@ -69,7 +73,7 @@ struct AgePickerView: View {
                             .pickerStyle(WheelPickerStyle())
                             .frame(maxWidth: .infinity, maxHeight: 120)
                             .clipped()
-                            .onChange(of: months) { _ in
+                            .onChange(of: months) {
                                 withAnimation {
                                     showPicker = false
                                 }

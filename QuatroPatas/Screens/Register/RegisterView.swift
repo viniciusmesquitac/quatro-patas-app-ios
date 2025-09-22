@@ -116,7 +116,8 @@ struct RegisterView: View {
                         _ = try await firestore.add(appUser,
                                                     to: "users",
                                                     withID: firebaseUser.uid)
-                        navigator.dismiss()
+                        navigator.popToRoot()
+                        userSession.isLoggedIn = true
                     } catch {
                         toast("Erro salvando usuário: \(error.localizedDescription)", .error)
                     }

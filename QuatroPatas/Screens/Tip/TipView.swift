@@ -14,8 +14,8 @@ struct TipView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: Spacing.xxLarge.rawValue) {
 
                     Text(tip.title)
                         .font(.largeTitle)
@@ -30,17 +30,18 @@ struct TipView: View {
                     
                     Spacer()
                 }
-                .padding()
+                .padding(.horizontal, Padding.large.rawValue)
                 
                 if let buttonText = tip.buttonText {
                     Button(action: {
                         tip.buttonAction?()
                     }) {
                         Text(buttonText)
-                    }.buttonStyle(PrimaryButtonStyle())
+                    }
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .buttonStyle(PrimaryButtonStyle())
                 }
             }
-            .padding()
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()
             }
