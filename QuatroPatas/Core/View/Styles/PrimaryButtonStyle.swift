@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
     var backgroundColor: Color = .primaryColor
-    var foregroundColor: Color = .white
     var cornerRadius: CGFloat = CornerRadius.large.rawValue
     var isLoading: Bool = false
     
@@ -17,7 +16,7 @@ struct PrimaryButtonStyle: ButtonStyle {
         ZStack {
             if isLoading {
                 ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: foregroundColor))
+                    .progressViewStyle(CircularProgressViewStyle(tint: .black))
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(backgroundColor.opacity(configuration.isPressed ? 0.8 : 1))
@@ -28,7 +27,7 @@ struct PrimaryButtonStyle: ButtonStyle {
                     .padding()
                     .disabled(isLoading)
                     .background(backgroundColor.opacity(configuration.isPressed ? 0.8 : 1))
-                    .foregroundColor(foregroundColor)
+                    .foregroundColor(.customBackground)
                     .cornerRadius(cornerRadius)
                     .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
                     .animation(.easeOut(duration: 0.15), value: configuration.isPressed)

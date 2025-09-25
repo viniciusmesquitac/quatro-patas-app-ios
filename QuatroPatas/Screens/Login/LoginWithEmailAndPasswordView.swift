@@ -30,7 +30,6 @@ struct LoginWithEmailAndPasswordView: View {
     
             VStack(alignment: .center, spacing: Spacing.xLarge.rawValue) {
                 TextField("Email", text: $email)
-                    .textCase(.lowercase)
                     .keyboardType(.emailAddress)
                     .textFieldStyle(PrimaryTextFieldStyle())
                     .onChange(of: email) { _, newValue in
@@ -44,11 +43,6 @@ struct LoginWithEmailAndPasswordView: View {
                 Spacer()
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
-        }
-        .overlay {
-            if isLoading {
-                LoadingView()
-            }
         }
         .navigationBarHidden(true)
         .safeAreaInset(edge: .top) {
@@ -68,7 +62,14 @@ struct LoginWithEmailAndPasswordView: View {
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .padding(.bottom, Padding.medium.rawValue)
-            .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
+            .disabled(isLoading)
+            .buttonStyle(PrimaryButtonStyle())
+        }
+        .overlay {
+            if isLoading {
+                LoadingView()
+                    .ignoresSafeArea()
+            }
         }
     }
     

@@ -35,7 +35,6 @@ struct RegisterView: View {
                     
                     TextField("Email", text: $email)
                         .keyboardType(.emailAddress)
-                        .textCase(.lowercase)
                         .textFieldStyle(PrimaryTextFieldStyle())
                         .onChange(of: email) { _, newValue in
                             email = newValue.lowercased()
@@ -69,8 +68,9 @@ struct RegisterView: View {
                 Button {
                     registerUser()
                 } label: {
-                    SFIcon.image(.next, scale: .large, color: .neutralWhite)
+                    SFIcon.image(.next, scale: .large, color: .customBackground)
                 }
+                .disabled(isLoading)
                 .padding(.horizontal, Padding.large.rawValue)
                 .padding(.vertical, Padding.medium.rawValue)
                 .buttonStyle(CircleButtonStyle())

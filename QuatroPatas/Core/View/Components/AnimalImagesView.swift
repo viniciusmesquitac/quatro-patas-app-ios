@@ -14,7 +14,7 @@ struct AnimalImagesCarousel: View {
     @Binding var selectedPhotos: [PhotosPickerItem]
     @Binding var showPhotoPicker: Bool
     @Binding var selectedIndex: Int
-
+    
     var onRemoveExisting: ((Int) -> Void)?
     var onRemoveNew: ((Int) -> Void)?
     
@@ -35,114 +35,53 @@ struct AnimalImagesCarousel: View {
                     let url = allImages[index]
                     
                     ZStack(alignment: .topTrailing) {
-                        
-                        // 🚀 caso local (file://) → sem cache
-                        if url.isFileURL {
-                            if let uiImage = UIImage(contentsOfFile: url.path) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: frame.width, height: frame.height)
-                                    .clipped()
-                                    .tag(index)
-                            }
-                        }
-                        
-                        // 🌐 caso remoto (com cache)
-                        else {
-                            if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
-                               let uiImage = UIImage(data: imageData) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: frame.width, height: frame.height)
-                                    .clipped()
-                                    .tag(index)
-                            } else {
-                                AsyncImage(url: url, transaction: .init(animation: .spring(duration: 2))) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        Rectangle()
-                                            .frame(width: frame.width, height: frame.height)
-                                            .modifier(ShimmerModifier())
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: frame.width, height: frame.height)
-                                            .clipped()
-                                            .transition(.opacity)
-                                            .onAppear {
-                                                saveImageData(url: url)
-                                            }
-                                    default:
-                                        Image("default-animal-card.png")
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: frame.width, height: frame.height)
-                                            .clipped()
-                                    }
-                                }
-                                .tag(index)
-                            }
-                        }
-                        
-                        // ❌ Botão de remover
-                        Button {
-                            if index < existingPhotos.count {
-                                onRemoveExisting?(index)
-                            } else {
-                                onRemoveNew?(index - existingPhotos.count)
-                            }
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 48, height: 48)
-                                .foregroundStyle(Color.primaryColor.opacity(0.5))
-                        }
-                        .padding(8)
-                    }
-                }
-                
-                // ➕ Botão para adicionar
-                VStack {
-                    Button {
-                        showPhotoPicker = true
-                    } label: {
-                        VStack {
-                            Image(systemName: "plus")
-                                .font(.largeTitle)
-                            Text("Adicionar")
-                                .font(.caption)
-                        }
+                        CachedAsyncImage(
+                            url: url
+                        )
+                        .tag(index)
+                        .scaledToFill()
+                        .clipped()
                         .frame(width: frame.width, height: frame.height)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(12)
+                        .cornerRadius(8)
                     }
+                    
+                    // ❌ Botão de remover
+                    Button {
+                        if index < existingPhotos.count {
+                            onRemoveExisting?(index)
+                        } else {
+                            onRemoveNew?(index - existingPhotos.count)
+                        }
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 48, height: 48)
+                            .foregroundStyle(Color.primaryColor.opacity(0.5))
+                    }
+                    .padding(8)
                 }
-                .tag(allImages.count)
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .frame(height: frame.height)
-        }
-    }
-    
-    // MARK: - Helpers
-    func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-            return url.absoluteString
-        }
-        return token
-    }
-    
-    func saveImageData(url: URL) {
-        let token = getToken(url: url)
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data {
-                try? cacheProvider.save(data, for: token)
+            
+            // ➕ Botão para adicionar
+            VStack {
+                Button {
+                    showPhotoPicker = true
+                } label: {
+                    VStack {
+                        Image(systemName: "plus")
+                            .font(.largeTitle)
+                        Text("Adicionar")
+                            .font(.caption)
+                    }
+                    .frame(width: frame.width, height: frame.height)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(12)
+                }
             }
-        }.resume()
+            .tag(allImages.count)
+        }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+        .frame(height: frame.height)
     }
 }

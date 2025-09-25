@@ -53,7 +53,7 @@ struct FormPageView: View {
                     Button(action: {
                         didPressButton()
                     }) {
-                        SFIcon.image(.next, color: .neutralWhite)
+                        SFIcon.image(.next, color: .customBackground)
                     }
                     .padding(.horizontal, Padding.large.rawValue)
                     .padding(.vertical, Padding.medium.rawValue)
@@ -98,11 +98,22 @@ struct FormPageView: View {
         let currentSection = form.sections[currentPage]
         
         // Pega as obrigatórias que não foram respondidas
-        let emptyQuestions = currentSection.questions
-            .filter { (formManager.answers[$0.id] ?? "").isEmpty }
-            .map { $0.id }
+        let invalidQuestions = currentSection.questions.filter { question in
+            let answer = formManager.answers[question.id] ?? ""
+            
+            switch question.type {
+            case .email:
+                return !Validator.isValidEmail(answer)
+            case .age:
+                return !Validator.isValidAge(answer)
+            case .phone:
+                return !Validator.isValidPhone(answer)
+            default:
+                return answer.isEmpty
+            }
+        }.map { $0.id }
         
-        if emptyQuestions.isEmpty {
+        if invalidQuestions.isEmpty {
             // limpa erros
             formManager.errors.removeAll()
             
@@ -113,8 +124,8 @@ struct FormPageView: View {
             }
         } else {
             // marca erros
-            toast("Campos obrigatórios precisam ser preenchidos!", .error)
-            formManager.errors = Set(emptyQuestions)
+            toast("Verifique os campos obrigatórios ou inválidos!", .error)
+            formManager.errors = Set(invalidQuestions)
         }
     }
 }

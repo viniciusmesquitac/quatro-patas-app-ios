@@ -22,7 +22,9 @@ struct AnimalsView: View {
 
     @State private var isLoading = true
 
-    private let columns = Array(repeating: GridItem(.flexible(minimum: 170, maximum: 170)), count: 2)
+    private let columns = [
+        GridItem(.adaptive(minimum: 170), spacing: Spacing.medium.rawValue)
+    ]
 
     var body: some View {
         ZStack {
@@ -34,7 +36,7 @@ struct AnimalsView: View {
                             navigator.navigate(to: .details(animal))
                         }
                     }
-                }
+                }.padding(.horizontal, Padding.large.rawValue)
 
                 if filteredAnimals.isEmpty && isLoading == false {
                     buildEmptyStateView()

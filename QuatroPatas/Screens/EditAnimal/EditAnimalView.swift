@@ -10,16 +10,13 @@ import PhotosUI
 
 struct EditAnimalView: View {
 
-    @State private var selectedImageIndex = 0
     @State private var images: [URL] = []
 
-    @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var uploadedURLs: [String] = []
-    @State private var showPhotoPicker = false
     @State private var isLoading = false
-    @State private var isLoadingImage = false
 
     @State public var animal: Animal
+    @State private var originalAnimal: Animal
     
     @Environment(\.toast) var toast
     @EnvironmentObject var navigator: Navigator
@@ -29,6 +26,15 @@ struct EditAnimalView: View {
 
     @State var years: Int = 0
     @State var months: Int = 0
+    
+    init(animal: Animal) {
+        _animal = State(initialValue: animal)
+        _originalAnimal = State(initialValue: animal)
+    }
+    
+    var hasChanges: Bool {
+        animal != originalAnimal || !images.isEmpty
+    }
 
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
@@ -61,35 +67,30 @@ struct EditAnimalView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.medium.rawValue) {
-                AnimalImagesCarousel(
+                AnimalImagesGrid(
                     existingPhotos: $animal.photos,
-                    newImages: $images,
-                    selectedPhotos: $selectedPhotos,
-                    showPhotoPicker: $showPhotoPicker,
-                    selectedIndex: $selectedImageIndex,
-                    onRemoveExisting: { index in
-                        navigator.present(sheet: .alert(title: "Deseja realmente remover essa imagem?", action: {
-                            animal.photos.remove(at: index)
-                        }))
-                    },
-                    onRemoveNew: { index in
-                        images.remove(at: index)
-                        selectedPhotos.remove(at: index)
-                    }
-                )
-
+                    newImages: $images
+                ).padding()
+                
                 DynamicFormView(elements: formElements)
                     .padding(.horizontal, Padding.xxLarge.rawValue)
                 
-                Button(action: {
-                    editAnimal()
-                }) {
-                    Text("Salvar")
-                }
-                .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
-                .padding(.horizontal)
-                .padding(.top, Padding.medium.rawValue)
-                .disabled(isLoading)
+                
+                HStack {
+                    Button("Deletar") {
+                        navigator.present(sheet: .deleteAnimal(animal))
+                    }
+                    .buttonStyle(OutlineRoundedButtonStyle())
+                    .padding(.leading, Padding.xxLarge.rawValue)
+
+                    Spacer()
+                    Button("Salvar") {
+                        editAnimal()
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(.trailing, Padding.xxLarge.rawValue)
+                }.padding(.vertical, Padding.medium.rawValue)
+
             }
         }
         .navigationTitle("Editar")
@@ -98,64 +99,27 @@ struct EditAnimalView: View {
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
-        .toolbarItem(icon: .delete, color: .red, placement: .topBarTrailing, action: {
-            navigator.present(sheet: .deleteAnimal(animal))
-        })
+        .if(hasChanges) { view in
+            view.toolbarItem(label: "Salvar", placement: .topBarTrailing, action: {
+                editAnimal()
+            })
+        }
         .onAppear {
-             if let (y, m) = AgeHelper.toAgeComponents(from: animal.age) {
-                 years = y
-                 months = m
-             }
-         }
-        .photosPicker(
-            isPresented: $showPhotoPicker,
-            selection: $selectedPhotos,
-            maxSelectionCount: min(4, 4 - (animal.photos.count)),
-            matching: .images,
-            photoLibrary: .shared()
-        )
-        .onChange(of: selectedPhotos) { _, newItems in
-            Task {
-                isLoadingImage = true
-                images.removeAll()
-                for item in newItems {
-                    await loadImage(from: item)
-                }
-                selectedImageIndex = max(images.count - 1, 0)
-                isLoadingImage = false
+            if let (y, m) = AgeHelper.toAgeComponents(from: animal.age) {
+                years = y
+                months = m
             }
         }
         .onChange(of: animal.type) { _, _ in
             animal.breed = ""
             animal.tags.removeAll()
         }
-    }
-    
-    func saveImageToTemp(_ image: UIImage) -> URL? {
-        guard let data = image.jpegData(compressionQuality: 0.8) else { return nil }
-        let filename = UUID().uuidString + ".jpg"
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
-        do {
-            try data.write(to: url)
-            return url
-        } catch {
-            print("Error saving image: \(error)")
-            return nil
-        }
-    }
-    
-    
-    @MainActor
-    func loadImage(from item: PhotosPickerItem) async {
-        do {
-            if let data = try await item.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data),
-               let path = saveImageToTemp(uiImage) {
-                images.append(path)
+        .overlay {
+            if isLoading {
+                LoadingView()
             }
-        } catch {
-            print("Erro ao carregar imagem: \(error)")
         }
+        .navigationBarHidden(isLoading)
     }
     
     func uploadImage(imageURL: URL) async throws {

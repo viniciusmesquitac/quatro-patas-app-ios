@@ -12,7 +12,7 @@ extension UIColor {
     static var primaryColor: UIColor {
         return UIColor { traitCollection in
             (traitCollection.userInterfaceStyle == .dark ?
-             UIColor(hex: "#FFCB1B") : UIColor(hex: "#F5A623"))!
+             UIColor(hex: "#FFCB1B") : UIColor(hex: "#AC1B7D"))!
         }
     }
 

@@ -37,7 +37,7 @@ struct AnimalDetailView: View {
                         Button(action: {
                             toggleFavorite()
                         }) {
-                            SFIcon.image(isFavorite ? .heart_filled : .heart, scale: .large, color: isFavorite ? .red : .black)
+                            SFIcon.image(isFavorite ? .heart_filled : .heart, scale: .large, color: isFavorite ? .red : .customBackground)
                         }
                         .buttonStyle(CircleButtonStyle())
                         .offset(x: -25, y: 25)
@@ -89,7 +89,7 @@ struct AnimalDetailView: View {
                 Button {
                     navigator.dismiss()
                 } label: {
-                    SFIcon.image(.back)
+                    SFIcon.image(.back, color: .customLabel)
                 }
                 .buttonStyle(FloatingButtonStyle())
                 
@@ -98,7 +98,7 @@ struct AnimalDetailView: View {
                 Button {
                     shareAnimal()
                 } label: {
-                    SFIcon.image(.share)
+                    SFIcon.image(.share, color: .customLabel)
                 }
                 .buttonStyle(FloatingButtonStyle())
             }.padding(.horizontal)
