@@ -34,21 +34,21 @@ struct AnimalDetailsCardFactory {
             case .vacine:
                 return MenuCard(title: cardType.title, action: {
                     navigator.popToRoot()
-                })
+                }, icon: .vaccine)
                 
             case .medicine:
                 return MenuCard(title: cardType.title, action: {
                     navigator.popToRoot()
-                })
+                }, icon: .medicine)
                 
             case .weight:
                 return MenuCard(title: cardType.title, action: {
                     navigator.popToRoot()
-                })
+                }, icon: .weight)
             case .notes:
                 return MenuCard(title: cardType.title, action: {
                     navigator.popToRoot()
-                })
+                }, icon: .annotation)
             }
         }
     }

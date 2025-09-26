@@ -683,6 +683,9 @@
         }
       }
     },
+    "Buscar animal pelo nome" : {
+
+    },
     "Buscar todos" : {
       "localizations" : {
         "en" : {
@@ -980,6 +983,9 @@
 
     },
     "Salvar" : {
+
+    },
+    "Segment" : {
 
     },
     "Senha" : {

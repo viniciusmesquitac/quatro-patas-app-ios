@@ -7,19 +7,36 @@
 
 import SwiftUI
 
+enum AnimalDetailsSegment: String, CaseIterable, Identifiable {
+    case sheet = "Ficha"
+    case data = "Dados"
+
+    var id: String { self.rawValue }
+}
 
 struct MyAnimalDetailsView: View {
     
     @EnvironmentObject var navigator: Navigator
-    @CacheProvider(type: .fileManager)
-    var cacheProvider
+    @CacheProvider(type: .fileManager) var cacheProvider
 
-    @State var animal: Animal
+    @EnvironmentObject var firebase: FirestoreProvider
+    @EnvironmentObject var userSession: UserSession
+
+    @State private var animal: Animal
+    @State private var isAdopted: Bool
     
     let columns = [
         GridItem(.flexible(), spacing: Spacing.large.rawValue),
         GridItem(.flexible(), spacing: Spacing.large.rawValue)
     ]
+    
+    @State private var selectedSegment: AnimalDetailsSegment = .sheet
+    
+    
+    init(animal: Animal) {
+        self._animal = State(initialValue: animal)
+        self._isAdopted = State(initialValue: animal.isAdopted)
+    }
 
     private var cards: [MenuCard] {
         return AnimalDetailsCardFactory().allCases(
@@ -43,47 +60,33 @@ struct MyAnimalDetailsView: View {
                     .padding(.top)
             }
 
+
             // Nome
             Text(animal.name)
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top, Padding.medium.rawValue)
-
-            // Informações principais
-            VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
-                Row(label: "Idade", value: AgeHelper.formatAge(from: animal.age))
-                Row(label: "Gênero", value: animal.gender)
-                Row(label: "Tipo", value: animal.type)
-                Row(label: "Raça", value: animal.breed)
-                Row(label: "Cor", value: animal.color)
-                Row(label: "Porte", value: animal.size)
-                
-                if !animal.tags.isEmpty {
-                    Row(label: "Características", value: animal.tags.joined(separator: ", "))
-                }
-                
-                if let status = animal.status {
-                    Row(label: "Status", value: status)
-                }
-                
-                if !animal.description.isEmpty {
-                    VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
-                        Text("Descrição")
-                            .font(.headline)
-                        Text(animal.description)
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.top, Padding.medium.rawValue)
+            
+            // Segment Control
+            Picker("Segment", selection: $selectedSegment) {
+                ForEach(AnimalDetailsSegment.allCases) { filter in
+                    Text(filter.rawValue).tag(filter)
                 }
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
-                    .fill(Color(.systemBackground))
-                    .stroke(Color.gray.opacity(0.2), style: .init(lineWidth: 1))
-            )
+            .pickerStyle(.segmented)
             .padding(.horizontal)
+            .padding(.top, 8)
+
+            
+            switch selectedSegment {
+            case .sheet:
+                information
+            case .data:
+                cardsView
+            @unknown default:
+                EmptyView()
+            }
+
         }
         .navigationBarBackButtonHidden()
         .toolbarItem(icon: .back, placement: .topBarLeading) {
@@ -92,6 +95,68 @@ struct MyAnimalDetailsView: View {
         .toolbarItem(label: "Editar", placement: .topBarTrailing) {
             navigator.navigate(to: .edit(animal.localized))
         }
+    }
+    
+    var information: some View {
+        VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
+            Row(label: "Idade", value: AgeHelper.formatAge(from: animal.age))
+            Row(label: "Gênero", value: animal.gender)
+            Row(label: "Tipo", value: animal.type)
+            Row(label: "Raça", value: animal.breed)
+            Row(label: "Cor", value: animal.color)
+            Row(label: "Porte", value: animal.size)
+            
+            if !animal.tags.isEmpty {
+                Row(label: "Características", value: animal.tags.joined(separator: ", "))
+            }
+            
+            if let status = animal.status {
+                Row(label: "Status", value: status)
+            }
+            
+            HStack {
+                Text("Adotado")
+                    .font(.headline)
+                Spacer()
+                Toggle(String(), isOn: $isAdopted)
+                    .labelsHidden()
+            }
+            .onChange(of: isAdopted) { _, newValue in
+                Task {
+                    await updateAdoptionStatus(isAdopted: newValue)
+                }
+            }
+            
+            if !animal.description.isEmpty {
+                VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
+                    Text("Descrição")
+                        .font(.headline)
+                    Text(animal.description)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, Padding.medium.rawValue)
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
+                .fill(Color(.systemBackground))
+                .stroke(Color.gray.opacity(0.2), style: .init(lineWidth: 1))
+        )
+        .padding(.horizontal)
+    }
+    
+    var cardsView: some View {
+        LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
+            ForEach(cards, id: \.title) { card in
+                CardView(title: card.title, icon: card.icon) {
+                    card.action()
+                }
+                .transition(card.transition ?? .identity)
+            }
+        }
+        .padding()
     }
     
     
@@ -114,5 +179,32 @@ struct MyAnimalDetailsView: View {
                   return url.absoluteString
               }
         return token
+    }
+    
+    func animalPathBuilder() -> String? {
+        let userId = userSession.user?.id ?? ""
+        let userType = userSession.user?.type ?? .anonymous
+        
+        switch userType {
+        case .volunteer:
+            return "animals"
+        case .adopter:
+            return "users/\(userId)/animals"
+        default:
+            return nil
+        }
+    }
+    
+    private func updateAdoptionStatus(isAdopted: Bool) async {
+        do {
+            guard let path = animalPathBuilder() else {
+                throw EditAnimalError.pathError
+            }
+            var copy = animal.deslocalized
+            copy.isAdopted = isAdopted
+            _ = try await firebase.update(copy, in: path, withID: animal.id!)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

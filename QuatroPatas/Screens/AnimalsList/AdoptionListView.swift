@@ -21,6 +21,7 @@ struct AnimalsListView: View {
 
     @State private var animals: [Animal] = []
     @State private var isLoading: Bool = false
+    @State private var searchText: String = ""
     
     var listType: AnimalListType
     let repository = FavoritesRepository()
@@ -35,36 +36,59 @@ struct AnimalsListView: View {
             return "Meus Animais"
         }
     }
+
+    var filteredAnimals: [Animal] {
+        if searchText.isEmpty {
+            return animals
+        } else {
+            return animals.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
         
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: Padding.medium.rawValue) {
-                ForEach(animals, id: \.id) { animal in
-                    AnimalCardViewRow(animal: animal) {
-                        switch listType {
-                        case .myAnimals:
-                            didSelectMyAnimal(animal: animal)
-                        case .allAnimals:
-                            didSelectMyAnimal(animal: animal)
-                        case .favorites:
-                            didSelectFavoriteAnimal(animal: animal)
+        VStack {
+            HStack {
+                SFIcon.image(.search, color: .gray)
+                TextField("Buscar animal pelo nome", text: $searchText)
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+            }
+            .padding(Padding.medium.rawValue)
+            .background(Color(.systemGray6))
+            .cornerRadius(CornerRadius.medium.rawValue)
+            .padding(.horizontal, Padding.medium.rawValue)
+            .padding(.top, Padding.medium.rawValue)
+
+            ScrollView {
+                LazyVStack(spacing: Padding.medium.rawValue) {
+                    ForEach(filteredAnimals, id: \.id) { animal in
+                        AnimalCardViewRow(animal: animal) {
+                            switch listType {
+                            case .myAnimals:
+                                didSelectMyAnimal(animal: animal)
+                            case .allAnimals:
+                                didSelectMyAnimal(animal: animal)
+                            case .favorites:
+                                didSelectFavoriteAnimal(animal: animal)
+                            }
                         }
+                        .padding(.horizontal, Padding.medium.rawValue)
                     }
-                    .padding(.horizontal, Padding.medium.rawValue)
-                }
-                
-                if animals.isEmpty && !isLoading {
-                    buildEmptyStateView()
-                        .padding(.top, Padding.large.rawValue)
-                }
-                
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .transition(.opacity)
-                        .padding(.top, Padding.large.rawValue)
-                }
-            }.padding(Padding.medium.rawValue)
+                    
+                    if filteredAnimals.isEmpty && !isLoading {
+                        buildEmptyStateView()
+                            .padding(.top, Padding.large.rawValue)
+                    }
+                    
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .transition(.opacity)
+                            .padding(.top, Padding.large.rawValue)
+                    }
+                }.padding(Padding.medium.rawValue)
+            }
         }
         .task {
             switch listType {
@@ -105,7 +129,7 @@ struct AnimalsListView: View {
                 .frame(width: 200, height: 200)
         } description: {
             Text("Hmmm... \nNão tem nada por aqui!")
-                .font(.system(size: 24))
+                .font(.footnote)
         } actions: {
             Button("Adicionar Animal") {
                 let listToAdd: AddAnimalType  = listType == .allAnimals ? .ongAnimals : .myAnimals
@@ -157,6 +181,4 @@ struct AnimalsListView: View {
     func didSelectFavoriteAnimal(animal: Animal) {
         navigator.navigate(to: .details(animal.localized))
     }
-
-    
 }

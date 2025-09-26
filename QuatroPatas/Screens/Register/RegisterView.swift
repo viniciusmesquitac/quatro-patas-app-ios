@@ -51,11 +51,6 @@ struct RegisterView: View {
                 .padding(.horizontal, 20)
             }
         }
-        .overlay {
-            if isLoading {
-                LoadingView()
-            }
-        }
         .navigationTitle("Cadastro")
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -75,6 +70,12 @@ struct RegisterView: View {
                 .padding(.vertical, Padding.medium.rawValue)
                 .buttonStyle(CircleButtonStyle())
                 .disabled(isLoading)
+            }
+        }
+        .overlay {
+            if isLoading {
+                LoadingView()
+                    .ignoresSafeArea()
             }
         }
     }
