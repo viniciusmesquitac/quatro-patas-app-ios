@@ -78,7 +78,7 @@ struct AnimalCardViewRow: View {
                                 .padding(.horizontal, Padding.medium.rawValue)
                                 .padding(.vertical, Padding.small.rawValue)
                                 .background(Color.primaryColor)
-                                .foregroundColor(.white)
+                                .foregroundColor(.customBackground)
                                 .clipShape(Capsule())
                         }
                     }

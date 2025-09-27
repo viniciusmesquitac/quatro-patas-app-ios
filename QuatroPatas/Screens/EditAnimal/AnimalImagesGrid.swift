@@ -8,15 +8,15 @@
 import SwiftUI
 import PhotosUI
 
-struct AnimalImagesGrid: View {
+struct ImagesGrid: View {
     @Binding var existingPhotos: [String]
     @Binding var newImages: [URL]
 
     @State private var selectedPhotos: [PhotosPickerItem] = []
-    @State private var isLoading: [URL?: Bool] = [:] // track loading state por foto
+    @State private var isLoading: [URL?: Bool] = [:]
     @State private var showPhotoPicker = false
 
-    private let maxPhotos = 4
+    let maxPhotos: Int
     private let columns = [
         GridItem(.adaptive(minimum: 155), spacing: Spacing.medium.rawValue)
     ]
@@ -26,10 +26,10 @@ struct AnimalImagesGrid: View {
     }
 
     @EnvironmentObject var navigator: Navigator
-    
+
     var imageGrid: some View {
         LazyVGrid(columns: columns, spacing: Spacing.xxLarge.rawValue) {
-            // Fotos existentes (da API)
+            // Fotos existentes
             ForEach(existingPhotos.indices, id: \.self) { index in
                 ExistingPhotoCell(
                     urlString: existingPhotos[index],
@@ -46,7 +46,7 @@ struct AnimalImagesGrid: View {
             }
             .padding(.horizontal, Padding.large.rawValue)
 
-            // Fotos novas (locais)
+            // Fotos novas
             ForEach(newImages, id: \.self) { fileURL in
                 NewPhotoCell(
                     fileURL: fileURL,
@@ -57,17 +57,17 @@ struct AnimalImagesGrid: View {
                 )
             }
 
-            // Slots vazios (apenas se < maxPhotos)
+            // Slots vazios
             if remainingSlots > 0 {
                 ForEach(0..<remainingSlots, id: \.self) { _ in
                     AddPhotoSlot {
-                        // sempre reseta seleção antes de abrir
                         selectedPhotos.removeAll()
                         showPhotoPicker = true
                     }
                 }
             }
-        }.animation(.easeInOut(duration: 0.25), value: isLoading)
+        }
+        .animation(.easeInOut(duration: 0.25), value: isLoading)
     }
 
     var body: some View {
@@ -83,9 +83,7 @@ struct AnimalImagesGrid: View {
         )
         .onChange(of: selectedPhotos) { _, newItems in
             Task {
-                // zera estado antes de recarregar
                 for item in newItems.prefix(remainingSlots) {
-                    // gera um "placeholder" temporário
                     let tempURL = FileManager.default.temporaryDirectory
                         .appendingPathComponent(UUID().uuidString + ".jpg")
 
@@ -93,13 +91,11 @@ struct AnimalImagesGrid: View {
                     newImages.append(tempURL)
 
                     if let finalURL = await saveItemToTemp(item) {
-                        // substitui placeholder pelo arquivo real
                         if let idx = newImages.firstIndex(of: tempURL) {
                             newImages[idx] = finalURL
                             isLoading.removeValue(forKey: tempURL)
                         }
                     } else {
-                        // se falhou, remove placeholder
                         newImages.removeAll { $0 == tempURL }
                         isLoading.removeValue(forKey: tempURL)
                     }
@@ -115,7 +111,8 @@ struct AnimalImagesGrid: View {
     }
 }
 
-private extension AnimalImagesGrid {
+// MARK: - Helpers
+private extension ImagesGrid {
     func saveImageToTemp(_ image: UIImage) -> URL? {
         guard let data = image.jpegData(compressionQuality: 0.8) else { return nil }
         let filename = UUID().uuidString + ".jpg"
@@ -142,6 +139,7 @@ private extension AnimalImagesGrid {
         return nil
     }
 }
+
 
 // MARK: - Células
 

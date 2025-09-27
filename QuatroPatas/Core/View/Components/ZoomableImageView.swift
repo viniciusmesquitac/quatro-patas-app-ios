@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct ZoomableImage: View {
-    let imageName: String
+    var imageURL: URL
     @State private var scale: CGFloat = 1.0
     @State private var lastScale: CGFloat = 1.0
     
-    @CacheProvider(type: .fileManager)
-    var cacheProvider
     
     var body: some View {
         GeometryReader { geo in
-            if let imageData = cacheProvider.get(key: imageName) as? Data, let uii = UIImage(data: imageData) {
-                Image(uiImage: uii)
-                    .resizable()
+            CachedAsyncImage(url: imageURL)
                     .scaledToFit()
                     .frame(width: geo.size.width, height: geo.size.height)
                     .scaleEffect(scale)
@@ -38,7 +34,6 @@ struct ZoomableImage: View {
                             lastScale = 1.0
                         }
                     }
-            }
 
         }
     }
@@ -53,7 +48,7 @@ struct ZoomableCarouselView: View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
                 if let url = URL(string: images[index]) {
-                    ZoomableImage(imageName: getToken(url: url))
+                    ZoomableImage(imageURL: url)
                         .tag(index)
                 }
             }
@@ -65,18 +60,10 @@ struct ZoomableCarouselView: View {
                 dismiss()
             } label: {
                 Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 28))
+                    .font(.system(size: 30))
                     .foregroundColor(.white)
                     .padding()
             }
         }
-    }
-    
-    func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-                  return url.absoluteString
-              }
-        return token
     }
 }

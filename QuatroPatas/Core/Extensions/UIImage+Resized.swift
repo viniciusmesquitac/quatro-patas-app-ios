@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIImage {
-    func resized(toMax dimension: CGFloat) -> UIImage {
+    func resized(toMax dimension: CGFloat = 1024) -> UIImage {
         let aspectRatio = size.width / size.height
         var newSize: CGSize
         if aspectRatio > 1 {
@@ -21,6 +21,10 @@ extension UIImage {
         return renderer.image { _ in
             self.draw(in: CGRect(origin: .zero, size: newSize))
         }
+    }
+    
+    func compressed() -> Data? {
+        self.resized().jpegData(compressionQuality: 0.5)
     }
 }
 

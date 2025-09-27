@@ -27,13 +27,16 @@ extension MyAnimalCardDetailsType {
 
 struct AnimalDetailsCardFactory {
     
+    var animalId: String
+    var userId: String
+    
     @MainActor
     func allCases(navigator: Navigator) -> [MenuCard] {
         return MyAnimalCardDetailsType.allCases.map { cardType in
             switch cardType {
             case .vacine:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.popToRoot()
+                    navigator.navigate(to: .vaccineList(animalId, userId))
                 }, icon: .vaccine)
                 
             case .medicine:

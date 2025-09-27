@@ -23,6 +23,12 @@
     "Adicionar Animal" : {
 
     },
+    "Adoção" : {
+
+    },
+    "Adoção registrada com sucesso!" : {
+
+    },
     "Adotado" : {
 
     },
@@ -735,6 +741,9 @@
         }
       }
     },
+    "Checklist de Verificação" : {
+
+    },
     "Cor" : {
       "localizations" : {
         "en" : {
@@ -826,6 +835,9 @@
         }
       }
     },
+    "Espaço de descanso apropriado" : {
+
+    },
     "Este campo é obrigatório" : {
       "localizations" : {
         "en" : {
@@ -861,6 +873,12 @@
       }
     },
     "Formulário de Adoção" : {
+
+    },
+    "Foto da Identidade (frente e verso)" : {
+
+    },
+    "Foto do Termo de Adoção Assinado" : {
 
     },
     "gender.female" : {
@@ -917,6 +935,9 @@
         }
       }
     },
+    "Informações da Adoção" : {
+
+    },
     "Instagram (Opcional)" : {
 
     },
@@ -924,6 +945,12 @@
       "extractionState" : "manual"
     },
     "Limpar" : {
+
+    },
+    "Local seguro avaliado" : {
+
+    },
+    "Mais Informações" : {
 
     },
     "Meses" : {
@@ -976,7 +1003,16 @@
         }
       }
     },
+    "Registrar Adoção" : {
+
+    },
+    "Registro de Adoção" : {
+
+    },
     "Repetir senha" : {
+
+    },
+    "Rotas de fuga verificadas" : {
 
     },
     "Sair" : {
@@ -992,6 +1028,9 @@
 
     },
     "Sim" : {
+
+    },
+    "Status" : {
 
     },
     "Tamanho" : {
@@ -1040,6 +1079,9 @@
           }
         }
       }
+    },
+    "Vacinas" : {
+
     },
     "Vamos Lá!" : {
 

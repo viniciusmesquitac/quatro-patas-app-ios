@@ -1,0 +1,164 @@
+//
+//  RegisterAdoption.swift
+//  QuatroPatas
+//
+//  Created by Vinicius Mesquita Coelho on 25/09/25.
+//
+
+import SwiftUI
+import PhotosUI
+
+struct RegisterAdoption: View {
+    
+    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    @EnvironmentObject var navigator: Navigator
+    
+    var animalId: String
+    
+    @Environment(\.toast) var toast
+    
+    @State private var idFrontImage: UIImage?
+    @State private var idBackImage: UIImage?
+    @State private var adoptionTermImage: UIImage?
+    
+    // Checklist
+    @State private var escapeRoutesChecked = false
+    @State private var safePlaceChecked = false
+    @State private var restAreaChecked = false
+
+    @State private var isLoading = false
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Spacing.xLarge.rawValue) {
+                
+                Text("Registro de Adoção")
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+                // Fotos RG/CPF
+                VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
+                    Text("Foto da Identidade (frente e verso)")
+                        .font(.headline)
+                    
+                    HStack {
+                        PhotoUploadView(title: "Frente", image: $idFrontImage)
+                        PhotoUploadView(title: "Verso", image: $idBackImage)
+                    }
+                }
+                
+                // Foto Termo de Adoção
+                VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
+                    Text("Foto do Termo de Adoção Assinado")
+                        .font(.headline)
+                    
+                    PhotoUploadView(title: "Adicionar", image: $adoptionTermImage)
+                }
+                
+                // Checklist
+                VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
+                    Text("Checklist de Verificação")
+                        .font(.headline)
+                    
+                    Toggle("Rotas de fuga verificadas", isOn: $escapeRoutesChecked)
+                    Toggle("Local seguro avaliado", isOn: $safePlaceChecked)
+                    Toggle("Espaço de descanso apropriado", isOn: $restAreaChecked)
+                }
+                .toggleStyle(.switch)
+                
+                Button("Registrar Adoção") {
+                    registerAdoption()
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .padding(.top, Padding.large.rawValue)
+                
+            }
+            .navigationBarBackButtonHidden(true)
+            .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+                navigator.dismiss()
+            })
+            .navigationBarHidden(isLoading)
+            .padding()
+        }
+        .overlay {
+            if isLoading {
+                LoadingView()
+                    .ignoresSafeArea()
+            }
+        }
+    }
+    
+    // MARK: - Registrar
+    private func registerAdoption() {
+        isLoading = true
+        
+        Task {
+            do {
+                try await sendAdoption()
+            } catch {
+                isLoading = false
+                toast("Erro ao registrar adoção", .error)
+            }
+        }
+    }
+    
+    private func sendAdoption() async throws {
+        guard let termPhoto = adoptionTermImage,
+              let idFront = idFrontImage,
+              let idBack = idBackImage else {
+            toast("Faltam fotos obrigatórias", .error)
+            return
+        }
+
+        let termPath = "adoptions/terms/\(UUID().uuidString).jpg"
+        let idFrontPath = "adoptions/rg/\(UUID().uuidString).jpg"
+        let idBackPath = "adoptions/rg/\(UUID().uuidString).jpg"
+        
+        guard let compressedTermPhoto = termPhoto.compressed(),
+           let compressedIdFront = idFront.compressed(),
+           let compressedIdBack = idBack.compressed() else {
+            return
+        }
+
+        let termURL = try await firebaseStorageProvider.uploadFile(
+            data: compressedTermPhoto,
+            path: termPath
+        )
+        
+        toast("foto de termo de responsabilidade carregada!", .success)
+
+        let idFrontURL = try await firebaseStorageProvider.uploadFile(
+            data: compressedIdFront,
+            path: idFrontPath
+        )
+    
+        let idBackURL = try await firebaseStorageProvider.uploadFile(
+            data: compressedIdBack,
+            path: idBackPath
+        )
+
+        toast("fotos da identidade carregadas", .success)
+
+        let adoption = Adoption(
+            animalId: animalId,
+            termPhoto: termURL.absoluteString,
+            idPhotoFront: idFrontURL.absoluteString,
+            idPhotoBack: idBackURL.absoluteString,
+            status: .approved
+        )
+
+        _ = try await firestoreProvider.add(adoption, to: "adoptions")
+        
+        _ = try await firestoreProvider.updateFields(
+            in: "animals",
+            id: animalId,
+            fields: ["isAdopted": true]
+        )
+
+        isLoading = false
+        navigator.popToRoot()
+        toast("Adoção registrada com sucesso!", .success)
+    }
+
+}

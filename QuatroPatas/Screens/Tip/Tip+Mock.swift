@@ -48,13 +48,13 @@ extension Tip {
     )
     
     static let registerAdoption = Tip(
-        title: "📋 Instruções para Entrega do Animal ao Adotante",
+        title: "Instruções para Entrega do Animal ao Adotante",
         description: [
             TextFragment(content: "1. Documentação", isBold: true),
             TextFragment(content: """
-                        📸 Foto da Identidade (RG/CPF) do adotante, frente e verso, para registro.
+                        Foto da Identidade (RG/CPF) do adotante, frente e verso, para registro.
 
-                        📸 Foto do Termo de Adoção assinado pelo adotante.
+                        Foto do Termo de Adoção assinado pelo adotante.
 
                         Verifique se o termo está completamente preenchido e legível.
                         """),
@@ -62,11 +62,11 @@ extension Tip {
             TextFragment(content: "2. Conferência do Ambiente", isBold: true),
             
             TextFragment(content: """
-                         🚪 Rotas de fuga: verifique se portas, janelas, portões ou muros oferecem risco de fuga para o animal. Oriente o adotante, se necessário.
+                         Rotas de fuga: verifique se portas, janelas, portões ou muros oferecem risco de fuga para o animal. Oriente o adotante, se necessário.
 
-                         🏠 Local seguro: avalie se há espaço adequado e protegido para o animal (sem acesso fácil à rua, buracos em muros, portões frouxos etc.).
+                         Local seguro: avalie se há espaço adequado e protegido para o animal (sem acesso fácil à rua, buracos em muros, portões frouxos etc.).
 
-                         🛏️ Verifique se há local apropriado para dormir e descansar, protegido do sol, chuva e frio.
+                         Verifique se há local apropriado para dormir e descansar, protegido do sol, chuva e frio.
                          """),
             TextFragment(content: "3. Validação do Formulário de Adoção", isBold: true),
             TextFragment(content: "Confirme se as informações fornecidas no formulário são verdadeiras e compatíveis com a realidade")

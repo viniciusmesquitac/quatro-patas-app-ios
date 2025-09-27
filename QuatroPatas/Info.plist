@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Pedimos permissão para salvar imagens importantes no seu dispositivo</string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string>Precisamos de acesso a camera para poder tirar fotos dos termos e documentos para adoção</string>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
+	<key>NSServices</key>
+	<array/>
+</dict>
+</plist>

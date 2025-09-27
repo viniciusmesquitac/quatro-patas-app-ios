@@ -130,3 +130,22 @@ class FirestoreProvider: ObservableObject {
     }
 }
 
+
+extension FirestoreProvider {
+    /// Atualiza apenas campos específicos de um documento no Firestore
+    func updateFields(
+        in collection: String,
+        id: String,
+        fields: [String: Any]
+    ) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            db.collection(collection).document(id).updateData(fields) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
+}

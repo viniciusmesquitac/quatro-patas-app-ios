@@ -31,6 +31,10 @@ struct RouteDestinationView: View {
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
         case .myAnimalDetails(let animal): MyAnimalDetailsView(animal: animal)
+        case .vaccineList(let userId, let animalId): VaccineListView(animalId: animalId, userId: userId)
+        case .addvaccine(let userId, let animalId): AddVaccineView(animalId: animalId, userId: userId)
+        case .registerAdoption(let animalId): RegisterAdoption(animalId: animalId)
+        case .adoptionDetails(let animalId): AdoptionDetailsView(animalId: animalId)
         }
     }
 }

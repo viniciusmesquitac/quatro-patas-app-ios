@@ -11,11 +11,11 @@ struct Adoption: Identifiable, Codable, Hashable, Sendable {
     @DocumentID var id: String?
     @ServerTimestamp var createdAt: Date?
 
-    var adopterId: String
     var animalId: String
 
     var termPhoto: String?
-    var adopterIdPhoto: String?
+    var idPhotoFront: String?
+    var idPhotoBack: String?
 
-    var status: AdoptionStatus = .pending
+    var status: AdoptionStatus
 }

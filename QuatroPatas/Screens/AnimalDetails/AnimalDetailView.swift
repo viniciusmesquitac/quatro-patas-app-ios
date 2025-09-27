@@ -89,7 +89,7 @@ struct AnimalDetailView: View {
                 Button {
                     navigator.dismiss()
                 } label: {
-                    SFIcon.image(.back, color: .customLabel)
+                    SFIcon.image(.back, color: .primaryColor)
                 }
                 .buttonStyle(FloatingButtonStyle())
                 
@@ -98,7 +98,7 @@ struct AnimalDetailView: View {
                 Button {
                     shareAnimal()
                 } label: {
-                    SFIcon.image(.share, color: .customLabel)
+                    SFIcon.image(.share, color: .primaryColor)
                 }
                 .buttonStyle(FloatingButtonStyle())
             }.padding(.horizontal)
@@ -192,8 +192,9 @@ struct AnimalDetailView: View {
                 description: Tip.registerAdoption.description,
                 buttonText: "Tudo certo!",
                 buttonAction: {
+                    guard let animalId = animal.id else { return }
                     navigator.dismiss()
-                    navigator.navigate(to: .adoptionForm)
+                    navigator.navigate(to: .registerAdoption(animalId))
                 })
         ))
     }

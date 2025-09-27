@@ -39,9 +39,12 @@ struct MyAnimalDetailsView: View {
     }
 
     private var cards: [MenuCard] {
-        return AnimalDetailsCardFactory().allCases(
-            navigator: navigator
-        )
+        if let userId = userSession.user?.id, let animalId = animal.id {
+            return AnimalDetailsCardFactory(animalId: animalId, userId: userId).allCases(
+                navigator: navigator
+            )
+        }
+        return []
     }
 
     var body: some View {
@@ -125,6 +128,23 @@ struct MyAnimalDetailsView: View {
                 Task {
                     await updateAdoptionStatus(isAdopted: newValue)
                 }
+            }
+            
+            if isAdopted {
+                Button {
+                    guard let animalId = animal.id else { return }
+                    navigator.navigate(to: .adoptionDetails(animalId))
+                } label: {
+                    Text("Mais Informações")
+                        .font(.body)
+                        .fontWeight(.semibold)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.top, 8)
             }
             
             if !animal.description.isEmpty {

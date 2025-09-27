@@ -67,9 +67,10 @@ struct EditAnimalView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.medium.rawValue) {
-                AnimalImagesGrid(
+                ImagesGrid(
                     existingPhotos: $animal.photos,
-                    newImages: $images
+                    newImages: $images,
+                    maxPhotos: 4
                 ).padding()
                 
                 DynamicFormView(elements: formElements)

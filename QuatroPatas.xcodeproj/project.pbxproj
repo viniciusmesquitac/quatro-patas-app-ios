@@ -39,9 +39,22 @@
 		81DF06D62D8DED83007D23D1 /* QuatroPatasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuatroPatasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		817977DA2E872F21007D2FA9 /* Exceptions for "QuatroPatas" folder in "QuatroPatas" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 81DF06BA2D8DED82007D23D1 /* QuatroPatas */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		81DF06BD2D8DED82007D23D1 /* QuatroPatas */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				817977DA2E872F21007D2FA9 /* Exceptions for "QuatroPatas" folder in "QuatroPatas" target */,
+			);
 			path = QuatroPatas;
 			sourceTree = "<group>";
 		};
@@ -434,6 +447,7 @@
 				DEVELOPMENT_TEAM = 3A46XCK2VP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuatroPatas/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -474,6 +488,7 @@
 				DEVELOPMENT_TEAM = 3A46XCK2VP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuatroPatas/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
