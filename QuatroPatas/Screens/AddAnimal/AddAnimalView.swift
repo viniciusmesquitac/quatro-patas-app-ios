@@ -8,17 +8,11 @@
 import SwiftUI
 import PhotosUI
 
-
-enum AddAnimalType {
-    case myAnimals
-    case ongAnimals
-}
-
 struct AddAnimalView: View {
-
+    
     @State private var selectedImageIndex = 0
     @State private var images: [URL] = []
-
+    
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var uploadedURLs: [String] = []
     @State private var showPhotoPicker = false
@@ -32,12 +26,11 @@ struct AddAnimalView: View {
     @EnvironmentObject var firestoreProvider: FirestoreProvider
     @EnvironmentObject var userSession: UserSession
     @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
-
+    
     @State private var years = 0
     @State private var months = 0
     
-    var addAnimalType: AddAnimalType
-
+    
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
             return [Breed.localized(.mixed)]
@@ -51,7 +44,7 @@ struct AddAnimalView: View {
         }
         return AnimalTag.localizedByType(type)
     }
-
+    
     var formElements: [FormElement] {
         [
             .textField(title: "Nome", placeholder: "Digite o nome", binding: $animal.name),
@@ -62,10 +55,10 @@ struct AddAnimalView: View {
             .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $animal.color),
             .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $animal.size),
             .multiselection(title: "Caracteristicas", options: filteredTags, binding: $animal.tags),
-            .textEditor(title: "Descrição", binding: $animal.description)
+            .textEditor(title: "Descrição", binding: $animal)
         ]
     }
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.medium.rawValue) {
@@ -73,7 +66,7 @@ struct AddAnimalView: View {
                                   selectedIndex: $selectedImageIndex,
                                   showPhotoPicker: $showPhotoPicker,
                                   isLoading: isLoadingImage)
-
+                
                 DynamicFormView(elements: formElements)
                     .padding(.horizontal, Padding.xxLarge.rawValue)
                 
@@ -107,6 +100,7 @@ struct AddAnimalView: View {
                 isLoadingImage = false
             }
         }
+        .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
@@ -116,6 +110,13 @@ struct AddAnimalView: View {
             animal.breed = ""
             animal.tags.removeAll()
         }
+        .onChange(of: years) {
+            animal.age = calculateAgeTimestamp(years: years, months: months)
+        }
+        .onChange(of: months) {
+            animal.age = calculateAgeTimestamp(years: years, months: months)
+        }
+        
     }
     
     func saveImageToTemp(_ image: UIImage) -> URL? {
@@ -147,7 +148,7 @@ struct AddAnimalView: View {
     
     func uploadImages(forAnimalId id: String) async throws -> [String] {
         var uploadedURLs: [String] = []
-
+        
         for imageURL in images {
             do {
                 let data = try Data(contentsOf: imageURL)
@@ -167,13 +168,13 @@ struct AddAnimalView: View {
                 throw error // interrompe se algum upload falhar
             }
         }
-
+        
         return uploadedURLs
     }
     
     func validateFields(of animal: Animal) -> Bool {
         let mirror = Mirror(reflecting: animal)
-
+        
         for (_, value) in mirror.children {
             if let str = value as? String {
                 if str.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -183,11 +184,11 @@ struct AddAnimalView: View {
         }
         return true
     }
-
+    
     func calculateAgeTimestamp(years: Int, months: Int) -> String {
         let calendar = Calendar.current
         let now = Date()
-
+        
         if let date = calendar.date(byAdding: .year, value: -years, to: now),
            let finalDate = calendar.date(byAdding: .month, value: -months, to: date) {
             let timestamp = finalDate.timeIntervalSince1970
@@ -196,52 +197,57 @@ struct AddAnimalView: View {
         
         return "0"
     }
-
+    
     func addAnimal() {
         animal.age = calculateAgeTimestamp(years: years, months: months)
-        if validateFields(of: animal) {
-            isLoading = true
-            
-            Task {
-                do {
-                    let id = UUID().uuidString
-                    
-                    // 1️⃣ Faz upload de todas as imagens primeiro
-                    let uploaded = try await uploadImages(forAnimalId: id)
-                    
-                    // 2️⃣ Cria o animal já com as URLs das imagens
-                    let copy = Animal(
-                        id: id,
-                        name: animal.name,
-                        photos: uploaded,
-                        age: animal.age,
-                        gender: Gender.fromLocalized(animal.gender)?.caseName ?? "",
-                        type: AnimalType.fromLocalized(animal.type)?.caseName ?? "",
-                        breed: Breed.fromLocalized(animal.breed)?.caseName ?? "",
-                        color: AnimalColor.fromLocalized(animal.color)?.caseName ?? "",
-                        size: AnimalSize.fromLocalized(animal.size)?.caseName ?? "",
-                        description: animal.description,
-                        status: animal.status,
-                        tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
-                    )
-                    
-                    // 3️⃣ Salva no Firestore somente depois que tudo foi enviado
-                    switch addAnimalType {
-                    case .ongAnimals:
-                        _ = try await firestoreProvider.add(copy, to: "animals", withID: id)
-                    case .myAnimals:
-                        let userId = userSession.user?.id ?? ""
-                        _ = try await firestoreProvider.add(copy, to: "users/\(userId)/animals")
-                    }
-                    navigator.dismiss()
-                    toast("Animal cadastrado com sucesso!", .success)
-                } catch {
-                    toast("erro ao salvar!", .error)
-                    isLoading = false
-                }
-            }
-        } else {
+        
+        // 1️⃣ Primeiro valida se há pelo menos uma foto
+        guard !images.isEmpty else {
+            toast("Adicione pelo menos uma foto do animal!", .error)
+            return
+        }
+
+        // 2️⃣ Depois valida os demais campos
+        guard validateFields(of: animal) else {
             toast("Preencha todos os campos obrigatórios!", .error)
+            return
+        }
+    
+        isLoading = true
+        
+        Task {
+            do {
+                let id = UUID().uuidString
+                
+                // 1️⃣ Faz upload de todas as imagens primeiro
+                let uploaded = try await uploadImages(forAnimalId: id)
+                
+                // 2️⃣ Cria o animal já com as URLs das imagens
+                let copy = Animal(
+                    id: id,
+                    name: animal.name,
+                    photos: uploaded,
+                    age: animal.age,
+                    gender: Gender.fromLocalized(animal.gender)?.caseName ?? "",
+                    type: AnimalType.fromLocalized(animal.type)?.caseName ?? "",
+                    breed: Breed.fromLocalized(animal.breed)?.caseName ?? "",
+                    color: AnimalColor.fromLocalized(animal.color)?.caseName ?? "",
+                    size: AnimalSize.fromLocalized(animal.size)?.caseName ?? "",
+                    description: animal.description,
+                    status: animal.status,
+                    tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
+                )
+                
+                // 3️⃣ Salva no Firestore somente depois que tudo foi enviado
+                guard let userId = userSession.user?.id else { return }
+                let path = "users/\(userId)/animals"
+                _ = try await firestoreProvider.add(copy, to: path)
+                navigator.dismiss()
+                toast("Animal cadastrado com sucesso!", .success)
+            } catch {
+                toast("erro ao salvar!", .error)
+                isLoading = false
+            }
         }
     }
 }

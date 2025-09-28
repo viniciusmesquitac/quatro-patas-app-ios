@@ -10,27 +10,34 @@ struct VaccineListView: View {
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var userSession: UserSession
+    
+    @Environment(\.toast) var toast
 
     @State var isLoading: Bool = false
-    @State var vaccines: [Vaccine] = [
-        Vaccine(name: "teste", date: "teste")
-    ]
+    @State var vaccines: [Vaccine] = []
 
     var animalId: String
-    var userId: String
 
-    var vaccinePath: String {
+    var vaccinePath: String? {
+        guard let userId = userSession.user?.id else { return nil }
         return "users/\(userId)/animals/\(animalId)/vaccines"
     }
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: Padding.medium.rawValue) {
-                ForEach(vaccines, id: \.id) { vacine in
-                    VaccineRowView(vaccine: vacine)
-                }
+        List {
+            ForEach(vaccines, id: \.id) { vaccine in
+                VaccineRowView(vaccine: vaccine)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            Task { await deleteVaccine(vaccine) }
+                        } label: {
+                            Label("Deletar", systemImage: "trash")
+                        }
+                    }
             }
         }
+        .listStyle(.plain)
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Vacinas")
         .toolbar(.hidden, for: .tabBar)
@@ -38,10 +45,14 @@ struct VaccineListView: View {
             navigator.dismiss()
         }
         .toolbarItem(icon: .add, placement: .topBarTrailing) {
-            navigator.navigate(to: .addvaccine("", ""))
+            navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
+                Task {
+                    await fetchVaccine(from: animalId)
+                }
+            }))
         }
         .task {
-            
+            await fetchVaccine(from: animalId)
         }
         
     }
@@ -50,11 +61,28 @@ struct VaccineListView: View {
     func fetchVaccine(from animalId: String) async {
         do {
             isLoading = true
-            let items: [Vaccine] = try await firestoreProvider.fetch(from: vaccinePath)
+            guard let path = vaccinePath else {
+                toast("Erro ao carregar as vacinas", .error)
+                return
+            }
+            let items: [Vaccine] = try await firestoreProvider.fetch(from: path)
             self.vaccines = items
             isLoading = false
         } catch {
-            print("❌ Fetch error: \(error.localizedDescription)")
+            toast("Erro ao carregar as vacinas", .error)
+        }
+    }
+
+    @MainActor
+    func deleteVaccine(_ vaccine: Vaccine) async {
+        guard let path = vaccinePath, let id = vaccine.id else { return }
+        
+        do {
+            _ = try await firestoreProvider.delete(from: path, id: id)
+            vaccines.removeAll { $0.id == vaccine.id }
+            toast("Vacina deletada", .success)
+        } catch {
+            toast("Erro ao deletar vacina", .error)
         }
     }
 }

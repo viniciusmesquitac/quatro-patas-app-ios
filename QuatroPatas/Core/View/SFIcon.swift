@@ -44,4 +44,14 @@ enum SFIcon: String {
             .foregroundColor(color)
             .imageScale(scale)
     }
+
+    static func circle(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor, size: CGFloat) -> some View {
+        let iconSize: CGFloat = size / 1.2
+        return SFIcon.image(value, scale: scale, color: .primaryColor)
+            .frame(width: iconSize, height: iconSize)
+            .background(
+                Circle().strokeBorder(Color.primaryColor, lineWidth: 2)
+            )
+            .frame(width: size, height: size)
+    }
 }

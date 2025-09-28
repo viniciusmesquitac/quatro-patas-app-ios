@@ -9,4 +9,5 @@ enum UserType: String, Codable, Localizable {
     case volunteer
     case adopter
     case anonymous
+    case ngo
 }

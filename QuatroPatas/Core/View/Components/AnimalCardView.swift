@@ -46,6 +46,8 @@ struct AnimalCardView: View {
         }
     }
     
+    @State private var isLoading: Bool? = nil
+
     var body: some View {
         Button(action: action) {
             VStack {
@@ -53,13 +55,15 @@ struct AnimalCardView: View {
                     if let firstURL = animal.photos.first,
                        let url = URL(string: firstURL) {
                         CachedAsyncImage(
-                            url: url
+                            url: url, isLoading: $isLoading
                         )
                         .scaledToFill()
                         .clipped()
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .overlay {
-                            AnimalNameView
+                            if !(isLoading ?? false) {
+                                AnimalNameView
+                            }
                         }
                         .cornerRadius(CornerRadius.small.rawValue)
 

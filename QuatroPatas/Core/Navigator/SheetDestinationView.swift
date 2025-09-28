@@ -23,8 +23,17 @@ struct SheetDestinationView: View {
             LogoutView()
         case .alert(let title, let action):
             AlertView(title: title, action: action)
-        case .deleteAnimal(let animal):
-            DeleteAnimalView(animal: animal)
+        case .deleteAnimal(let animal, let onDelete):
+            DeleteAnimalView(animal: animal, onDelete: onDelete)
+        case .addVaccine(let animalId, let onAdded):
+            NavigationStack {
+                AddVaccineView(animalId: animalId, onAdded: onAdded)
+                    .modifier(ToastModifier())
+            }
+        case .descriptionEditor(let text):
+            NavigationStack {
+                DescriptionEditorView(text: text)
+            }
         }
     }
 }

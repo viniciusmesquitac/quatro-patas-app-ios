@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DynamicFormView: View {
     let elements: [FormElement]
+    @EnvironmentObject var navigator: Navigator
+    @Environment(\.toast) var toast
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
@@ -22,13 +24,20 @@ struct DynamicFormView: View {
                     }
                     
                 case .textEditor(let title, let binding):
-                    FormField(title: title) {
-                        TextEditor(text: binding)
-                            .frame(height: 100)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            )
+                    VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
+                        HStack {
+                            Text(title).font(.headline).bold()
+                            Spacer()
+                            Button("Gerar automáticamente") {
+                                AnimalDescriptionGenerator.generate(for: binding) { message in
+                                    toast(message, .error)
+                                }
+                            }
+                        }
+                        TextEditorButton(text: binding.description) {
+                            navigator.present(sheet: .descriptionEditor(binding.description))
+                        }
+                        Spacer()
                     }
                     
                 case .selectable(let title, let options, let binding):

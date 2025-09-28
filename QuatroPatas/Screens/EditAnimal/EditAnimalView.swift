@@ -60,7 +60,7 @@ struct EditAnimalView: View {
             .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $animal.color),
             .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $animal.size),
             .multiselection(title: "Caracteristicas", options: filteredTags, binding: $animal.tags),
-            .textEditor(title: "Descrição", binding: $animal.description)
+            .textEditor(title: "Descrição", binding: $animal)
         ]
     }
 
@@ -79,7 +79,15 @@ struct EditAnimalView: View {
                 
                 HStack {
                     Button("Deletar") {
-                        navigator.present(sheet: .deleteAnimal(animal))
+                        navigator.present(sheet: .deleteAnimal(animal, onDelete: { state in
+                            switch state {
+                            case .startLoading:
+                                isLoading = true
+                            case .finished(_):
+                                isLoading = false
+                            }
+                           
+                        }))
                     }
                     .buttonStyle(OutlineRoundedButtonStyle())
                     .padding(.leading, Padding.xxLarge.rawValue)
@@ -183,16 +191,7 @@ struct EditAnimalView: View {
     
     func animalPathBuilder() -> String? {
         let userId = userSession.user?.id ?? ""
-        let userType = userSession.user?.type ?? .anonymous
-        
-        switch userType {
-        case .volunteer:
-            return "animals"
-        case .adopter:
-            return "users/\(userId)/animals"
-        default:
-            return nil
-        }
+        return "users/\(userId)/animals"
     }
 }
 

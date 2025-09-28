@@ -44,6 +44,7 @@ extension MenuCardType {
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .anonymous: [.login, .adoptionForm, .aboutShelter],
     .volunteer: [.addOngAnimal, .animalsList, .aboutShelter],
+    .ngo: [.addOngAnimal, .animalsList, .aboutShelter],
     .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals],
 ]
 
@@ -66,7 +67,7 @@ struct MenuCardFactory {
 
             case .addOngAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .addAnimal(.ongAnimals))
+                    navigator.navigate(to: .addAnimal)
                 }, icon: .add)
 
             case .animalsList:
@@ -94,7 +95,7 @@ struct MenuCardFactory {
                 })
             case .addMyAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .addAnimal(.myAnimals))
+                    navigator.navigate(to: .addAnimal)
                 }, icon: .add)
             }
         }

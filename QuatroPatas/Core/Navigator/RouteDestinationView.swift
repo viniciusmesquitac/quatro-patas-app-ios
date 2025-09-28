@@ -20,7 +20,7 @@ struct RouteDestinationView: View {
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)
         case .animalsList(let type): AnimalsListView(listType: type)
-        case .addAnimal(let type): AddAnimalView(addAnimalType: type)
+        case .addAnimal: AddAnimalView()
         case .edit(let animal):
             EditAnimalView(animal: animal)
         case .webView(let url): WebViewContainer(url: url)
@@ -31,8 +31,7 @@ struct RouteDestinationView: View {
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
         case .myAnimalDetails(let animal): MyAnimalDetailsView(animal: animal)
-        case .vaccineList(let userId, let animalId): VaccineListView(animalId: animalId, userId: userId)
-        case .addvaccine(let userId, let animalId): AddVaccineView(animalId: animalId, userId: userId)
+        case .vaccineList(let animalId): VaccineListView(animalId: animalId)
         case .registerAdoption(let animalId): RegisterAdoption(animalId: animalId)
         case .adoptionDetails(let animalId): AdoptionDetailsView(animalId: animalId)
         }

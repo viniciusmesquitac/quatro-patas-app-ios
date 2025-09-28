@@ -91,16 +91,10 @@ struct AnimalsListView: View {
             }
         }
         .task {
-            switch listType {
-            case .allAnimals:
-                await fetchAllAnimals()
-            case .myAnimals:
-                await fetchMyAnimals()
-            case .favorites:
-                await fetchAllAnimals()
+            await fetchAllAnimals()
+            if listType == .favorites {
                 filterFavoriteAnimals()
             }
-
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(navigationBarTitle)
@@ -108,15 +102,8 @@ struct AnimalsListView: View {
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }
-        .if(listType == .allAnimals) { view in
-            view.toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.navigate(to: .addAnimal(.ongAnimals))
-            }
-        }
-        .if(listType == .myAnimals) { view in
-            view.toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.navigate(to: .addAnimal(.myAnimals))
-            }
+        .toolbarItem(icon: .add, placement: .topBarTrailing) {
+            navigator.navigate(to: .addAnimal)
         }
     }
 
@@ -132,27 +119,13 @@ struct AnimalsListView: View {
                 .font(.footnote)
         } actions: {
             Button("Adicionar Animal") {
-                let listToAdd: AddAnimalType  = listType == .allAnimals ? .ongAnimals : .myAnimals
-                navigator.navigate(to: .addAnimal(listToAdd))
+                navigator.navigate(to: .addAnimal)
             }
         }
     }
     
-    
     @MainActor
     func fetchAllAnimals() async {
-        do {
-            isLoading = true
-            let items: [Animal] = try await databaseProvider.fetch(from: "animals")
-            self.animals = items
-            isLoading = false
-        } catch {
-            print("❌ Fetch error: \(error.localizedDescription)")
-        }
-    }
-    
-    @MainActor
-    func fetchMyAnimals() async {
         do {
             isLoading = true
             let userId = userSession.user?.id ?? ""

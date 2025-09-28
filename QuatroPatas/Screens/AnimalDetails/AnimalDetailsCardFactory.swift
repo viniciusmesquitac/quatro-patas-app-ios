@@ -36,7 +36,7 @@ struct AnimalDetailsCardFactory {
             switch cardType {
             case .vacine:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .vaccineList(animalId, userId))
+                    navigator.navigate(to: .vaccineList(animalId))
                 }, icon: .vaccine)
                 
             case .medicine:

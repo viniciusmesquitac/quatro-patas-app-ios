@@ -15,7 +15,7 @@ enum Route: Hashable, Identifiable {
     case adoptionForm
     case formPage(AdoptionForm, Int)
     case animalsList(AnimalListType)
-    case addAnimal(AddAnimalType)
+    case addAnimal
     case edit(Animal)
     case webView(URL)
     case register
@@ -24,8 +24,7 @@ enum Route: Hashable, Identifiable {
     case profile
     case personalInformation(User)
     case myAnimalDetails(Animal)
-    case vaccineList(String, String)
-    case addvaccine(String, String)
+    case vaccineList(String)
     case registerAdoption(String)
     case adoptionDetails(String)
     

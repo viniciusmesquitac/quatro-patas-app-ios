@@ -9,7 +9,7 @@ import SwiftUI
 
 enum AnimalDetailsSegment: String, CaseIterable, Identifiable {
     case sheet = "Ficha"
-    case data = "Dados"
+    case health = "Saúde"
 
     var id: String { self.rawValue }
 }
@@ -49,17 +49,11 @@ struct MyAnimalDetailsView: View {
 
     var body: some View {
         ScrollView {
-            // Foto
             if let firstURL = animal.photos.first,
-               let url =  URL(string: firstURL),
-               let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
-               let uii = UIImage(data: imageData) {
-                Image(uiImage: uii)
-                    .resizable()
-                    .scaledToFill()
+               let url = URL(string: firstURL) {
+                CachedAsyncImage(url: url)
                     .frame(width: 160, height: 160)
                     .clipShape(Circle())
-                    .shadow(radius: 4)
                     .padding(.top)
             }
 
@@ -78,13 +72,13 @@ struct MyAnimalDetailsView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
-            .padding(.top, 8)
+            .padding(.top, Padding.medium.rawValue)
 
             
             switch selectedSegment {
             case .sheet:
                 information
-            case .data:
+            case .health:
                 cardsView
             @unknown default:
                 EmptyView()
@@ -116,17 +110,17 @@ struct MyAnimalDetailsView: View {
             if let status = animal.status {
                 Row(label: "Status", value: status)
             }
-            
-            HStack {
-                Text("Adotado")
-                    .font(.headline)
-                Spacer()
-                Toggle(String(), isOn: $isAdopted)
-                    .labelsHidden()
-            }
-            .onChange(of: isAdopted) { _, newValue in
-                Task {
-                    await updateAdoptionStatus(isAdopted: newValue)
+            if userSession.user?.type == .ngo {
+                HStack {
+                    Text("Adotado")
+                        .font(.headline)
+                    Spacer()
+                    Toggle(String(), isOn: $isAdopted)
+                        .labelsHidden()
+                }.onChange(of: isAdopted) { _, newValue in
+                    Task {
+                        await updateAdoptionStatus(isAdopted: newValue)
+                    }
                 }
             }
             
@@ -138,13 +132,13 @@ struct MyAnimalDetailsView: View {
                     Text("Mais Informações")
                         .font(.body)
                         .fontWeight(.semibold)
-                        .padding(.vertical, 8)
+                        .padding(.vertical, Padding.medium.rawValue)
                         .frame(maxWidth: .infinity)
                         .background(Color.accentColor)
                         .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .cornerRadius(CornerRadius.medium.rawValue)
                 }
-                .padding(.top, 8)
+                .padding(.top, Padding.medium.rawValue)
             }
             
             if !animal.description.isEmpty {
@@ -193,26 +187,9 @@ struct MyAnimalDetailsView: View {
         Divider()
     }
     
-    func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-                  return url.absoluteString
-              }
-        return token
-    }
-    
     func animalPathBuilder() -> String? {
-        let userId = userSession.user?.id ?? ""
-        let userType = userSession.user?.type ?? .anonymous
-        
-        switch userType {
-        case .volunteer:
-            return "animals"
-        case .adopter:
-            return "users/\(userId)/animals"
-        default:
-            return nil
-        }
+        guard let userId = userSession.user?.id else { return nil }
+        return "users/\(userId)/animals"
     }
     
     private func updateAdoptionStatus(isAdopted: Bool) async {

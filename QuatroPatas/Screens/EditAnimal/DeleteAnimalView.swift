@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum DeleteAction {
+    case startLoading
+    case finished(Bool)
+}
+
 struct DeleteAnimalView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
@@ -16,6 +21,8 @@ struct DeleteAnimalView: View {
     @EnvironmentObject var userSession: UserSession
     @Environment(\.toast) var toast
     
+    let onDelete: (DeleteAction) -> Void
+    
     var body: some View {
         VStack(spacing: Spacing.large.rawValue) {
             Text("Você tem certeza que quer deletar esse animal?")
@@ -23,30 +30,25 @@ struct DeleteAnimalView: View {
             
             Button("Sim") {
                 navigator.dismiss()
-                navigator.dismiss()
+                onDelete(.startLoading)
                 Task {
-                    let userType = userSession.user?.type ?? .anonymous
-                    let userId = userSession.user?.id ?? ""
-                    let animalId = animal.id ?? ""
-                    
-                    var path = ""
-                    switch userType {
-                    case .volunteer:
-                        path = "animals"
-                    case .adopter:
-                        path = "users/\(userId)/animals"
-                    case .anonymous:
-                        path = ""
+                    guard let userId = userSession.user?.id,
+                          let animalId = animal.id else {
+                        toast("Não foi possivel deletar esse animal, tente novamente.", .error)
+                        return
                     }
+                    let path = "users/\(userId)/animals"
                     do {
                         let result = try await firestoreProvider.delete(from: path, id: animalId)
                         try await firebaseStorageProvider.deleteFolder(path: "animals/\(animalId)")
-
-                        navigator.dismiss()
                         if result {
+                            onDelete(.finished(true))
                             toast("Animal deletado com sucesso!", .success)
+                            navigator.dismiss()
+                            navigator.dismiss()
                         }
                     } catch {
+                        onDelete(.finished(false))
                         toast("Não foi possivel deletar esse animal, tente novamente.", .error)
                     }
                 }

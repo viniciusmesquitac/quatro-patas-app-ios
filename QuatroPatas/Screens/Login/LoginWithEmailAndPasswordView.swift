@@ -17,6 +17,12 @@ struct LoginWithEmailAndPasswordView: View {
     @State var email: String = ""
     @State var password: String = ""
     
+    enum Field: Hashable {
+        case email
+        case password
+    }
+    @FocusState private var focusedField: Field?
+
     @State var isLoading: Bool = false
 
     var body: some View {
@@ -35,10 +41,12 @@ struct LoginWithEmailAndPasswordView: View {
                     .onChange(of: email) { _, newValue in
                         email = newValue.lowercased()
                     }
+                    .focused($focusedField, equals: .email)
                 
                 SecureField("Senha", text: $password)
                     .keyboardType(.emailAddress)
                     .textFieldStyle(PrimaryTextFieldStyle())
+                    .focused($focusedField, equals: .password)
                 
                 Spacer()
             }
@@ -58,6 +66,7 @@ struct LoginWithEmailAndPasswordView: View {
         }
         .safeAreaInset(edge: .bottom) {
             Button("Entrar") {
+                focusedField = nil
                 login()
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)

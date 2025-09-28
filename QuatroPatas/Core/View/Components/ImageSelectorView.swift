@@ -13,7 +13,7 @@ struct ImageSelectorView: View {
     @Binding var selectedIndex: Int
     @Binding var showPhotoPicker: Bool
     var isLoading: Bool = false
-    var height: CGFloat = 250
+    var height: CGFloat = 400
     
     var body: some View {
         ZStack {
@@ -26,15 +26,20 @@ struct ImageSelectorView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .gray))
                     )
             } else if images.isEmpty {
-                RoundedRectangle(cornerRadius: .zero)
+                Rectangle()
                     .fill(Color.gray.opacity(0.2))
                     .frame(height: height)
                     .overlay(
-                        Image(systemName: "plus")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
+                        VStack(alignment: .center) {
+                            SFIcon.image(.add, color: .gray)
+                            Text("Adicionar fotos")
+                                .font(.headline)
+                                .padding(.top, Padding.small.rawValue)
+                                .foregroundColor(.gray)
+                        }
                     )
                     .onTapGesture { showPhotoPicker = true }
+                
             } else {
                 ImageCarousel(
                     images: images,

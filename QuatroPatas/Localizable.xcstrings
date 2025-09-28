@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%@" : {
+
+    },
     "%lld" : {
 
     },
@@ -23,6 +26,12 @@
     "Adicionar Animal" : {
 
     },
+    "Adicionar fotos" : {
+
+    },
+    "Adicionar Vacina" : {
+
+    },
     "Adoção" : {
 
     },
@@ -37,7 +46,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adopt"
+            "value" : "Adotar"
           }
         },
         "pt-BR" : {
@@ -57,7 +66,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Black"
+            "value" : "Preto"
           }
         },
         "pt-BR" : {
@@ -74,7 +83,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Black and White"
+            "value" : "Preto e Branco"
           }
         },
         "pt-BR" : {
@@ -91,7 +100,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cream"
+            "value" : "Creme"
           }
         },
         "pt-BR" : {
@@ -108,7 +117,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gray"
+            "value" : "Cinza"
           }
         },
         "pt-BR" : {
@@ -125,7 +134,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orange"
+            "value" : "Laranja"
           }
         },
         "pt-BR" : {
@@ -142,7 +151,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tabby"
+            "value" : "Tigrado"
           }
         },
         "pt-BR" : {
@@ -176,7 +185,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "White"
+            "value" : "Branco"
           }
         },
         "pt-BR" : {
@@ -193,7 +202,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yellow"
+            "value" : "Amarelo"
           }
         },
         "pt-BR" : {
@@ -210,12 +219,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Large"
+            "value" : "Grande"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Grande"
           }
         }
@@ -227,12 +236,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medium"
+            "value" : "Médio"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Médio"
           }
         }
@@ -244,12 +253,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Small"
+            "value" : "Pequeno"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Pequeno"
           }
         }
@@ -261,7 +270,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dewormed"
+            "value" : "Vermifugado(a)"
           }
         },
         "pt-BR" : {
@@ -306,13 +315,30 @@
         }
       }
     },
+    "animaltag.hipdysplasia" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Displasia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Displasia"
+          }
+        }
+      }
+    },
     "animaltag.microchipped" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Microchipped"
+            "value" : "Microchipado"
           }
         },
         "pt-BR" : {
@@ -329,12 +355,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neutered"
+            "value" : "Castrado"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Castrado(a)"
           }
         }
@@ -346,7 +372,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SpecialNeeds"
+            "value" : "Necessidades Especias"
           }
         },
         "pt-BR" : {
@@ -363,7 +389,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaccinated"
+            "value" : "Vacinado(a)"
           }
         },
         "pt-BR" : {
@@ -380,12 +406,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cat"
+            "value" : "Gato"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Gato"
           }
         }
@@ -397,12 +423,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dog"
+            "value" : "Cachorro"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Cachorro"
           }
         }
@@ -417,18 +443,21 @@
     "Apelido" : {
 
     },
+    "Aplicação: %@" : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adoption"
+            "value" : "Adoção"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Adoção"
           }
         }
@@ -440,12 +469,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animals"
+            "value" : "Animais"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Animais"
           }
         }
@@ -474,12 +503,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Profile"
+            "value" : "Perfil"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Perfil"
           }
         }
@@ -697,7 +726,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search all"
+            "value" : "Buscar Todos"
           }
         }
       }
@@ -707,7 +736,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Register"
+            "value" : "Cadastrar"
           }
         }
       }
@@ -736,7 +765,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loading photos…"
+            "value" : "Carregando fotos…"
           }
         }
       }
@@ -749,12 +778,18 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Color"
+            "value" : "Cor"
           }
         }
       }
     },
     "Criar uma conta" : {
+
+    },
+    "Data da Aplicação" : {
+
+    },
+    "Datas" : {
 
     },
     "Deletar" : {
@@ -765,17 +800,20 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description"
+            "value" : "Descrição"
           }
         }
       }
+    },
+    "Digite o nome" : {
+
     },
     "Digite seu email" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Type your e-mail"
+            "value" : "Digite seu email"
           }
         }
       }
@@ -785,7 +823,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Type your phone"
+            "value" : "Digite seu telefone"
           }
         }
       }
@@ -795,7 +833,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Type your age"
+            "value" : "Digite sua idade"
           }
         }
       }
@@ -805,19 +843,43 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Type your answer"
+            "value" : "Digite sua resposta"
           }
         }
       }
     },
     "Disponiveis para adoção" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponiveis para adoção"
+          }
+        }
+      }
+    },
+    "Dose nº" : {
 
     },
     "Editar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
+          }
+        }
+      }
     },
     "Email" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
     },
     "Encontre o seu melhor amigo aqui!" : {
 
@@ -830,7 +892,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Send"
+            "value" : "Enviar"
           }
         }
       }
@@ -843,34 +905,26 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is a required field!"
+            "value" : "Este campo é obrigatório"
           }
         }
       }
+    },
+    "Ex: 1, 2, Reforço" : {
+
     },
     "Filtrar" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter"
+            "value" : "Filtrar"
           }
         }
       }
     },
     "Filtrar Animais" : {
 
-    },
-    "Formulário de adoção" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adoption Form"
-          }
-        }
-      }
     },
     "Formulário de Adoção" : {
 
@@ -887,12 +941,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Female"
+            "value" : "Fêmea"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Fêmea"
           }
         }
@@ -904,26 +958,22 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Male"
+            "value" : "Macho"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Macho"
           }
         }
       }
     },
+    "Gerar automáticamente" : {
+
+    },
     "Hmmm... \nNão tem nada por aqui!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "There’s nothing here!"
-          }
-        }
-      }
+
     },
     "Idade" : {
       "localizations" : {
@@ -944,6 +994,12 @@
     "Key" : {
       "extractionState" : "manual"
     },
+    "Laboratório" : {
+
+    },
+    "Laboratório: %@" : {
+
+    },
     "Limpar" : {
 
     },
@@ -951,6 +1007,9 @@
 
     },
     "Mais Informações" : {
+
+    },
+    "Marca: %@" : {
 
     },
     "Meses" : {
@@ -961,7 +1020,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My Animals"
+            "value" : "Meus Animais"
           }
         }
       }
@@ -971,37 +1030,50 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Name"
+            "value" : "Nome"
           }
         }
       }
     },
+    "Notificações" : {
+
+    },
     "Olá, %@" : {
+
+    },
+    "Opcional" : {
+
+    },
+    "Outro" : {
 
     },
     "Perfil" : {
 
     },
-    "Próximo" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next"
-          }
-        }
-      }
+    "Personalizado" : {
+
+    },
+    "Próxima aplicação" : {
+
+    },
+    "Proxima aplicação: %@" : {
+
+    },
+    "Quando lembrar?" : {
+
     },
     "Raça" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Breed"
+            "value" : "Raça"
           }
         }
       }
+    },
+    "Receber notificações" : {
+
     },
     "Registrar Adoção" : {
 
@@ -1022,6 +1094,9 @@
 
     },
     "Segment" : {
+
+    },
+    "Selecione" : {
 
     },
     "Senha" : {
@@ -1079,6 +1154,9 @@
           }
         }
       }
+    },
+    "Vacina" : {
+
     },
     "Vacinas" : {
 
