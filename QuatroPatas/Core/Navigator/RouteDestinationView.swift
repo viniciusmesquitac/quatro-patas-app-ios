@@ -20,6 +20,7 @@ struct RouteDestinationView: View {
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)
         case .animalsList(let type): AnimalsListView(listType: type)
+        case .favorites: FavoritesListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal):
             EditAnimalView(animal: animal)

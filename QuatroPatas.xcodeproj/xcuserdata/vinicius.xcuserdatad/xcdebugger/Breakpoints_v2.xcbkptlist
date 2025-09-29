@@ -50,54 +50,78 @@
             endingLineNumber = "474"
             landmarkName = "updateMetadata(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F25E0849-609E-46AF-8D2B-C50D27569C50"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QuatroPatas/Core/View/Components/CachedAsyncImage.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "97ACA045-1412-4224-BAFE-C56FE913BA4F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QuatroPatas/Core/View/Components/CachedAsyncImage.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8D551404-32E7-4726-905D-28774DC204FA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QuatroPatas/Core/View/Components/CachedAsyncImage.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "body"
-            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 827698f4059c96a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 2b41bc506bb142"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 13b3b8768683d8af"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 5c6e27b7c6f0bbae"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+               <Location
+                  uuid = "A358BA52-F4A8-4D5C-8929-6827B3C6DD3B - 6af2f78c3d2e2448"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;FirebaseStorage.StorageMetadata, Swift.Error&gt;) -&gt; () in FirebaseStorage.StorageReference.updateMetadata(FirebaseStorage.StorageMetadata) async throws -&gt; FirebaseStorage.StorageMetadata"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Library/Developer/Xcode/DerivedData/QuatroPatas-gmwiadocinblvodbawmsovytqcgl/SourcePackages/checkouts/firebase-ios-sdk/FirebaseStorage/Sources/StorageReference.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -25,7 +25,7 @@ struct VaccineListView: View {
     }
 
     var body: some View {
-        ZStack {
+        ScrollView {
             List {
                 ForEach(vaccines, id: \.id) { vaccine in
                     VaccineRowView(vaccine: vaccine)
@@ -79,8 +79,6 @@ struct VaccineListView: View {
                     }
                 }))
             }
-            .padding(.horizontal, Padding.xxLarge.rawValue)
-            .buttonStyle(PrimaryButtonStyle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.top, 40)

@@ -25,6 +25,7 @@ struct TabItem<Content: View>: View {
         NavigationStack(path: $navigator.path) {
             content.applyRoute()
         }
+        .tag(tab)
         .tabItem {
             Label(AppTab.localized(tab), systemImage: icon.rawValue)
         }

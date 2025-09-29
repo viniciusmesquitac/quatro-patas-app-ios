@@ -721,6 +721,9 @@
         }
       }
     },
+    "Buscar Animais" : {
+
+    },
     "Buscar animal pelo nome" : {
 
     },
@@ -1188,6 +1191,9 @@
 
     },
     "Ver perfil" : {
+
+    },
+    "Você ainda não adicionou ninguém aos favoritos" : {
 
     },
     "Você tem certeza que quer deletar esse animal?" : {

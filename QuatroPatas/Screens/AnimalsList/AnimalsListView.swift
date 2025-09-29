@@ -8,9 +8,8 @@
 import SwiftUI
 
 enum AnimalListType {
-    case allAnimals
+    case ongAnimals
     case myAnimals
-    case favorites
 }
 
 struct AnimalsListView: View {
@@ -24,14 +23,11 @@ struct AnimalsListView: View {
     @State private var searchText: String = ""
     
     var listType: AnimalListType
-    let repository = FavoritesRepository()
     
     var navigationBarTitle: String {
         switch listType {
-        case .allAnimals:
+        case .ongAnimals:
             return "Animais da ONG"
-        case .favorites:
-            return "Meus Favoritos"
         case .myAnimals:
             return "Meus Animais"
         }
@@ -47,18 +43,20 @@ struct AnimalsListView: View {
         
     var body: some View {
         VStack {
-            HStack {
-                SFIcon.image(.search, color: .gray)
-                TextField("Buscar animal pelo nome", text: $searchText)
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
+            if animals.count > 10 {
+                HStack {
+                    SFIcon.image(.search, color: .gray)
+                    TextField("Buscar animal pelo nome", text: $searchText)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                }
+                .padding(Padding.medium.rawValue)
+                .background(Color(.systemGray6))
+                .cornerRadius(CornerRadius.medium.rawValue)
+                .padding(.horizontal, Padding.medium.rawValue)
+                .padding(.top, Padding.medium.rawValue)
             }
-            .padding(Padding.medium.rawValue)
-            .background(Color(.systemGray6))
-            .cornerRadius(CornerRadius.medium.rawValue)
-            .padding(.horizontal, Padding.medium.rawValue)
-            .padding(.top, Padding.medium.rawValue)
 
             ScrollView {
                 LazyVStack(spacing: Padding.medium.rawValue) {
@@ -67,10 +65,8 @@ struct AnimalsListView: View {
                             switch listType {
                             case .myAnimals:
                                 didSelectMyAnimal(animal: animal)
-                            case .allAnimals:
+                            case .ongAnimals:
                                 didSelectMyAnimal(animal: animal)
-                            case .favorites:
-                                didSelectFavoriteAnimal(animal: animal)
                             }
                         }
                         .padding(.horizontal, Padding.medium.rawValue)
@@ -92,9 +88,6 @@ struct AnimalsListView: View {
         }
         .task {
             await fetchAllAnimals()
-            if listType == .favorites {
-                filterFavoriteAnimals()
-            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(navigationBarTitle)
@@ -137,11 +130,6 @@ struct AnimalsListView: View {
         }
     }
 
-
-    func filterFavoriteAnimals() {
-        let animalsIds: [String] = repository.getFavorites()
-        self.animals = animals.filter { animalsIds.contains($0.id ?? String()) }
-    }
     
     func didSelectEditAnimal(animal: Animal) {
         navigator.navigate(to: .edit(animal.localized))

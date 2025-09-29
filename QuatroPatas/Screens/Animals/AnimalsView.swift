@@ -35,16 +35,16 @@ struct AnimalsView: View {
                         AnimalCardView(animal: animal) {
                             navigator.navigate(to: .details(animal))
                         }
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .bottom).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                     }
                 }.padding(.horizontal, Padding.large.rawValue)
 
                 if filteredAnimals.isEmpty && isLoading == false {
                     buildEmptyStateView()
                 }
-            }
-
-            if isLoading {
-                LoadingDotsView()
             }
         }.refreshable {
             await refresh()
@@ -99,9 +99,10 @@ struct AnimalsView: View {
                 $0.whereField("isAdopted", isEqualTo: false)
             }
             allAnimals.append(contentsOf: animals)
-            
-            self.animals = allAnimals
-            
+
+            withAnimation(.spring()) {
+                self.animals = allAnimals
+            }
             
             isLoading = false
         } catch {

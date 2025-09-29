@@ -70,7 +70,7 @@ struct MenuCardFactory {
 
             case .ongAnimalsList:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .animalsList(.allAnimals))
+                    navigator.navigate(to: .animalsList(.ongAnimals))
                 })
 
             case .adoptionForm:
@@ -85,7 +85,7 @@ struct MenuCardFactory {
 
             case .favorites:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .animalsList(.favorites))
+                    navigator.navigate(to: .favorites)
                 }, icon: .favorite)
             case .myAnimals:
                 return MenuCard(title: cardType.title, action: {

@@ -8,10 +8,10 @@
 import SwiftUI
 
 class Navigator: ObservableObject {
-
     @Published var path = NavigationPath()
     @Published var presentedSheet: Sheet? = nil
-
+    @Published var selectedTab: AppTab = .animals
+    
     func navigate(to route: Route) {
         path.append(route)
     }
@@ -31,5 +31,9 @@ class Navigator: ObservableObject {
     func popToRoot() {
         presentedSheet = nil
         path.removeLast(path.count)
+    }
+    
+    func selectTab(_ tab: AppTab) {
+        selectedTab = tab
     }
 }

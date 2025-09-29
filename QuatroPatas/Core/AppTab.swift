@@ -6,6 +6,5 @@
 
 enum AppTab: String, Localizable {
     case animals
-    case adoption
     case menu
 }

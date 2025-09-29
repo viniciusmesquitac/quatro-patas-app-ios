@@ -31,7 +31,7 @@ struct QuatroPatasApp: App {
                 if userSession.isLoadingAuth {
                     LoadingView()
                 } else if userSession.isLoggedIn {
-                    TabView {
+                    TabView(selection: $navigator.selectedTab) {
                         TabItem(label: .animals, icon: .paw) {
                             AnimalsView()
                         }
