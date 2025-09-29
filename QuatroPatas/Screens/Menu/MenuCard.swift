@@ -18,7 +18,7 @@ enum MenuCardType: CaseIterable {
     case login
     case addOngAnimal
     case addMyAnimal
-    case animalsList
+    case ongAnimalsList
     case adoptionForm
     case aboutShelter
     case favorites
@@ -31,7 +31,7 @@ extension MenuCardType {
         case .login: return "Fazer Login"
         case .addOngAnimal: return "Adicionar Animal"
         case .addMyAnimal: return "Adicionar Animal"
-        case .animalsList: return "Animais da ONG"
+        case .ongAnimalsList: return "Animais da ONG"
         case .adoptionForm: return "Formulário de Adoção"
         case .aboutShelter: return "Quem Somos"
         case .favorites: return "Meus Favoritos"
@@ -42,9 +42,7 @@ extension MenuCardType {
 
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
-    .anonymous: [.login, .adoptionForm, .aboutShelter],
-    .volunteer: [.addOngAnimal, .animalsList, .aboutShelter],
-    .ngo: [.addOngAnimal, .animalsList, .aboutShelter],
+    .ngo: [.addOngAnimal, .ongAnimalsList, .aboutShelter],
     .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals],
 ]
 
@@ -70,7 +68,7 @@ struct MenuCardFactory {
                     navigator.navigate(to: .addAnimal)
                 }, icon: .add)
 
-            case .animalsList:
+            case .ongAnimalsList:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .animalsList(.allAnimals))
                 })

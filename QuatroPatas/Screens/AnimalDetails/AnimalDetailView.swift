@@ -58,13 +58,13 @@ struct AnimalDetailView: View {
                         Spacer()
 
                         Button(action: {
-                            if userSession.user?.type == .volunteer {
+                            if userSession.user?.type == .ngo {
                                 registerAdoption()
                             } else {
                                 adopt()
                             }
                         }) {
-                            Text(userSession.user?.type == .volunteer ? "Cadastrar adoção" : "Adotar")
+                            Text(userSession.user?.type == .ngo ? "Cadastrar adoção" : "Adotar")
                         }
                         .buttonStyle(PrimaryButtonStyle())
                     }

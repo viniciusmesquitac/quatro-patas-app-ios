@@ -52,6 +52,7 @@ struct MyAnimalDetailsView: View {
             if let firstURL = animal.photos.first,
                let url = URL(string: firstURL) {
                 CachedAsyncImage(url: url)
+                    .scaledToFill()
                     .frame(width: 160, height: 160)
                     .clipShape(Circle())
                     .padding(.top)

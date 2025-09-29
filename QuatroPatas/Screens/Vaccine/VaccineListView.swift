@@ -79,6 +79,7 @@ struct VaccineListView: View {
                     }
                 }))
             }
+            .padding(.horizontal, Padding.xxLarge.rawValue)
             .buttonStyle(PrimaryButtonStyle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
