@@ -13,13 +13,14 @@ struct CachedAsyncImage: View {
     private var cacheProvider
     
     @State private var attempt = 0
-    
-    private let imagePlaceholder = "default-animal-card.png"
-    
+
+    var placeholder: String
+
     @Binding var isLoading: Bool?
     
-    init(url: URL?, isLoading: Binding<Bool?> = .constant(nil)) {
+    init(url: URL?, isLoading: Binding<Bool?> = .constant(nil), placeholder: String = "default-animal-card.png") {
         self.url = url
+        self.placeholder = placeholder
         self._isLoading = isLoading
     }
 
@@ -40,9 +41,8 @@ struct CachedAsyncImage: View {
             AsyncImage(url: url, transaction: .init(animation: .spring(duration: 1))) { phase in
                 switch phase {
                 case .empty:
-                    Rectangle()
-                        .modifier(ShimmerModifier())
-                        .onAppear { isLoading = true }
+                    Image(placeholder)
+                        .resizable()
                 case .success(let image):
                     image
                         .resizable()
@@ -53,7 +53,7 @@ struct CachedAsyncImage: View {
                             }
                         }
                 case .failure(_):
-                    Image(imagePlaceholder)
+                    Image(placeholder)
                         .resizable()
                         .onAppear {
                             isLoading = false

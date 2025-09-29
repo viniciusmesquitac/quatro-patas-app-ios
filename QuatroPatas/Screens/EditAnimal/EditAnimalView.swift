@@ -60,7 +60,7 @@ struct EditAnimalView: View {
             .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $animal.color),
             .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $animal.size),
             .multiselection(title: "Caracteristicas", options: filteredTags, binding: $animal.tags),
-            .textEditor(title: "Descrição", binding: $animal)
+            .textEditor(title: "Descrição", binding: $animal, showGenerator: userSession.user?.type == .ngo)
         ]
     }
 

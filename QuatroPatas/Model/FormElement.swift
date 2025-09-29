@@ -9,7 +9,7 @@ import SwiftUI
 
 enum FormElement: Identifiable {
     case textField(title: String, placeholder: String, binding: Binding<String>, keyboard: UIKeyboardType = .default)
-    case textEditor(title: String, binding: Binding<Animal>)
+    case textEditor(title: String, binding: Binding<Animal>, showGenerator: Bool)
     case selectable(title: String, options: [String], binding: Binding<String>)
     case dropdown(title: String, options: [String], binding: Binding<String>)
     case multiselection(title: String, options: [String], binding: Binding<[String]>)
@@ -18,7 +18,7 @@ enum FormElement: Identifiable {
     var id: String {
         switch self {
         case .textField(let title, _, _, _): return title
-        case .textEditor(let title, _): return title
+        case .textEditor(let title, _, _): return title
         case .selectable(let title, _, _): return title
         case .dropdown(let title, _, _): return title
         case .multiselection(let title, _, _): return title

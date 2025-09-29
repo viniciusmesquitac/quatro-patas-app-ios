@@ -29,6 +29,9 @@
     "Adicionar fotos" : {
 
     },
+    "Adicionar vacina" : {
+
+    },
     "Adicionar Vacina" : {
 
     },
@@ -1025,6 +1028,9 @@
         }
       }
     },
+    "Nenhuma vacina cadastrada" : {
+
+    },
     "Nome" : {
       "localizations" : {
         "en" : {
@@ -1134,6 +1140,23 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Adotante"
+          }
+        }
+      }
+    },
+    "usertype.ngo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organização Sem Fins Lucrativos"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organização Sem Fins Lucrativos"
           }
         }
       }

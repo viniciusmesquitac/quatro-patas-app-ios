@@ -25,7 +25,14 @@ struct EditPersonalInformationView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: Spacing.xLarge.rawValue) {
-
+                
+                CachedAsyncImage(
+                    url: URL(string: user.photo ?? String()),
+                    placeholder: "default-profile"
+                )
+                .frame(width: 120, height: 120)
+                .clipShape(Circle())
+    
                 TextField("Nome", text: $name)
                     .textFieldStyle(PrimaryTextFieldStyle())
                 

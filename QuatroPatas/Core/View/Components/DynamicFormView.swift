@@ -23,14 +23,16 @@ struct DynamicFormView: View {
                             .keyboardType(keyboard)
                     }
                     
-                case .textEditor(let title, let binding):
+                case .textEditor(let title, let binding, let showGenerator):
                     VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
                         HStack {
                             Text(title).font(.headline).bold()
                             Spacer()
-                            Button("Gerar automáticamente") {
-                                AnimalDescriptionGenerator.generate(for: binding) { message in
-                                    toast(message, .error)
+                            if showGenerator {
+                                Button("Gerar automáticamente") {
+                                    AnimalDescriptionGenerator.generate(for: binding) { message in
+                                        toast(message, .error)
+                                    }
                                 }
                             }
                         }

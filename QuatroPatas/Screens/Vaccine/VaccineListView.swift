@@ -25,36 +25,64 @@ struct VaccineListView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(vaccines, id: \.id) { vaccine in
-                VaccineRowView(vaccine: vaccine)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            Task { await deleteVaccine(vaccine) }
-                        } label: {
-                            Label("Deletar", systemImage: "trash")
+        ZStack {
+            List {
+                ForEach(vaccines, id: \.id) { vaccine in
+                    VaccineRowView(vaccine: vaccine)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                Task { await deleteVaccine(vaccine) }
+                            } label: {
+                                Label("Deletar", systemImage: "trash")
+                            }
                         }
+                }
+            }
+            .listStyle(.plain)
+            .navigationBarBackButtonHidden(true)
+            .navigationTitle("Vacinas")
+            .toolbar(.hidden, for: .tabBar)
+            .toolbarItem(icon: .back, placement: .topBarLeading) {
+                navigator.dismiss()
+            }
+            .toolbarItem(icon: .add, placement: .topBarTrailing) {
+                navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
+                    Task {
+                        await fetchVaccine(from: animalId)
                     }
+                }))
+            }
+            .task {
+                await fetchVaccine(from: animalId)
+            }
+
+            if vaccines.isEmpty && isLoading == false {
+                buildEmptyStateView()
             }
         }
-        .listStyle(.plain)
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle("Vacinas")
-        .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading) {
-            navigator.dismiss()
-        }
-        .toolbarItem(icon: .add, placement: .topBarTrailing) {
-            navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
-                Task {
-                    await fetchVaccine(from: animalId)
-                }
-            }))
-        }
-        .task {
-            await fetchVaccine(from: animalId)
-        }
         
+    }
+    
+    @ViewBuilder
+    func buildEmptyStateView() -> some View {
+        VStack(spacing: Spacing.large.rawValue) {
+            LottieView(name: "vaccine", loopMode: .loop)
+                .frame(width: 200, height: 200)
+
+            Text("Nenhuma vacina cadastrada")
+                .font(.system(size: 24))
+
+            Button("Adicionar vacina") {
+                navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
+                    Task {
+                        await fetchVaccine(from: animalId)
+                    }
+                }))
+            }
+            .buttonStyle(PrimaryButtonStyle())
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.top, 40)
     }
     
     @MainActor
@@ -66,7 +94,15 @@ struct VaccineListView: View {
                 return
             }
             let items: [Vaccine] = try await firestoreProvider.fetch(from: path)
-            self.vaccines = items
+
+            let newOnes = items.filter { new in
+                !vaccines.contains { $0.id == new.id }
+            }
+            
+            withAnimation {
+                vaccines.append(contentsOf: newOnes)
+            }
+            
             isLoading = false
         } catch {
             toast("Erro ao carregar as vacinas", .error)

@@ -9,6 +9,7 @@ import Foundation
 
 struct User: Hashable, Identifiable, Codable {
     let id: String
+    var photo: String?
     var name: String
     let email: String
     var phone: String?

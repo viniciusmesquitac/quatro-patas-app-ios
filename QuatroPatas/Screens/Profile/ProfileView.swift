@@ -17,12 +17,15 @@ struct ProfileView: View {
             VStack(spacing: Spacing.xLarge.rawValue) {
         
                 VStack {
-                    Image("default-profile")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 120, height: 120)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.primaryColor, lineWidth: 2))
+                    
+                    CachedAsyncImage(
+                        url: URL(string: userSession.user?.photo ?? String()),
+                        placeholder: "default-profile"
+                    )
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.primaryColor, lineWidth: 2))
+
                     Text(userSession.user?.name ?? "Anônimo")
                         .font(.title2)
                         .fontWeight(.semibold)

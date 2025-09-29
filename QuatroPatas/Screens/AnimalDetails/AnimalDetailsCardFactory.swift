@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum MyAnimalCardDetailsType: CaseIterable {
-    case vacine
+    case vaccine
     case medicine
     case weight
     case notes
@@ -17,7 +17,7 @@ enum MyAnimalCardDetailsType: CaseIterable {
 extension MyAnimalCardDetailsType {
     var title: String {
         switch self {
-        case .vacine: "Vacinas"
+        case .vaccine: "Vacinas"
         case .medicine: "Medicamentos"
         case .weight: "Peso"
         case .notes: "Anotações"
@@ -34,7 +34,7 @@ struct AnimalDetailsCardFactory {
     func allCases(navigator: Navigator) -> [MenuCard] {
         return MyAnimalCardDetailsType.allCases.map { cardType in
             switch cardType {
-            case .vacine:
+            case .vaccine:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .vaccineList(animalId))
                 }, icon: .vaccine)
