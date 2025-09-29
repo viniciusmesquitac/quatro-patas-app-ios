@@ -25,7 +25,7 @@ struct VaccineListView: View {
     }
 
     var body: some View {
-        ScrollView {
+        ZStack {
             List {
                 ForEach(vaccines, id: \.id) { vaccine in
                     VaccineRowView(vaccine: vaccine)

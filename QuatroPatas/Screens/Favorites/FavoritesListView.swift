@@ -84,9 +84,14 @@ struct FavoritesListView: View {
     func fetchAllAnimals() async {
         do {
             isLoading = true
-            let userId = userSession.user?.id ?? ""
-            let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
-            self.animals = items
+            let ongId = "rlt2rPJZOveXgqLs54o6lVrufC32"
+            var allAnimals: [Animal] = []
+
+            let animals: [Animal] = try await databaseProvider.fetch(from: "users/\(ongId)/animals") {
+                $0.whereField("isAdopted", isEqualTo: false)
+             }
+            allAnimals.append(contentsOf: animals)
+            self.animals = allAnimals
             isLoading = false
         } catch {
             print("❌ Fetch error: \(error.localizedDescription)")
