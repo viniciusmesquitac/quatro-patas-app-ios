@@ -33,7 +33,7 @@ struct QuatroPatasApp: App {
                 } else if userSession.isLoggedIn {
                     TabView(selection: $navigator.selectedTab) {
                         TabItem(label: .animals, icon: .paw) {
-                            AnimalsView()
+                            AnimalsViewV3()
                         }
                         TabItem(label: .menu, icon: .menu) {
                             MenuView()

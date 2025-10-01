@@ -46,7 +46,7 @@ struct AnimalDetailView: View {
                     // conteúdo abaixo da imagem
                     VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
 
-                        Text(animal.name + ", " + AgeHelper.formatAge(from: animal.age))
+                        Text(animal.name + ", " + animal.ageFormatted)
                             .font(.largeTitle)
                             .fontWeight(.bold)
 

@@ -97,7 +97,7 @@ struct MyAnimalDetailsView: View {
     
     var information: some View {
         VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
-            Row(label: "Idade", value: AgeHelper.formatAge(from: animal.age))
+            Row(label: "Idade", value: animal.ageFormatted)
             Row(label: "Gênero", value: animal.gender)
             Row(label: "Tipo", value: animal.type)
             Row(label: "Raça", value: animal.breed)

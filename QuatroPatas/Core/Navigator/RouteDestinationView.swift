@@ -13,9 +13,7 @@ struct RouteDestinationView: View {
 
     var body: some View {
         switch route {
-        case .animals: AnimalsView()
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .menu: MenuView()
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
         case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)

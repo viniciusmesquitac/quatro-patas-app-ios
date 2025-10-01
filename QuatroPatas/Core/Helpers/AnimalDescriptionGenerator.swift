@@ -28,9 +28,8 @@ struct AnimalDescriptionGenerator {
         let gender = a.gender.lowercased() == "male" ? "Ele" : "Ela"
         var parts: [String] = []
 
-        let age = AgeHelper.formatAge(from: a.age)
         // Introdução
-        parts.append("Conheça \(a.name), um(a) \(a.type.lowercased()) \(a.breed.lowercased()) de porte \(a.size.lowercased()) e \(age).")
+        parts.append("Conheça \(a.name), um(a) \(a.type.lowercased()) \(a.breed.lowercased()) de porte \(a.size.lowercased()) e \(a.ageFormatted).")
 
         // Cor
         if !a.color.isEmpty {

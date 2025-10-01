@@ -10,11 +10,15 @@ import SwiftUI
 struct FilterView<AnyFilter: Filter>: View {
     
    @Binding var filter: AnyFilter
+
+    var values: [String] {
+        filter.values()
+    }
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Spacing.medium.rawValue) {
-                ForEach(filter.values(), id: \.self) { item in
+                ForEach(values, id: \.self) { item in
                     HStack(spacing: Spacing.medium.rawValue) {
                         Text(item)
                             .foregroundColor(.customBackground)
@@ -23,7 +27,9 @@ struct FilterView<AnyFilter: Filter>: View {
                                 filter.remove(value: item)
                             }
                         }) {
-                            SFIcon.image(.close, scale: .small, color: .customBackground)
+                            SFIcon.image(.close, scale: .medium, color: .customBackground)
+                                .padding(.vertical, 4)
+                                .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
                         

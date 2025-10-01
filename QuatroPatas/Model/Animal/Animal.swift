@@ -43,6 +43,10 @@ extension Animal {
             .map { AnimalTag.localized($0) }
         return copy
     }
+
+    var ageFormatted: String {
+        AgeHelper.formatAge(from: age)
+    }
 }
 
 extension Animal {
