@@ -41,7 +41,7 @@ struct AnimalDetailsCardFactory {
                 
             case .medicine:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.popToRoot()
+                    navigator.navigate(to: .medicationList(animalId))
                 }, icon: .medicine)
                 
             case .weight:

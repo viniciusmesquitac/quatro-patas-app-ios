@@ -38,6 +38,7 @@ enum SFIcon: String {
     case vaccine = "syringe"
     case weight = "scalemass"
     case annotation = "pencil.and.list.clipboard"
+    case report = "megaphone"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)

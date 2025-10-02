@@ -24,6 +24,7 @@ enum Route: Hashable, Identifiable {
     case personalInformation(User)
     case myAnimalDetails(Animal)
     case vaccineList(String)
+    case medicationList(String)
     case registerAdoption(String)
     case adoptionDetails(String)
     

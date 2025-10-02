@@ -29,6 +29,12 @@
     "Adicionar fotos" : {
 
     },
+    "Adicionar medicação" : {
+
+    },
+    "Adicionar Medicação" : {
+
+    },
     "Adicionar vacina" : {
 
     },
@@ -1018,6 +1024,12 @@
     "Marca: %@" : {
 
     },
+    "Medicação" : {
+
+    },
+    "Medicações" : {
+
+    },
     "Meses" : {
 
     },
@@ -1030,6 +1042,9 @@
           }
         }
       }
+    },
+    "Nenhuma medicação cadastrada" : {
+
     },
     "Nenhuma vacina cadastrada" : {
 

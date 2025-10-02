@@ -23,6 +23,7 @@ enum MenuCardType: CaseIterable {
     case aboutShelter
     case favorites
     case myAnimals
+    case lostAnimal
 }
 
 extension MenuCardType {
@@ -36,6 +37,7 @@ extension MenuCardType {
         case .aboutShelter: return "Quem Somos"
         case .favorites: return "Meus Favoritos"
         case .myAnimals: return "Meus Animais"
+        case .lostAnimal: return "Animal Perdido"
         }
     }
 }
@@ -43,7 +45,7 @@ extension MenuCardType {
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .ngo: [.addOngAnimal, .ongAnimalsList, .aboutShelter],
-    .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals],
+    .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal],
 ]
 
 struct MenuCardFactory {
@@ -65,7 +67,7 @@ struct MenuCardFactory {
 
             case .addOngAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .addAnimal)
+                    navigator.present(sheet: .addAnimal)
                 }, icon: .add)
 
             case .ongAnimalsList:
@@ -95,6 +97,12 @@ struct MenuCardFactory {
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal)
                 }, icon: .add)
+                
+            case .lostAnimal:
+                return MenuCard(title: cardType.title, action: {
+                    navigator.navigate(to: .addAnimal)
+                }, icon: .report)
+                
             }
         }
     }

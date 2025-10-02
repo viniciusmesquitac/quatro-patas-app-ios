@@ -1,13 +1,13 @@
 //
-//  VaccineListView.swift
+//  MedicationListView.swift
 //  QuatroPatas
 //
-//  Created by Vinicius Mesquita Coelho on 25/09/25.
+//  Created by Vinicius Mesquita Coelho on 01/10/25.
 //
 
 import SwiftUI
 
-struct VaccineListView: View {
+struct MedicationListView: View {
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
@@ -16,48 +16,48 @@ struct VaccineListView: View {
     @Environment(\.toast) var toast
 
     @State var isLoading: Bool = false
-    @State var vaccines: [Vaccine] = []
+    @State var medications: [Medication] = []
 
     var animalId: String
 
     var vaccinePath: String? {
         guard let userId = userSession.user?.id else { return nil }
-        return "users/\(userId)/animals/\(animalId)/vaccines"
+        return "users/\(userId)/animals/\(animalId)/medications"
     }
 
     var body: some View {
         ZStack {
             List {
-                ForEach(vaccines, id: \.id) { vaccine in
-                    VaccineRowView(vaccine: vaccine)
+                ForEach(medications, id: \.id) { medication in
+                    MedicationRowView(medication: medication)
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
-                                Task { await deleteVaccine(vaccine) }
+                                Task { await delete(medication) }
                             } label: {
-                                Label("Deletar", systemImage: "trash")
+                                Label("Deletar", systemImage: SFIcon.delete.rawValue)
                             }
                         }
                 }
             }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)
-            .navigationTitle("Vacinas")
+            .navigationTitle("Medicações")
             .toolbar(.hidden, for: .tabBar)
             .toolbarItem(icon: .back, placement: .topBarLeading) {
                 navigator.dismiss()
             }
             .toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
+                navigator.present(sheet: .addMedication(animalId: animalId, onAdded: {
                     Task {
-                        await fetchVaccine(from: animalId)
+                        await fetchMedication(from: animalId)
                     }
                 }))
             }
             .task {
-                await fetchVaccine(from: animalId)
+                await fetchMedication(from: animalId)
             }
 
-            if vaccines.isEmpty && isLoading == false {
+            if medications.isEmpty && isLoading == false {
                 buildEmptyStateView()
             }
         }
@@ -70,13 +70,13 @@ struct VaccineListView: View {
             LottieView(name: "vaccine", loopMode: .loop)
                 .frame(width: 200, height: 200)
 
-            Text("Nenhuma vacina cadastrada")
+            Text("Nenhuma medicação cadastrada")
                 .font(.system(size: 24))
 
-            Button("Adicionar vacina") {
-                navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
+            Button("Adicionar medicação") {
+                navigator.present(sheet: .addMedication(animalId: animalId, onAdded: {
                     Task {
-                        await fetchVaccine(from: animalId)
+                        await fetchMedication(from: animalId)
                     }
                 }))
             }
@@ -86,39 +86,39 @@ struct VaccineListView: View {
     }
     
     @MainActor
-    func fetchVaccine(from animalId: String) async {
+    func fetchMedication(from animalId: String) async {
         do {
             isLoading = true
             guard let path = vaccinePath else {
-                toast("Erro ao carregar as vacinas", .error)
+                toast("Erro ao carregar as medicações", .error)
                 return
             }
-            let items: [Vaccine] = try await firestoreProvider.fetch(from: path)
+            let items: [Medication] = try await firestoreProvider.fetch(from: path)
 
             let newOnes = items.filter { new in
-                !vaccines.contains { $0.id == new.id }
+                !medications.contains { $0.id == new.id }
             }
             
             withAnimation {
-                vaccines.append(contentsOf: newOnes)
+                medications.append(contentsOf: newOnes)
             }
             
             isLoading = false
         } catch {
-            toast("Erro ao carregar as vacinas", .error)
+            toast("Erro ao carregar as medicações", .error)
         }
     }
 
     @MainActor
-    func deleteVaccine(_ vaccine: Vaccine) async {
-        guard let path = vaccinePath, let id = vaccine.id else { return }
+    func delete(_ medication: Medication) async {
+        guard let path = vaccinePath, let id = medication.id else { return }
         
         do {
             _ = try await firestoreProvider.delete(from: path, id: id)
-            vaccines.removeAll { $0.id == vaccine.id }
-            toast("Vacina deletada", .success)
+            medications.removeAll { $0.id == medication.id }
+            toast("Medicação deletada", .success)
         } catch {
-            toast("Erro ao deletar vacina", .error)
+            toast("Erro ao deletar a medicação", .error)
         }
     }
 }
