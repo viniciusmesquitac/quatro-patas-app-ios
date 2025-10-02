@@ -45,6 +45,10 @@ struct SheetDestinationView: View {
             NavigationStack {
                 DescriptionEditorView(text: text)
             }
+        case .addWeight(let animalId, let onAdded):
+            NavigationStack {
+                AddWeightEntryView(animalId: animalId, onAdded: onAdded)
+            }
         }
     }
 }

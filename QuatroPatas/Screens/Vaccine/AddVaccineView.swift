@@ -124,7 +124,6 @@ struct AddVaccineView: View {
             return
         }
         
-        // converte doseNumber (String) para Int?
         let doseNumberInt: Int? = {
             let trimmed = doseNumber.trimmingCharacters(in: .whitespacesAndNewlines)
             return trimmed.isEmpty ? nil : Int(trimmed)
@@ -132,7 +131,6 @@ struct AddVaccineView: View {
         
         let totalDosesInt: Int? = nil
         
-        // nextDate só se for diferente do date (por dia)
         let nextDateString: String? = {
             if Calendar.current.isDate(date, inSameDayAs: nextDate) {
                 return nil

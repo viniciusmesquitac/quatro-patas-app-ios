@@ -18,6 +18,7 @@ enum Sheet: Identifiable {
     case addAnimal
     case addVaccine(animalId: String, onAdded: () -> Void)
     case addMedication(animalId: String, onAdded: () -> Void)
+    case addWeight(animalId: String, onAdded: (WeightEntry) -> Void)
 
     var id: String {
         String(describing: self)

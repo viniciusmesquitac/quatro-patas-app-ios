@@ -27,6 +27,7 @@ enum Route: Hashable, Identifiable {
     case medicationList(String)
     case registerAdoption(String)
     case adoptionDetails(String)
+    case weightChart(String)
     
     var id: String { String(describing: self) }
 }

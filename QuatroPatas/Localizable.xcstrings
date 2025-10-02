@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%.1f kg" : {
+
+    },
     "%@" : {
 
     },
@@ -33,6 +36,12 @@
 
     },
     "Adicionar Medicação" : {
+
+    },
+    "Adicionar registro" : {
+
+    },
+    "Adicionar Registro" : {
 
     },
     "Adicionar vacina" : {
@@ -798,6 +807,9 @@
     "Criar uma conta" : {
 
     },
+    "Data" : {
+
+    },
     "Data da Aplicação" : {
 
     },
@@ -805,6 +817,9 @@
 
     },
     "Deletar" : {
+
+    },
+    "Deletar registro?" : {
 
     },
     "Descrição" : {
@@ -984,6 +999,9 @@
     "Gerar automáticamente" : {
 
     },
+    "Histórico de Peso" : {
+
+    },
     "Hmmm... \nNão tem nada por aqui!" : {
 
     },
@@ -1043,6 +1061,9 @@
         }
       }
     },
+    "Nenhum registro de peso ainda" : {
+
+    },
     "Nenhuma medicação cadastrada" : {
 
     },
@@ -1075,6 +1096,12 @@
 
     },
     "Personalizado" : {
+
+    },
+    "Peso" : {
+
+    },
+    "Peso (kg)" : {
 
     },
     "Próxima aplicação" : {

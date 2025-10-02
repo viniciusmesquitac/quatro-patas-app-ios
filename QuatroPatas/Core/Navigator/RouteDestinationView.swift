@@ -34,6 +34,7 @@ struct RouteDestinationView: View {
         case .medicationList(let animalId): MedicationListView(animalId: animalId)
         case .registerAdoption(let animalId): RegisterAdoption(animalId: animalId)
         case .adoptionDetails(let animalId): AdoptionDetailsView(animalId: animalId)
+        case .weightChart(let animalId): WeightChartView(animalId: animalId)
         }
     }
 }
