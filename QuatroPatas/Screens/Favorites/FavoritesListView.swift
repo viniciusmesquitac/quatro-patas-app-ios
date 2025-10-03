@@ -74,7 +74,9 @@ struct FavoritesListView: View {
             Button("Buscar Animais") {
                 withAnimation {
                     navigator.popToRoot()
-                    navigator.selectTab(.animals)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        navigator.selectTab(.animals)
+                    }
                 }
             }
         }

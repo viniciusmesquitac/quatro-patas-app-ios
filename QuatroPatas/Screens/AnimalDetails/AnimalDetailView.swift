@@ -20,6 +20,33 @@ struct AnimalDetailView: View {
     @State private var isFavorite = false
 
     let repository = FavoritesRepository()
+    
+    
+    var image: some View {
+        ZStack(alignment: .bottom) {
+            ImageCarousel(
+                images: animal.photos.compactMap { URL(string: $0) },
+                selectedIndex: $selectedImageIndex
+            )
+            .stretchy()
+            .onTapGesture {
+                showFullScreen = true
+            }
+
+            // Gradient that bleeds into the text area
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(uiColor: .systemBackground).opacity(0.0), // transparent at top
+                    Color(uiColor: .systemBackground).opacity(1.0)  // solid background
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .frame(height: 300) // larger so it overlaps the text area
+            .allowsHitTesting(false) // so taps still go to buttons/text
+        }
+        .background(Color(uiColor: .systemBackground))
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -27,12 +54,7 @@ struct AnimalDetailView: View {
                 VStack(spacing: Spacing.small.rawValue) {
                     
                     ZStack(alignment: .bottomTrailing) {
-                        ImageCarousel(
-                            images: animal.photos.compactMap { URL(string: $0) },
-                            selectedIndex: $selectedImageIndex
-                        ).onTapGesture {
-                            showFullScreen = true
-                        }
+                        image
 
                         Button(action: {
                             toggleFavorite()

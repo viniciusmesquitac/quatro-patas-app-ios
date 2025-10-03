@@ -124,51 +124,5 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DB65A810-DB67-4082-9F00-47659DD94FDF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QuatroPatas/Screens/Favorites/FavoritesListView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "didSelectFavoriteAnimal(animal:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DB65A810-DB67-4082-9F00-47659DD94FDF - 653c06607b409ff8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QuatroPatas.FavoritesListView.filterFavoriteAnimals() -&gt; ()"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/Favorites/FavoritesListView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104">
-               </Location>
-               <Location
-                  uuid = "DB65A810-DB67-4082-9F00-47659DD94FDF - 709cd1240d1a5a70"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (QuatroPatas.Animal) -&gt; Swift.Bool in QuatroPatas.FavoritesListView.filterFavoriteAnimals() -&gt; ()"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/Favorites/FavoritesListView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

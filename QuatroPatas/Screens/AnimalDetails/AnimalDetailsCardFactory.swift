@@ -50,7 +50,7 @@ struct AnimalDetailsCardFactory {
                 }, icon: .weight)
             case .notes:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.popToRoot()
+                    navigator.navigate(to: .annotationList(animalId))
                 }, icon: .annotation)
             }
         }

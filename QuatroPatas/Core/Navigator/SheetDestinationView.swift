@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SheetDestinationView: View {
     let sheet: Sheet
-
+    
     var body: some View {
         switch sheet {
         case .animalFilter(let animals, let filter):
@@ -48,6 +48,11 @@ struct SheetDestinationView: View {
         case .addWeight(let animalId, let onAdded):
             NavigationStack {
                 AddWeightEntryView(animalId: animalId, onAdded: onAdded)
+            }
+        case .addAnnotation(let animalId, let onAdded):
+            NavigationStack {
+                AddAnnotationView(animalId: animalId, onAdded: onAdded)
+                    .modifier(ToastModifier())
             }
         }
     }

@@ -29,6 +29,9 @@
     "Adicionar Animal" : {
 
     },
+    "Adicionar Anotação" : {
+
+    },
     "Adicionar fotos" : {
 
     },
@@ -455,6 +458,9 @@
     "Anos" : {
 
     },
+    "Anotações" : {
+
+    },
     "Ao continuar, você concorda com nossos termos de uso e política de privacidade." : {
 
     },
@@ -813,6 +819,9 @@
     "Data da Aplicação" : {
 
     },
+    "Data: %@" : {
+
+    },
     "Datas" : {
 
     },
@@ -831,6 +840,9 @@
           }
         }
       }
+    },
+    "Detalhes da Anotação" : {
+
     },
     "Digite o nome" : {
 
@@ -1064,6 +1076,9 @@
     "Nenhum registro de peso ainda" : {
 
     },
+    "Nenhuma anotação cadastrada" : {
+
+    },
     "Nenhuma medicação cadastrada" : {
 
     },
@@ -1081,6 +1096,9 @@
       }
     },
     "Notificações" : {
+
+    },
+    "Nova nota" : {
 
     },
     "Olá, %@" : {
