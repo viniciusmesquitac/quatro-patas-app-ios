@@ -41,6 +41,13 @@ struct AnnotationListView: View {
                         }
                 }
             }
+            .if(annotations.isEmpty && isLoading == false) { view in
+                view.emptyState(
+                    message: "Nenhuma anotação cadastrada",
+                    title: "Adicionar Anotação",
+                    action: addAnotation
+                )
+            }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)
             .navigationTitle("Anotações")
@@ -49,42 +56,21 @@ struct AnnotationListView: View {
                 navigator.dismiss()
             }
             .toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.present(sheet: .addAnnotation(animalId: animalId, onAdded: {
-                    Task {
-                        await fetch(from: animalId)
-                    }
-                }))
+                addAnotation()
             }
             .task {
                 await fetch(from: animalId)
-            }
-
-            if annotations.isEmpty && isLoading == false {
-                buildEmptyStateView()
             }
         }
         
     }
     
-    @ViewBuilder
-    func buildEmptyStateView() -> some View {
-        VStack(spacing: Spacing.large.rawValue) {
-            LottieView(name: "empty_search", loopMode: .loop)
-                .frame(width: 200, height: 200)
-
-            Text("Nenhuma anotação cadastrada")
-                .font(.system(size: 24))
-
-            Button("Adicionar Anotação") {
-                navigator.present(sheet: .addAnnotation(animalId: animalId, onAdded: {
-                    Task {
-                        await fetch(from: animalId)
-                    }
-                }))
+    func addAnotation() {
+        navigator.present(sheet: .addAnnotation(animalId: animalId, onAdded: {
+            Task {
+                await fetch(from: animalId)
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.top, 40)
+        }))
     }
     
     @MainActor

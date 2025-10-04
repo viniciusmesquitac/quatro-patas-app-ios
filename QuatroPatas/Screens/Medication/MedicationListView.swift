@@ -39,6 +39,13 @@ struct MedicationListView: View {
                         }
                 }
             }
+            .if(medications.isEmpty && isLoading == false) { view in
+                view.emptyState(
+                    message: "Nenhuma Medicação cadastrada",
+                    title: "Adicionar Medicação",
+                    action: addMedication
+                )
+            }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)
             .navigationTitle("Medicações")
@@ -47,42 +54,21 @@ struct MedicationListView: View {
                 navigator.dismiss()
             }
             .toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.present(sheet: .addMedication(animalId: animalId, onAdded: {
-                    Task {
-                        await fetchMedication(from: animalId)
-                    }
-                }))
+                addMedication()
             }
             .task {
                 await fetchMedication(from: animalId)
-            }
-
-            if medications.isEmpty && isLoading == false {
-                buildEmptyStateView()
             }
         }
         
     }
     
-    @ViewBuilder
-    func buildEmptyStateView() -> some View {
-        VStack(spacing: Spacing.large.rawValue) {
-            LottieView(name: "vaccine", loopMode: .loop)
-                .frame(width: 200, height: 200)
-
-            Text("Nenhuma medicação cadastrada")
-                .font(.system(size: 24))
-
-            Button("Adicionar medicação") {
-                navigator.present(sheet: .addMedication(animalId: animalId, onAdded: {
-                    Task {
-                        await fetchMedication(from: animalId)
-                    }
-                }))
+    func addMedication() {
+        navigator.present(sheet: .addMedication(animalId: animalId, onAdded: {
+            Task {
+                await fetchMedication(from: animalId)
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.top, 40)
+        }))
     }
     
     @MainActor

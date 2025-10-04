@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct AnimalSectionListView: View {
-
+    
     @State var animals: [Animal]
     @State private var filter = AnimalFilter()
-
+    
     var filteredAnimals: [Animal] {
         filter.apply(to: animals)
     }
@@ -19,11 +19,11 @@ struct AnimalSectionListView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
     @Environment(\.toast) var toast
-
+    
     @State private var isLoading = false
-
+    
     private let columns = Array(repeating: GridItem(.flexible(minimum: 170, maximum: 170)), count: 2)
-
+    
     var body: some View {
         ZStack {
             ScrollView() {
@@ -35,14 +35,10 @@ struct AnimalSectionListView: View {
                         }
                     }
                 }
-
+                
                 if filteredAnimals.isEmpty && isLoading == false {
                     buildEmptyStateView()
                 }
-            }
-
-            if isLoading {
-                LoadingDotsView()
             }
         }
         .refreshable {
@@ -53,21 +49,20 @@ struct AnimalSectionListView: View {
         })
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(!isLoading ? "Resultado(\(filteredAnimals.count))" : String())
+        .navigationTitle(!isLoading ? "Resultado (\(filteredAnimals.count))" : String())
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }
         .toolbar(.hidden, for: .tabBar)
     }
-
+    
     
     
     @ViewBuilder
     func buildEmptyStateView() -> some View {
         ContentUnavailableView {
             Spacer()
-            Image("empty-state-animals")
-                .resizable()
+            LottieView(name: "cat_in_box", loopMode: .loop)
                 .frame(width: 200, height: 200)
         } description: {
             Text("Hmmm... \nNão tem nada por aqui!")
@@ -84,18 +79,31 @@ struct AnimalSectionListView: View {
     }
     
     func refresh() async {
-         do {
-             await fetchAllAnimals()
-             filter = AnimalFilter()
-             isLoading = false
-         }
-     }
-    
+        do {
+            await fetchAllAnimals()
+            filter = AnimalFilter()
+            isLoading = false
+        }
+    }
+
     @MainActor
     func fetchAllAnimals() async {
+        isLoading = true
         do {
-            let items: [Animal] = try await databaseProvider.fetch(from: "animals")
-            self.animals = items
+            // Busca apenas da ong quatro patas
+            let ongId = "rlt2rPJZOveXgqLs54o6lVrufC32"
+            var allAnimals: [Animal] = []
+            
+            let animals: [Animal] = try await databaseProvider.fetch(from: "users/\(ongId)/animals") {
+                $0.whereField("isAdopted", isEqualTo: false)
+            }
+            allAnimals.append(contentsOf: animals)
+            
+            withAnimation(.spring()) {
+                self.animals = allAnimals
+            }
+            self.isLoading = false
+            
             isLoading = false
         } catch {
             toast(error.localizedDescription, .error)

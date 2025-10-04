@@ -17,7 +17,7 @@ struct AnimalsListView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
     @EnvironmentObject var userSession: UserSession
-
+    
     @State private var animals: [Animal] = []
     @State private var isLoading: Bool = false
     @State private var searchText: String = ""
@@ -27,12 +27,12 @@ struct AnimalsListView: View {
     var navigationBarTitle: String {
         switch listType {
         case .ongAnimals:
-            return "Animais da ONG"
+            return "Animais"
         case .myAnimals:
             return "Meus Animais"
         }
     }
-
+    
     var filteredAnimals: [Animal] {
         if searchText.isEmpty {
             return animals
@@ -40,51 +40,37 @@ struct AnimalsListView: View {
             return animals.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
-        
+    
     var body: some View {
-        VStack {
-            if animals.count > 10 {
-                HStack {
-                    SFIcon.image(.search, color: .gray)
-                    TextField("Buscar animal pelo nome", text: $searchText)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                }
-                .padding(Padding.medium.rawValue)
-                .background(Color(.systemGray6))
-                .cornerRadius(CornerRadius.medium.rawValue)
-                .padding(.horizontal, Padding.medium.rawValue)
-                .padding(.top, Padding.medium.rawValue)
-            }
-
-            ScrollView {
-                LazyVStack(spacing: Padding.medium.rawValue) {
-                    ForEach(filteredAnimals, id: \.id) { animal in
-                        AnimalCardViewRow(animal: animal) {
-                            switch listType {
-                            case .myAnimals:
-                                didSelectMyAnimal(animal: animal)
-                            case .ongAnimals:
-                                didSelectMyAnimal(animal: animal)
-                            }
+        ScrollView {
+            LazyVStack(spacing: Padding.medium.rawValue) {
+                ForEach(filteredAnimals, id: \.id) { animal in
+                    AnimalCardViewRow(animal: animal) {
+                        switch listType {
+                        case .myAnimals:
+                            didSelectMyAnimal(animal: animal)
+                        case .ongAnimals:
+                            didSelectMyAnimal(animal: animal)
                         }
-                        .padding(.horizontal, Padding.medium.rawValue)
                     }
-                    
-                    if filteredAnimals.isEmpty && !isLoading {
-                        buildEmptyStateView()
-                            .padding(.top, Padding.large.rawValue)
-                    }
-                    
-                    if isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .transition(.opacity)
-                            .padding(.top, Padding.large.rawValue)
-                    }
-                }.padding(Padding.medium.rawValue)
-            }
+                    .padding(.horizontal, Padding.medium.rawValue)
+                }
+                
+                if filteredAnimals.isEmpty && !isLoading {
+                    buildEmptyStateView()
+                        .padding(.top, Padding.large.rawValue)
+                }
+                
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .transition(.opacity)
+                        .padding(.top, Padding.large.rawValue)
+                }
+            }.padding(Padding.medium.rawValue)
+        }
+        .if(animals.count >= 10) { view in
+            view.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Buscar animal pelo nome")
         }
         .task {
             await fetchAllAnimals()
@@ -99,7 +85,6 @@ struct AnimalsListView: View {
             navigator.navigate(to: .addAnimal)
         }
     }
-
 
     @ViewBuilder
     func buildEmptyStateView() -> some View {
@@ -129,7 +114,7 @@ struct AnimalsListView: View {
             print("❌ Fetch error: \(error.localizedDescription)")
         }
     }
-
+    
     
     func didSelectEditAnimal(animal: Animal) {
         navigator.navigate(to: .edit(animal.localized))
@@ -138,7 +123,7 @@ struct AnimalsListView: View {
     func didSelectMyAnimal(animal: Animal) {
         navigator.navigate(to: .myAnimalDetails(animal.localized))
     }
-
+    
     func didSelectFavoriteAnimal(animal: Animal) {
         navigator.navigate(to: .details(animal.localized))
     }

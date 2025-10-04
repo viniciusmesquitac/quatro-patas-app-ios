@@ -20,7 +20,7 @@ struct DescriptionEditorView: View {
         }
         .navigationTitle("Descrição")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarItem(label: "Salvar", placement: .topBarTrailing, action: {
+        .toolbarItem(label: "Fechar", placement: .topBarTrailing, action: {
             navigator.dismiss()
         })
     }

@@ -32,7 +32,7 @@ extension MenuCardType {
         case .login: return "Fazer Login"
         case .addOngAnimal: return "Adicionar Animal"
         case .addMyAnimal: return "Adicionar Animal"
-        case .ongAnimalsList: return "Animais da ONG"
+        case .ongAnimalsList: return "Animais"
         case .adoptionForm: return "Formulário de Adoção"
         case .aboutShelter: return "Quem Somos"
         case .favorites: return "Meus Favoritos"
@@ -44,7 +44,7 @@ extension MenuCardType {
 
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
-    .ngo: [.addOngAnimal, .ongAnimalsList, .aboutShelter],
+    .ngo: [.addOngAnimal, .ongAnimalsList],
     .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal],
 ]
 

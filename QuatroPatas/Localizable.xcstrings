@@ -35,9 +35,6 @@
     "Adicionar fotos" : {
 
     },
-    "Adicionar medicação" : {
-
-    },
     "Adicionar Medicação" : {
 
     },
@@ -1079,9 +1076,6 @@
     "Nenhuma anotação cadastrada" : {
 
     },
-    "Nenhuma medicação cadastrada" : {
-
-    },
     "Nenhuma vacina cadastrada" : {
 
     },
@@ -1251,6 +1245,9 @@
 
     },
     "Ver perfil" : {
+
+    },
+    "Ver todos" : {
 
     },
     "Você ainda não adicionou ninguém aos favoritos" : {

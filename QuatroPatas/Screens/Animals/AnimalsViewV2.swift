@@ -17,8 +17,6 @@ struct AnimalsViewV2: View {
 
     @State private var isLoading = true
 
-    let repository = FavoritesRepository()
-
     var body: some View {
         VStack {
             ScrollView {

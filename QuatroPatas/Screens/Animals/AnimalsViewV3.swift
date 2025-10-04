@@ -29,15 +29,20 @@ struct AnimalsViewV3: View {
     ]
     
     var animalsView: some View {
-        ForEach(filteredAnimals, id: \.id) { animal in
-            AnimalRowView(animal: animal) {
-                navigator.navigate(to: .details(animal))
+        VStack {
+            ForEach(Array(filteredAnimals.prefix(4)), id: \.id) { animal in
+                AnimalRowView(animal: animal) {
+                    navigator.navigate(to: .details(animal))
+                }
+                .transition(.asymmetric(
+                    insertion: .move(edge: .bottom).combined(with: .opacity),
+                    removal: .opacity
+                ))
+                .padding(.horizontal, Padding.large.rawValue)
             }
-            .transition(.asymmetric(
-                insertion: .move(edge: .bottom).combined(with: .opacity),
-                removal: .opacity
-            ))
-            .padding(.horizontal, 16)
+            Button("Ver todos") {
+                navigator.navigate(to: .seeAllAnimals(animals))
+            }.padding(.vertical, Padding.medium.rawValue)
         }
     }
     
@@ -67,11 +72,14 @@ struct AnimalsViewV3: View {
             if filteredAnimals.isEmpty && isLoading == false {
                 buildEmptyStateView()
             }
-        }.refreshable {
-            await refresh()
         }
-        .task {
+        .refreshable {
             await fetchAllAnimals()
+        }
+        .onAppear {
+            Task {
+                await fetchAllAnimals()
+            }
         }
         .toolbarItem(icon: .filter, action: {
             navigator.present(sheet: .animalFilter(animals, $filter))
@@ -79,8 +87,7 @@ struct AnimalsViewV3: View {
         .navigationTitle("Animais")
     }
     
-    
-    
+
     @ViewBuilder
     func buildEmptyStateView() -> some View {
         ContentUnavailableView {
@@ -98,13 +105,6 @@ struct AnimalsViewV3: View {
                     }
                 }
             }
-        }
-    }
-    
-    func refresh() async {
-        do {
-            isLoading = true
-            await fetchAllAnimals()
         }
     }
     

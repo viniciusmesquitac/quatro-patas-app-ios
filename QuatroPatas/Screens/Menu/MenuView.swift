@@ -1,10 +1,3 @@
-//
-//  MenuView.swift
-//  QuatroPatas
-//
-//  Created by Vinicius Mesquita Coelho on 31/05/25.
-//
-
 import SwiftUI
 
 struct MenuView: View {
@@ -26,6 +19,9 @@ struct MenuView: View {
         )
     }
     
+    @State private var animate = false
+    @State private var didAnimate = false
+
     var body: some View {
         ScrollView {
             if let user = userSession.user {
@@ -35,18 +31,33 @@ struct MenuView: View {
                     set: { userSession.user = $0 }
                 ))
                     .padding(.horizontal, Padding.xxLarge.rawValue)
-
             }
+            
             LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
-                ForEach(cards, id: \.title) { card in
+                ForEach(cards.indices, id: \.self) { index in
+                    let card = cards[index]
+                    
                     CardView(title: card.title, icon: card.icon) {
                         card.action()
                     }
-                    .transition(card.transition ?? .identity)
+                    .opacity(animate ? 1 : 0)
+                    .offset(y: animate ? 0 : 30)
+                    .animation(
+                        .spring().delay(Double(index) * 0.1),
+                        value: animate
+                    )
                 }
             }
-            .animation(.spring(), value: userSession.user?.type)
             .padding()
+        }
+        .onAppear {
+            guard !didAnimate else { return }
+            
+            animate = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                animate = true
+                didAnimate = true
+            }
         }
     }
 }

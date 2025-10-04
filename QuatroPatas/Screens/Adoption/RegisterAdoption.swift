@@ -83,8 +83,7 @@ struct RegisterAdoption: View {
         }
         .overlay {
             if isLoading {
-                LoadingView()
-                    .ignoresSafeArea()
+                LoadingCatView()
             }
         }
     }

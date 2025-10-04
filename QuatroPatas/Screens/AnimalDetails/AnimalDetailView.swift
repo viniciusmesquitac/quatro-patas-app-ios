@@ -32,18 +32,6 @@ struct AnimalDetailView: View {
             .onTapGesture {
                 showFullScreen = true
             }
-
-            // Gradient that bleeds into the text area
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(uiColor: .systemBackground).opacity(0.0), // transparent at top
-                    Color(uiColor: .systemBackground).opacity(1.0)  // solid background
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: 300) // larger so it overlaps the text area
-            .allowsHitTesting(false) // so taps still go to buttons/text
         }
         .background(Color(uiColor: .systemBackground))
     }

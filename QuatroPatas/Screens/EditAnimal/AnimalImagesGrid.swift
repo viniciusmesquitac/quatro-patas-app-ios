@@ -4,9 +4,13 @@
 //
 //  Created by Vinicius Mesquita Coelho on 24/09/25.
 //
-
 import SwiftUI
 import PhotosUI
+
+enum GridImage: Hashable {
+    case existing(String) // foto salva no servidor
+    case new(URL)         // foto adicionada localmente
+}
 
 struct ImagesGrid: View {
     @Binding var existingPhotos: [String]
@@ -15,49 +19,41 @@ struct ImagesGrid: View {
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var isLoading: [URL?: Bool] = [:]
     @State private var showPhotoPicker = false
+    @State private var draggingItem: GridImage?
 
     let maxPhotos: Int
     private let columns = [
         GridItem(.adaptive(minimum: 155), spacing: Spacing.medium.rawValue)
     ]
 
+    private var allImages: [GridImage] {
+        existingPhotos.map { .existing($0) } + newImages.map { .new($0) }
+    }
+
     private var remainingSlots: Int {
-        maxPhotos - (existingPhotos.count + newImages.count)
+        maxPhotos - allImages.count
     }
 
     @EnvironmentObject var navigator: Navigator
 
-    var imageGrid: some View {
+    var body: some View {
         LazyVGrid(columns: columns, spacing: Spacing.xxLarge.rawValue) {
-            // Fotos existentes
-            ForEach(existingPhotos.indices, id: \.self) { index in
-                ExistingPhotoCell(
-                    urlString: existingPhotos[index],
-                    onRemove: {
-                        navigator.present(sheet: .alert(
-                            title: "Deseja realmente remover essa imagem?",
-                            action: {
-                                existingPhotos.remove(at: index)
-                                navigator.dismiss()
-                            }
-                        ))
+            ForEach(allImages, id: \.self) { item in
+                cell(for: item)
+                    .opacity(draggingItem == item ? 0.3 : 1.0)
+                    .onDrag {
+                        self.draggingItem = item
+                        return NSItemProvider(object: item.idString as NSString)
                     }
-                )
-            }
-            .padding(.horizontal, Padding.large.rawValue)
-
-            // Fotos novas
-            ForEach(newImages, id: \.self) { fileURL in
-                NewPhotoCell(
-                    fileURL: fileURL,
-                    isLoading: isLoading[fileURL] ?? false,
-                    onRemove: {
-                        Task { await onRemoveImage(at: fileURL) }
-                    }
-                )
+                    .onDrop(of: [.text],
+                            delegate: DropViewDelegate(
+                                current: item,
+                                items: allImages,
+                                draggingItem: $draggingItem,
+                                onMove: reorder
+                            ))
             }
 
-            // Slots vazios
             if remainingSlots > 0 {
                 ForEach(0..<remainingSlots, id: \.self) { _ in
                     AddPhotoSlot {
@@ -67,13 +63,7 @@ struct ImagesGrid: View {
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: isLoading)
-    }
-
-    var body: some View {
-        VStack {
-            imageGrid
-        }
+        .animation(.easeInOut(duration: 0.25), value: allImages)
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,
@@ -104,10 +94,79 @@ struct ImagesGrid: View {
         }
     }
 
+    @ViewBuilder
+    private func cell(for item: GridImage) -> some View {
+        switch item {
+        case .existing(let urlString):
+            ExistingPhotoCell(
+                urlString: urlString,
+                onRemove: {
+                    navigator.present(sheet: .alert(
+                        title: "Deseja realmente remover essa imagem?",
+                        action: {
+                            if let idx = existingPhotos.firstIndex(of: urlString) {
+                                existingPhotos.remove(at: idx)
+                            }
+                            navigator.dismiss()
+                        }
+                    ))
+                }
+            )
+
+        case .new(let fileURL):
+            NewPhotoCell(
+                fileURL: fileURL,
+                isLoading: isLoading[fileURL] ?? false,
+                onRemove: {
+                    Task { await onRemoveImage(at: fileURL) }
+                }
+            )
+        }
+    }
+
+    private func reorder(from: GridImage, to: GridImage) {
+        var current = allImages
+        guard let fromIndex = current.firstIndex(of: from),
+              let toIndex = current.firstIndex(of: to),
+              fromIndex != toIndex else { return }
+
+        current.move(fromOffsets: IndexSet(integer: fromIndex),
+                     toOffset: toIndex > fromIndex ? toIndex + 1 : toIndex)
+
+        // separar de volta para existingPhotos e newImages
+        existingPhotos = current.compactMap {
+            if case let .existing(url) = $0 { return url }
+            return nil
+        }
+        newImages = current.compactMap {
+            if case let .new(url) = $0 { return url }
+            return nil
+        }
+    }
+
     func onRemoveImage(at fileURL: URL) async {
         if let index = newImages.firstIndex(of: fileURL) {
             newImages.remove(at: index)
         }
+    }
+}
+
+// MARK: - Drop Delegate
+struct DropViewDelegate: DropDelegate {
+    let current: GridImage
+    let items: [GridImage]
+    @Binding var draggingItem: GridImage?
+    let onMove: (GridImage, GridImage) -> Void
+
+    func performDrop(info: DropInfo) -> Bool {
+        draggingItem = nil
+        return true
+    }
+
+    func dropEntered(info: DropInfo) {
+        guard let draggingItem = draggingItem,
+              draggingItem != current else { return }
+        onMove(draggingItem, current)
     }
 }
 
@@ -140,92 +199,13 @@ private extension ImagesGrid {
     }
 }
 
-
-// MARK: - Células
-
-private struct ExistingPhotoCell: View {
-    let urlString: String
-    let onRemove: () -> Void
-    private let size = CGSize(width: 155, height: 155)
-
-    var body: some View {
-        ZStack(alignment: .topTrailing) {
-            if let url = URL(string: urlString) {
-                CachedAsyncImage(url: url)
-                    .scaledToFill()
-                    .frame(width: size.width, height: size.height)
-                    .clipped()
-                    .cornerRadius(CornerRadius.medium.rawValue)
-            }
-            RemoveButton(action: onRemove)
+// MARK: - Identificador único para drag
+private extension GridImage {
+    var idString: String {
+        switch self {
+        case .existing(let str): return "existing-\(str)"
+        case .new(let url): return "new-\(url.path)"
         }
     }
 }
 
-private struct NewPhotoCell: View {
-    let fileURL: URL
-    let isLoading: Bool
-    let onRemove: () -> Void
-    private let size = CGSize(width: 155, height: 155)
-
-    var body: some View {
-        ZStack(alignment: .topTrailing) {
-            if let uiImage = UIImage(contentsOfFile: fileURL.path) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size.width, height: size.height)
-                    .clipped()
-                    .cornerRadius(CornerRadius.medium.rawValue)
-                    .overlay {
-                        if isLoading {
-                            Rectangle()
-                                .frame(width: size.width, height: size.height)
-                                .cornerRadius(CornerRadius.medium.rawValue)
-                                .modifier(ShimmerModifier())
-                                .transition(.opacity)
-                        }
-                    }
-            } else {
-                Rectangle()
-                    .frame(width: size.width, height: size.height)
-                    .cornerRadius(CornerRadius.medium.rawValue)
-                    .modifier(ShimmerModifier())
-                    .transition(.opacity)
-            }
-            
-
-            RemoveButton(action: onRemove)
-        }
-    }
-}
-
-private struct AddPhotoSlot: View {
-    let action: () -> Void
-    private let size = CGSize(width: 155, height: 155)
-
-    var body: some View {
-        Button(action: action) {
-            ZStack {
-                RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
-                    .strokeBorder(Color.gray.opacity(0.4), style: StrokeStyle(lineWidth: 2, dash: [6]))
-                    .background(Color.gray.opacity(0.1))
-
-                SFIcon.image(.add, color: .gray)
-            }
-            .frame(width: size.width, height: size.height)
-            .aspectRatio(1, contentMode: .fit)
-        }
-    }
-}
-
-private struct RemoveButton: View {
-    let action: () -> Void
-    var body: some View {
-        Button(action: action) {
-            SFIcon.image(.close, color: .red)
-        }
-        .buttonStyle(CircleTranslucentButtonStyle())
-        .frame(width: 24, height: 24)
-    }
-}
