@@ -40,11 +40,7 @@ struct MedicationListView: View {
                 }
             }
             .if(medications.isEmpty && isLoading == false) { view in
-                view.emptyState(
-                    message: "Nenhuma Medicação cadastrada",
-                    title: "Adicionar Medicação",
-                    action: addMedication
-                )
+                view.emptyState(.search, action: addMedication)
             }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)

@@ -7,24 +7,59 @@
 
 import SwiftUI
 
+enum EmptyStateType {
+    case search
+    case cat
+    case vaccine
+    case generic(name: String, message: String, title: String)
+    
+    var config: (name: String, message: String, title: String) {
+        switch self {
+        case .search:
+            return (
+                name: "empty_search",
+                message: "Nenhum resultado encontrado.",
+                title: "Adicionar"
+            )
+            
+        case .cat:
+            return (
+                name: "cat_in_box",
+                message: "Hmmm... \nNão tem nada por aqui!",
+                title: "Buscar todos"
+            )
+            
+        case .vaccine:
+            return (
+                name: "vaccine",
+                message: "Nenhum resultado encontrado.",
+                title: "Adicionar vacina"
+            )
+            
+        case let .generic(name, message, title):
+            return (name: name, message: message, title: title)
+        }
+    }
+}
+
 extension View {
-    @ViewBuilder
     func emptyState(
-        name: String = "empty_search",
-        message: String,
-        title: String,
+        _ type: EmptyStateType,
         action: @escaping () -> Void
     ) -> some View {
-        ScrollView {
+        let config = type.config
+        
+        return ScrollView {
             VStack(spacing: Spacing.large.rawValue) {
-                LottieView(name: name, loopMode: .loop)
+                LottieView(name: config.name, loopMode: .loop)
                     .frame(width: 200, height: 200)
                 
-                Text(message)
+                Text(config.message)
                     .font(.system(size: 24))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                Button(title, action: action)
+                
+                Button(config.title, action: action)
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

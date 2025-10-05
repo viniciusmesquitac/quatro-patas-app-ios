@@ -42,11 +42,7 @@ struct AnnotationListView: View {
                 }
             }
             .if(annotations.isEmpty && isLoading == false) { view in
-                view.emptyState(
-                    message: "Nenhuma anotação cadastrada",
-                    title: "Adicionar Anotação",
-                    action: addAnotation
-                )
+                view.emptyState(.search, action: addAnotation)
             }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)

@@ -56,11 +56,6 @@ struct AnimalsListView: View {
                     .padding(.horizontal, Padding.medium.rawValue)
                 }
                 
-                if filteredAnimals.isEmpty && !isLoading {
-                    buildEmptyStateView()
-                        .padding(.top, Padding.large.rawValue)
-                }
-                
                 if isLoading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
@@ -68,6 +63,9 @@ struct AnimalsListView: View {
                         .padding(.top, Padding.large.rawValue)
                 }
             }.padding(Padding.medium.rawValue)
+        }
+        .if(filteredAnimals.isEmpty && !isLoading ) { view in
+            view.emptyState(.cat, action: addAnimal)
         }
         .if(animals.count >= 10) { view in
             view.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Buscar animal pelo nome")
@@ -82,24 +80,12 @@ struct AnimalsListView: View {
             navigator.dismiss()
         }
         .toolbarItem(icon: .add, placement: .topBarTrailing) {
-            navigator.navigate(to: .addAnimal)
+            addAnimal()
         }
     }
-
-    @ViewBuilder
-    func buildEmptyStateView() -> some View {
-        ContentUnavailableView {
-            Spacer()
-            LottieView(name: "cat_in_box", loopMode: .loop)
-                .frame(width: 200, height: 200)
-        } description: {
-            Text("Hmmm... \nNão tem nada por aqui!")
-                .font(.footnote)
-        } actions: {
-            Button("Adicionar Animal") {
-                navigator.navigate(to: .addAnimal)
-            }
-        }
+    
+    func addAnimal() {
+        navigator.navigate(to: .addAnimal)
     }
     
     @MainActor

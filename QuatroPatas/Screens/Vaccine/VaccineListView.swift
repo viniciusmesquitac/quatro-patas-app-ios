@@ -40,12 +40,7 @@ struct VaccineListView: View {
                 }
             }
             .if(vaccines.isEmpty && isLoading == false) { view in
-                view.emptyState(
-                    name: "vaccine",
-                    message: "Nenhuma vacina cadastrada",
-                    title: "Adicionar vacina",
-                    action: addVaccine
-                )
+                view.emptyState(.vaccine, action: addVaccine)
             }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)

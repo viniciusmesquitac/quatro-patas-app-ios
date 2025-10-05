@@ -19,6 +19,20 @@ struct LoginView: View {
     @State private var isLoading: Bool = false
     
     var body: some View {
+        ScrollView {
+            animation
+            content
+        }
+        .scrollIndicators(.hidden)
+        .ignoresSafeArea(edges: .top)
+        .overlay {
+            if isLoading {
+                LoadingView()
+            }
+        }
+    }
+    
+    var animation: some View {
         Rectangle()
             .fill(Color.primaryColor)
             .frame(height: UIScreen.main.bounds.height / 2.5)
@@ -26,8 +40,10 @@ struct LoginView: View {
                 LottieView(name: "like_cat", loopMode: .loop)
                     .padding(.top, 80)
             }
-            .ignoresSafeArea(edges: .top)
-        
+            .stretchy()
+    }
+    
+    var content: some View {
         VStack(spacing: Spacing.large.rawValue) {
             Text("Encontre o seu melhor amigo aqui!")
                 .font(.title2)
@@ -59,13 +75,8 @@ struct LoginView: View {
                 .foregroundColor(.secondary)
                 .padding(.horizontal, Padding.xxLarge.rawValue)
                 .padding(.top, Padding.medium.rawValue)
+            Spacer()
         }
-        .overlay {
-            if isLoading {
-                LoadingView()
-            }
-        }
-        Spacer()
     }
 }
 
