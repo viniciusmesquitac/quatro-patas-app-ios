@@ -67,7 +67,7 @@ struct MenuCardFactory {
 
             case .addOngAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.present(sheet: .addAnimal)
+                    navigator.navigate(to: .addAnimal)
                 }, icon: .add)
 
             case .ongAnimalsList:

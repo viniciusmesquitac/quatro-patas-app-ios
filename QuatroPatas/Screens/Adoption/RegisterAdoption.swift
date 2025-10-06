@@ -107,6 +107,7 @@ struct RegisterAdoption: View {
               let idFront = idFrontImage,
               let idBack = idBackImage else {
             toast("Faltam fotos obrigatórias", .error)
+            isLoading = false
             return
         }
 
