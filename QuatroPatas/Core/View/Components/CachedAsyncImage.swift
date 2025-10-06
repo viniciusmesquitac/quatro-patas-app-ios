@@ -41,8 +41,8 @@ struct CachedAsyncImage: View {
             AsyncImage(url: url, transaction: .init(animation: .spring(duration: 1))) { phase in
                 switch phase {
                 case .empty:
-                    Image(placeholder)
-                        .resizable()
+                    Rectangle()
+                        .modifier(ShimmerModifier())
                 case .success(let image):
                     image
                         .resizable()

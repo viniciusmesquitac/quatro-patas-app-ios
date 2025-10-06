@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Precisamos da sua localização para preencher o endereço automaticamente.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Pedimos permissão para salvar imagens importantes no seu dispositivo</string>
 	<key>CFBundleIdentifier</key>

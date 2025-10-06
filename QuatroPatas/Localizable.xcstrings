@@ -736,6 +736,9 @@
         }
       }
     },
+    "Buscando endereço..." : {
+
+    },
     "Buscar Animais" : {
 
     },
@@ -794,6 +797,9 @@
     "Checklist de Verificação" : {
 
     },
+    "Confirmar" : {
+
+    },
     "Cor" : {
       "localizations" : {
         "en" : {
@@ -811,6 +817,9 @@
 
     },
     "Data da Aplicação" : {
+
+    },
+    "data: " : {
 
     },
     "Data: %@" : {
@@ -930,6 +939,9 @@
         }
       }
     },
+    "Escolher no mapa" : {
+
+    },
     "Espaço de descanso apropriado" : {
 
     },
@@ -1042,6 +1054,9 @@
     "Local seguro avaliado" : {
 
     },
+    "Localização atual" : {
+
+    },
     "Mais Informações" : {
 
     },
@@ -1150,7 +1165,16 @@
     "Segment" : {
 
     },
+    "Selecionar imagem" : {
+
+    },
     "Selecione" : {
+
+    },
+    "Selecione no mapa" : {
+
+    },
+    "Selecione uma data" : {
 
     },
     "Senha" : {
@@ -1173,6 +1197,9 @@
       }
     },
     "Telefone (Opcional)" : {
+
+    },
+    "Trocar imagem" : {
 
     },
     "usertype.adopter" : {

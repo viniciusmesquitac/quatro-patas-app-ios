@@ -45,7 +45,7 @@ enum EmptyStateType {
 extension View {
     func emptyState(
         _ type: EmptyStateType,
-        action: @escaping () -> Void
+        action: (() -> Void)? = nil
     ) -> some View {
         let config = type.config
         
@@ -59,7 +59,9 @@ extension View {
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Button(config.title, action: action)
+                if let action = action {
+                    Button(config.title, action: action)
+                }
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

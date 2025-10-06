@@ -22,6 +22,12 @@ struct EditPersonalInformationView: View {
     
     @State var isLoading: Bool = false
 
+    private var hasChanges: Bool {
+        name != user.name ||
+        instagram != (user.instagram ?? "") ||
+        phone != (user.phone ?? "")
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: Spacing.xLarge.rawValue) {
@@ -80,7 +86,7 @@ struct EditPersonalInformationView: View {
                 }
             }
             .padding(Padding.xxLarge.rawValue)
-            .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
+            .buttonStyle(PrimaryButtonStyle(isLoading: isLoading, isEnabled: hasChanges))
         }
 
     }

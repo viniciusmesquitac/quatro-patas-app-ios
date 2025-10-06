@@ -100,7 +100,7 @@ struct MenuCardFactory {
                 
             case .lostAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .addAnimal)
+                    navigator.navigate(to: .reportMissingAnimal)
                 }, icon: .report)
                 
             }

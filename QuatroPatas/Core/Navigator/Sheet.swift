@@ -20,6 +20,7 @@ enum Sheet: Identifiable {
     case addMedication(animalId: String, onAdded: () -> Void)
     case addWeight(animalId: String, onAdded: (WeightEntry) -> Void)
     case addAnnotation(animalId: String, onAdded: () -> Void)
+    case map(address: Binding<String>)
 
     var id: String {  String(describing: self) }
 }

@@ -54,6 +54,11 @@ struct SheetDestinationView: View {
                 AddAnnotationView(animalId: animalId, onAdded: onAdded)
                     .modifier(ToastModifier())
             }
+
+        case .map(let address):
+            NavigationStack {
+                MapPickerSheet(address: address)
+            }
         }
     }
 }

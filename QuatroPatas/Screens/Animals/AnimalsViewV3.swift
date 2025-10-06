@@ -76,9 +76,7 @@ struct AnimalsViewV3: View {
     var missing: some View {
         VStack {
             
-        }.emptyState(.search) {
-            
-        }
+        }.emptyState(.search)
     }
     
     private func removeFilter() {

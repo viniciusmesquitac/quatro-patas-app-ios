@@ -15,7 +15,6 @@ struct QuatroPatasApp: App {
     @StateObject private var requestProvider = RequestProvider()
     @StateObject private var databaseProvider = FirestoreProvider()
     @StateObject private var storageProvider = FirebaseStorageProvider()
-    @StateObject private var formManager = FormManager()
     @StateObject private var userSession = UserSession()
     
     @State private var isLoggedIn: Bool = false
@@ -61,7 +60,6 @@ struct QuatroPatasApp: App {
             .environmentObject(requestProvider)
             .environmentObject(databaseProvider)
             .environmentObject(storageProvider)
-            .environmentObject(formManager)
             .environmentObject(userSession)
             .tint(Color.primaryColor)
             .toast()

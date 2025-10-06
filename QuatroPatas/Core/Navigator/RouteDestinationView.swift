@@ -16,7 +16,7 @@ struct RouteDestinationView: View {
         case .details(let animal): AnimalDetailView(animal: animal)
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
-        case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)
+        case .formPage(let form, let manager, let currentPage): FormPageView(form: form, formManager: manager, currentPage: currentPage)
         case .animalsList(let type): AnimalsListView(listType: type)
         case .favorites: FavoritesListView()
         case .addAnimal: AddAnimalView()
@@ -37,6 +37,7 @@ struct RouteDestinationView: View {
         case .weightChart(let animalId): WeightChartView(animalId: animalId)
         case .annotationList(let animalId): AnnotationListView(animalId: animalId)
         case .annotationDetails(let annotation): AnnotationDetailsView(annotation: annotation)
+        case .reportMissingAnimal: ReportMissingAnimalFormView()
         }
     }
 }
