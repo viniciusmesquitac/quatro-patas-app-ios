@@ -41,9 +41,11 @@ struct AnimalsViewV3: View {
                 await fetchAllAnimals()
             }
         }
-        .toolbarItem(icon: .filter, action: {
-            navigator.present(sheet: .animalFilter(animals, $filter))
-        })
+        .if(selectedSegment == .available) { view in
+            view.toolbarItem(icon: .filter, action: {
+                navigator.present(sheet: .animalFilter(animals, $filter))
+            })
+        }
         .navigationTitle("Animais")
     }
     

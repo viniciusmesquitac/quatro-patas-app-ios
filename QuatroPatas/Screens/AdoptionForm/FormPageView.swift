@@ -72,6 +72,7 @@ struct FormPageView: View {
         }
         .environmentObject(formManager)
         .toolbar(.hidden, for: .tabBar)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(form.sections[currentPage].title)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading) {
