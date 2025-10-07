@@ -12,6 +12,11 @@ struct QuestionView: View {
     @Binding var answer: String
     @EnvironmentObject var formManager: FormManager
     
+    let columns = [
+        GridItem(.flexible(), spacing: Spacing.large.rawValue),
+        GridItem(.flexible(), spacing: Spacing.large.rawValue)
+    ]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(question.title)
@@ -37,8 +42,20 @@ struct QuestionView: View {
                 longAnswerTextField
             case .singleSelection:
                 if let options = question.options {
-                    ForEach(options, id: \.self) { title in
-                        option(title: title, selection: $answer)
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
+                            ForEach(options, id: \.self) { title in
+                                SelectableCardView(
+                                    title: title,
+                                    selection: $answer,
+                                    questionId: question.id,
+                                    formManager: formManager
+                                )
+                                .frame(minHeight: 162)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
                     }
                 }
             case .location:
@@ -71,9 +88,10 @@ struct QuestionView: View {
                     formManager.errors.insert(question.id)
                 }
             }
+            .primaryTextEditorStyle()
             .frame(minHeight: 100)
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
                     .stroke(isInvalid ? Color.red : Color.gray.opacity(0.4))
             )
     }
@@ -89,9 +107,9 @@ struct QuestionView: View {
                 }
             }
             .keyboardType(.numberPad)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .textFieldStyle(PrimaryTextFieldStyle())
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
                     .stroke(isInvalid ? Color.red : Color.clear, lineWidth: 1)
             )
     }
@@ -106,9 +124,9 @@ struct QuestionView: View {
                     formManager.errors.insert(question.id)
                 }
             }
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .textFieldStyle(PrimaryTextFieldStyle())
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
                     .stroke(isInvalid ? Color.red : Color.clear, lineWidth: 1)
             )
     }
@@ -125,9 +143,9 @@ struct QuestionView: View {
             }
             .keyboardType(.emailAddress)
             .autocapitalization(.none)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .textFieldStyle(PrimaryTextFieldStyle())
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
                     .stroke(isInvalid ? Color.red : Color.clear, lineWidth: 1)
             )
     }
@@ -154,9 +172,9 @@ struct QuestionView: View {
                 }
             }
             .keyboardType(.numberPad)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .textFieldStyle(PrimaryTextFieldStyle())
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
                     .stroke(isInvalid ? Color.red : Color.clear, lineWidth: 1)
             )
     }
@@ -190,16 +208,11 @@ struct QuestionView: View {
             selection.wrappedValue = title
             formManager.errors.remove(question.id) // remove erro ao responder
         }) {
-            HStack {
-                Image(systemName: selection.wrappedValue == title ? SFIcon.circle_filled.rawValue : SFIcon.circle.rawValue)
-                    .foregroundColor(selection.wrappedValue == title ? .primaryColor : .secondary)
-                Text(title)
-                    .foregroundColor(.primary)
-                Spacer()
-            }
-            .contentShape(Rectangle())
+            Text(title)
+                .foregroundColor(.primary)
+                .contentShape(Rectangle())
         }
-        .buttonStyle(NoneButtonStyle())
+        .buttonStyle(CardButtonStyle())
     }
 }
 

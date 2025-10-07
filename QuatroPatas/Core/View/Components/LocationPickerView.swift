@@ -11,16 +11,16 @@ import MapKit
 struct LocationPickerView: View {
     @Binding var address: String
     @State private var isLoading = false
-    @State private var showMapPicker = false
     @State private var locationManager = CLLocationManager()
     @StateObject private var delegate = LocationDelegate()
+    @EnvironmentObject private var navigator: Navigator
     @Environment(\.toast) var toast
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                TextField("Localização atual", text: $address)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("Digite o seu endereço", text: $address)
+                    .textFieldStyle(PrimaryTextFieldStyle())
                 
                 Button {
                     fetchCurrentLocation()
@@ -37,7 +37,7 @@ struct LocationPickerView: View {
             }
             
             Button {
-                showMapPicker.toggle()
+                navigator.present(sheet: .map(address: $address))
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "map.fill")
@@ -52,11 +52,6 @@ struct LocationPickerView: View {
             locationManager.delegate = delegate
             delegate.onLocationUpdate = { location in
                 handleLocation(location)
-            }
-        }
-        .sheet(isPresented: $showMapPicker) {
-            NavigationStack {
-                MapPickerSheet(address: $address)
             }
         }
     }

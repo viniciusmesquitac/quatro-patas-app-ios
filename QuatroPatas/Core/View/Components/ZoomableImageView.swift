@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct ZoomableImageView: UIViewRepresentable {
     let imageURL: URL
 
@@ -28,6 +27,11 @@ struct ZoomableImageView: UIViewRepresentable {
         scrollView.addSubview(imageView)
         context.coordinator.imageView = imageView
 
+        // 👉 Adiciona gesto de duplo toque
+        let doubleTap = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleDoubleTap(_:)))
+        doubleTap.numberOfTapsRequired = 2
+        scrollView.addGestureRecognizer(doubleTap)
+
         return scrollView
     }
 
@@ -40,9 +44,7 @@ struct ZoomableImageView: UIViewRepresentable {
     }
 
     func updateUIView(_ scrollView: UIScrollView, context: Context) {
-        // Evita recarregar se a imagem já está carregada
         guard context.coordinator.imageView?.image == nil else { return }
-        
         
         if let imageData = cacheProvider.get(key: getToken(url: imageURL)) as? Data,
            let cachedImage = UIImage(data: imageData) {
@@ -52,7 +54,7 @@ struct ZoomableImageView: UIViewRepresentable {
             }
             return
         }
-        
+
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(from: imageURL)
@@ -61,6 +63,8 @@ struct ZoomableImageView: UIViewRepresentable {
                         context.coordinator.imageView?.image = image
                         context.coordinator.imageView?.frame = scrollView.bounds
                     }
+                    // Salva no cache
+                    try cacheProvider.save(data, for: getToken(url: imageURL))
                 }
             } catch {
                 print("❌ Erro ao carregar imagem: \(error.localizedDescription)")
@@ -75,13 +79,35 @@ struct ZoomableImageView: UIViewRepresentable {
     class Coordinator: NSObject, UIScrollViewDelegate {
         weak var imageView: UIImageView?
 
+        // ✅ Ao dar duplo toque, volta o zoom para 1.0
+        @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+            guard let scrollView = gesture.view as? UIScrollView else { return }
+            
+            if scrollView.zoomScale > 1.0 {
+                // volta ao zoom inicial
+                scrollView.setZoomScale(1.0, animated: true)
+            } else {
+                // dá um pequeno zoom no ponto tocado
+                let pointInView = gesture.location(in: imageView)
+                let newZoomScale = min(scrollView.maximumZoomScale, scrollView.zoomScale * 2)
+                let scrollViewSize = scrollView.bounds.size
+
+                let width = scrollViewSize.width / newZoomScale
+                let height = scrollViewSize.height / newZoomScale
+                let x = pointInView.x - (width / 2)
+                let y = pointInView.y - (height / 2)
+
+                let rectToZoom = CGRect(x: x, y: y, width: width, height: height)
+                scrollView.zoom(to: rectToZoom, animated: true)
+            }
+        }
+
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
             imageView
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
             guard let imageView = imageView else { return }
-
             let offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0)
             let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0)
             imageView.center = CGPoint(
@@ -91,6 +117,7 @@ struct ZoomableImageView: UIViewRepresentable {
         }
     }
 }
+
 
 
 struct ZoomableCarouselView: View {
@@ -111,7 +138,7 @@ struct ZoomableCarouselView: View {
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .background(Color.black.ignoresSafeArea())
-        .overlay(alignment: .topLeading) {
+        .overlay(alignment: .topTrailing) {
             Button {
                 dismiss()
             } label: {

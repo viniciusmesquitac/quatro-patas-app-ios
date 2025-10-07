@@ -43,13 +43,16 @@ enum EmptyStateType {
 }
 
 extension View {
-    func emptyState(
+    @ViewBuilder
+    func emptyState<Content: View>(
         _ type: EmptyStateType,
-        action: (() -> Void)? = nil
+        action: (() -> Void)? = nil,
+        @ViewBuilder content: () -> Content = { EmptyView() }
     ) -> some View {
         let config = type.config
         
-        return ScrollView {
+        ScrollView {
+            content()
             VStack(spacing: Spacing.large.rawValue) {
                 LottieView(name: config.name, loopMode: .loop)
                     .frame(width: 200, height: 200)
@@ -62,6 +65,7 @@ extension View {
                 if let action = action {
                     Button(config.title, action: action)
                 }
+                
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

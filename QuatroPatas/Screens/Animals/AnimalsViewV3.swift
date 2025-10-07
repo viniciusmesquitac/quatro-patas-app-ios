@@ -71,7 +71,12 @@ struct AnimalsViewV3: View {
                 }.padding(.vertical, Padding.medium.rawValue)
             }
         }.if(filteredAnimals.isEmpty && isLoading == false) { view in
-            view.emptyState(.cat, action: removeFilter)
+            view.emptyState(.cat, action: removeFilter, content: {
+                if !filter.isEmpty {
+                    FilterView(filter: $filter)
+                        .padding(.bottom, Padding.medium.rawValue)
+                }
+            })
         }
     }
     

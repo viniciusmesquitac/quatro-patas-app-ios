@@ -819,7 +819,7 @@
     "Data da Aplicação" : {
 
     },
-    "data: " : {
+    "Data:" : {
 
     },
     "Data: %@" : {
@@ -848,6 +848,9 @@
 
     },
     "Digite o nome" : {
+
+    },
+    "Digite o seu endereço" : {
 
     },
     "Digite seu email" : {
@@ -1052,9 +1055,6 @@
 
     },
     "Local seguro avaliado" : {
-
-    },
-    "Localização atual" : {
 
     },
     "Mais Informações" : {
