@@ -38,7 +38,6 @@ struct FlowLayout: Layout {
         var x: CGFloat = bounds.minX
         var y: CGFloat = bounds.minY
         var lineHeight: CGFloat = 0
-        let maxWidth = bounds.width
 
         for subview in subviews {
             let size = subview.sizeThatFits(.unspecified)

@@ -4,28 +4,29 @@
 //
 //  Created by Vinicius Mesquita Coelho on 25/09/25.
 //
+
 import SwiftUI
 
 struct VaccineListView: View {
-
+    
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var firestoreProvider: FirestoreProvider
     @EnvironmentObject var userSession: UserSession
     
     @Environment(\.toast) var toast
-
+    
     @State var isLoading: Bool = false
     @State var vaccines: [Vaccine] = []
-
+    
     var animalId: String
-
+    
     var vaccinePath: String? {
         guard let userId = userSession.user?.id else { return nil }
         return "users/\(userId)/animals/\(animalId)/vaccines"
     }
-
+    
     var body: some View {
-        ScrollView {
+        ZStack {
             List {
                 ForEach(vaccines, id: \.id) { vaccine in
                     VaccineRowView(vaccine: vaccine)
@@ -38,6 +39,9 @@ struct VaccineListView: View {
                         }
                 }
             }
+            .if(vaccines.isEmpty && isLoading == false) { view in
+                view.emptyState(.vaccine, action: addVaccine)
+            }
             .listStyle(.plain)
             .navigationBarBackButtonHidden(true)
             .navigationTitle("Vacinas")
@@ -46,42 +50,21 @@ struct VaccineListView: View {
                 navigator.dismiss()
             }
             .toolbarItem(icon: .add, placement: .topBarTrailing) {
-                navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
-                    Task {
-                        await fetchVaccine(from: animalId)
-                    }
-                }))
+                addVaccine()
             }
             .task {
                 await fetchVaccine(from: animalId)
-            }
-
-            if vaccines.isEmpty && isLoading == false {
-                buildEmptyStateView()
             }
         }
         
     }
     
-    @ViewBuilder
-    func buildEmptyStateView() -> some View {
-        VStack(spacing: Spacing.large.rawValue) {
-            LottieView(name: "vaccine", loopMode: .loop)
-                .frame(width: 200, height: 200)
-
-            Text("Nenhuma vacina cadastrada")
-                .font(.system(size: 24))
-
-            Button("Adicionar vacina") {
-                navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
-                    Task {
-                        await fetchVaccine(from: animalId)
-                    }
-                }))
+    func addVaccine() {
+        navigator.present(sheet: .addVaccine(animalId: animalId, onAdded: {
+            Task {
+                await fetchVaccine(from: animalId)
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.top, 40)
+        }))
     }
     
     @MainActor

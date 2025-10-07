@@ -11,7 +11,8 @@ struct PrimaryButtonStyle: ButtonStyle {
     var backgroundColor: Color = .primaryColor
     var cornerRadius: CGFloat = CornerRadius.large.rawValue
     var isLoading: Bool = false
-    
+    var isEnabled: Bool = true
+
     func makeBody(configuration: Configuration) -> some View {
         ZStack {
             if isLoading {
@@ -19,22 +20,27 @@ struct PrimaryButtonStyle: ButtonStyle {
                     .progressViewStyle(CircularProgressViewStyle(tint: .customBackground))
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(backgroundColor.opacity(configuration.isPressed ? 0.8 : 1))
+                    .background(
+                        (isEnabled ? backgroundColor : Color.gray.opacity(0.4))
+                            .opacity(configuration.isPressed ? 0.8 : 1)
+                    )
                     .cornerRadius(cornerRadius)
             } else {
                 configuration.label
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .disabled(isLoading)
                     .background(
-                         (isLoading ? Color.gray : backgroundColor)
-                             .opacity(configuration.isPressed ? 0.8 : 1)
-                     )
+                        (isEnabled ? backgroundColor : Color.gray.opacity(0.4))
+                            .opacity(configuration.isPressed ? 0.8 : 1)
+                    )
                     .foregroundColor(.customBackground)
                     .cornerRadius(cornerRadius)
                     .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
                     .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+                    .animation(.easeInOut(duration: 0.2), value: isEnabled) // ✅ animação suave de cor
+                    .opacity(isEnabled ? 1 : 0.7)
             }
         }
+        .disabled(!isEnabled || isLoading)
     }
 }

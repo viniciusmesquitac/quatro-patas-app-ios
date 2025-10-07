@@ -15,9 +15,9 @@ struct AnimalFilter: Hashable {
 }
 
 extension AnimalFilter: Filter {
-
+    
     typealias Item = Animal
-
+    
     func apply(to items: [Animal]) -> [Animal] {
         items.filter { animal in
             var matches = true
@@ -37,22 +37,22 @@ extension AnimalFilter: Filter {
             if let age = age {
                 if let month = AgeHelper.calculateAgeMonth(timestamp: animal.age) {
                     if age == "Filhote" {
-                           matches = matches && month <= 12
-                       } else
+                        matches = matches && month <= 12
+                    } else
                     if age == "Adulto" {
                         matches = matches && month > 12
                     }
                 }
             }
-
+            
             if let color = color {
                 matches = matches && animal.color == AnimalColor.fromLocalized(color)?.caseName
             }
-
+            
             return matches
         }
     }
-
+    
     mutating func remove(value: String) {
         if animalType == value {
             animalType = nil
@@ -79,4 +79,12 @@ extension AnimalFilter: Filter {
     }
     
     
+    var isEmpty: Bool {
+        return animalType == nil &&
+        gender == nil &&
+        breed == nil &&
+        size == nil &&
+        color == nil &&
+        age == nil
+    }
 }

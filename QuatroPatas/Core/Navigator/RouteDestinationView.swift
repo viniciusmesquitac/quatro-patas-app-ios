@@ -13,12 +13,10 @@ struct RouteDestinationView: View {
 
     var body: some View {
         switch route {
-        case .animals: AnimalsView()
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .menu: MenuView()
         case .adoption:  AdoptionView()
         case .adoptionForm: AdoptionFormView()
-        case .formPage(let form, let currentPage): FormPageView(form: form, currentPage: currentPage)
+        case .formPage(let form, let manager, let currentPage): FormPageView(form: form, formManager: manager, currentPage: currentPage)
         case .animalsList(let type): AnimalsListView(listType: type)
         case .favorites: FavoritesListView()
         case .addAnimal: AddAnimalView()
@@ -33,8 +31,13 @@ struct RouteDestinationView: View {
         case .personalInformation(let user): EditPersonalInformationView(user: user)
         case .myAnimalDetails(let animal): MyAnimalDetailsView(animal: animal)
         case .vaccineList(let animalId): VaccineListView(animalId: animalId)
+        case .medicationList(let animalId): MedicationListView(animalId: animalId)
         case .registerAdoption(let animalId): RegisterAdoption(animalId: animalId)
         case .adoptionDetails(let animalId): AdoptionDetailsView(animalId: animalId)
+        case .weightChart(let animalId): WeightChartView(animalId: animalId)
+        case .annotationList(let animalId): AnnotationListView(animalId: animalId)
+        case .annotationDetails(let annotation): AnnotationDetailsView(annotation: annotation)
+        case .reportMissingAnimal: ReportMissingAnimalFormView()
         }
     }
 }

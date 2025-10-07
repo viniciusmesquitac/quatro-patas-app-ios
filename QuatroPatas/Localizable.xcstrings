@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%.1f kg" : {
+
+    },
     "%@" : {
 
     },
@@ -27,6 +30,15 @@
 
     },
     "Adicionar fotos" : {
+
+    },
+    "Adicionar Medicação" : {
+
+    },
+    "Adicionar registro" : {
+
+    },
+    "Adicionar Registro" : {
 
     },
     "Adicionar vacina" : {
@@ -440,6 +452,9 @@
     "Anos" : {
 
     },
+    "Anotações" : {
+
+    },
     "Ao continuar, você concorda com nossos termos de uso e política de privacidade." : {
 
     },
@@ -721,6 +736,9 @@
         }
       }
     },
+    "Buscando endereço..." : {
+
+    },
     "Buscar Animais" : {
 
     },
@@ -779,6 +797,9 @@
     "Checklist de Verificação" : {
 
     },
+    "Confirmar" : {
+
+    },
     "Cor" : {
       "localizations" : {
         "en" : {
@@ -792,13 +813,25 @@
     "Criar uma conta" : {
 
     },
+    "Data" : {
+
+    },
     "Data da Aplicação" : {
+
+    },
+    "Data:" : {
+
+    },
+    "Data: %@" : {
 
     },
     "Datas" : {
 
     },
     "Deletar" : {
+
+    },
+    "Deletar registro?" : {
 
     },
     "Descrição" : {
@@ -811,7 +844,13 @@
         }
       }
     },
+    "Detalhes da Anotação" : {
+
+    },
     "Digite o nome" : {
+
+    },
+    "Digite o seu endereço" : {
 
     },
     "Digite seu email" : {
@@ -903,6 +942,9 @@
         }
       }
     },
+    "Escolher no mapa" : {
+
+    },
     "Espaço de descanso apropriado" : {
 
     },
@@ -978,6 +1020,9 @@
     "Gerar automáticamente" : {
 
     },
+    "Histórico de Peso" : {
+
+    },
     "Hmmm... \nNão tem nada por aqui!" : {
 
     },
@@ -1018,6 +1063,12 @@
     "Marca: %@" : {
 
     },
+    "Medicação" : {
+
+    },
+    "Medicações" : {
+
+    },
     "Meses" : {
 
     },
@@ -1031,7 +1082,7 @@
         }
       }
     },
-    "Nenhuma vacina cadastrada" : {
+    "Nenhum registro de peso ainda" : {
 
     },
     "Nome" : {
@@ -1047,6 +1098,9 @@
     "Notificações" : {
 
     },
+    "Nova nota" : {
+
+    },
     "Olá, %@" : {
 
     },
@@ -1060,6 +1114,12 @@
 
     },
     "Personalizado" : {
+
+    },
+    "Peso" : {
+
+    },
+    "Peso (kg)" : {
 
     },
     "Próxima aplicação" : {
@@ -1105,7 +1165,16 @@
     "Segment" : {
 
     },
+    "Selecionar imagem" : {
+
+    },
     "Selecione" : {
+
+    },
+    "Selecione no mapa" : {
+
+    },
+    "Selecione uma data" : {
 
     },
     "Senha" : {
@@ -1128,6 +1197,9 @@
       }
     },
     "Telefone (Opcional)" : {
+
+    },
+    "Trocar imagem" : {
 
     },
     "usertype.adopter" : {
@@ -1191,6 +1263,9 @@
 
     },
     "Ver perfil" : {
+
+    },
+    "Ver todos" : {
 
     },
     "Você ainda não adicionou ninguém aos favoritos" : {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AdoptionFormView: View {
     @State private var isLoading = false
-    @State private var form: AdoptionForm? = nil
+    @State private var form: FormTemplate? = nil
     
     @EnvironmentObject var navigator: Navigator
 
@@ -36,14 +36,14 @@ struct AdoptionFormView: View {
             if let url = Bundle.main.url(forResource: "adoption_form", withExtension: "json"),
                let data = try? Data(contentsOf: url) {
                 do {
-                    let decoded = try JSONDecoder().decode(AdoptionForm.self, from: data)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    let decoded = try JSONDecoder().decode(FormTemplate.self, from: data)
+                    DispatchQueue.main.async {
                         withAnimation {
                             isLoading = false
                             form = decoded
                             if let form = form {
                                 navigator.dismiss()
-                                navigator.navigate(to: .formPage(form, 0))
+                                navigator.navigate(to: .formPage(form, FormManager(), 0))
                             }
                         }
                     }

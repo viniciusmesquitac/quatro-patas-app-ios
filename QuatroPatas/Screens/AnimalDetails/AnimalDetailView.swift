@@ -20,6 +20,21 @@ struct AnimalDetailView: View {
     @State private var isFavorite = false
 
     let repository = FavoritesRepository()
+    
+    
+    var image: some View {
+        ZStack(alignment: .bottom) {
+            ImageCarousel(
+                images: animal.photos.compactMap { URL(string: $0) },
+                selectedIndex: $selectedImageIndex
+            )
+            .stretchy()
+            .onTapGesture {
+                showFullScreen = true
+            }
+        }
+        .background(Color(uiColor: .systemBackground))
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -27,12 +42,7 @@ struct AnimalDetailView: View {
                 VStack(spacing: Spacing.small.rawValue) {
                     
                     ZStack(alignment: .bottomTrailing) {
-                        ImageCarousel(
-                            images: animal.photos.compactMap { URL(string: $0) },
-                            selectedIndex: $selectedImageIndex
-                        ).onTapGesture {
-                            showFullScreen = true
-                        }
+                        image
 
                         Button(action: {
                             toggleFavorite()
@@ -46,7 +56,7 @@ struct AnimalDetailView: View {
                     // conteúdo abaixo da imagem
                     VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
 
-                        Text(animal.name + ", " + AgeHelper.formatAge(from: animal.age))
+                        Text(animal.name + ", " + animal.ageFormatted)
                             .font(.largeTitle)
                             .fontWeight(.bold)
 

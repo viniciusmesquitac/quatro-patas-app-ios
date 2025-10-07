@@ -7,6 +7,7 @@
 
 import SwiftUI
 
-struct AdoptionForm: Decodable, Hashable {
+struct FormTemplate: Decodable, Hashable {
+    let url: String
     let sections: [SectionForm]
 }

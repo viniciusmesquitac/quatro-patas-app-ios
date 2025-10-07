@@ -66,6 +66,11 @@ struct DynamicFormView: View {
                     FormField(title: "Idade") {
                         AgePickerView(years: years, months: months)
                     }
+                    
+                case .locationPicker(let title, let binding):
+                    FormField(title: title) {
+                        LocationPickerView(address: binding)
+                    }
                 }
             }
         }

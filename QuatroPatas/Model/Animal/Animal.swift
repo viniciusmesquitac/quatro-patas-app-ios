@@ -22,8 +22,10 @@ struct Animal: Hashable, Identifiable, Sendable, Codable {
     var status: String?
     var tags: [String] = []
     var isAdopted: Bool = false
+    var isMissing: Bool? = false
     var ownerId: String?
     var adoptionTerm: String?
+    var position: Int?
 }
 
 extension Animal {
@@ -42,6 +44,10 @@ extension Animal {
             .compactMap { AnimalTag(rawValue: $0) }
             .map { AnimalTag.localized($0) }
         return copy
+    }
+
+    var ageFormatted: String {
+        AgeHelper.formatAge(from: age)
     }
 }
 

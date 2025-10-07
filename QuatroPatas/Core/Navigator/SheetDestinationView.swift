@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SheetDestinationView: View {
     let sheet: Sheet
-
+    
     var body: some View {
         switch sheet {
         case .animalFilter(let animals, let filter):
@@ -30,9 +30,34 @@ struct SheetDestinationView: View {
                 AddVaccineView(animalId: animalId, onAdded: onAdded)
                     .modifier(ToastModifier())
             }
+            
+        case .addMedication(let animalId, let onAdded):
+            NavigationStack {
+                AddMedicationView(animalId: animalId, onAdded: onAdded)
+                    .modifier(ToastModifier())
+            }
+            
+        case .addAnimal:
+            NavigationStack {
+                AddAnimalView()
+            }
         case .descriptionEditor(let text):
             NavigationStack {
                 DescriptionEditorView(text: text)
+            }
+        case .addWeight(let animalId, let onAdded):
+            NavigationStack {
+                AddWeightEntryView(animalId: animalId, onAdded: onAdded)
+            }
+        case .addAnnotation(let animalId, let onAdded):
+            NavigationStack {
+                AddAnnotationView(animalId: animalId, onAdded: onAdded)
+                    .modifier(ToastModifier())
+            }
+
+        case .map(let address):
+            NavigationStack {
+                MapPickerSheet(address: address)
             }
         }
     }

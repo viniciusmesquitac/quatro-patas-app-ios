@@ -1,4 +1,5 @@
 {
+  "url": "https://docs.google.com/forms/d/e/1FAIpQLSdGudwF9f1YkSikuGZqY8FOhPgXwgWTNNAHYvgHJgv1DDeZ1A/formResponse",
   "sections": [
     {
       "title": "Informações pessoais",
@@ -17,7 +18,7 @@
         { "title": "Qual o seu número de telefone?", "id": "entry.108172991", "type": "phone" },
         { "title": "Qual o seu instagram?", "id": "entry.1750004051", "type": "short_answer" },
         { "title": "Qual o seu email?", "id": "entry.498752817", "type": "email" },
-        { "title": "Qual o seu endereço?", "id": "entry.1808710657", "type": "short_answer" }
+        { "title": "Qual o seu endereço?", "id": "entry.1808710657", "type": "location" }
       ]
     },
     {

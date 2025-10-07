@@ -12,7 +12,8 @@ struct TagItem: Identifiable {
     var id = UUID()
     var tag: AnimalTag
     var icon: Image?
-    var action: () -> Void
+    var action: (() -> Void)? = nil
+    var font: Font? = .system(size: 16)
 }
 
 struct TagsView: View {
@@ -21,9 +22,10 @@ struct TagsView: View {
     var body: some View {
         FlowLayout(spacing: Spacing.medium.rawValue) {
             ForEach(tags) { item in
-                Button(action: { item.action() }) {
+                Button(action: { item.action?() }) {
                     HStack(spacing: Spacing.medium.rawValue) {
                         Text(AnimalTag.localized(item.tag))
+                            .font(item.font)
                             .foregroundColor(.primary)
                         item.icon
                     }

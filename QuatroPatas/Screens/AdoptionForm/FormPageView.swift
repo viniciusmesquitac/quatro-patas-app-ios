@@ -9,15 +9,15 @@ import SwiftUI
 
 struct FormPageView: View {
     
-    @State var form: AdoptionForm
+    @State var form: FormTemplate
     
-    @EnvironmentObject var formManager: FormManager
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var requestProvider: RequestProvider
     @Environment(\.toast) var toast
+    @StateObject var formManager: FormManager
     
     var currentPage: Int
-    
+
     private var progressValue: Double {
         let total = Double(form.sections.count)
         let current = Double(currentPage + 1)
@@ -70,7 +70,9 @@ struct FormPageView: View {
                 }
             }
         }
+        .environmentObject(formManager)
         .toolbar(.hidden, for: .tabBar)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(form.sections[currentPage].title)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading) {
@@ -79,8 +81,7 @@ struct FormPageView: View {
     }
     
     private func sendForm() {
-        let formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdGudwF9f1YkSikuGZqY8FOhPgXwgWTNNAHYvgHJgv1DDeZ1A/formResponse"
-        requestProvider.post(url: formUrl, parameters: formManager.answers) { result in
+        requestProvider.post(url: form.url, parameters: formManager.answers) { result in
             switch result {
             case .success:
                 toast("Enviado com sucesso", .success)
@@ -93,11 +94,10 @@ struct FormPageView: View {
     }
     
     private func didPressButton() {
-        formManager.didSubmit = true // marca que o usuário tentou enviar
+        formManager.didSubmit = true
         
         let currentSection = form.sections[currentPage]
         
-        // Pega as obrigatórias que não foram respondidas
         let invalidQuestions = currentSection.questions.filter { question in
             let answer = formManager.answers[question.id] ?? ""
             
@@ -118,12 +118,11 @@ struct FormPageView: View {
             formManager.errors.removeAll()
             
             if form.sections.indices.contains(currentPage + 1) {
-                self.navigator.navigate(to: .formPage(form, currentPage + 1))
+                self.navigator.navigate(to: .formPage(form, formManager, currentPage + 1))
             } else {
                 sendForm()
             }
         } else {
-            // marca erros
             toast("Verifique os campos obrigatórios ou inválidos!", .error)
             formManager.errors = Set(invalidQuestions)
         }

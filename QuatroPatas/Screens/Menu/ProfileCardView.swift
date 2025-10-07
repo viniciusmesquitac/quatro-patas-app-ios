@@ -14,13 +14,24 @@ struct ProfileCardView: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            CachedAsyncImage(
-                url: URL(string: user.photo ?? String()),
-                placeholder: "default-profile"
-            )
-            .frame(width: 64, height: 64)
-            .clipShape(Circle())
-            .overlay(Circle().stroke(Color.primaryColor, lineWidth: 1))
+            if let photo = user.photo, let url = URL(string: photo) {
+                CachedAsyncImage(
+                    url: url,
+                    placeholder: "default-profile"
+                )
+                .frame(width: 64, height: 64)
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.primaryColor, lineWidth: 2))
+            } else {
+                Image("default-profile")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 64, height: 64)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle().stroke(Color.primaryColor, style: StrokeStyle(lineWidth: 2, dash: [2]))
+                    )
+            }
             
             VStack(alignment: .leading, spacing: 4) {
                 Text("Olá, \(user.name)")

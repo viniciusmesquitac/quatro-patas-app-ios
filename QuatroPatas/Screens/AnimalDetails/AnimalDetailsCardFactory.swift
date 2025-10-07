@@ -41,16 +41,16 @@ struct AnimalDetailsCardFactory {
                 
             case .medicine:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.popToRoot()
+                    navigator.navigate(to: .medicationList(animalId))
                 }, icon: .medicine)
                 
             case .weight:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.popToRoot()
+                    navigator.navigate(to: .weightChart(animalId))
                 }, icon: .weight)
             case .notes:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.popToRoot()
+                    navigator.navigate(to: .annotationList(animalId))
                 }, icon: .annotation)
             }
         }

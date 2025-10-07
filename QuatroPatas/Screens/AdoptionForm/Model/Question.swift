@@ -23,4 +23,7 @@ enum QuestionType: String, Decodable {
     case age
     case email
     case phone
+    case location
+    case date
+    case imageUpload = "image_upload"
 }
