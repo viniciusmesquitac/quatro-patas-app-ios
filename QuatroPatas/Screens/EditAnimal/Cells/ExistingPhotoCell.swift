@@ -11,6 +11,7 @@ struct ExistingPhotoCell: View {
     let urlString: String
     let onRemove: () -> Void
     private let size = CGSize(width: 155, height: 155)
+    var preview: Bool
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -21,7 +22,9 @@ struct ExistingPhotoCell: View {
                     .clipped()
                     .cornerRadius(CornerRadius.medium.rawValue)
             }
-            RemoveButton(action: onRemove)
+            if preview == false {
+                RemoveButton(action: onRemove)
+            }
         }
     }
 }

@@ -40,11 +40,17 @@ struct ImagesGrid: View {
         LazyVGrid(columns: columns, spacing: Spacing.xxLarge.rawValue) {
             ForEach(allImages, id: \.self) { item in
                 cell(for: item)
-                    .opacity(draggingItem == item ? 0.3 : 1.0)
-                    .onDrag {
+                    .opacity(draggingItem == item ? 0.6 : 1.0)
+                    .onDrag ({
                         self.draggingItem = item
                         return NSItemProvider(object: item.idString as NSString)
-                    }
+                    }, preview: {
+                        cell(for: item, preview: true)
+                            .clipShape(RoundedRectangle(cornerRadius: 32))
+                            .scaleEffect(1.05)
+                            .brightness(0.05)
+                            .shadow(radius: 8)
+                    })
                     .onDrop(of: [.text],
                             delegate: DropViewDelegate(
                                 current: item,
@@ -72,30 +78,12 @@ struct ImagesGrid: View {
             photoLibrary: .shared()
         )
         .onChange(of: selectedPhotos) { _, newItems in
-            Task {
-                for item in newItems.prefix(remainingSlots) {
-                    let tempURL = FileManager.default.temporaryDirectory
-                        .appendingPathComponent(UUID().uuidString + ".jpg")
-
-                    isLoading[tempURL] = true
-                    newImages.append(tempURL)
-
-                    if let finalURL = await saveItemToTemp(item) {
-                        if let idx = newImages.firstIndex(of: tempURL) {
-                            newImages[idx] = finalURL
-                            isLoading.removeValue(forKey: tempURL)
-                        }
-                    } else {
-                        newImages.removeAll { $0 == tempURL }
-                        isLoading.removeValue(forKey: tempURL)
-                    }
-                }
-            }
+            handleSelectedPhotos(newItems)
         }
     }
 
     @ViewBuilder
-    private func cell(for item: GridImage) -> some View {
+    private func cell(for item: GridImage, preview: Bool = false) -> some View {
         switch item {
         case .existing(let urlString):
             ExistingPhotoCell(
@@ -110,7 +98,8 @@ struct ImagesGrid: View {
                             navigator.dismiss()
                         }
                     ))
-                }
+                },
+                preview: preview
             )
 
         case .new(let fileURL):
@@ -124,16 +113,41 @@ struct ImagesGrid: View {
         }
     }
 
+    private func handleSelectedPhotos(_ newItems: [PhotosPickerItem]) {
+        Task {
+            for item in newItems.prefix(remainingSlots) {
+                let tempURL = FileManager.default.temporaryDirectory
+                    .appendingPathComponent(UUID().uuidString + ".jpg")
+
+                isLoading[tempURL] = true
+                newImages.append(tempURL)
+
+                if let finalURL = await saveItemToTemp(item) {
+                    if let idx = newImages.firstIndex(of: tempURL) {
+                        newImages[idx] = finalURL
+                        isLoading.removeValue(forKey: tempURL)
+                    }
+                } else {
+                    newImages.removeAll { $0 == tempURL }
+                    isLoading.removeValue(forKey: tempURL)
+                }
+            }
+        }
+    }
+
     private func reorder(from: GridImage, to: GridImage) {
         var current = allImages
         guard let fromIndex = current.firstIndex(of: from),
               let toIndex = current.firstIndex(of: to),
-              fromIndex != toIndex else { return }
+              fromIndex != toIndex else {
+            return
+        }
 
-        current.move(fromOffsets: IndexSet(integer: fromIndex),
-                     toOffset: toIndex > fromIndex ? toIndex + 1 : toIndex)
+        withAnimation(.easeInOut(duration: 0.25)) {
+            current.move(fromOffsets: IndexSet(integer: fromIndex),
+                         toOffset: toIndex > fromIndex ? toIndex + 1 : toIndex)
+        }
 
-        // separar de volta para existingPhotos e newImages
         existingPhotos = current.compactMap {
             if case let .existing(url) = $0 { return url }
             return nil
@@ -161,6 +175,10 @@ struct DropViewDelegate: DropDelegate {
     func performDrop(info: DropInfo) -> Bool {
         draggingItem = nil
         return true
+    }
+    
+    func dropUpdated(info: DropInfo) -> DropProposal? {
+        .init(operation: .cancel)
     }
 
     func dropEntered(info: DropInfo) {

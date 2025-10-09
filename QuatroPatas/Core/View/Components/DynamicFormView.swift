@@ -19,10 +19,13 @@ struct DynamicFormView: View {
                 switch element {
                 case .textField(let title, let placeholder, let binding, let keyboard):
                     FormField(title: title) {
-                        TextField(placeholder, text: binding)
+                        NoDropTextField(text: binding, placeholder: placeholder)
                             .textFieldStyle(PrimaryTextFieldStyle())
                             .keyboardType(keyboard)
                             .focused($isTextFieldFocused)
+                            .onDrop(of: [.image, .fileURL, .text], isTargeted: nil) { _ in
+                                return false
+                            }
                     }
                     
                 case .textEditor(let title, let binding, let showGenerator):
@@ -50,6 +53,7 @@ struct DynamicFormView: View {
                             ForEach(options, id: \.self) { option in
                                 SelectableButton(title: option, isSelected: binding.wrappedValue == option) {
                                     binding.wrappedValue = option
+                                    isTextFieldFocused = false
                                 }
                             }
                         }
