@@ -11,6 +11,7 @@ struct DynamicFormView: View {
     let elements: [FormElement]
     @EnvironmentObject var navigator: Navigator
     @Environment(\.toast) var toast
+    @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
@@ -19,8 +20,9 @@ struct DynamicFormView: View {
                 case .textField(let title, let placeholder, let binding, let keyboard):
                     FormField(title: title) {
                         TextField(placeholder, text: binding)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .textFieldStyle(PrimaryTextFieldStyle())
                             .keyboardType(keyboard)
+                            .focused($isTextFieldFocused)
                     }
                     
                 case .textEditor(let title, let binding, let showGenerator):
