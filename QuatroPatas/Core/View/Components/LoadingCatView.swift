@@ -8,15 +8,38 @@
 import SwiftUI
 
 struct LoadingCatView: View {
-
+    
     var size: CGFloat = 128
-
+    var currentUploadIndex: Int
+    var totalItems: Int
+    var uploadProgress: Double
+    
     var body: some View {
         ZStack {
             Rectangle().fill(.ultraThinMaterial)
-            LottieView(name: "cat_loading", loopMode: .loop)
-                .frame(width: size, height: size)
-            
+            VStack(spacing: Spacing.medium.rawValue) {
+                LottieView(name: "cat_loading", loopMode: .loop)
+                    .frame(width: size, height: size)
+                
+                if currentUploadIndex > 0 {
+                    Text("Enviando \(currentUploadIndex)/\(totalItems)")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.white)
+                        .transition(.opacity)
+                }
+
+                ProgressView(value: uploadProgress)
+                    .progressViewStyle(.linear)
+                    .frame(maxWidth: 120)
+                    .tint(.white)
+
+                Text("\(Int(round(uploadProgress * 100)))%")
+                    .font(.footnote)
+                    .foregroundColor(.white.opacity(0.9))
+            }
+            .padding()
+            .animation(.easeInOut, value: currentUploadIndex)
         }.ignoresSafeArea()
     }
 }

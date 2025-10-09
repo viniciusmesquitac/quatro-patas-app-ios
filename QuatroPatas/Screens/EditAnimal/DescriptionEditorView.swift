@@ -12,16 +12,26 @@ struct DescriptionEditorView: View {
     @Binding var text: String
 
     @EnvironmentObject var navigator: Navigator
-
+    
+    @FocusState private var isFocused: Bool
     var body: some View {
         VStack {
             TextEditor(text: $text)
-                .ignoresSafeArea(edges: .all)
+                .font(.body)
+                .padding(.horizontal, 4)
+                .padding(.vertical, 8)
+                .focused($isFocused)
         }
         .navigationTitle("Descrição")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarItem(label: "Fechar", placement: .topBarTrailing, action: {
+        .toolbarItem(label: "Salvar", placement: .topBarTrailing, action: {
             navigator.dismiss()
         })
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isFocused = true
+            }
+        }
+        .animation(.easeInOut, value: text)
     }
 }

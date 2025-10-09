@@ -21,6 +21,7 @@ enum Sheet: Identifiable {
     case addWeight(animalId: String, onAdded: (WeightEntry) -> Void)
     case addAnnotation(animalId: String, onAdded: () -> Void)
     case map(address: Binding<String>)
+    case deleteAccount(onDelete: (DeleteAction) -> Void)
 
     var id: String {  String(describing: self) }
 }

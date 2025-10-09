@@ -41,7 +41,7 @@ struct LocationPickerView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "map.fill")
-                    Text("Escolher no mapa")
+                    Text("Procurar no mapa")
                 }
                 .font(.system(size: 15, weight: .medium))
                 .foregroundColor(.primaryColor)

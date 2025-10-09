@@ -36,29 +36,29 @@ class FirestoreProvider: ObservableObject {
         }
     }
     
-       func fetchDocument<T: Codable & Sendable>(
-           from collection: String,
-           id: String
-       ) async throws -> T? {
-           try await withCheckedThrowingContinuation { continuation in
-               db.collection(collection).document(id).getDocument { snapshot, error in
-                   if let error = error {
-                       continuation.resume(throwing: error)
-                   } else {
-                       do {
-                           if let snapshot = snapshot, snapshot.exists {
-                               let item = try snapshot.data(as: T.self)
-                               continuation.resume(returning: item)
-                           } else {
-                               continuation.resume(returning: nil) // documento não existe
-                           }
-                       } catch {
-                           continuation.resume(throwing: error)
-                       }
-                   }
-               }
-           }
-       }
+    func fetchDocument<T: Codable & Sendable>(
+        from collection: String,
+        id: String
+    ) async throws -> T? {
+        try await withCheckedThrowingContinuation { continuation in
+            db.collection(collection).document(id).getDocument { snapshot, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    do {
+                        if let snapshot = snapshot, snapshot.exists {
+                            let item = try snapshot.data(as: T.self)
+                            continuation.resume(returning: item)
+                        } else {
+                            continuation.resume(returning: nil)
+                        }
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+    }
 
     func add<T: Codable>(_ item: T, to collection: String, withID id: String? = nil) async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
@@ -140,7 +140,6 @@ class FirestoreProvider: ObservableObject {
     }
 }
 
-
 extension FirestoreProvider {
     /// Atualiza apenas campos específicos de um documento no Firestore
     func updateFields(
@@ -155,6 +154,56 @@ extension FirestoreProvider {
                 } else {
                     continuation.resume(returning: true)
                 }
+            }
+        }
+    }
+}
+
+extension FirestoreProvider {
+
+    /// Deleta um usuário e todas as subcoleções associadas (animais e suas subcoleções).
+    func deleteUserCollections(userId: String) async throws {
+        let userRef = db.collection("users").document(userId)
+
+        // 🔹 1. Deleta todos os animais e subcoleções dentro deles
+        try await deleteAnimals(of: userId)
+
+        // 🔹 2. Deleta o documento principal do usuário
+        try await userRef.delete()
+    }
+
+    /// Deleta a subcoleção "animals" e tudo que está dentro de cada animal.
+    func deleteAnimals(of userId: String) async throws {
+        let animalsRef = db.collection("users").document(userId).collection("animals")
+        let animalsSnapshot = try await animalsRef.getDocuments()
+
+        for animal in animalsSnapshot.documents {
+            let animalRef = animal.reference
+
+            // Subcoleções conhecidas dentro de cada animal
+            let subcollections = ["vaccines", "medications", "annotations", "weights"]
+
+            for sub in subcollections {
+                try await deleteCollection("\(animalRef.path)/\(sub)", batchSize: 20)
+            }
+
+            // Por fim, deleta o documento do animal
+            try await animalRef.delete()
+        }
+    }
+
+    /// Deleta todos os documentos de uma coleção (usada internamente)
+    private func deleteCollection(_ collectionPath: String, batchSize: Int = 20) async throws {
+        let collectionRef = db.collection(collectionPath)
+
+        while true {
+            let snapshot = try await collectionRef.limit(to: batchSize).getDocuments()
+            let documents = snapshot.documents
+
+            guard !documents.isEmpty else { break }
+
+            for document in documents {
+                try await document.reference.delete()
             }
         }
     }

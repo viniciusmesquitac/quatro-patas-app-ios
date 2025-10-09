@@ -59,6 +59,8 @@ struct SheetDestinationView: View {
             NavigationStack {
                 MapPickerSheet(address: address)
             }
+        case .deleteAccount(let onDelete):
+            DeleteAccountView(onDelete: onDelete)
         }
     }
 }

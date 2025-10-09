@@ -51,11 +51,9 @@ struct QuestionView: View {
                                     questionId: question.id,
                                     formManager: formManager
                                 )
-                                .frame(minHeight: 162)
                             }
                         }
-                        .padding(.horizontal)
-                        .padding(.vertical, 8)
+                        .padding(.vertical, Padding.medium.rawValue)
                     }
                 }
             case .location:
@@ -73,7 +71,7 @@ struct QuestionView: View {
                     .foregroundColor(.red)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, Padding.small.rawValue)
     }
     
     // MARK: - Views

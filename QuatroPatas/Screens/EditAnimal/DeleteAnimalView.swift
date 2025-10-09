@@ -32,21 +32,17 @@ struct DeleteAnimalView: View {
                 navigator.dismiss()
                 onDelete(.startLoading)
                 Task {
-                    guard let userId = userSession.user?.id,
-                          let animalId = animal.id else {
+                    guard let userId = userSession.user?.id, let fileId = animal.fileId else {
                         toast("Não foi possivel deletar esse animal, tente novamente.", .error)
                         return
                     }
-                    let path = "users/\(userId)/animals"
                     do {
-                        let result = try await firestoreProvider.delete(from: path, id: animalId)
-                        try await firebaseStorageProvider.deleteFolder(path: "animals/\(animalId)")
-                        if result {
-                            onDelete(.finished(true))
-                            toast("Animal deletado com sucesso!", .success)
-                            navigator.dismiss()
-                            navigator.dismiss()
-                        }
+                        try await firestoreProvider.deleteAnimals(of: userId)
+                        try await firebaseStorageProvider.deleteFolder(path: "animals/\(fileId)")
+                        onDelete(.finished(true))
+                        toast("Animal deletado com sucesso!", .success)
+                        navigator.dismiss()
+                        navigator.dismiss()
                     } catch {
                         onDelete(.finished(false))
                         toast("Não foi possivel deletar esse animal, tente novamente.", .error)

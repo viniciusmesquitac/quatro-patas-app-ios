@@ -8,23 +8,22 @@
 import SwiftUI
 
 struct ToastView: View {
-   
     @Binding var toast: ToastItem?
 
     var body: some View {
         HStack {
-            Image(systemName: toast?.type == .success ? SFIcon.success.rawValue : SFIcon.failure.rawValue)
+            Image(systemName: iconName(for: toast?.type))
                 .foregroundColor(.white)
                 .font(.title2)
-            
-            Text(toast?.message ?? String())
+
+            Text(toast?.message ?? "")
                 .foregroundColor(.white)
                 .font(.body)
                 .multilineTextAlignment(.leading)
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(toast?.type == .success ? Color.green : Color.red)
+        .background(backgroundColor(for: toast?.type))
         .cornerRadius(16)
         .shadow(radius: 5)
         .padding(.horizontal, 24)
@@ -34,6 +33,26 @@ struct ToastView: View {
             withAnimation(.bouncy) {
                 toast = nil
             }
+        }
+    }
+
+    // MARK: - Helpers
+
+    private func backgroundColor(for type: ToastType?) -> Color {
+        switch type {
+        case .success: return .green
+        case .error: return .red
+        case .warning: return .orange
+        case .none: return .clear
+        }
+    }
+
+    private func iconName(for type: ToastType?) -> String {
+        switch type {
+        case .success: return "checkmark.circle.fill"
+        case .error: return "xmark.octagon.fill"
+        case .warning: return "exclamationmark.triangle.fill"
+        case .none: return "info.circle"
         }
     }
 }

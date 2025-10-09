@@ -91,7 +91,7 @@ struct MyAnimalDetailsView: View {
             navigator.dismiss()
         }
         .toolbarItem(label: "Editar", placement: .topBarTrailing) {
-            navigator.navigate(to: .edit(animal.localized))
+            navigator.navigate(to: .edit(animal))
         }
     }
     

@@ -30,7 +30,6 @@ struct AddAnnotationView: View {
     var body: some View {
         VStack {
             TextEditor(text: $text)
-                .ignoresSafeArea(edges: .all)
         }
         .navigationTitle("Descrição")
         .navigationBarTitleDisplayMode(.inline)

@@ -23,6 +23,9 @@
         }
       }
     },
+    "%lld%%" : {
+
+    },
     "Adicionar" : {
 
     },
@@ -932,6 +935,16 @@
     "Entrar" : {
 
     },
+    "Enviando %lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enviando %1$lld/%2$lld"
+          }
+        }
+      }
+    },
     "Enviar" : {
       "localizations" : {
         "en" : {
@@ -942,10 +955,10 @@
         }
       }
     },
-    "Escolher no mapa" : {
+    "Espaço de descanso apropriado" : {
 
     },
-    "Espaço de descanso apropriado" : {
+    "Essa ação é permanente e removerá todos os seus dados, incluindo animais cadastrados e fotos." : {
 
     },
     "Este campo é obrigatório" : {
@@ -1122,6 +1135,9 @@
     "Peso (kg)" : {
 
     },
+    "Procurar no mapa" : {
+
+    },
     "Próxima aplicação" : {
 
     },
@@ -1171,9 +1187,6 @@
     "Selecione" : {
 
     },
-    "Selecione no mapa" : {
-
-    },
     "Selecione uma data" : {
 
     },
@@ -1181,6 +1194,9 @@
 
     },
     "Sim" : {
+
+    },
+    "Sim, deletar conta" : {
 
     },
     "Status" : {
@@ -1197,6 +1213,9 @@
       }
     },
     "Telefone (Opcional)" : {
+
+    },
+    "Tem certeza que deseja deletar sua conta?" : {
 
     },
     "Trocar imagem" : {

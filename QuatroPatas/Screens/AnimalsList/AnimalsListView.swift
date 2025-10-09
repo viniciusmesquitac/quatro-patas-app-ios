@@ -100,17 +100,9 @@ struct AnimalsListView: View {
             print("❌ Fetch error: \(error.localizedDescription)")
         }
     }
-    
-    
-    func didSelectEditAnimal(animal: Animal) {
-        navigator.navigate(to: .edit(animal.localized))
-    }
-    
+
     func didSelectMyAnimal(animal: Animal) {
         navigator.navigate(to: .myAnimalDetails(animal.localized))
     }
-    
-    func didSelectFavoriteAnimal(animal: Animal) {
-        navigator.navigate(to: .details(animal.localized))
-    }
+
 }

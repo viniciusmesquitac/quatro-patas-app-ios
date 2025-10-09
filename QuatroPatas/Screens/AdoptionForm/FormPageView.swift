@@ -27,12 +27,13 @@ struct FormPageView: View {
     var body: some View {
         ScrollView {
             VStack {
-                // Barra de progresso no topo
-                ProgressView(value: progressValue, total: 1.0)
-                    .progressViewStyle(LinearProgressViewStyle(tint: Color.primaryColor))
-                    .frame(height: 4)
-                    .padding(.bottom, Padding.medium.rawValue)
-        
+                if form.sections.count > 1 {
+                    ProgressView(value: progressValue, total: 1.0)
+                        .progressViewStyle(LinearProgressViewStyle(tint: Color.primaryColor))
+                        .frame(height: 4)
+                        .padding(.bottom, Padding.medium.rawValue)
+                }
+    
                 VStack(spacing: Spacing.medium.rawValue) {
                     ForEach(form.sections[currentPage].questions, id: \.id) { question in
                         QuestionView(
@@ -70,6 +71,7 @@ struct FormPageView: View {
                 }
             }
         }
+        .transition(.opacity)
         .environmentObject(formManager)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarTitleDisplayMode(.inline)

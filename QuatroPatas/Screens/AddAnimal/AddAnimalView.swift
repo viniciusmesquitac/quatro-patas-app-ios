@@ -18,6 +18,8 @@ struct AddAnimalView: View {
     @State private var showPhotoPicker = false
     @State private var isLoading = false
     @State private var isLoadingImage = false
+    @State private var uploadProgress: Double = 0
+    @State private var currentUploadIndex = 0
     
     @State private var animal = Animal.empty
     
@@ -89,6 +91,15 @@ struct AddAnimalView: View {
             matching: .images,
             photoLibrary: .shared()
         )
+        .overlay {
+            if isLoading {
+                LoadingCatView(
+                    currentUploadIndex: currentUploadIndex,
+                    totalItems: images.count,
+                    uploadProgress: uploadProgress
+                )
+            }
+        }
         .onChange(of: selectedPhotos) { _, newItems in
             Task {
                 isLoadingImage = true
@@ -116,7 +127,7 @@ struct AddAnimalView: View {
         .onChange(of: months) {
             animal.age = calculateAgeTimestamp(years: years, months: months)
         }
-        
+        .animation(.easeInOut, value: currentUploadIndex)
     }
     
     func saveImageToTemp(_ image: UIImage) -> URL? {
@@ -148,8 +159,15 @@ struct AddAnimalView: View {
     
     func uploadImages(forAnimalId id: String) async throws -> [String] {
         var uploadedURLs: [String] = []
+        uploadProgress = 0
+        currentUploadIndex = 0
         
-        for imageURL in images {
+        for (index, imageURL) in images.enumerated() {
+            await MainActor.run {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    currentUploadIndex = index + 1
+                }
+            }
             do {
                 let data = try Data(contentsOf: imageURL)
                 if let uiImage = UIImage(data: data) {
@@ -158,17 +176,17 @@ struct AddAnimalView: View {
                         let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
                         let url = try await firebaseStorageProvider.uploadFile(
                             data: compressedData,
-                            path: fileName
+                            path: fileName,
+                            progress: $uploadProgress
                         )
                         uploadedURLs.append(url.absoluteString)
                     }
                 }
             } catch {
                 print("Erro ao enviar imagem \(imageURL.lastPathComponent): \(error)")
-                throw error // interrompe se algum upload falhar
+                throw error
             }
         }
-        
         return uploadedURLs
     }
     
@@ -224,7 +242,7 @@ struct AddAnimalView: View {
                 
                 // 2️⃣ Cria o animal já com as URLs das imagens
                 let copy = Animal(
-                    id: id,
+                    fileId: id,
                     name: animal.name,
                     photos: uploaded,
                     age: animal.age,

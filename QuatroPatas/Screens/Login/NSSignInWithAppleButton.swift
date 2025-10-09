@@ -1,5 +1,5 @@
 //
-//  SignInWithAppleView.swift
+//  NSSignInWithAppleButton.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 20/09/25.
@@ -10,7 +10,7 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
-struct SignInWithAppleView: View {
+struct NSSignInWithAppleButton: View {
     
     @Environment(\.colorScheme) var scheme
     @Environment(\.toast) var toast
@@ -35,14 +35,13 @@ struct SignInWithAppleView: View {
             }
         }
         .signInWithAppleButtonStyle(scheme == .dark ? .white : .black)
-        .frame(height: 48)
-        .cornerRadius(CornerRadius.large.rawValue)
-        .padding(.horizontal, Padding.xxLarge.rawValue)
+        .frame(height: 64)
+        .cornerRadius(32)
     }
 }
 
 // MARK: - Helpers
-extension SignInWithAppleView {
+extension NSSignInWithAppleButton {
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)

@@ -119,7 +119,8 @@ struct EditAnimalView: View {
                 months = m
             }
         }
-        .onChange(of: animal.type) { _, _ in
+        .onChange(of: animal.type) { oldValue, newValue in
+            guard newValue != oldValue else { return }
             animal.breed = ""
             animal.tags.removeAll()
         }

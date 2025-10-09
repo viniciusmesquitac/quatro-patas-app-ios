@@ -99,7 +99,7 @@ struct AnimalsViewV3: View {
         isLoading = true
         do {
             // Busca apenas da ong quatro patas
-            let ongId = "rlt2rPJZOveXgqLs54o6lVrufC32"
+            let ongId = "7IicBiq4WcVD6VG5N6V32wPsE5Y2"
             var allAnimals: [Animal] = []
             
             let animals: [Animal] = try await databaseProvider.fetch(from: "users/\(ongId)/animals") {

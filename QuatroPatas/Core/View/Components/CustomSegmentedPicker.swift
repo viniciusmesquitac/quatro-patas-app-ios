@@ -14,7 +14,7 @@ struct CustomSegmentedPicker<T: Hashable & CaseIterable & RawRepresentable>: Vie
     @Namespace private var animation
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack {
             ForEach(Array(T.allCases), id: \.self) { option in
                 Button {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.65, blendDuration: 0.2)) {

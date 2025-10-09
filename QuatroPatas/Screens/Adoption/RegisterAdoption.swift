@@ -26,6 +26,8 @@ struct RegisterAdoption: View {
     @State private var escapeRoutesChecked = false
     @State private var safePlaceChecked = false
     @State private var restAreaChecked = false
+    @State private var currentUploadIndex = 0
+    @State private var uploadProgress: Double = 0
 
     @State private var isLoading = false
     
@@ -83,7 +85,7 @@ struct RegisterAdoption: View {
         }
         .overlay {
             if isLoading {
-                LoadingCatView()
+                LoadingCatView(currentUploadIndex: currentUploadIndex, totalItems: 3, uploadProgress: uploadProgress)
             }
         }
     }
@@ -123,19 +125,22 @@ struct RegisterAdoption: View {
 
         let termURL = try await firebaseStorageProvider.uploadFile(
             data: compressedTermPhoto,
-            path: termPath
+            path: termPath,
+            progress: $uploadProgress
         )
-        
+
         toast("foto de termo de responsabilidade carregada!", .success)
 
         let idFrontURL = try await firebaseStorageProvider.uploadFile(
             data: compressedIdFront,
-            path: idFrontPath
+            path: idFrontPath,
+            progress: $uploadProgress
         )
     
         let idBackURL = try await firebaseStorageProvider.uploadFile(
             data: compressedIdBack,
-            path: idBackPath
+            path: idBackPath,
+            progress: $uploadProgress
         )
 
         toast("fotos da identidade carregadas", .success)

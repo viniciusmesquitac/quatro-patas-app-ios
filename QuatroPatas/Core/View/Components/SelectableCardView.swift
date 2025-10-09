@@ -47,7 +47,7 @@ struct SelectableCardView: View {
                 .padding()
             }
             .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 3)
-            .frame(maxWidth: .infinity, minHeight: 162)
+            .frame(maxWidth: .infinity, minHeight: 100)
         }
         .buttonStyle(CardButtonStyle())
     }

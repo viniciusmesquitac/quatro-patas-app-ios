@@ -61,6 +61,18 @@ struct EditPersonalInformationView: View {
             .toolbarItem(icon: .back, placement: .topBarLeading) {
                 navigator.dismiss()
             }
+            .toolbarMenu(icon: .more, actions: [
+                .init(label: "Deletar minha conta", icon: .delete, action: {
+                    navigator.present(sheet: .deleteAccount(onDelete: { delete in
+                        switch delete {
+                        case .startLoading:
+                            isLoading = true
+                        case .finished(_):
+                            isLoading = false
+                        }
+                    }))
+                })
+            ])
             .onAppear {
                 name = user.name
                 email = user.email

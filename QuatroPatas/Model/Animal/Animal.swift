@@ -9,6 +9,7 @@
 
 struct Animal: Hashable, Identifiable, Sendable, Codable {
     @DocumentID var id: String?
+    var fileId: String?
     @ServerTimestamp var createdAt: Date?
     var name: String
     var photos: [String] = []

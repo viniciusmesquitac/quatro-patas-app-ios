@@ -88,7 +88,6 @@ struct ImageUploadField: View {
             
             await MainActor.run {
                 isUploading = true
-                uploadProgress = 0.1
                 selectedImage = uiImage
             }
             
@@ -102,13 +101,12 @@ struct ImageUploadField: View {
             let filePath = "forms/\(UUID().uuidString).jpg"
             
             // Upload
-            let url = try await firebaseStorageProvider.uploadFile(data: compressedData, path: filePath)
+            let url = try await firebaseStorageProvider.uploadFile(data: compressedData, path: filePath, progress: $uploadProgress)
             
             await MainActor.run {
                 answer = url.absoluteString
-                uploadedFilePath = filePath // 👈 salva o path
+                uploadedFilePath = filePath
                 isUploading = false
-                uploadProgress = 1.0
             }
         } catch {
             print("❌ Erro ao enviar imagem: \(error.localizedDescription)")

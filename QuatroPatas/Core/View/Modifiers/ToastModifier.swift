@@ -16,6 +16,7 @@ struct ToastItem: Identifiable, Hashable {
 enum ToastType {
     case success
     case error
+    case warning
 }
 
 struct ToastModifier: ViewModifier {

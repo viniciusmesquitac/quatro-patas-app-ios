@@ -14,25 +14,43 @@ class FirebaseStorageProvider: ObservableObject {
 
     private let storage = Storage.storage()
 
-    /// Faz upload de um arquivo (ex: imagem) para o Storage e retorna a URL de download
-    func uploadFile(data: Data, path: String, contentType: String = "image/jpeg") async throws -> URL {
+    func uploadFile(
+        data: Data,
+        path: String,
+        contentType: String = "image/jpeg",
+        progress: Binding<Double>? = nil
+    ) async throws -> URL {
         try await withCheckedThrowingContinuation { continuation in
             let storageRef = storage.reference().child(path)
             let metadata = StorageMetadata()
             metadata.contentType = contentType
             
-            storageRef.putData(data, metadata: metadata) { _, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    storageRef.downloadURL { url, error in
-                        if let error = error {
-                            continuation.resume(throwing: error)
-                        } else if let url = url {
-                            continuation.resume(returning: url)
-                        }
+            let uploadTask = storageRef.putData(data, metadata: metadata)
+            
+            // Observa o progresso do upload
+            let progressObserver = uploadTask.observe(.progress) { snapshot in
+                guard let fractionCompleted = snapshot.progress?.fractionCompleted else { return }
+                DispatchQueue.main.async {
+                    progress?.wrappedValue = fractionCompleted
+                }
+            }
+            
+            // Observa o sucesso ou erro
+            uploadTask.observe(.success) { _ in
+                uploadTask.removeObserver(withHandle: progressObserver)
+                storageRef.downloadURL { url, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else if let url = url {
+                        continuation.resume(returning: url)
                     }
                 }
+            }
+            
+            uploadTask.observe(.failure) { snapshot in
+                uploadTask.removeObserver(withHandle: progressObserver)
+                let error = snapshot.error ?? NSError(domain: "UploadError", code: -1, userInfo: nil)
+                continuation.resume(throwing: error)
             }
         }
     }
