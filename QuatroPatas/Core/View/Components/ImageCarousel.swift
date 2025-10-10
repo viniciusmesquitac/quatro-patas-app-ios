@@ -10,28 +10,23 @@ import SwiftUI
 struct ImageCarousel: View {
     let images: [URL]
     @Binding var selectedIndex: Int
-    var frame = CGSize(width: UIScreen.main.bounds.width, height: 500)
-    
-    @CacheProvider(type: .fileManager)
-    var cacheProvider
-    
-    @State private var attempt = 0
     
     var body: some View {
         TabView(selection: $selectedIndex) {
             ForEach(images.indices, id: \.self) { index in
                 let url = images[index]
-                CachedAsyncImage(url: url)
-                    .scaledToFill()
-                    .clipped()
-                    .frame(width: frame.width, height: frame.height)
-                    .transition(.scale)
-                    .tag(index)
+                GeometryReader { proxy in
+                    CachedAsyncImage(url: url)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                        .clipped()
+                }
+                .frame(height: 500)
+                .tag(index)
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-        .frame(height: frame.height)
+        .frame(height: 500)
         .ignoresSafeArea(edges: .top)
     }
 }
-

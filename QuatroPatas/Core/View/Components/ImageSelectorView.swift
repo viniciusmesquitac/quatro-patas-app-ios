@@ -43,8 +43,7 @@ struct ImageSelectorView: View {
             } else {
                 ImageCarousel(
                     images: images,
-                    selectedIndex: $selectedIndex,
-                    frame: CGSize(width: UIScreen.main.bounds.width, height: height)
+                    selectedIndex: $selectedIndex
                 )
                 .onTapGesture { showPhotoPicker = true }
             }
