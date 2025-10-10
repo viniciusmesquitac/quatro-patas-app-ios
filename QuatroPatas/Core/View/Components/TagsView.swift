@@ -25,16 +25,10 @@ struct TagsView: View {
                 Button(action: { item.action?() }) {
                     HStack(spacing: Spacing.medium.rawValue) {
                         Text(AnimalTag.localized(item.tag))
-                            .font(item.font)
-                            .foregroundColor(.primary)
                         item.icon
                     }
-                    .padding(.vertical, Padding.medium.rawValue)
-                    .padding(.horizontal, Padding.large.rawValue)
-                    .background(Color.primaryColor.opacity(0.2))
-                    .clipShape(Capsule())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(TagButtonStyle())
             }
         }
     }

@@ -11,13 +11,15 @@ struct AnimalsViewV3: View {
     
     @State private var animals: [Animal] = []
     @State private var filter = AnimalFilter()
+    @State private var selectedSegment: AnimalsSegment = .available
+    @State private var isLoading = true
+    @State private var isLoadingMore = false
+    @State private var visibleCount = 7
+    @State private var showMoreAnimalsCount = 7
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: FirestoreProvider
     @Environment(\.toast) var toast
-
-    @State private var selectedSegment: AnimalsSegment = .available
-    @State private var isLoading = true
     
     var filteredAnimals: [Animal] {
         filter.apply(to: animals)
@@ -28,7 +30,8 @@ struct AnimalsViewV3: View {
             CustomSegmentedPicker(
                 selection: $selectedSegment,
                 primaryColor: .primaryColor
-            ).padding()
+            )
+            .padding()
             
             switch selectedSegment {
             case .available: availables
@@ -56,12 +59,16 @@ struct AnimalsViewV3: View {
     }
     
     var availables: some View {
-        VStack {
+        VStack(spacing: 16) {
+            
+            // Mostra filtro ativo, se houver
             if !filter.isEmpty {
                 FilterView(filter: $filter)
                     .padding(.bottom, Padding.medium.rawValue)
             }
-            ForEach(Array(filteredAnimals.prefix(4)), id: \.id) { animal in
+
+            // Lista de animais visíveis
+            ForEach(Array(filteredAnimals.prefix(visibleCount)), id: \.id) { animal in
                 AnimalRowView(animal: animal) {
                     navigator.navigate(to: .details(animal))
                 }
@@ -71,12 +78,35 @@ struct AnimalsViewV3: View {
                 ))
                 .padding(.horizontal, Padding.large.rawValue)
             }
-            if !filteredAnimals.isEmpty {
-                Button("Ver todos") {
-                    navigator.navigate(to: .seeAllAnimals(animals))
-                }.padding(.vertical, Padding.medium.rawValue)
+            
+            // Botão carregar mais
+            if filteredAnimals.count > visibleCount {
+                if !filteredAnimals.isEmpty {
+                    VStack(spacing: 8) {
+                        Text("\(min(visibleCount, filteredAnimals.count)) de \(filteredAnimals.count) animais")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.secondary)
+                        
+                        ProgressView(value: Double(min(visibleCount, filteredAnimals.count)),
+                                     total: Double(filteredAnimals.count))
+                        .tint(.primaryColor)
+                        .padding(.horizontal, 40)
+                    }
+                    .transition(.opacity)
+                }
+                
+                Button("Carregar mais") {
+                    Task { await loadMoreAnimals() }
+                }
+                .buttonStyle(TagButtonStyle(isLoading: isLoadingMore))
+                .padding(.vertical, Padding.medium.rawValue)
+                .padding(.horizontal, Padding.xxLarge.rawValue)
+                .animation(.spring(), value: isLoadingMore)
             }
-        }.if(filteredAnimals.isEmpty && isLoading == false) { view in
+        }
+        .padding(.bottom, 16)
+        .if(filteredAnimals.isEmpty && isLoading == false) { view in
             view.emptyState(.cat, action: removeFilter, content: {
                 if !filter.isEmpty {
                     FilterView(filter: $filter)
@@ -87,9 +117,8 @@ struct AnimalsViewV3: View {
     }
     
     var missing: some View {
-        VStack {
-            
-        }.emptyState(.search)
+        VStack { }
+            .emptyState(.search)
     }
     
     private func removeFilter() {
@@ -106,19 +135,14 @@ struct AnimalsViewV3: View {
         do {
             // Busca apenas da ong quatro patas
             let ongId = "7IicBiq4WcVD6VG5N6V32wPsE5Y2"
-            var allAnimals: [Animal] = []
-            
             let animals: [Animal] = try await databaseProvider.fetch(from: "users/\(ongId)/animals") {
                 $0.whereField("isAdopted", isEqualTo: false)
                     .order(by: "position", descending: false)
             }
-            allAnimals.append(contentsOf: animals)
-            
             withAnimation(.spring()) {
-                self.animals = allAnimals
+                self.animals = animals
+                self.visibleCount = min(showMoreAnimalsCount, animals.count)
             }
-            self.isLoading = false
-            
             isLoading = false
         } catch {
             toast(error.localizedDescription, .error)
@@ -126,4 +150,14 @@ struct AnimalsViewV3: View {
         }
     }
     
+    @MainActor
+    private func loadMoreAnimals() async {
+        guard !isLoadingMore else { return }
+        isLoadingMore = true
+        try? await Task.sleep(nanoseconds: 1_000_000_000) // Simula carregamento
+        withAnimation(.spring()) {
+            visibleCount = min(visibleCount + showMoreAnimalsCount, filteredAnimals.count)
+        }
+        isLoadingMore = false
+    }
 }

@@ -23,6 +23,16 @@
         }
       }
     },
+    "%lld de %lld animais" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld de %2$lld animais"
+          }
+        }
+      }
+    },
     "%lld%%" : {
 
     },
@@ -101,13 +111,30 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preto e Branco"
+            "value" : "Preto com Branco"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Preto com Branco"
+          }
+        }
+      }
+    },
+    "animalcolor.brown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marrom"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marrom"
           }
         }
       }
@@ -660,12 +687,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mixed breed"
+            "value" : "Sem raça definida"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Sem raça definida"
           }
         }
@@ -711,12 +738,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Siamese"
+            "value" : "Siamês"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Siamês"
           }
         }
@@ -772,14 +799,7 @@
 
     },
     "Cadastrar Animal" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Register Animal"
-          }
-        }
-      }
+
     },
     "Cadastro" : {
 
@@ -796,6 +816,9 @@
           }
         }
       }
+    },
+    "Carregar mais" : {
+
     },
     "Checklist de Verificação" : {
 
@@ -962,14 +985,7 @@
 
     },
     "Este campo é obrigatório" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este campo é obrigatório"
-          }
-        }
-      }
+
     },
     "Ex: 1, 2, Reforço" : {
 
@@ -1040,14 +1056,7 @@
 
     },
     "Idade" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Age"
-          }
-        }
-      }
+
     },
     "Informações da Adoção" : {
 
@@ -1086,14 +1095,7 @@
 
     },
     "Meus Animais" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meus Animais"
-          }
-        }
-      }
+
     },
     "Nenhum registro de peso ainda" : {
 
@@ -1203,14 +1205,7 @@
 
     },
     "Tamanho" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Size"
-          }
-        }
-      }
+
     },
     "Telefone (Opcional)" : {
 
@@ -1227,7 +1222,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adopter"
+            "value" : "Adotante"
           }
         },
         "pt-BR" : {
@@ -1261,7 +1256,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Volunteer"
+            "value" : "Voluntário"
           }
         },
         "pt-BR" : {

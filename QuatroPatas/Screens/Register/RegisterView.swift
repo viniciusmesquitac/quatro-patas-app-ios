@@ -20,6 +20,14 @@ struct RegisterView: View {
     @EnvironmentObject var userSession: UserSession
     @EnvironmentObject var firestore: FirestoreProvider
     @Environment(\.toast) var toast
+    
+    enum Field: Hashable {
+        case email
+        case password
+        case name
+    }
+    
+    @FocusState private var focusedField: Field?
 
     var body: some View {
         ZStack {
@@ -32,6 +40,7 @@ struct RegisterView: View {
                     
                     TextField("Apelido", text: $name)
                         .textFieldStyle(PrimaryTextFieldStyle())
+                        .focused($focusedField, equals: .name)
                     
                     TextField("Email", text: $email)
                         .keyboardType(.emailAddress)
@@ -39,12 +48,15 @@ struct RegisterView: View {
                         .onChange(of: email) { _, newValue in
                             email = newValue.lowercased()
                         }
+                        .focused($focusedField, equals: .email)
                     
                     SecureField("Senha", text: $password)
                         .textFieldStyle(PrimaryTextFieldStyle())
+                        .focused($focusedField, equals: .password)
                     
                     SecureField("Repetir senha", text: $passwordConfirmation)
                         .textFieldStyle(PrimaryTextFieldStyle())
+                        .focused($focusedField, equals: .password)
                     
                     Spacer(minLength: 100)
                 }
@@ -61,6 +73,7 @@ struct RegisterView: View {
             HStack {
                 Spacer()
                 Button {
+                    focusedField = nil
                     registerUser()
                 } label: {
                     SFIcon.image(.next, scale: .large, color: .customBackground)

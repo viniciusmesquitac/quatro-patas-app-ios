@@ -51,7 +51,7 @@ struct ImagesGrid: View {
                             .brightness(0.05)
                             .shadow(radius: 8)
                     })
-                    .onDrop(of: [.text],
+                    .onDrop(of: [.image],
                             delegate: DropViewDelegate(
                                 current: item,
                                 items: allImages,

@@ -20,12 +20,7 @@ struct DynamicFormView: View {
                 case .textField(let title, let placeholder, let binding, let keyboard):
                     FormField(title: title) {
                         NoDropTextField(text: binding, placeholder: placeholder)
-                            .textFieldStyle(PrimaryTextFieldStyle())
-                            .keyboardType(keyboard)
-                            .focused($isTextFieldFocused)
-                            .onDrop(of: [.image, .fileURL, .text], isTargeted: nil) { _ in
-                                return false
-                            }
+                            .frame(height: 48)
                     }
                     
                 case .textEditor(let title, let binding, let showGenerator):

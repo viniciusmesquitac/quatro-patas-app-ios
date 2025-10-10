@@ -157,38 +157,80 @@ struct AddAnimalView: View {
         }
     }
     
+    @MainActor
     func uploadImages(forAnimalId id: String) async throws -> [String] {
         var uploadedURLs: [String] = []
-        uploadProgress = 0
         currentUploadIndex = 0
-        
+        uploadProgress = 0.0
+
+        guard !images.isEmpty else { return [] }
+
+        let progressPerImage = 1.0 / Double(images.count)
+        var throttledProgress: Double = 0
+        var lastUpdate = Date()
+
         for (index, imageURL) in images.enumerated() {
-            await MainActor.run {
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    currentUploadIndex = index + 1
-                }
+            withAnimation(.easeInOut(duration: 0.25)) {
+                currentUploadIndex = index + 1
             }
+
             do {
                 let data = try Data(contentsOf: imageURL)
-                if let uiImage = UIImage(data: data) {
-                    let resized = uiImage.resized(toMax: 1024)
-                    if let compressedData = resized.jpegData(compressionQuality: 0.5) {
-                        let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
-                        let url = try await firebaseStorageProvider.uploadFile(
-                            data: compressedData,
-                            path: fileName,
-                            progress: $uploadProgress
-                        )
-                        uploadedURLs.append(url.absoluteString)
+                guard let uiImage = UIImage(data: data) else { continue }
+
+                let resized = uiImage.resized(toMax: 1024)
+                guard let compressedData = resized.jpegData(compressionQuality: 0.5) else { continue }
+
+                let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
+
+                var imageProgress: Double = 0
+
+                let progressBinding = Binding<Double>(
+                    get: { imageProgress },
+                    set: { newValue in
+                        imageProgress = newValue
+                        let totalProgress = (Double(index) * progressPerImage) + (newValue * progressPerImage)
+
+                        // ⏳ Debounce manual: só atualiza a cada 30ms
+                        let now = Date()
+                        if now.timeIntervalSince(lastUpdate) > 0.03 {
+                            lastUpdate = now
+                            throttledProgress = totalProgress
+                            Task { @MainActor in
+                                withAnimation(.easeInOut(duration: 0.25)) {
+                                    uploadProgress = min(throttledProgress, 1.0)
+                                }
+                            }
+                        }
                     }
-                }
+                )
+
+                let url = try await firebaseStorageProvider.uploadFile(
+                    data: compressedData,
+                    path: fileName,
+                    progress: progressBinding
+                )
+
+                uploadedURLs.append(url.absoluteString)
+
             } catch {
                 print("Erro ao enviar imagem \(imageURL.lastPathComponent): \(error)")
                 throw error
             }
         }
+
+        withAnimation(.easeInOut(duration: 0.3)) {
+            uploadProgress = 1.0
+        }
+
+        // Espera 0.3s pra mostrar 100%
+        try? await Task.sleep(nanoseconds: 300_000_000)
+
         return uploadedURLs
     }
+
+
+
     
     func validateFields(of animal: Animal) -> Bool {
         let mirror = Mirror(reflecting: animal)

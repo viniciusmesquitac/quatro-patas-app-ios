@@ -25,18 +25,21 @@ struct LoadingCatView: View {
                     Text("Enviando \(currentUploadIndex)/\(totalItems)")
                         .font(.subheadline)
                         .fontWeight(.medium)
-                        .foregroundColor(.white)
+                        .foregroundColor(.customLabel)
                         .transition(.opacity)
                 }
 
                 ProgressView(value: uploadProgress)
                     .progressViewStyle(.linear)
-                    .frame(maxWidth: 120)
-                    .tint(.white)
+                    .frame(maxWidth: 140)
+                    .tint(.primaryColor)
+                    .scaleEffect(x: 1, y: 1.2, anchor: .center)
+                    .animation(.easeInOut(duration: 0.3), value: uploadProgress)
 
                 Text("\(Int(round(uploadProgress * 100)))%")
                     .font(.footnote)
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.customLabel.opacity(0.9))
+                    .animation(.easeInOut(duration: 0.3), value: uploadProgress)
             }
             .padding()
             .animation(.easeInOut, value: currentUploadIndex)
