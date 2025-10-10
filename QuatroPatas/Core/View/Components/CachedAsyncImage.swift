@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct CachedAsyncImage: View {
     let url: URL?
 
@@ -14,13 +15,10 @@ struct CachedAsyncImage: View {
     
     @State private var attempt = 0
 
-    var placeholder: String
-
     @Binding var isLoading: Bool?
     
-    init(url: URL?, isLoading: Binding<Bool?> = .constant(nil), placeholder: String = "default-animal-card.png") {
+    init(url: URL?, isLoading: Binding<Bool?> = .constant(nil)) {
         self.url = url
-        self.placeholder = placeholder
         self._isLoading = isLoading
     }
 
@@ -40,9 +38,6 @@ struct CachedAsyncImage: View {
         else {
             AsyncImage(url: url, transaction: .init(animation: .spring(duration: 1))) { phase in
                 switch phase {
-                case .empty:
-                    Rectangle()
-                        .modifier(ShimmerModifier())
                 case .success(let image):
                     image
                         .resizable()
@@ -53,14 +48,18 @@ struct CachedAsyncImage: View {
                             }
                         }
                 case .failure(_):
-                    Image(placeholder)
-                        .resizable()
+                    Rectangle()
+                        .background(Color.gray)
                         .onAppear {
-                            isLoading = false
+                            isLoading = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 attempt += 1
                             }
                         }
+                case .empty:
+                    Rectangle()
+                        .background(Color.gray)
+                        .modifier(ShimmerModifier())
                 @unknown default:
                     EmptyView()
                 }

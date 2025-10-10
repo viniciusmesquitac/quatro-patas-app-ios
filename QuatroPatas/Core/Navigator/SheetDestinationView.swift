@@ -36,11 +36,6 @@ struct SheetDestinationView: View {
                 AddMedicationView(animalId: animalId, onAdded: onAdded)
                     .modifier(ToastModifier())
             }
-            
-        case .addAnimal:
-            NavigationStack {
-                AddAnimalView()
-            }
         case .descriptionEditor(let text):
             NavigationStack {
                 DescriptionEditorView(text: text)

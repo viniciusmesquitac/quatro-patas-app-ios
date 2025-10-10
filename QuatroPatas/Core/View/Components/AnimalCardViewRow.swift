@@ -24,42 +24,8 @@ struct AnimalCardViewRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: Spacing.large.rawValue) {
-                // Imagem do animal
                 if let firstURL = animal.photos.first, let url = URL(string: firstURL) {
-                    
-                    if let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
-                       let uii = UIImage(data: imageData) {
-                        Image(uiImage: uii)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: Constants.imageSize, height: Constants.imageSize)
-                            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
-                    } else {
-                        AsyncImage(url: url) { phase in
-                            switch phase {
-                            case .empty:
-                                RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                                    .frame(width: Constants.imageSize, height: Constants.imageSize)
-                                    .modifier(ShimmerModifier())
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: Constants.imageSize, height: Constants.imageSize)
-                                    .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
-                                    .onAppear { saveImageData(url: url) }
-                            default:
-                                Image("default-animal-card.png")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: Constants.imageSize, height: Constants.imageSize)
-                                    .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
-                            }
-                        }
-                    }
-                } else {
-                    Image("default-animal-card.png")
-                        .resizable()
+                    CachedAsyncImage(url: url)
                         .scaledToFill()
                         .frame(width: Constants.imageSize, height: Constants.imageSize)
                         .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
@@ -95,26 +61,5 @@ struct AnimalCardViewRow: View {
         }
         .frame(maxWidth: .infinity)
         .buttonStyle(NoneButtonStyle())
-    }
-    
-    func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-                  return url.absoluteString
-              }
-        return token
-    }
-
-    func saveImageData(url: URL) {
-        let token = getToken(url: url)
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data {
-                do {
-                    try cacheProvider.save(data, for: token)
-                } catch {
-                    print(error)
-                }
-            }
-        }.resume()
     }
 }

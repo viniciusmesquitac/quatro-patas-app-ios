@@ -16,8 +16,7 @@ struct ProfileCardView: View {
         HStack(alignment: .center) {
             if let photo = user.photo, let url = URL(string: photo) {
                 CachedAsyncImage(
-                    url: url,
-                    placeholder: "default-profile"
+                    url: url
                 )
                 .frame(width: 64, height: 64)
                 .clipShape(Circle())

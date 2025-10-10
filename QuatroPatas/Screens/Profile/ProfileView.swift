@@ -20,7 +20,6 @@ struct ProfileView: View {
                     if let photo = userSession.user?.photo, let url = URL(string: photo) {
                         CachedAsyncImage(
                             url: url,
-                            placeholder: "default-profile"
                         )
                         .frame(width: 120, height: 120)
                         .clipShape(Circle())
