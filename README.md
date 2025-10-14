@@ -28,8 +28,12 @@ Se você é um **abrigo** ou **protetor independente**, o app também permite **
 
 O app foi desenvolvido em **SwiftUI** e integra diversas tecnologias modernas para oferecer uma experiência fluida e confiável:
 
-- **SwiftUI** — Interface declarativa e reativa.
-- **Firebase** — Autenticação, Firestore e armazenamento de imagens.
+- **SwiftUI + Combine** — Interface declarativa e reativa.  
+- **Firebase** — Autenticação, Firestore e armazenamento de imagens.  
+- **MVVM Architecture** — Organização e desacoplamento de camadas.  
+- **Async/Await** — Código assíncrono mais limpo e legível.  
+- **Crashlytics & Analytics** — Observabilidade e métricas de uso.  
+
 ---
 
 ## 🧑‍💻 Como contribuir
@@ -38,6 +42,38 @@ Quer ajudar a melhorar o Quatro Patas? Toda contribuição é bem-vinda!
 Siga os passos abaixo 👇  
 
 ### 1️⃣ Faça um fork do repositório  
-```bash
-git clone https://github.com/<seu-usuario>/quatro-patas.git
-cd quatro-patas
+No canto superior direito da página do GitHub, você verá um botão assim:
+<img width="1440" height="357" alt="image" src="https://github.com/user-attachments/assets/8bc1b275-1767-4742-81ca-0e0472144003" />
+
+Agora você pode editar os arquivos, criar branches e propor mudanças.
+
+---
+
+### 3️⃣ Faça suas alterações e envie um Pull Request
+
+Quando terminar suas modificações:
+
+1. Vá até a página principal do seu fork.  
+2. Clique em **“Contribute” → “Open Pull Request”**.  
+3. Escreva um título e uma descrição clara sobre o que foi alterado.  
+4. Clique em **“Create Pull Request”**.
+
+### Pronto! 🎉  
+Seu código será revisado e, se aprovado, fará parte do projeto oficial.
+
+**Participe do Hacktoberfest!**
+O Quatro Patas faz parte do espírito colaborativo do Hacktoberfest 💻🌍
+Ideias para contribuir, se quiser participar e não sabe por onde começar, aqui estão algumas ideias:
+
+- 💬 Implementar chat entre adotante e abrigo
+- 🎨 Melhorar o design da tela de perfil
+- 🪲 Corrigir pequenos bugs de layout
+
+🐕‍🦺 Contribuidores
+Um enorme obrigado a todos que contribuem para tornar o Quatro Patas um app melhor a cada dia 💙
+
+📄 Licença
+Este projeto é licenciado sob a MIT License — sinta-se livre para usar, modificar e contribuir.
+
+Feito com amor pelos amigos dos animais 🐾
+[➡️ Baixe o app na App Store](https://apps.apple.com/us/app/quatro-patas-adote-um-amigo/id6753719349?platform=iphone)
