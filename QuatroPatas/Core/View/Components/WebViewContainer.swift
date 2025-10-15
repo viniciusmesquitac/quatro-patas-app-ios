@@ -8,22 +8,40 @@
 import SwiftUI
 
 struct WebViewContainer: View {
-    @State private var isLoading = true
-    var url: URL
+    @State private var isLoading = false
+    @State private var isFormSubmitted = false
+    @State private var canGoBack = false
+    @State private var goBack = false
+    var request: URLRequest
     
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var formSession: FormSessionManager
+    
     
     var body: some View {
         ZStack {
-            WebView(url, isLoading: $isLoading)
-            
+            WebView(request: request, isLoading: $isLoading, goBack: $goBack, canGoBack: $canGoBack, isFormSubmitted: $isFormSubmitted)
+                .ignoresSafeArea(edges: .all)
+        }
+        .overlay {
             if isLoading {
-                LoadingDotsView()
+                LoadingView()
+                    .transition(.opacity)
             }
         }
+        .animation(.bouncy, value: isLoading)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            navigator.dismiss()
+            guard !isFormSubmitted else {
+                navigator.popToRoot()
+                return
+            }
+            if formSession.page > 1 {
+                goBack = true
+            } else {
+                formSession.responses = [:]
+                navigator.dismiss()
+            }
         })
         .toolbar(.hidden, for: .tabBar)
     }

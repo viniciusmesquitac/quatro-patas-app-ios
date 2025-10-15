@@ -13,7 +13,7 @@ struct LoadingView: View {
 
     var body: some View {
         ZStack {
-            Rectangle().fill(.ultraThinMaterial)
+            Rectangle().fill(Color.customBackground)
             ProgressView()
                 .frame(width: size, height: size)
                 .background(.background, in: .rect(cornerRadius: CornerRadius.medium.rawValue))

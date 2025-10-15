@@ -15,18 +15,14 @@ struct RouteDestinationView: View {
         switch route {
         case .details(let animal): AnimalDetailView(animal: animal)
         case .adoption:  AdoptionView()
-        case .adoptionForm: FormLoaderView(fileName: "adoption_form")
-        case .formPage(let form, let manager, let currentPage): FormPageView(form: form, formManager: manager, currentPage: currentPage)
         case .animalsList(let type): AnimalsListView(listType: type)
         case .favorites: FavoritesListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal):
             EditAnimalView(animal: animal)
-        case .webView(let url): WebViewContainer(url: url)
+        case .webView(let url): WebViewContainer(request: url)
         case .register: RegisterView()
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
-        case .seeAllAnimals(let animals):
-            AnimalSectionListView(animals: animals)
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
         case .myAnimalDetails(let animal): MyAnimalDetailsView(animal: animal)
@@ -37,7 +33,6 @@ struct RouteDestinationView: View {
         case .weightChart(let animalId): WeightChartView(animalId: animalId)
         case .annotationList(let animalId): AnnotationListView(animalId: animalId)
         case .annotationDetails(let annotation): AnnotationDetailsView(annotation: annotation)
-        case .reportMissingAnimal: FormLoaderView(fileName: "missing_animal")
         }
     }
 }

@@ -116,37 +116,9 @@ struct AnimalDetailView: View {
     }
     
     func loadTags() -> [TagItem] {
-        let tags = animal.tags.compactMap { AnimalTag(rawValue: $0) }
-        return tags.map {
-            if $0 == .vaccinated {
-                return TagItem(tag: $0, action: {
-                    navigator.present(sheet: .tip(Tip.vaccinated))
-                })
-            }
-            if $0 == .neutered {
-                return TagItem(tag: $0, action: {
-                    navigator.present(sheet: .tip(Tip.neutered))
-                })
-            }
-            if $0 == .felv {
-                return TagItem(tag: $0, action: {
-                    navigator.present(sheet: .tip(Tip.felv))
-                })
-            }
-            
-            if $0 == .dewormed {
-                return TagItem(tag: $0, action: {
-                    navigator.present(sheet: .tip(Tip.dewormed))
-                })
-            }
-            
-            if $0 == .fiv {
-                return TagItem(tag: $0, action: {
-                    navigator.present(sheet: .tip(Tip.fiv))
-                })
-            }
-            return TagItem(tag: $0, action: {})
-        }
+        animal.tags
+            .compactMap { AnimalTag(rawValue: $0) }
+            .map { $0.makeTagItem(using: navigator) }
     }
     
     private func toggleFavorite() {
@@ -191,7 +163,10 @@ struct AnimalDetailView: View {
                 buttonText: "Entendi!",
                 buttonAction: {
                     navigator.dismiss()
-                    navigator.navigate(to: .adoptionForm)
+                    if let url = URL(string: "https://forms.gle/fwbzQjBzHFxv1fLZ6") {
+                        let request = URLRequest(url: url)
+                        navigator.navigate(to: .webView(request))
+                    }
                 })
         ))
     }

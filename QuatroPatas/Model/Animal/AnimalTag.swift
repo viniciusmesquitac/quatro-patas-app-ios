@@ -5,7 +5,7 @@
 //  Created by Vinicius Mesquita Coelho on 28/08/25.
 //
 
-enum AnimalTag: String, Localizable, Codable {
+enum AnimalTag: String, Localizable, Codable, CaseIterable {
     // cat
     case fiv
     case felv
@@ -35,5 +35,24 @@ enum AnimalTag: String, Localizable, Codable {
         allCases
             .filter { $0.supportedTypes.contains(type) }
             .map { AnimalTag.localized($0) }
+    }
+
+    func makeTagItem(using navigator: Navigator) -> TagItem {
+        let action: () -> Void
+        switch self {
+        case .vaccinated:
+            action = { navigator.present(sheet: .tip(.vaccinated)) }
+        case .neutered:
+            action = { navigator.present(sheet: .tip(.neutered)) }
+        case .felv:
+            action = { navigator.present(sheet: .tip(.felv)) }
+        case .dewormed:
+            action = { navigator.present(sheet: .tip(.dewormed)) }
+        case .fiv:
+            action = { navigator.present(sheet: .tip(.fiv)) }
+        default:
+            action = {}
+        }
+        return TagItem(tag: self, action: action)
     }
 }

@@ -18,20 +18,25 @@ struct LoadingDotsView: View {
     let maxScale: CGFloat = 1.6
 
     var body: some View {
-        HStack(spacing: spacing) {
-            ForEach(0..<dotCount, id: \.self) { index in
-                Circle()
-                    .fill(Color.primaryColor)
-                    .frame(width: size, height: size)
-                    .scaleEffect(scales[index])
-                    .animation(
-                        Animation.easeInOut(duration: duration)
-                            .repeatForever()
-                            .delay(Double(index) * duration / 2),
-                        value: scales[index]
-                    )
+        ZStack {
+            Rectangle().fill(Color.customBackground)
+
+            HStack(spacing: spacing) {
+                ForEach(0..<dotCount, id: \.self) { index in
+                    Circle()
+                        .fill(Color.primaryColor)
+                        .frame(width: size, height: size)
+                        .scaleEffect(scales[index])
+                        .animation(
+                            Animation.easeInOut(duration: duration)
+                                .repeatForever()
+                                .delay(Double(index) * duration / 2),
+                            value: scales[index]
+                        )
+                }
             }
         }
+        .ignoresSafeArea()
         .onAppear {
             for i in 0..<dotCount {
                 scales[i] = maxScale

@@ -77,3 +77,16 @@ struct DynamicFormView: View {
         }
     }
 }
+
+struct FormField<Content: View>: View {
+    let title: String
+    @ViewBuilder let content: () -> Content
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
+            Text(title).font(.headline).bold()
+            content()
+            Spacer()
+        }
+    }
+}

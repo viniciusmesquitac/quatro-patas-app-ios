@@ -154,9 +154,10 @@ struct RegisterAdoption: View {
         )
 
         _ = try await firestoreProvider.add(adoption, to: "adoptions")
+        let ongId = "rlt2rPJZOveXgqLs54o6lVrufC32"
         
         _ = try await firestoreProvider.updateFields(
-            in: "animals",
+            in: "users/\(ongId)/animals",
             id: animalId,
             fields: ["isAdopted": true]
         )

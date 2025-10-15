@@ -135,13 +135,13 @@ struct WeightChartView: View {
         guard let userId = userSession.user?.id,
               let id = entry.id else { return }
         
-        let path = "users/\(userId)/animals/\(animalId)/weights"
+        withAnimation {
+            entries.removeAll { $0.id == id }
+        }
         
         do {
+            let path = "users/\(userId)/animals/\(animalId)/weights"
             _ = try await firestoreProvider.delete(from: path, id: id)
-            withAnimation {
-                entries.removeAll { $0.id == id }
-            }
             toast("Peso deletado com sucesso", .success)
         } catch {
             toast("Erro ao deletar peso", .error)

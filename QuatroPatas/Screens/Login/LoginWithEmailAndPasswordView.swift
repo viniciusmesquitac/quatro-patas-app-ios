@@ -97,7 +97,9 @@ struct LoginWithEmailAndPasswordView: View {
                 return
             }
             isLoading = false
-            navigator.popToRoot()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                navigator.popToRoot()
+            }
         }
     }
 

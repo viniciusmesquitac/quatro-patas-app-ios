@@ -24,6 +24,7 @@ struct MyAnimalDetailsView: View {
 
     @State private var animal: Animal
     @State private var isAdopted: Bool
+    @State private var isMissing: Bool
     
     let columns = [
         GridItem(.flexible(), spacing: Spacing.large.rawValue),
@@ -36,6 +37,7 @@ struct MyAnimalDetailsView: View {
     init(animal: Animal) {
         self._animal = State(initialValue: animal)
         self._isAdopted = State(initialValue: animal.isAdopted)
+        self._isMissing = State(initialValue: animal.isMissing)
     }
 
     private var cards: [MenuCard] {
@@ -123,6 +125,19 @@ struct MyAnimalDetailsView: View {
                         await updateAdoptionStatus(isAdopted: newValue)
                     }
                 }
+                
+                HStack {
+                    Text("Perdido")
+                        .font(.headline)
+                    Spacer()
+                    Toggle(String(), isOn: $isMissing)
+                        .labelsHidden()
+                }
+                .onChange(of: isMissing) { _, newValue in
+                    Task {
+                        await updateMissingStatus(isMissing: newValue)
+                    }
+                }
             }
             
             if isAdopted {
@@ -195,12 +210,29 @@ struct MyAnimalDetailsView: View {
     
     private func updateAdoptionStatus(isAdopted: Bool) async {
         do {
-            guard let path = animalPathBuilder() else {
+            guard let path = animalPathBuilder(), let animalId = animal.id else {
                 throw EditAnimalError.pathError
             }
-            var copy = animal.deslocalized
-            copy.isAdopted = isAdopted
-            _ = try await firebase.update(copy, in: path, withID: animal.id!)
+            _ = try await firebase.updateFields(
+                in: path,
+                id: animalId,
+                fields: ["isAdopted": isAdopted]
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    private func updateMissingStatus(isMissing: Bool) async {
+        do {
+            guard let path = animalPathBuilder(), let animalId = animal.id else {
+                throw EditAnimalError.pathError
+            }
+            _ = try await firebase.updateFields(
+                in: path,
+                id: animalId,
+                fields: ["isMissing": isMissing]
+            )
         } catch {
             print(error.localizedDescription)
         }

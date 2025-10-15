@@ -880,6 +880,7 @@
 
     },
     "Digite seu email" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -890,6 +891,7 @@
       }
     },
     "Digite seu telefone" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -900,6 +902,7 @@
       }
     },
     "Digite sua idade" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -910,6 +913,7 @@
       }
     },
     "Digite sua resposta" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -920,6 +924,7 @@
       }
     },
     "Disponiveis para adoção" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -969,6 +974,7 @@
       }
     },
     "Enviar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -982,9 +988,6 @@
 
     },
     "Essa ação é permanente e removerá todos os seus dados, incluindo animais cadastrados e fotos." : {
-
-    },
-    "Este campo é obrigatório" : {
 
     },
     "Ex: 1, 2, Reforço" : {
@@ -1123,6 +1126,9 @@
 
     },
     "Outro" : {
+
+    },
+    "Perdido" : {
 
     },
     "Perfil" : {
@@ -1277,9 +1283,6 @@
 
     },
     "Ver perfil" : {
-
-    },
-    "Ver todos" : {
 
     },
     "Você ainda não adicionou ninguém aos favoritos" : {

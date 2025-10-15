@@ -16,6 +16,8 @@ struct QuatroPatasApp: App {
     @StateObject private var databaseProvider = FirestoreProvider()
     @StateObject private var storageProvider = FirebaseStorageProvider()
     @StateObject private var userSession = UserSession()
+    @StateObject private var formSession = FormSessionManager()
+
     
     @State private var isLoggedIn: Bool = false
     @State private var isLoading: Bool = false
@@ -32,7 +34,7 @@ struct QuatroPatasApp: App {
                 } else if userSession.isLoggedIn {
                     TabView(selection: $navigator.selectedTab) {
                         TabItem(label: .animals, icon: .paw) {
-                            AnimalsViewV3()
+                            AnimalsView()
                         }
                         TabItem(label: .menu, icon: .menu) {
                             MenuView()
@@ -61,6 +63,7 @@ struct QuatroPatasApp: App {
             .environmentObject(databaseProvider)
             .environmentObject(storageProvider)
             .environmentObject(userSession)
+            .environmentObject(formSession)
             .tint(Color.primaryColor)
             .toast()
         }

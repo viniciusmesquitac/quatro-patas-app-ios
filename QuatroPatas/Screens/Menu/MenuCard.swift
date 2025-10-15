@@ -77,12 +77,18 @@ struct MenuCardFactory {
 
             case .adoptionForm:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .adoptionForm)
+                    if let url = URL(string: "https://forms.gle/fwbzQjBzHFxv1fLZ6") {
+                        let request = URLRequest(url: url)
+                        navigator.navigate(to: .webView(request))
+                    }
                 }, icon: .form)
 
             case .aboutShelter:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .webView(URL(string: "https://4patasfortaleza.org")!))
+                    if let url = URL(string: "https://4patasfortaleza.org") {
+                        let request = URLRequest(url: url)
+                        navigator.navigate(to: .webView(request))
+                    }
                 }, icon: .about)
 
             case .favorites:
@@ -100,7 +106,10 @@ struct MenuCardFactory {
                 
             case .lostAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .reportMissingAnimal)
+                    if let url = URL(string: "https://forms.gle/MJVUUqASVVLFR7wYA") {
+                        let request = URLRequest(url: url)
+                        navigator.navigate(to: .webView(request))
+                    }
                 }, icon: .report)
                 
             }
