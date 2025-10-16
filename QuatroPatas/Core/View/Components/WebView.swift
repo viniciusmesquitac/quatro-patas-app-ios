@@ -17,6 +17,9 @@ struct WebView: UIViewRepresentable {
     @Binding var goBack: Bool
     @Binding var canGoBack: Bool
     @Binding var isFormSubmitted: Bool
+    
+    var onAuthResult: ((URL) -> Void)? = nil
+    var onOpenAuthURL: ((URL) -> Void)? = nil
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var formSession: FormSessionManager
@@ -42,6 +45,7 @@ struct WebView: UIViewRepresentable {
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = context.coordinator
+        webView.uiDelegate = context.coordinator
         webView.isInspectable = true
         webView.scrollView.pinchGestureRecognizer?.isEnabled = false
 
@@ -65,11 +69,13 @@ struct WebView: UIViewRepresentable {
     }
 
     
-    class Coordinator: NSObject, WKNavigationDelegate {
+    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         var parent: WebView
+        var onOpenAuthURL: ((URL) -> Void)? = nil
 
-        init(_ parent: WebView) {
+        init(_ parent: WebView, onOpenAuthURL: ((URL) -> Void)? = nil) {
             self.parent = parent
+            self.onOpenAuthURL = onOpenAuthURL
         }
         
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
@@ -119,18 +125,20 @@ struct WebView: UIViewRepresentable {
             document.body.style.userSelect='none';
             """)
             webView.evaluateJavaScript("""
-            document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = '120%';
+            document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = '110%';
             document.getElementsByTagName('body')[0].style.fontSize = '18px';
             """)
-            
-            webView.evaluateJavaScript("""
-                const loginBanner = document.querySelector('.DqBBlb');
-                if (loginBanner) {
-                    loginBanner.style.display = 'none';
-                }
-                """)
+
             parent.goBack = false
             parent.canGoBack = webView.canGoBack
+            
+            // Fonte
+            webView.evaluateJavaScript("""
+                const elements = document.querySelectorAll('*');
+                elements.forEach(el => {
+                    el.style.fontFamily = '-apple-system, sans-serif';
+                });
+            """)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.parent.isLoading = false
@@ -138,7 +146,21 @@ struct WebView: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-//            parent.isLoading = false
+            parent.isLoading = false
+        }
+        
+        func webView(_ webView: WKWebView,
+                     createWebViewWith configuration: WKWebViewConfiguration,
+                     for navigationAction: WKNavigationAction,
+                     windowFeatures: WKWindowFeatures) -> WKWebView? {
+            // Login no google
+            if let url = navigationAction.request.url {
+                parent.navigator.present(sheet: .webView(URLRequest(url: url), onResult: { url in
+                    self.parent.navigator.dismiss()
+                    webView.reload()
+                }))
+            }
+            return nil
         }
     }
 }

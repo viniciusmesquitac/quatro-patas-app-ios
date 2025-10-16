@@ -19,16 +19,16 @@ struct WebViewContainer: View {
     
     
     var body: some View {
-        ZStack {
-            WebView(request: request, isLoading: $isLoading, goBack: $goBack, canGoBack: $canGoBack, isFormSubmitted: $isFormSubmitted)
-                .ignoresSafeArea(edges: .all)
-        }
+        WebView(request: request, isLoading: $isLoading, goBack: $goBack, canGoBack: $canGoBack, isFormSubmitted: $isFormSubmitted)
+            .ignoresSafeArea(.container, edges: .all)
         .overlay {
             if isLoading {
                 LoadingView()
                     .transition(.opacity)
             }
         }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .animation(.bouncy, value: isLoading)
         .navigationBarBackButtonHidden(true)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
@@ -44,5 +44,19 @@ struct WebViewContainer: View {
             }
         })
         .toolbar(.hidden, for: .tabBar)
+        .onAppear {
+            makeNavigationTransparent()
+        }
+    }
+    
+    func makeNavigationTransparent() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        appearance.shadowColor = .clear
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
     }
 }

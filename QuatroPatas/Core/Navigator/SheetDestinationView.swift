@@ -56,6 +56,10 @@ struct SheetDestinationView: View {
             }
         case .deleteAccount(let onDelete):
             DeleteAccountView(onDelete: onDelete)
+        case .webView(let url, let result):
+            NavigationStack {
+                AuthWebViewContainerView(request: url, onCompletion: result)
+            }
         }
     }
 }

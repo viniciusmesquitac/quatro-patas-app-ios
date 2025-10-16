@@ -21,6 +21,7 @@ enum Sheet: Identifiable {
     case addAnnotation(animalId: String, onAdded: () -> Void)
     case map(address: Binding<String>)
     case deleteAccount(onDelete: (DeleteAction) -> Void)
+    case webView(URLRequest, onResult: ((URL) -> Void)? = nil)
 
     var id: String {  String(describing: self) }
 }
