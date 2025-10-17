@@ -11,8 +11,7 @@ import Supabase
 
 final class SupabaseManager {
     static let shared = SupabaseManager()
-    
-    // substitua pelas suas credenciais
+
     private let supabaseURL = URL(string: "")!
     private let supabaseKey = ""
 
