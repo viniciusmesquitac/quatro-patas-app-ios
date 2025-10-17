@@ -10,7 +10,7 @@ import SwiftUI
 struct EditPersonalInformationView: View {
 
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
     @Environment(\.toast) var toast
     @State var user: User

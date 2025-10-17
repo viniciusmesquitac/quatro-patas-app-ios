@@ -11,7 +11,7 @@ struct AddAnnotationView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     
     @Environment(\.toast) var toast
     
@@ -51,7 +51,7 @@ struct AddAnnotationView: View {
         
         Task {
             do {
-                _ = try await firestoreProvider.add(annotation, to: path)
+                _ = try await databaseProvider.add(annotation, to: path)
                 isLoading = false
                 toast("Anotação adicionada com sucesso!", .success)
                 onAdded()

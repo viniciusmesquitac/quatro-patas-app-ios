@@ -68,5 +68,381 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "uploadImages(forAnimalId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - acfcf3812988a3a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190">
+               </Location>
+               <Location
+                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - 6892f6742c7a99b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190">
+               </Location>
+               <Location
+                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - 3b6ea06583f1e7ae"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190">
+               </Location>
+               <Location
+                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - 1dd962fa2b2b8a53"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "671B7845-98FA-41E8-A091-EEB5992647D5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
+            landmarkName = "uploadImages(forAnimalId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "671B7845-98FA-41E8-A091-EEB5992647D5 - acfcf3812988a2a0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198">
+               </Location>
+               <Location
+                  uuid = "671B7845-98FA-41E8-A091-EEB5992647D5 - 3b6ea06583f1e6a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198">
+               </Location>
+               <Location
+                  uuid = "671B7845-98FA-41E8-A091-EEB5992647D5 - 1dd962fa2b2b8b5b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "95E20CA2-D9B5-4DA0-98E4-DEB3DE365EB4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "uploadImages(forAnimalId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "95E20CA2-D9B5-4DA0-98E4-DEB3DE365EB4 - c7e09cc9e5d62918"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "210"
+                  endingLineNumber = "210">
+               </Location>
+               <Location
+                  uuid = "95E20CA2-D9B5-4DA0-98E4-DEB3DE365EB4 - 539248ac783f6ee6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "210"
+                  endingLineNumber = "210">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "uploadImages(forAnimalId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB - acfcf3812988a205"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203">
+               </Location>
+               <Location
+                  uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB - 3b6ea06583f1e603"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203">
+               </Location>
+               <Location
+                  uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB - 51a0e121363378b0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 () -&gt; () in QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "uploadFile(data:path:contentType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - af77e7a43519ee3e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18">
+               </Location>
+               <Location
+                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - 11ddcd58e7ccd09b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18">
+               </Location>
+               <Location
+                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - 6c1829a19fe6223c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18">
+               </Location>
+               <Location
+                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - 24b01910e7df90f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "14266D11-FE42-415E-95E2-63D5336EEFEC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "uploadFile(data:path:contentType:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B26A7410-1DDB-42F7-83F6-B1BE86EB2B78"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "uploadFile(data:path:contentType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B26A7410-1DDB-42F7-83F6-B1BE86EB2B78 - 911b7136fc3e900e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;FirebaseStorage.StorageMetadata&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27">
+               </Location>
+               <Location
+                  uuid = "B26A7410-1DDB-42F7-83F6-B1BE86EB2B78 - 4aecdc788e8375ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.URL&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;FirebaseStorage.StorageMetadata&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
+                  moduleName = "QuatroPatas.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

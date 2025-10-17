@@ -10,8 +10,8 @@ import FirebaseAuth
 
 struct DeleteAccountView: View {
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
-    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
+    @EnvironmentObject var storageProvider: StorageProvider
     @EnvironmentObject var userSession: UserSession
     @Environment(\.toast) var toast
 
@@ -80,18 +80,18 @@ struct DeleteAccountView: View {
             }
 
             // 1️⃣ Busca os animais antes de apagar dados
-            let animals: [Animal] = try await firestoreProvider.fetch(from: "users/\(userId)/animals")
+            let animals: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
 
             // 2️⃣ Deleta dados do Firestore
-            try await firestoreProvider.deleteUserCollections(userId: userId)
+            try await databaseProvider.deleteUserCollections(userId: userId)
 
             // 3️⃣ Deleta imagens associadas
             for item in animals {
                 if let id = item.fileId {
-                    try await firebaseStorageProvider.deleteFolder(path: "animals/\(id)")
+                    try await storageProvider.deleteFolder(path: "animals/\(id)")
                 }
             }
-            try await firebaseStorageProvider.deleteFolder(path: "users/\(userId)")
+            try await storageProvider.deleteFolder(path: "users/\(userId)")
 
         } catch  let error as NSError {
             print("❌ Erro ao deletar conta: \(error)")

@@ -106,10 +106,7 @@ struct MenuCardFactory {
                 
             case .lostAnimal:
                 return MenuCard(title: cardType.title, action: {
-                    if let url = URL(string: "https://forms.gle/MJVUUqASVVLFR7wYA") {
-                        let request = URLRequest(url: url)
-                        navigator.navigate(to: .webView(request))
-                    }
+                    navigator.navigate(to: .reportMissingAnimal)
                 }, icon: .report)
                 
             }

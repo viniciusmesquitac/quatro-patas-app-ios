@@ -7,11 +7,12 @@
 
 
 import SwiftUI
+import FirebaseStorage
 
 struct FavoritesListView: View {
     
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
     
     @State private var animals: [Animal] = []
@@ -47,6 +48,9 @@ struct FavoritesListView: View {
                         .padding(.top, Padding.large.rawValue)
                 }
             }.padding(Padding.medium.rawValue)
+        }
+        .onAppear {
+            Storage.storage().reference().child("test.txt").putData("test".data(using: .utf8)!)
         }
         .task {
             await fetchAllAnimals()

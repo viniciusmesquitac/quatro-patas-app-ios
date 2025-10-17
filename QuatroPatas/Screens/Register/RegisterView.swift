@@ -18,7 +18,7 @@ struct RegisterView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
-    @EnvironmentObject var firestore: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @Environment(\.toast) var toast
     
     enum Field: Hashable {
@@ -127,7 +127,7 @@ struct RegisterView: View {
                 // Salva no Firestore na coleção "users" usando UID como ID
                 Task {
                     do {
-                        _ = try await firestore.add(appUser,
+                        _ = try await databaseProvider.add(appUser,
                                                     to: "users",
                                                     withID: firebaseUser.uid)
                         navigator.popToRoot()

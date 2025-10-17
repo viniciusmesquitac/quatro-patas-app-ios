@@ -3,28 +3,28 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCjMij7KDgVWTihP_vUboKl0AgAo-zn8EY</string>
+	<string>AIzaSyDkN6zXKWSupSFNRsxiL4SQ1Y1cL2mHUr0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>440341981390</string>
+	<string>983841428591</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.viniciuscoelho.quatropatas</string>
 	<key>PROJECT_ID</key>
-	<string>quatropatas-a8f96</string>
+	<string>quatro-patas-c35e5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>quatropatas-a8f96.firebasestorage.app</string>
+	<string>quatro-patas-c35e5.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:440341981390:ios:66ccd3cfa0ed2db093c89f</string>
+	<string>1:983841428591:ios:850f9e6e28294c219e299a</string>
 </dict>
 </plist>

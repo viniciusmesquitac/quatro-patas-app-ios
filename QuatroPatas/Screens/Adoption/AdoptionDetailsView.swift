@@ -9,7 +9,7 @@ import SwiftUI
 struct AdoptionDetailsView: View {
     
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     
     var animalId: String
     
@@ -83,7 +83,7 @@ struct AdoptionDetailsView: View {
     
     private func loadAdoption() async {
         do {
-            let adoptions: [Adoption] = try await firestoreProvider.fetch(
+            let adoptions: [Adoption] = try await databaseProvider.fetch(
                 from: "adoptions",
                 query: { ref in
                     ref.whereField("animalId", isEqualTo: animalId)

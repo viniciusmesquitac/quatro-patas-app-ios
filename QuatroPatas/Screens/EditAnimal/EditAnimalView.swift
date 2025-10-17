@@ -20,8 +20,8 @@ struct EditAnimalView: View {
     
     @Environment(\.toast) var toast
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
-    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
+    @EnvironmentObject var storageProvider: StorageProvider
     @EnvironmentObject var userSession: UserSession
 
     @State var years: Int = 0
@@ -138,7 +138,7 @@ struct EditAnimalView: View {
             let resized = uiImage.resized(toMax: 1024)
             if let compressedData = resized.jpegData(compressionQuality: 0.5), let id = animal.id {
                 let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
-                let url = try await firebaseStorageProvider.uploadFile(data: compressedData, path: fileName)
+                let url = try await storageProvider.uploadFile(data: compressedData, path: fileName)
                 uploadedURLs.append(url.absoluteString)
             }
         }
@@ -175,7 +175,7 @@ struct EditAnimalView: View {
                     guard let path = animalPathBuilder() else {
                         throw EditAnimalError.pathError
                     }
-                    _ = try await firestoreProvider.update(copy, in: path, withID: animal.id!)
+                    _ = try await databaseProvider.update(copy, in: path, withID: animal.id!)
                     toast("Animal editado com sucesso!", .success)
                     isLoading = false
                     navigator.dismiss()

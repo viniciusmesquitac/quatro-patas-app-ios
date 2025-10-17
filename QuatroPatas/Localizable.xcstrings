@@ -88,6 +88,9 @@
     "Animais" : {
 
     },
+    "Animal Perdido" : {
+
+    },
     "animalcolor.black" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -974,7 +977,6 @@
       }
     },
     "Enviar" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1189,9 +1191,6 @@
     "Segment" : {
 
     },
-    "Selecionar imagem" : {
-
-    },
     "Selecione" : {
 
     },
@@ -1217,9 +1216,6 @@
 
     },
     "Tem certeza que deseja deletar sua conta?" : {
-
-    },
-    "Trocar imagem" : {
 
     },
     "usertype.adopter" : {

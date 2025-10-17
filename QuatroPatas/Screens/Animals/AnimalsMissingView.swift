@@ -12,7 +12,7 @@ struct AnimalsMissingView: View {
     @State private var animals: [Animal] = []
     @State private var isLoading = true
 
-    @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @Environment(\.toast) var toast
     
     private let columns = [

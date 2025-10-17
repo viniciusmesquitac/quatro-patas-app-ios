@@ -1,14 +1,14 @@
 //
-//  AddAnimalView.swift
+//  ReportMissingAnimalView.swift
 //  QuatroPatas
 //
-//  Created by Vinicius Mesquita Coelho on 02/09/25.
+//  Created by Vinicius Mesquita Coelho on 16/10/25.
 //
 
 import SwiftUI
 import PhotosUI
 
-struct AddAnimalView: View {
+struct ReportMissingAnimalView: View {
     
     @State private var selectedImageIndex = 0
     @State private var images: [URL] = []
@@ -28,11 +28,7 @@ struct AddAnimalView: View {
     @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
     @EnvironmentObject var storageProvider: StorageProvider
-    
-    @State private var years = 0
-    @State private var months = 0
-    
-    
+
     var filteredBreeds: [String] {
         guard let type = AnimalType.fromLocalized(animal.type) else {
             return [Breed.localized(.mixed)]
@@ -49,15 +45,11 @@ struct AddAnimalView: View {
     
     var formElements: [FormElement] {
         [
-            .textField(title: "Nome", placeholder: "Digite o nome", binding: $animal.name),
-            .agePicker(years: $years, months: $months),
-            .selectable(title: "Gênero", options: [Gender.localized(.male), Gender.localized(.female)], binding: $animal.gender),
+            .textField(title: "Nome", placeholder: "Digite o nome se souber", binding: $animal.name),
             .selectable(title: "Tipo", options: [AnimalType.localized(.cat), AnimalType.localized(.dog)], binding: $animal.type),
+            .selectable(title: "Gênero", options: [Gender.localized(.male), Gender.localized(.female)], binding: $animal.gender),
             .dropdown(title: "Raça", options: filteredBreeds, binding: $animal.breed),
-            .dropdown(title: "Cor", options: AnimalColor.allLocalized, binding: $animal.color),
-            .dropdown(title: "Tamanho", options: AnimalSize.allLocalized, binding: $animal.size),
-            .multiselection(title: "Caracteristicas", options: filteredTags, binding: $animal.tags),
-            .textEditor(title: "Descrição", binding: $animal, showGenerator: userSession.user?.type == .ngo)
+            .locationPicker(title: "Ultimo local visto", binding: $animal.description)
         ]
     }
     
@@ -75,7 +67,7 @@ struct AddAnimalView: View {
                 Button(action: {
                     addAnimal()
                 }) {
-                    Text("Cadastrar")
+                    Text("Enviar")
                 }
                 .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
                 .padding(.horizontal)
@@ -83,7 +75,7 @@ struct AddAnimalView: View {
                 .disabled(isLoading)
             }
         }
-        .navigationTitle("Cadastrar Animal")
+        .navigationTitle("Animal Perdido")
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,
@@ -93,11 +85,7 @@ struct AddAnimalView: View {
         )
         .overlay {
             if isLoading {
-                LoadingCatView(
-                    currentUploadIndex: currentUploadIndex,
-                    totalItems: images.count,
-                    uploadProgress: uploadProgress
-                )
+                LoadingView()
             }
         }
         .onChange(of: selectedPhotos) { _, newItems in
@@ -120,12 +108,6 @@ struct AddAnimalView: View {
         .onChange(of: animal.type) { _, _ in
             animal.breed = ""
             animal.tags.removeAll()
-        }
-        .onChange(of: years) {
-            animal.age = calculateAgeTimestamp(years: years, months: months)
-        }
-        .onChange(of: months) {
-            animal.age = calculateAgeTimestamp(years: years, months: months)
         }
         .animation(.easeInOut, value: currentUploadIndex)
     }
@@ -181,7 +163,7 @@ struct AddAnimalView: View {
                 let resized = uiImage.resized(toMax: 1024)
                 guard let compressedData = resized.jpegData(compressionQuality: 0.5) else { continue }
 
-                let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
+                let fileName = "missing-animals/\(id)/\(UUID().uuidString).jpg"
 
                 var imageProgress: Double = 0
 
@@ -232,14 +214,8 @@ struct AddAnimalView: View {
 
     
     func validateFields(of animal: Animal) -> Bool {
-        let mirror = Mirror(reflecting: animal)
-        
-        for (_, value) in mirror.children {
-            if let str = value as? String {
-                if str.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    return false
-                }
-            }
+        if animal.breed == "" || animal.name == "" ||  animal.gender == "" {
+            return false
         }
         return true
     }
@@ -258,8 +234,6 @@ struct AddAnimalView: View {
     }
     
     func addAnimal() {
-        animal.age = calculateAgeTimestamp(years: years, months: months)
-        
         // 1️⃣ Primeiro valida se há pelo menos uma foto
         guard !images.isEmpty else {
             toast("Adicione pelo menos uma foto do animal!", .error)
@@ -294,12 +268,10 @@ struct AddAnimalView: View {
                     size: AnimalSize.fromLocalized(animal.size)?.caseName ?? "",
                     description: animal.description,
                     status: animal.status,
-                    tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
+                    isMissing: true
                 )
                 
-                // 3️⃣ Salva no Firestore somente depois que tudo foi enviado
-                guard let userId = userSession.user?.id else { return }
-                let path = "users/\(userId)/animals"
+                let path = "missing-animals"
                 _ = try await databaseProvider.add(copy, to: path)
                 navigator.dismiss()
                 toast("Animal cadastrado com sucesso!", .success)

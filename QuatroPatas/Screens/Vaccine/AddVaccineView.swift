@@ -11,7 +11,7 @@ struct AddVaccineView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     
     @Environment(\.toast) var toast
     
@@ -155,7 +155,7 @@ struct AddVaccineView: View {
         
         Task {
             do {
-                _ = try await firestoreProvider.add(vaccine, to: path)
+                _ = try await databaseProvider.add(vaccine, to: path)
                 isLoading = false
                 toast("Vacina adicionada com sucesso!", .success)
                 onAdded()

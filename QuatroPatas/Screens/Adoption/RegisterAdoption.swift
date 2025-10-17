@@ -10,8 +10,8 @@ import PhotosUI
 
 struct RegisterAdoption: View {
     
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
-    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
+    @EnvironmentObject var storageProvider: StorageProvider
     @EnvironmentObject var navigator: Navigator
     
     var animalId: String
@@ -123,24 +123,21 @@ struct RegisterAdoption: View {
             return
         }
 
-        let termURL = try await firebaseStorageProvider.uploadFile(
+        let termURL = try await storageProvider.uploadFile(
             data: compressedTermPhoto,
-            path: termPath,
-            progress: $uploadProgress
+            path: termPath
         )
 
         toast("foto de termo de responsabilidade carregada!", .success)
 
-        let idFrontURL = try await firebaseStorageProvider.uploadFile(
+        let idFrontURL = try await storageProvider.uploadFile(
             data: compressedIdFront,
-            path: idFrontPath,
-            progress: $uploadProgress
+            path: idFrontPath
         )
     
-        let idBackURL = try await firebaseStorageProvider.uploadFile(
+        let idBackURL = try await storageProvider.uploadFile(
             data: compressedIdBack,
-            path: idBackPath,
-            progress: $uploadProgress
+            path: idBackPath
         )
 
         toast("fotos da identidade carregadas", .success)
@@ -153,10 +150,10 @@ struct RegisterAdoption: View {
             status: .approved
         )
 
-        _ = try await firestoreProvider.add(adoption, to: "adoptions")
+        _ = try await databaseProvider.add(adoption, to: "adoptions")
         let ongId = "rlt2rPJZOveXgqLs54o6lVrufC32"
         
-        _ = try await firestoreProvider.updateFields(
+        _ = try await databaseProvider.updateFields(
             in: "users/\(ongId)/animals",
             id: animalId,
             fields: ["isAdopted": true]

@@ -1,5 +1,5 @@
 //
-//  FirestoreProvider.swift
+//  DatabaseProvider.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 31/08/25.
@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-class FirestoreProvider: ObservableObject {
+class DatabaseProvider: ObservableObject {
 
     private let db = Firestore.firestore()
 
@@ -140,7 +140,7 @@ class FirestoreProvider: ObservableObject {
     }
 }
 
-extension FirestoreProvider {
+extension DatabaseProvider {
     /// Atualiza apenas campos específicos de um documento no Firestore
     func updateFields(
         in collection: String,
@@ -159,7 +159,7 @@ extension FirestoreProvider {
     }
 }
 
-extension FirestoreProvider {
+extension DatabaseProvider {
 
     /// Deleta um usuário e todas as subcoleções associadas (animais e suas subcoleções).
     func deleteUserCollections(userId: String) async throws {

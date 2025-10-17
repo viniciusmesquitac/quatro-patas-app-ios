@@ -10,7 +10,7 @@ import SwiftUI
 struct MedicationListView: View {
 
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
     
     @Environment(\.toast) var toast
@@ -75,7 +75,7 @@ struct MedicationListView: View {
                 toast("Erro ao carregar as medicações", .error)
                 return
             }
-            let items: [Medication] = try await firestoreProvider.fetch(from: path)
+            let items: [Medication] = try await databaseProvider.fetch(from: path)
 
             let newOnes = items.filter { new in
                 !medications.contains { $0.id == new.id }
@@ -96,7 +96,7 @@ struct MedicationListView: View {
         guard let path = vaccinePath, let id = medication.id else { return }
         
         do {
-            _ = try await firestoreProvider.delete(from: path, id: id)
+            _ = try await databaseProvider.delete(from: path, id: id)
             medications.removeAll { $0.id == medication.id }
             toast("Medicação deletada", .success)
         } catch {

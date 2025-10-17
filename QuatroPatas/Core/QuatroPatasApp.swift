@@ -13,8 +13,8 @@ struct QuatroPatasApp: App {
     
     @StateObject private var navigator = Navigator()
     @StateObject private var requestProvider = RequestProvider()
-    @StateObject private var databaseProvider = FirestoreProvider()
-    @StateObject private var storageProvider = FirebaseStorageProvider()
+    @StateObject private var databaseProvider = DatabaseProvider()
+    @StateObject private var storageProvider = StorageProvider()
     @StateObject private var userSession = UserSession()
     @StateObject private var formSession = FormSessionManager()
 

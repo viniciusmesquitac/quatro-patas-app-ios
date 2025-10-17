@@ -24,8 +24,8 @@ struct AnimalImagesCarousel: View {
     var cacheProvider
     
     var allImages: [URL] {
-        let firebase = existingPhotos.compactMap { URL(string: $0) }
-        return firebase + newImages
+        let existingImages = existingPhotos.compactMap { URL(string: $0) }
+        return existingImages + newImages
     }
     
     var body: some View {

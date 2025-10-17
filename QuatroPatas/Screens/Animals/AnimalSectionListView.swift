@@ -17,7 +17,7 @@ struct AnimalSectionListView: View {
     }
     
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @Environment(\.toast) var toast
     
     @State private var isLoading = false

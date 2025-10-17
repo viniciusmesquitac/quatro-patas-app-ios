@@ -18,7 +18,7 @@ struct AnimalsAvailableView: View {
     @State private var visibleCount = 7
     @State private var showMoreAnimalsCount = 7
     
-    @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var navigator: Navigator
     @Environment(\.toast) var toast
 

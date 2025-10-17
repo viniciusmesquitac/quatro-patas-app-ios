@@ -14,8 +14,8 @@ enum DeleteAction {
 
 struct DeleteAnimalView: View {
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
-    @EnvironmentObject var firebaseStorageProvider: FirebaseStorageProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
+    @EnvironmentObject var storageProvider: StorageProvider
 
     @State var animal: Animal
     @EnvironmentObject var userSession: UserSession
@@ -37,8 +37,8 @@ struct DeleteAnimalView: View {
                         return
                     }
                     do {
-                        try await firestoreProvider.deleteAnimals(of: userId)
-                        try await firebaseStorageProvider.deleteFolder(path: "animals/\(fileId)")
+                        try await databaseProvider.deleteAnimals(of: userId)
+                        try await storageProvider.deleteFolder(path: "animals/\(fileId)")
                         onDelete(.finished(true))
                         toast("Animal deletado com sucesso!", .success)
                         navigator.dismiss()

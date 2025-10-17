@@ -15,7 +15,7 @@ struct WeightChartView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     
     @State private var isLoading: Bool = false
     @Environment(\.toast) var toast
@@ -121,7 +121,7 @@ struct WeightChartView: View {
             guard let userId = userSession.user?.id else { return }
             let path = "users/\(userId)/animals/\(animalId)/weights"
             
-            let items: [WeightEntry] = try await firestoreProvider.fetch(from: path)
+            let items: [WeightEntry] = try await databaseProvider.fetch(from: path)
             entries = items.sorted { $0.date < $1.date }
             
             isLoading = false
@@ -141,7 +141,7 @@ struct WeightChartView: View {
         
         do {
             let path = "users/\(userId)/animals/\(animalId)/weights"
-            _ = try await firestoreProvider.delete(from: path, id: id)
+            _ = try await databaseProvider.delete(from: path, id: id)
             toast("Peso deletado com sucesso", .success)
         } catch {
             toast("Erro ao deletar peso", .error)

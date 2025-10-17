@@ -43,7 +43,7 @@ class UserSession: ObservableObject {
      private func loadUserData(for firebaseUser: FirebaseAuth.User) async {
          // primeiro carrega uma vez
          do {
-             let fetchedUser: User? = try await FirestoreProvider()
+             let fetchedUser: User? = try await DatabaseProvider()
                  .fetchDocument(from: "users", id: firebaseUser.uid)
              self.user = fetchedUser
              self.isLoggedIn = true

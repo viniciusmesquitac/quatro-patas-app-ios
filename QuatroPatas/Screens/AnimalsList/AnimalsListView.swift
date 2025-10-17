@@ -15,7 +15,7 @@ enum AnimalListType {
 struct AnimalsListView: View {
     
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var databaseProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
     
     @State private var animals: [Animal] = []

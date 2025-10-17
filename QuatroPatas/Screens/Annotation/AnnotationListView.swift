@@ -10,7 +10,7 @@ import SwiftUI
 struct AnnotationListView: View {
 
     @EnvironmentObject var navigator: Navigator
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
     @Environment(\.toast) var toast
 
@@ -77,7 +77,7 @@ struct AnnotationListView: View {
                 toast("Erro ao carregar as anotações", .error)
                 return
             }
-            let items: [Annotation] = try await firestoreProvider.fetch(from: path)
+            let items: [Annotation] = try await databaseProvider.fetch(from: path)
 
             let newOnes = items.filter { new in
                 !annotations.contains { $0.id == new.id }
@@ -98,7 +98,7 @@ struct AnnotationListView: View {
         guard let path = self.path, let id = annotation.id else { return }
         
         do {
-            _ = try await firestoreProvider.delete(from: path, id: id)
+            _ = try await databaseProvider.delete(from: path, id: id)
             annotations.removeAll { $0.id == annotation.id }
             toast("Anotação deletada", .success)
         } catch {

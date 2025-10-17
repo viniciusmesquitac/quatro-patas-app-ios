@@ -19,7 +19,7 @@ struct MyAnimalDetailsView: View {
     @EnvironmentObject var navigator: Navigator
     @CacheProvider(type: .fileManager) var cacheProvider
 
-    @EnvironmentObject var firebase: FirestoreProvider
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var userSession: UserSession
 
     @State private var animal: Animal
@@ -213,7 +213,7 @@ struct MyAnimalDetailsView: View {
             guard let path = animalPathBuilder(), let animalId = animal.id else {
                 throw EditAnimalError.pathError
             }
-            _ = try await firebase.updateFields(
+            _ = try await databaseProvider.updateFields(
                 in: path,
                 id: animalId,
                 fields: ["isAdopted": isAdopted]
@@ -228,7 +228,7 @@ struct MyAnimalDetailsView: View {
             guard let path = animalPathBuilder(), let animalId = animal.id else {
                 throw EditAnimalError.pathError
             }
-            _ = try await firebase.updateFields(
+            _ = try await databaseProvider.updateFields(
                 in: path,
                 id: animalId,
                 fields: ["isMissing": isMissing]

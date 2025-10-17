@@ -15,7 +15,7 @@ struct AddWeightEntryView: View {
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
-    @EnvironmentObject var firestoreProvider: FirestoreProvider
+    @EnvironmentObject var firestoreProvider: DatabaseProvider
     
     @Environment(\.toast) var toast
     
