@@ -69,11 +69,7 @@ struct CachedAsyncImage: View {
     }
 
     private func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-            return url.absoluteString
-        }
-        return token
+        return url.lastPathComponent.replacingOccurrences(of: ".jpg", with: "")
     }
 
     private func saveImageData(url: URL) {
