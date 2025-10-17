@@ -32,12 +32,12 @@ struct DeleteAnimalView: View {
                 navigator.dismiss()
                 onDelete(.startLoading)
                 Task {
-                    guard let userId = userSession.user?.id, let fileId = animal.fileId else {
+                    guard let userId = userSession.user?.id, let fileId = animal.fileId, let animalId = animal.id else {
                         toast("Não foi possivel deletar esse animal, tente novamente.", .error)
                         return
                     }
                     do {
-                        try await databaseProvider.deleteAnimals(of: userId)
+                        _ = try await databaseProvider.delete(from: "users/\(userId)/animals", id: animalId)
                         try await storageProvider.deleteFolder(path: "animals/\(fileId)")
                         onDelete(.finished(true))
                         toast("Animal deletado com sucesso!", .success)
