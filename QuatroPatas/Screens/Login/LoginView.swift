@@ -59,12 +59,18 @@ struct LoginView: View {
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .buttonStyle(PrimaryButtonStyle())
             
-            Button("Entrar") {
+            Button("Fazer Login") {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(.easeInOut) {
                         navigator.navigate(to: .loginWithEmailAndPassword)
                     }
                 }
+            }
+            .padding(.horizontal, Padding.xxLarge.rawValue)
+            .buttonStyle(OutlineRoundedButtonStyle())
+
+            Button("Entrar") {
+                userSession.loginAnonymous()
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .buttonStyle(OutlineRoundedButtonStyle())

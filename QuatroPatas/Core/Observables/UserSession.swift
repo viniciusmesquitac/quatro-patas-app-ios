@@ -92,6 +92,8 @@ class UserSession: ObservableObject {
     }
 
     func logout() {
+        self.isLoggedIn = false
+        self.user = nil
         do {
             try Auth.auth().signOut()
         } catch {

@@ -46,6 +46,7 @@ extension MenuCardType {
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .ngo: [.addOngAnimal, .ongAnimalsList],
     .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal],
+    .anonymous: [.aboutShelter, .adoptionForm, .login]
 ]
 
 struct MenuCardFactory {
