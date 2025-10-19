@@ -82,64 +82,6 @@
             endingLineNumber = "190"
             landmarkName = "uploadImages(forAnimalId:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - acfcf3812988a3a8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190">
-               </Location>
-               <Location
-                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - 6892f6742c7a99b5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190">
-               </Location>
-               <Location
-                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - 3b6ea06583f1e7ae"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190">
-               </Location>
-               <Location
-                  uuid = "D2192C70-E95E-48C7-B6F6-DCA5974EEB8F - 1dd962fa2b2b8a53"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(6) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -156,50 +98,6 @@
             endingLineNumber = "198"
             landmarkName = "uploadImages(forAnimalId:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "671B7845-98FA-41E8-A091-EEB5992647D5 - acfcf3812988a2a0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "198"
-                  endingLineNumber = "198">
-               </Location>
-               <Location
-                  uuid = "671B7845-98FA-41E8-A091-EEB5992647D5 - 3b6ea06583f1e6a6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "198"
-                  endingLineNumber = "198">
-               </Location>
-               <Location
-                  uuid = "671B7845-98FA-41E8-A091-EEB5992647D5 - 1dd962fa2b2b8b5b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(6) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "198"
-                  endingLineNumber = "198">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -216,36 +114,6 @@
             endingLineNumber = "210"
             landmarkName = "uploadImages(forAnimalId:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "95E20CA2-D9B5-4DA0-98E4-DEB3DE365EB4 - c7e09cc9e5d62918"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "210"
-                  endingLineNumber = "210">
-               </Location>
-               <Location
-                  uuid = "95E20CA2-D9B5-4DA0-98E4-DEB3DE365EB4 - 539248ac783f6ee6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(7) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "210"
-                  endingLineNumber = "210">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -262,50 +130,6 @@
             endingLineNumber = "203"
             landmarkName = "uploadImages(forAnimalId:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB - acfcf3812988a205"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203">
-               </Location>
-               <Location
-                  uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB - 3b6ea06583f1e603"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203">
-               </Location>
-               <Location
-                  uuid = "EB16E6E5-7987-4FA3-8A68-0DBF635E69CB - 51a0e121363378b0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #4 () -&gt; () in QuatroPatas.ReportMissingAnimalView.uploadImages(forAnimalId: Swift.String) async throws -&gt; Swift.Array&lt;Swift.String&gt;"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Screens/ReportMissingAnimal/ReportMissingAnimalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -354,22 +178,6 @@
             endingLineNumber = "27"
             landmarkName = "uploadFile(data:path:contentType:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "49D77D17-D4D4-4D94-B9EA-703A6EAD6FC4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QuatroPatas/Core/View/Components/CachedAsyncImage.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "body"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
