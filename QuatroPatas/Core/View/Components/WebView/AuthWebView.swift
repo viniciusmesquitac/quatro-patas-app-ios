@@ -63,6 +63,11 @@ struct AuthWebView: UIViewRepresentable {
         
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             
+            webView.evaluateJavaScript("""
+                const style = document.createElement('style');
+                style.textContent = '* { user-select:none !important; -webkit-user-select:none !important; -webkit-touch-callout:none !important; }';
+                document.head.appendChild(style);
+            """)
             
             webView.evaluateJavaScript("""
             (function() {

@@ -322,64 +322,6 @@
             endingLineNumber = "18"
             landmarkName = "uploadFile(data:path:contentType:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - af77e7a43519ee3e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-               <Location
-                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - 11ddcd58e7ccd09b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-               <Location
-                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - 6c1829a19fe6223c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-               <Location
-                  uuid = "6A3F0393-8CCF-4A96-BBBC-55E8AE85A216 - 24b01910e7df90f7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -412,36 +354,6 @@
             endingLineNumber = "27"
             landmarkName = "uploadFile(data:path:contentType:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B26A7410-1DDB-42F7-83F6-B1BE86EB2B78 - 911b7136fc3e900e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;FirebaseStorage.StorageMetadata&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27">
-               </Location>
-               <Location
-                  uuid = "B26A7410-1DDB-42F7-83F6-B1BE86EB2B78 - 4aecdc788e8375ea"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.URL&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.Optional&lt;FirebaseStorage.StorageMetadata&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in QuatroPatas.FirebaseStorageProvider.uploadFile(data: Foundation.Data, path: Swift.String, contentType: Swift.String) async throws -&gt; Foundation.URL"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/Network/Providers/FirebaseStorageProvider.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -474,36 +386,6 @@
             endingLineNumber = "79"
             landmarkName = "saveImageData(url:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EB615F70-334C-4F6C-9F8F-C75EED855BDA - 6dd7c7ac72740451"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QuatroPatas.CachedAsyncImage.saveImageData(url: Foundation.URL) -&gt; ()"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/View/Components/CachedAsyncImage.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79">
-               </Location>
-               <Location
-                  uuid = "EB615F70-334C-4F6C-9F8F-C75EED855BDA - ac389f82df1f4668"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in QuatroPatas.CachedAsyncImage.saveImageData(url: Foundation.URL) -&gt; ()"
-                  moduleName = "QuatroPatas.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vinicius/Documents/Projects/QuatroPatas/QuatroPatas/Core/View/Components/CachedAsyncImage.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
