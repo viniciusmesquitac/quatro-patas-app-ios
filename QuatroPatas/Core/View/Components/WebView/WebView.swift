@@ -15,6 +15,7 @@ struct WebView: UIViewRepresentable {
 
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var formSession: FormSessionManager
+    @Environment(\.toast) var toast
 
     @ObservedObject var state: WebViewState
 
@@ -138,15 +139,14 @@ struct WebView: UIViewRepresentable {
                 if bodyString.contains("back=") {
                     decisionHandler(.cancel)
                     parent.navigator.dismiss()
-                    parent.formSession.page -= 1
                     return
                 }
                 
                 if bodyString.contains("continue=") {
                     decisionHandler(.cancel)
-                    var requestWithCachedBody = request
-                    requestWithCachedBody.httpBody = parent.formSession.encodedBody(isContinuing: true)
-                    parent.navigator.navigate(to: .webView(requestWithCachedBody))
+//                    var requestWithCachedBody = request
+//                    requestWithCachedBody.httpBody = parent.formSession.encodedBody(isContinuing: true)
+                    parent.navigator.navigate(to: .webView(request))
                     parent.formSession.page += 1
                     return
                 }
@@ -221,6 +221,9 @@ struct WebView: UIViewRepresentable {
                 let popupButton = buttons.map {  PopupButton(text: $0, role: .none) }
                 var popUp = WebViewPopup(title: title, description: description, buttons: popupButton)
                 popUp.didTapButton = { button in
+                    let normalized = button.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+                    let isClearForm = normalized == "clear form" || normalized == "limpar formulário"
+
                     let removeAlertDialog = """
                     (function() {
                       const alertDialog = document.querySelector('[role="alertdialog"]');
@@ -242,7 +245,13 @@ struct WebView: UIViewRepresentable {
                       }
                     })();
                     """
-                    message.webView?.evaluateJavaScript(removeAlertDialog, completionHandler: nil)
+
+                    message.webView?.evaluateJavaScript(removeAlertDialog, completionHandler: { _ , _ in
+                        if isClearForm {
+                            self.parent.navigator.popToRoot()
+                            self.parent.toast("Formulário limpo com sucesso!", .success)
+                        }
+                    })
                 }
 
                 parent.popUp = popUp

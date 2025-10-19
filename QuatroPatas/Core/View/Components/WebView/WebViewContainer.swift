@@ -49,6 +49,9 @@ struct WebViewContainer: View {
             }
 
         }, message: { Text(popUp?.description ?? String()) })
+        .onDisappear {
+            formSession.page -= 1
+        }
         .toolbar(.hidden, for: .tabBar)
     }
 }
