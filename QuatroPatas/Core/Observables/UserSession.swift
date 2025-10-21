@@ -28,10 +28,7 @@ class UserSession: ObservableObject {
                     await self.loadUserData(for: firebaseUser)
                 }
             } else {
-                // usuário saiu
-                self.user = nil
-                self.isLoggedIn = false
-                // cancela listener do Firestore se existir
+                self.loginAnonymous()
                 self.userListener?.remove()
                 self.userListener = nil
                 self.isLoadingAuth = false

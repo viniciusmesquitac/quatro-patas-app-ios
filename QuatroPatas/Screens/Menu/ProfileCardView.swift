@@ -35,14 +35,12 @@ struct ProfileCardView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Olá, \(user.name)")
                     .font(.headline)
-                if !(user.type == .anonymous) {
-                    Button(action: {
-                        navigator.navigate(to: .profile)
-                    }) {
-                        Text("Ver perfil")
-                            .font(.subheadline)
-                            .foregroundColor(Color.primaryColor)
-                    }
+                Button(action: {
+                    user.type == .anonymous ? navigator.navigate(to: .login) : navigator.navigate(to: .profile)
+                }) {
+                    Text(user.type == .anonymous ? "Fazer Login" : "Ver perfil")
+                        .font(.subheadline)
+                        .foregroundColor(Color.primaryColor)
                 }
             }
             

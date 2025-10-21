@@ -16,6 +16,7 @@ enum Route: Identifiable, Hashable {
     case edit(Animal)
     case webView(URLRequest)
     case register
+    case login
     case loginWithEmailAndPassword
     case profile
     case personalInformation(User)

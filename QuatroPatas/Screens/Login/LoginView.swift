@@ -23,8 +23,22 @@ struct LoginView: View {
             animation
             content
         }
+        .toolbar(.hidden, for: .tabBar)
+        .navigationBarBackButtonHidden()
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
+        .safeAreaInset(edge: .top) {
+            HStack {
+                Button {
+                    navigator.dismiss()
+                } label: {
+                    SFIcon.image(.back, color: .primaryColor)
+                }
+                .buttonStyle(FloatingButtonStyle())
+                
+                Spacer()
+            }.padding(.horizontal)
+        }
         .overlay {
             if isLoading {
                 LoadingView()
@@ -65,12 +79,6 @@ struct LoginView: View {
                         navigator.navigate(to: .loginWithEmailAndPassword)
                     }
                 }
-            }
-            .padding(.horizontal, Padding.xxLarge.rawValue)
-            .buttonStyle(OutlineRoundedButtonStyle())
-
-            Button("Entrar") {
-                userSession.loginAnonymous()
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .buttonStyle(OutlineRoundedButtonStyle())

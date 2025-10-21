@@ -18,10 +18,7 @@ struct QuatroPatasApp: App {
     @StateObject private var userSession = UserSession()
     @StateObject private var formSession = FormSessionManager()
 
-    
-    @State private var isLoggedIn: Bool = false
-    @State private var isLoading: Bool = false
-    
+
     init() {
         FirebaseApp.configure()
     }
@@ -29,35 +26,18 @@ struct QuatroPatasApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if userSession.isLoadingAuth {
-                    LoadingView()
-                } else if userSession.isLoggedIn {
-                    TabView(selection: $navigator.selectedTab) {
-                        TabItem(label: .animals, icon: .paw) {
-                            AnimalsView()
-                        }
-                        TabItem(label: .menu, icon: .menu) {
-                            MenuView()
-                        }
+                TabView(selection: $navigator.selectedTab) {
+                    TabItem(label: .animals, icon: .paw) {
+                        AnimalsView()
                     }
-                    .sheet(item: $navigator.presentedSheet) { sheet in
-                        SheetDestinationView(sheet: sheet)
-                    }
-                    .transition(.move(edge: .trailing))
-                } else {
-                    NavigationStack(path: $navigator.path) {
-                        LoginView()
-                            .applyRoute()
-                            .transition(.move(edge: .leading))
+                    TabItem(label: .menu, icon: .menu) {
+                        MenuView()
                     }
                 }
-            }
-            .overlay {
-                if isLoading {
-                    LoadingView()
+                .sheet(item: $navigator.presentedSheet) { sheet in
+                    SheetDestinationView(sheet: sheet)
                 }
             }
-            .animation(.easeInOut(duration: 0.5), value: userSession.isLoggedIn)
             .environmentObject(navigator)
             .environmentObject(requestProvider)
             .environmentObject(databaseProvider)

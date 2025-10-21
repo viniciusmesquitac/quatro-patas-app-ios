@@ -22,6 +22,7 @@ struct RouteDestinationView: View {
             EditAnimalView(animal: animal)
         case .webView(let url): WebViewContainer(request: url)
         case .register: RegisterView()
+        case .login: LoginView()
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)

@@ -44,38 +44,43 @@ extension MenuCardType {
 
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
-    .ngo: [.addOngAnimal, .ongAnimalsList],
-    .adopter: [.adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal],
-    .anonymous: [.aboutShelter, .adoptionForm, .login]
+    .ngo: [
+        .addOngAnimal, .ongAnimalsList
+    ],
+    .adopter: [
+        .adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal
+    ],
+    .anonymous: [
+        .adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal
+    ]
 ]
 
 struct MenuCardFactory {
-
+    
     @MainActor
     func allCases(for type: UserType,
                   navigator: Navigator,
                   userSession: UserSession) -> [MenuCard] {
-
+        
         let allowedCards = allowedCardsByUserType[type] ?? []
-
+        
         return allowedCards.map { cardType in
             switch cardType {
             case .login:
                 return MenuCard(title: cardType.title, action: {
-                    userSession.logout()
-                    navigator.popToRoot()
+                    navigator.navigate(to: .login)
                 })
-
+                
             case .addOngAnimal:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal)
                 }, icon: .add)
-
+                
             case .ongAnimalsList:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .animalsList(.ongAnimals))
                 })
-
+                
             case .adoptionForm:
                 return MenuCard(title: cardType.title, action: {
                     if let url = URL(string: "https://forms.gle/fwbzQjBzHFxv1fLZ6") {
@@ -83,7 +88,7 @@ struct MenuCardFactory {
                         navigator.navigate(to: .webView(request))
                     }
                 }, icon: .form)
-
+                
             case .aboutShelter:
                 return MenuCard(title: cardType.title, action: {
                     if let url = URL(string: "https://4patasfortaleza.org") {
@@ -91,25 +96,38 @@ struct MenuCardFactory {
                         navigator.navigate(to: .webView(request))
                     }
                 }, icon: .about)
-
+                
             case .favorites:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .favorites)
+                    if userSession.user?.type == .anonymous {
+                        navigator.navigate(to: .login)
+                    } else {
+                        navigator.navigate(to: .favorites)
+                    }
                 }, icon: .favorite)
+                
             case .myAnimals:
                 return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .animalsList(.myAnimals))
+                    if userSession.user?.type == .anonymous {
+                        navigator.navigate(to: .login)
+                    } else {
+                        navigator.navigate(to: .animalsList(.myAnimals))
+                    }
                 })
+                
+            case .lostAnimal:
+                return MenuCard(title: cardType.title, action: {
+                    if userSession.user?.type == .anonymous {
+                        navigator.navigate(to: .login)
+                    } else {
+                        navigator.navigate(to: .reportMissingAnimal)
+                    }
+                }, icon: .report)
+                
             case .addMyAnimal:
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal)
                 }, icon: .add)
-                
-            case .lostAnimal:
-                return MenuCard(title: cardType.title, action: {
-                    navigator.navigate(to: .reportMissingAnimal)
-                }, icon: .report)
-                
             }
         }
     }
