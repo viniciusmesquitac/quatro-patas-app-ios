@@ -164,10 +164,6 @@ struct AddAnimalView: View {
 
         guard !images.isEmpty else { return [] }
 
-        let progressPerImage = 1.0 / Double(images.count)
-        var throttledProgress: Double = 0
-        var lastUpdate = Date()
-
         for (index, imageURL) in images.enumerated() {
             withAnimation(.easeInOut(duration: 0.25)) {
                 currentUploadIndex = index + 1
@@ -193,13 +189,6 @@ struct AddAnimalView: View {
                 throw error
             }
         }
-
-        withAnimation(.easeInOut(duration: 0.3)) {
-            uploadProgress = 1.0
-        }
-
-        // Espera 0.3s pra mostrar 100%
-        try? await Task.sleep(nanoseconds: 300_000_000)
 
         return uploadedURLs
     }
@@ -256,8 +245,8 @@ struct AddAnimalView: View {
                 
                 // 1️⃣ Faz upload de todas as imagens primeiro
                 let uploaded = try await uploadImages(forAnimalId: id)
+                guard let userId = userSession.user?.id else { return }
                 
-                // 2️⃣ Cria o animal já com as URLs das imagens
                 let copy = Animal(
                     fileId: id,
                     name: animal.name,
@@ -270,11 +259,11 @@ struct AddAnimalView: View {
                     size: AnimalSize.fromLocalized(animal.size)?.caseName ?? "",
                     description: animal.description,
                     status: animal.status,
-                    tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName }
+                    tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName
+                    },
+                    ownerId: userId
                 )
                 
-                // 3️⃣ Salva no Firestore somente depois que tudo foi enviado
-                guard let userId = userSession.user?.id else { return }
                 let path = "users/\(userId)/animals"
                 _ = try await databaseProvider.add(copy, to: path)
                 navigator.dismiss()

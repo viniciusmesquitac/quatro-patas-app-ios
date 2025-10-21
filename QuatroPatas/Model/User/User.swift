@@ -14,6 +14,7 @@ struct User: Hashable, Identifiable, Codable {
     let email: String
     var phone: String?
     var instagram: String?
+    var form: String?
     let type: UserType
     var createdAt: Date = Date()
 }

@@ -28,7 +28,7 @@ struct AuthWebViewContainerView: View {
                     .transition(.opacity)
             }
         }
-        .toolbarItem(icon: .close, placement: .confirmationAction) {
+        .toolbarItem(icon: .close, placement: .topBarTrailing) {
             navigator.dismiss()
         }
         

@@ -11,6 +11,7 @@ struct AnimalDetailView: View {
     let animal: Animal
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
+    @EnvironmentObject var databaseProvider: DatabaseProvider
     @CacheProvider(type: .fileManager) var cacheProvider
     
     @Environment(\.toast) private var toast
@@ -162,13 +163,66 @@ struct AnimalDetailView: View {
                 description: Tip.adoption.description,
                 buttonText: "Entendi!",
                 buttonAction: {
-                    navigator.dismiss()
-                    if let url = URL(string: "https://forms.gle/fwbzQjBzHFxv1fLZ6") {
-                        let request = URLRequest(url: url)
-                        navigator.navigate(to: .webView(request))
-                    }
+                    openForms()
                 })
         ))
+    }
+    
+    func openForms() {
+        guard let ownerId = animal.ownerId else {
+            navigator.dismiss()
+            toast("formulário ainda não está dispónivel", .warning)
+            return
+        }
+        Task {
+            do {
+                let user: User? = try await databaseProvider.fetchDocument(from: "users", id: ownerId)
+                navigator.dismiss()
+                
+                let validGoogleFormsHosts = ["forms.gle", "docs.google.com"]
+
+                if
+                    let form = user?.form,
+                    let url = URL(string: form),
+                    let host = url.host,
+                    validGoogleFormsHosts.contains(host)
+                {
+                    // 🔎 2ª verificação: de fato existe online
+                    let isValid = await validateGoogleForm(url: url)
+
+                    if isValid {
+                        let request = URLRequest(url: url)
+                        navigator.navigate(to: .webView(request))
+                    } else {
+                        toast("formulário indisponível ou inválido", .warning)
+                    }
+
+                } else {
+                    toast("formulário ainda não está disponível ou inválido", .warning)
+                }
+
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+
+    }
+    
+    func validateGoogleForm(url: URL) async -> Bool {
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD" // mais leve que GET
+        request.timeoutInterval = 10
+        
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse {
+                return httpResponse.statusCode == 200
+            }
+        } catch {
+            return false
+        }
+        
+        return false
     }
     
     func registerAdoption() {

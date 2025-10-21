@@ -19,13 +19,15 @@ struct EditPersonalInformationView: View {
     @State var email: String = ""
     @State var instagram: String = ""
     @State var phone: String = ""
+    @State var form: String = ""
     
     @State var isLoading: Bool = false
 
     private var hasChanges: Bool {
         name != user.name ||
         instagram != (user.instagram ?? "") ||
-        phone != (user.phone ?? "")
+        phone != (user.phone ?? "") ||
+        form != (user.form ?? "")
     }
 
     var body: some View {
@@ -42,6 +44,11 @@ struct EditPersonalInformationView: View {
                 
                 TextField("Instagram (Opcional)", text: $instagram)
                     .textFieldStyle(PrimaryTextFieldStyle())
+                
+                if user.type == .ngo {
+                    TextField("Formulário do google", text: $form)
+                        .textFieldStyle(PrimaryTextFieldStyle())
+                }
                 
                 TextField("Telefone (Opcional)", text: $phone)
                     .textFieldStyle(PrimaryTextFieldStyle())
@@ -78,6 +85,7 @@ struct EditPersonalInformationView: View {
                 email = user.email
                 instagram = user.instagram ?? ""
                 phone = user.phone ?? ""
+                form = user.form ?? ""
             }
         }
         .safeAreaInset(edge: .bottom) {
@@ -89,6 +97,7 @@ struct EditPersonalInformationView: View {
                         updatedUser.name = name
                         updatedUser.instagram = instagram
                         updatedUser.phone = phone
+                        updatedUser.form = form
                         try await _ = databaseProvider.update(updatedUser, in: "users", withID: user.id)
                         isLoading = false
                         toast("Atualizado com sucesso!", .success)

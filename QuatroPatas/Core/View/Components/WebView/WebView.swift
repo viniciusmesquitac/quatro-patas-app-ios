@@ -172,7 +172,7 @@ struct WebView: UIViewRepresentable {
             // Remove botão rodapé
             webView.evaluateJavaScript("""
             (function() {
-              const btn = document.querySelector('button[aria-label="help and feedback"]');
+              const btn = document.querySelector('button[aria-haspopup="menu"]');
               if (btn) btn.remove();
             })();
             """, completionHandler: nil)
