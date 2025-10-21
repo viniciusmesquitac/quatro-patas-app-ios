@@ -19,9 +19,15 @@ struct ToolbarItemModifier: ViewModifier {
         content
             .toolbar {
                 ToolbarItem(placement: placement) {
-                    Button(label ?? String(), systemImage: icon?.rawValue ?? String()) {
-                        action()
-                    }.foregroundStyle(color)
+                    if let icon = icon {
+                        Button(label ?? String(), systemImage: icon.rawValue) {
+                            action()
+                        }.foregroundStyle(color)
+                    } else {
+                        Button(label ?? String()) {
+                            action()
+                        }.foregroundStyle(color)
+                    }
                 }
             }
     }

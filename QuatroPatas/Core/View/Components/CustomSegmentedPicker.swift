@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct CustomSegmentedPicker<T: Hashable & CaseIterable & RawRepresentable>: View where T.RawValue == String {
     @Binding var selection: T
@@ -19,12 +20,12 @@ struct CustomSegmentedPicker<T: Hashable & CaseIterable & RawRepresentable>: Vie
         appearance.selectedSegmentTintColor = UIColor(primaryColor)
 
         appearance.setTitleTextAttributes([
-            .foregroundColor : UIColor.label,
+            .foregroundColor : UIColor.customLabel,
             .font : UIFont.systemFont(ofSize: 16, weight: .semibold)
         ], for: .normal)
 
         appearance.setTitleTextAttributes([
-            .foregroundColor : UIColor.white,
+            .foregroundColor : UIColor.systemBackground,
             .font : UIFont.systemFont(ofSize: 16, weight: .semibold)
         ], for: .selected)
     }
