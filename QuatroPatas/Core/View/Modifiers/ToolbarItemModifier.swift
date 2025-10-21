@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ToolbarItemModifier: ViewModifier {
     @EnvironmentObject var navigator: Navigator
     var label: String?
@@ -22,12 +20,14 @@ struct ToolbarItemModifier: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: placement) {
                     Button(action: action) {
-                        HStack {
+                        HStack(spacing: Spacing.medium.rawValue) {
                             if let icon = icon {
                                 SFIcon.image(icon, color: color)
+                                    .frame(maxHeight: .infinity, alignment: .center)
                             }
                             if let label = label {
                                 Text(label)
+                                    .frame(maxHeight: .infinity, alignment: .center)
                             }
                         }
                     }
