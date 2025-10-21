@@ -12,7 +12,6 @@
 		813F3D852E6B75A2001F4BD2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D842E6B75A2001F4BD2 /* FirebaseFirestore */; };
 		813F3D872E6B75A2001F4BD2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D862E6B75A2001F4BD2 /* FirebaseStorage */; };
 		817EEF0A2E7EFA0600A03C6B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 817EEF092E7EFA0600A03C6B /* Lottie */; };
-		81F0AFE02EA2AE7900649448 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 81F0AFDF2EA2AE7900649448 /* Supabase */; };
 		81FEB16D2EA2AD4A00488C31 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB16C2EA2AD4A00488C31 /* Storage */; };
 		81FEB1712EA2ADD800488C31 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB1702EA2ADD800488C31 /* Auth */; };
 		81FEB1732EA2ADD800488C31 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB1722EA2ADD800488C31 /* Functions */; };
@@ -79,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F0AFE02EA2AE7900649448 /* Supabase in Frameworks */,
 				81FEB16D2EA2AD4A00488C31 /* Storage in Frameworks */,
 				817EEF0A2E7EFA0600A03C6B /* Lottie in Frameworks */,
 				81FEB1732EA2ADD800488C31 /* Functions in Frameworks */,
@@ -168,7 +166,6 @@
 				81FEB1722EA2ADD800488C31 /* Functions */,
 				81FEB1742EA2ADD800488C31 /* PostgREST */,
 				81FEB1762EA2ADD800488C31 /* Realtime */,
-				81F0AFDF2EA2AE7900649448 /* Supabase */,
 			);
 			productName = QuatroPatas;
 			productReference = 81DF06BB2D8DED82007D23D1 /* QuatroPatas.app */;
@@ -718,11 +715,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 817EEDED2E7EF7F600A03C6B /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		81F0AFDF2EA2AE7900649448 /* Supabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Supabase;
 		};
 		81FEB16C2EA2AD4A00488C31 /* Storage */ = {
 			isa = XCSwiftPackageProductDependency;

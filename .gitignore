@@ -11,9 +11,6 @@ xcuserdata/
 *.mode2v3
 *.perspectivev3
 
-# Ignorar o project.pbxproj
-**/*.pbxproj
-
 # SwiftPM
 #
 .swiftpm/
