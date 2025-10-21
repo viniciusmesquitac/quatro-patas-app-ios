@@ -75,6 +75,7 @@ struct MyAnimalDetailsView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
+            .tint(Color.primaryColor)
             .padding(.top, Padding.medium.rawValue)
 
             

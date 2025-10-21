@@ -75,14 +75,24 @@ struct AnimalsAvailableView: View {
                 .animation(.spring(), value: isLoadingMore)
             }
         }
+        .overlay {
+            if isLoading {
+                VStack {
+                    Spacer(minLength: 100)
+                    LoadingView()
+                }
+            }
+        }
         .onAppear {
             Task {
                 await fetchAllAnimals()
             }
         }
         .padding(.bottom, Padding.large.rawValue)
-        .toolbarItem(icon: .filter, placement: .topBarTrailing) {
-            navigator.present(sheet: .animalFilter(animals, $filter))
+        .if(!filteredAnimals.isEmpty) { view in
+            view.toolbarItem(icon: .filter, placement: .topBarTrailing) {
+                navigator.present(sheet: .animalFilter(animals, $filter))
+            }
         }
         .if(filteredAnimals.isEmpty && isLoading == false) { view in
             view.emptyState(.cat, action: removeFilter, content: {
