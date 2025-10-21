@@ -35,6 +35,7 @@ struct RouteDestinationView: View {
         case .annotationList(let animalId): AnnotationListView(animalId: animalId)
         case .annotationDetails(let annotation): AnnotationDetailsView(annotation: annotation)
         case .reportMissingAnimal: ReportMissingAnimalView()
+        case .forgotPassword: ForgotPasswordView()
         }
     }
 }

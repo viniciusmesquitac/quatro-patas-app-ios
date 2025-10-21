@@ -144,8 +144,8 @@ struct WebView: UIViewRepresentable {
                 
                 if bodyString.contains("continue=") {
                     decisionHandler(.cancel)
-//                    var requestWithCachedBody = request
-//                    requestWithCachedBody.httpBody = parent.formSession.encodedBody(isContinuing: true)
+                    var requestWithCachedBody = request
+                    requestWithCachedBody.httpBody = parent.formSession.encodedBody(isContinuing: true)
                     parent.navigator.navigate(to: .webView(request))
                     parent.formSession.page += 1
                     return

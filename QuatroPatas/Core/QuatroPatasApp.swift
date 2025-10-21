@@ -34,6 +34,7 @@ struct QuatroPatasApp: App {
                         MenuView()
                     }
                 }
+                .tint(Color.primaryColor)
                 .sheet(item: $navigator.presentedSheet) { sheet in
                     SheetDestinationView(sheet: sheet)
                 }
@@ -44,7 +45,6 @@ struct QuatroPatasApp: App {
             .environmentObject(storageProvider)
             .environmentObject(userSession)
             .environmentObject(formSession)
-            .tint(Color.primaryColor)
             .toast()
         }
     }

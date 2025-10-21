@@ -34,7 +34,7 @@ struct ToolbarItemModifier: ViewModifier {
 }
 
 extension View {
-    func toolbarItem(label: String? = "", icon: SFIcon? = nil, color: Color = .primaryColor, placement: ToolbarItemPlacement = .automatic, action: @escaping () -> Void) -> some View {
+    func toolbarItem(label: String? = "", icon: SFIcon? = nil, color: Color = Color.primaryColor, placement: ToolbarItemPlacement = .automatic, action: @escaping () -> Void) -> some View {
         self.modifier(ToolbarItemModifier(label: label, icon: icon, color: color, placement: placement, action: action))
     }
 }

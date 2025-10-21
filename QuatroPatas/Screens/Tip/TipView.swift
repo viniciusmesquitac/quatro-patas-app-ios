@@ -45,6 +45,7 @@ struct TipView: View {
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 navigator.dismiss()
             }
+            .tint(Color.primaryColor)
         }
     }
 }

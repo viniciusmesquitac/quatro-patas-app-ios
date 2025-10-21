@@ -27,8 +27,8 @@ struct WebViewContainer: View {
                     .transition(.opacity)
             }
         }
-        .animation(.bouncy, value: state.isLoading)
         .navigationBarBackButtonHidden(true)
+        .animation(.bouncy, value: state.isLoading)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
             guard !state.isFormSubmitted else {
                 navigator.popToRoot()

@@ -48,22 +48,21 @@ struct LoginWithEmailAndPasswordView: View {
                     .textFieldStyle(PrimaryTextFieldStyle())
                     .focused($focusedField, equals: .password)
                 
+                HStack {
+                    Spacer()
+                    Button("Esqueci a senha") {
+                        navigator.navigate(to: .forgotPassword)
+                    }.foregroundStyle(Color.primaryColor)
+                }
+                
                 Spacer()
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
         }
-        .navigationBarHidden(true)
-        .safeAreaInset(edge: .top) {
-            HStack {
-                Button {
-                    navigator.dismiss()
-                } label: {
-                    SFIcon.image(.back)
-                }
-                .buttonStyle(FloatingButtonStyle())
-                Spacer()
-            }.padding(.horizontal)
-        }
+        .navigationBarBackButtonHidden()
+        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+            navigator.dismiss()
+        })
         .safeAreaInset(edge: .bottom) {
             Button("Entrar") {
                 focusedField = nil
