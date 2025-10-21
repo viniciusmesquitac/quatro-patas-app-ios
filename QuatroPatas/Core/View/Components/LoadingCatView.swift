@@ -12,7 +12,6 @@ struct LoadingCatView: View {
     var size: CGFloat = 128
     var currentUploadIndex: Int
     var totalItems: Int
-    var uploadProgress: Double
     
     var body: some View {
         ZStack {
@@ -28,18 +27,6 @@ struct LoadingCatView: View {
                         .foregroundColor(.customLabel)
                         .transition(.opacity)
                 }
-
-                ProgressView(value: uploadProgress)
-                    .progressViewStyle(.linear)
-                    .frame(maxWidth: 140)
-                    .tint(.primaryColor)
-                    .scaleEffect(x: 1, y: 1.2, anchor: .center)
-                    .animation(.easeInOut(duration: 0.3), value: uploadProgress)
-
-                Text("\(Int(round(uploadProgress * 100)))%")
-                    .font(.footnote)
-                    .foregroundColor(.customLabel.opacity(0.9))
-                    .animation(.easeInOut(duration: 0.3), value: uploadProgress)
             }
             .padding()
             .animation(.easeInOut, value: currentUploadIndex)

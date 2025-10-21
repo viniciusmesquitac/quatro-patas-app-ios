@@ -135,8 +135,7 @@ struct EditAnimalView: View {
     func uploadImage(imageURL: URL) async throws {
         let data = try Data(contentsOf: imageURL)
         if let uiImage = UIImage(data: data) {
-            let resized = uiImage.resized(toMax: 1024)
-            if let compressedData = resized.jpegData(compressionQuality: 0.5), let id = animal.id {
+            if let compressedData = uiImage.resized().compressed(), let id = animal.id {
                 let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
                 let url = try await storageProvider.uploadFile(data: compressedData, path: fileName)
                 uploadedURLs.append(url.absoluteString)

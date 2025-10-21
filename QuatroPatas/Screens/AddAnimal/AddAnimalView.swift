@@ -95,8 +95,7 @@ struct AddAnimalView: View {
             if isLoading {
                 LoadingCatView(
                     currentUploadIndex: currentUploadIndex,
-                    totalItems: images.count,
-                    uploadProgress: uploadProgress
+                    totalItems: images.count
                 )
             }
         }
@@ -178,33 +177,10 @@ struct AddAnimalView: View {
                 let data = try Data(contentsOf: imageURL)
                 guard let uiImage = UIImage(data: data) else { continue }
 
-                let resized = uiImage.resized(toMax: 1024)
-                guard let compressedData = resized.jpegData(compressionQuality: 0.5) else { continue }
+                guard let compressedData = uiImage.resized().compressed() else { continue }
 
                 let fileName = "animals/\(id)/\(UUID().uuidString).jpg"
-
-                var imageProgress: Double = 0
-
-                let progressBinding = Binding<Double>(
-                    get: { imageProgress },
-                    set: { newValue in
-                        imageProgress = newValue
-                        let totalProgress = (Double(index) * progressPerImage) + (newValue * progressPerImage)
-
-                        // ⏳ Debounce manual: só atualiza a cada 30ms
-                        let now = Date()
-                        if now.timeIntervalSince(lastUpdate) > 0.03 {
-                            lastUpdate = now
-                            throttledProgress = totalProgress
-                            Task { @MainActor in
-                                withAnimation(.easeInOut(duration: 0.25)) {
-                                    uploadProgress = min(throttledProgress, 1.0)
-                                }
-                            }
-                        }
-                    }
-                )
-
+            
                 let url = try await storageProvider.uploadFile(
                     data: compressedData,
                     path: fileName

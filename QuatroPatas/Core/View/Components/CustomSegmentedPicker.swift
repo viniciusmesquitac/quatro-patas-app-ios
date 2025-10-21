@@ -11,35 +11,38 @@ import UIKit
 struct CustomSegmentedPicker<T: Hashable & CaseIterable & RawRepresentable>: View where T.RawValue == String {
     @Binding var selection: T
     var primaryColor: Color
-
-    init(selection: Binding<T>, primaryColor: Color) {
-        self._selection = selection
-        self.primaryColor = primaryColor
-
-        let appearance = UISegmentedControl.appearance()
-        appearance.selectedSegmentTintColor = UIColor(primaryColor)
-
-        appearance.setTitleTextAttributes([
-            .foregroundColor : UIColor.customLabel,
-            .font : UIFont.systemFont(ofSize: 16, weight: .semibold)
-        ], for: .normal)
-
-        appearance.setTitleTextAttributes([
-            .foregroundColor : UIColor.systemBackground,
-            .font : UIFont.systemFont(ofSize: 16, weight: .semibold)
-        ], for: .selected)
-    }
-
+    
+    @Namespace private var animation
+    
     var body: some View {
-        Picker("Segment", selection: $selection) {
+        HStack(spacing: 0) {
             ForEach(Array(T.allCases), id: \.self) { option in
-                Text(option.rawValue)
-                    .tag(option)
+                Button {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.65, blendDuration: 0.2)) {
+                        selection = option
+                    }
+                } label: {
+                    Text(option.rawValue)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(selection == option ? .customBackground : .primary)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                        .contentShape(Rectangle())
+                        .background(
+                            ZStack {
+                                if selection == option {
+                                    RoundedRectangle(cornerRadius: CornerRadius.large.rawValue)
+                                        .fill(primaryColor)
+                                        .matchedGeometryEffect(id: "segmentBackground", in: animation)
+                                }
+                            }
+                        )
+                }
+                .buttonStyle(.plain)
             }
         }
-        .pickerStyle(.segmented)
-        .tint(primaryColor)
-        .scaleEffect(y: 1.12)
-        .padding(.vertical, Padding.small.rawValue)
+        .padding(4)
+        .background(Color.gray.opacity(0.15))
+        .clipShape(RoundedRectangle(cornerRadius: CornerRadius.large.rawValue))
     }
 }

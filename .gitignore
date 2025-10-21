@@ -1,0 +1,44 @@
+# Xcode
+#
+DerivedData/
+build/
+*.xcworkspace/xcuserdata/
+*.xcuserstate
+xcuserdata/
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Ignorar o project.pbxproj
+**/*.pbxproj
+
+# SwiftPM
+#
+.swiftpm/
+.build/
+
+# CocoaPods
+#
+Pods/
+
+# Carthage
+#
+Carthage/Build/
+
+# Fastlane
+#
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Firebase keys
+GoogleService-Info.plist
+
+# Outros
+#
+*.ipa
+*.dSYM.zip
+*.dSYM

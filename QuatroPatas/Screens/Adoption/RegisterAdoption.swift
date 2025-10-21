@@ -27,7 +27,6 @@ struct RegisterAdoption: View {
     @State private var safePlaceChecked = false
     @State private var restAreaChecked = false
     @State private var currentUploadIndex = 0
-    @State private var uploadProgress: Double = 0
 
     @State private var isLoading = false
     
@@ -85,7 +84,7 @@ struct RegisterAdoption: View {
         }
         .overlay {
             if isLoading {
-                LoadingCatView(currentUploadIndex: currentUploadIndex, totalItems: 3, uploadProgress: uploadProgress)
+                LoadingCatView(currentUploadIndex: currentUploadIndex, totalItems: 3)
             }
         }
     }

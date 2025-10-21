@@ -75,14 +75,6 @@ struct AnimalsAvailableView: View {
                 .animation(.spring(), value: isLoadingMore)
             }
         }
-        .overlay {
-            if isLoading {
-                VStack {
-                    Spacer(minLength: 100)
-                    LoadingView()
-                }
-            }
-        }
         .onAppear {
             Task {
                 await fetchAllAnimals()

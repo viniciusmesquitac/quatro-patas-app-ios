@@ -160,8 +160,8 @@ struct ReportMissingAnimalView: View {
                 let data = try Data(contentsOf: imageURL)
                 guard let uiImage = UIImage(data: data) else { continue }
 
-                let resized = uiImage.resized(toMax: 1024)
-                guard let compressedData = resized.jpegData(compressionQuality: 0.5) else { continue }
+                let resized = uiImage
+                guard let compressedData = resized.resized().compressed() else { continue }
 
                 let fileName = "missing-animals/\(id)/\(UUID().uuidString).jpg"
 
