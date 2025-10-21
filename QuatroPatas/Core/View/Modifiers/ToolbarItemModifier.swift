@@ -14,23 +14,14 @@ struct ToolbarItemModifier: ViewModifier {
     var color: Color
     var placement: ToolbarItemPlacement
     var action: (() -> Void)
-
+    
     func body(content: Content) -> some View {
         content
             .toolbar {
                 ToolbarItem(placement: placement) {
-                    Button(action: action) {
-                        HStack(spacing: Spacing.medium.rawValue) {
-                            if let icon = icon {
-                                SFIcon.image(icon, color: color)
-                                    .frame(maxHeight: .infinity, alignment: .center)
-                            }
-                            if let label = label {
-                                Text(label)
-                                    .frame(maxHeight: .infinity, alignment: .center)
-                            }
-                        }
-                    }
+                    Button(label ?? String(), systemImage: icon?.rawValue ?? String()) {
+                        action()
+                    }.foregroundStyle(color)
                 }
             }
     }
