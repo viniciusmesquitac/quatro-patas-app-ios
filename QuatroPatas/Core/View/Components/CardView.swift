@@ -12,24 +12,30 @@ struct CardView: View {
     var title: String
     var icon: SFIcon = .paw
     var action: () -> Void
+    var isFocused: Bool = false
 
     var body: some View {
         Button(action: action) {
             ZStack {
-                Color.customBackground
-                    .cornerRadius(CornerRadius.medium.rawValue)
+                if isFocused {
+                    Color.primaryColor
+                        .cornerRadius(CornerRadius.medium.rawValue)
+                } else {
+                    Color.customBackground
+                        .cornerRadius(CornerRadius.medium.rawValue)
+                }
 
                 VStack {
                     HStack {
                         Image(systemName: icon.rawValue)
                             .font(.system(size: 22))
-                            .foregroundStyle(Color.primaryColor)
+                            .foregroundStyle(isFocused ? Color.customBackground : Color.primaryColor)
                         Spacer()
                     }
                     Spacer()
                     HStack {
                         Text(title)
-                            .foregroundStyle(Color.customLabel)
+                            .foregroundStyle(isFocused ? Color.customBackground : Color.customLabel)
                             .font(.headline)
                             .fontWeight(.light)
                             .multilineTextAlignment(.leading)

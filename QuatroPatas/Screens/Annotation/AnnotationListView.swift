@@ -30,7 +30,7 @@ struct AnnotationListView: View {
                 ForEach(annotations, id: \.id) { annotation in
                     AnnotationRowView(annotation: annotation)
                         .onTapGesture {
-                            navigator.navigate(to: .annotationDetails(annotation))
+                            navigator.navigate(to: .annotationDetails(annotation, animalId))
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button(role: .destructive) {
@@ -54,8 +54,10 @@ struct AnnotationListView: View {
             .toolbarItem(icon: .add, placement: .topBarTrailing) {
                 addAnotation()
             }
-            .task {
-                await fetch(from: animalId)
+            .onAppear {
+                Task {
+                    await fetch(from: animalId)
+                }
             }
         }
         
@@ -73,25 +75,26 @@ struct AnnotationListView: View {
     func fetch(from animalId: String) async {
         do {
             isLoading = true
+            defer { isLoading = false }
+
             guard let path = self.path else {
                 toast("Erro ao carregar as anotações", .error)
                 return
             }
-            let items: [Annotation] = try await databaseProvider.fetch(from: path)
 
-            let newOnes = items.filter { new in
-                !annotations.contains { $0.id == new.id }
+            let fetched: [Annotation] = try await databaseProvider.fetch(from: path)
+
+            withAnimation(.easeInOut) {
+                annotations = fetched.sorted(by: { lhs, rhs in
+                    return lhs.date > rhs.date
+                })
             }
-            
-            withAnimation {
-                annotations.append(contentsOf: newOnes)
-            }
-            
-            isLoading = false
+
         } catch {
             toast("Erro ao carregar as anotações", .error)
         }
     }
+
 
     @MainActor
     func delete(_ annotation: Annotation) async {

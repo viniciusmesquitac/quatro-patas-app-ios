@@ -9,7 +9,18 @@ import SwiftUI
 
 struct AnnotationDetailsView: View {
     var annotation: Annotation
+    var animalId: String
     
+    @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var databaseProvider: DatabaseProvider
+    @EnvironmentObject var userSession: UserSession
+    @Environment(\.toast) var toast
+    
+    var path: String? {
+        guard let userId = userSession.user?.id else { return nil }
+        return "users/\(userId)/animals/\(animalId)/annotations"
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
@@ -22,8 +33,7 @@ struct AnnotationDetailsView: View {
                 }
                 
                 Divider()
-                
-                // Texto principal
+
                 Text(annotation.text)
                     .font(.body)
                     .foregroundColor(.primary)
@@ -35,7 +45,23 @@ struct AnnotationDetailsView: View {
         }
         .navigationTitle("Detalhes da Anotação")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemGroupedBackground))
+        .navigationBarBackButtonHidden()
+        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+            navigator.dismiss()
+        })
+        .toolbarItem(icon: .delete, placement: .topBarTrailing, action: {
+            let dialog = ConfirmDialogModel(
+                title: "Deseja deletar essa anotação?",
+                message: "Essa ação não pode ser desfeita.") {
+                Task {
+                    await delete(annotation)
+                    navigator.dismiss()
+                }
+            }
+            navigator.present(sheet: .confirmDelete(dialog))
+
+        })
+        .background(Color.customBackground)
     }
     
     private func formatDate(_ isoDate: String) -> String {
@@ -45,5 +71,17 @@ struct AnnotationDetailsView: View {
             return formatter.string(from: date)
         }
         return isoDate
+    }
+    
+    @MainActor
+    func delete(_ annotation: Annotation) async {
+        guard let path = self.path, let id = annotation.id else { return }
+        
+        do {
+            _ = try await databaseProvider.delete(from: path, id: id)
+            toast("Anotação deletada", .success)
+        } catch {
+            toast("Erro ao deletar a anotação", .error)
+        }
     }
 }

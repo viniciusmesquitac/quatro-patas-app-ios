@@ -60,6 +60,8 @@ struct SheetDestinationView: View {
             NavigationStack {
                 AuthWebViewContainerView(request: url, onCompletion: result)
             }
+        case .confirmDelete(let dialog):
+            ConfirmDeleteView(model: dialog)
         }
     }
 }

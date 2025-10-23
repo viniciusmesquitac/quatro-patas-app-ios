@@ -33,7 +33,7 @@ struct RouteDestinationView: View {
         case .adoptionDetails(let animalId): AdoptionDetailsView(animalId: animalId)
         case .weightChart(let animalId): WeightChartView(animalId: animalId)
         case .annotationList(let animalId): AnnotationListView(animalId: animalId)
-        case .annotationDetails(let annotation): AnnotationDetailsView(annotation: annotation)
+        case .annotationDetails(let annotation, let animalId): AnnotationDetailsView(annotation: annotation, animalId: animalId)
         case .reportMissingAnimal: ReportMissingAnimalView()
         case .forgotPassword: ForgotPasswordView()
         }

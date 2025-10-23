@@ -185,6 +185,10 @@ struct WebView: UIViewRepresentable {
                 });
             """)
             
+            webView.evaluateJavaScript("""
+                const header = document.querySelector('header');
+                if (header) header.style.display = 'none';
+            """)
             
             parent.state.goBack = false
             parent.state.canGoBack = webView.canGoBack

@@ -22,11 +22,15 @@ struct ToolbarItemModifier: ViewModifier {
                     if let icon = icon {
                         Button(label ?? String(), systemImage: icon.rawValue) {
                             action()
-                        }.foregroundStyle(color)
+                        }
+                        .tint(color)
+                        .foregroundStyle(color)
                     } else {
                         Button(label ?? String()) {
                             action()
-                        }.foregroundStyle(color)
+                        }
+                        .tint(color)
+                        .foregroundStyle(color)
                     }
                 }
             }

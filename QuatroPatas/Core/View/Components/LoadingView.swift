@@ -15,6 +15,7 @@ struct LoadingView: View {
         ZStack {
             Rectangle().fill(Color.customBackground)
             ProgressView()
+                .tint(Color.primaryColor)
                 .frame(width: size, height: size)
                 .background(.background, in: .rect(cornerRadius: CornerRadius.medium.rawValue))
             

@@ -50,17 +50,19 @@ struct RegisterView: View {
                         }
                         .focused($focusedField, equals: .email)
                     
-                    SecureField("Senha", text: $password)
-                        .textFieldStyle(PrimaryTextFieldStyle())
-                        .focused($focusedField, equals: .password)
+                    PasswordField(
+                        title: "Senha",
+                        text: $password,
+                    ).frame(height: 44)
                     
-                    SecureField("Repetir senha", text: $passwordConfirmation)
-                        .textFieldStyle(PrimaryTextFieldStyle())
-                        .focused($focusedField, equals: .password)
+                    PasswordField(
+                        title: "Repetir senha",
+                        text: $passwordConfirmation,
+                    ).frame(height: 44)
                     
                     Spacer(minLength: 100)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, Padding.xLarge.rawValue)
             }
         }
         .navigationTitle("Cadastro")

@@ -8,7 +8,7 @@
 import SwiftUI
 import WebKit
 
-enum Route: Identifiable {
+enum Route: Identifiable, Hashable {
     case details(Animal)
     case adoption
     case animalsList(AnimalListType)
@@ -26,7 +26,7 @@ enum Route: Identifiable {
     case vaccineList(String)
     case medicationList(String)
     case annotationList(String)
-    case annotationDetails(Annotation)
+    case annotationDetails(Annotation, String)
     case registerAdoption(String)
     case adoptionDetails(String)
     case weightChart(String)

@@ -37,9 +37,9 @@ struct MenuView: View {
                 ForEach(cards.indices, id: \.self) { index in
                     let card = cards[index]
                     
-                    CardView(title: card.title, icon: card.icon) {
+                    CardView(title: card.title, icon: card.icon, action:  {
                         card.action()
-                    }
+                    }, isFocused: card.isFocused)
                     .opacity(animate ? 1 : 0)
                     .offset(y: animate ? 0 : 30)
                     .animation(

@@ -77,7 +77,11 @@ struct AnimalsAvailableView: View {
         }
         .onAppear {
             Task {
-                await fetchAllAnimals()
+                if animals.isEmpty {
+                    await fetchAllAnimals()
+                } else {
+                    isLoading = false
+                }
             }
         }
         .padding(.bottom, Padding.large.rawValue)

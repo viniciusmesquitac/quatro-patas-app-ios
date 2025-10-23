@@ -12,6 +12,7 @@ struct MenuCard {
     let action: () -> Void
     var icon: SFIcon = .paw
     let transition: AnyTransition? = .scale.combined(with: .opacity)
+    var isFocused: Bool = false
 }
 
 enum MenuCardType: CaseIterable {
@@ -24,6 +25,7 @@ enum MenuCardType: CaseIterable {
     case favorites
     case myAnimals
     case lostAnimal
+    case apoiase
 }
 
 extension MenuCardType {
@@ -38,6 +40,7 @@ extension MenuCardType {
         case .favorites: return "Meus Favoritos"
         case .myAnimals: return "Meus Animais"
         case .lostAnimal: return "Animal Perdido"
+        case .apoiase: return "Apoia-se"
         }
     }
 }
@@ -48,10 +51,10 @@ private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
         .addOngAnimal, .ongAnimalsList
     ],
     .adopter: [
-        .adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal
+        .adoptionForm, .aboutShelter, .favorites, .apoiase, .lostAnimal, .myAnimals
     ],
     .anonymous: [
-        .adoptionForm, .aboutShelter, .favorites, .myAnimals, .lostAnimal
+        .adoptionForm, .aboutShelter, .favorites, .apoiase, .lostAnimal, .myAnimals
     ]
 ]
 
@@ -91,7 +94,7 @@ struct MenuCardFactory {
                 
             case .aboutShelter:
                 return MenuCard(title: cardType.title, action: {
-                    if let url = URL(string: "https://4patasfortaleza.org") {
+                    if let url = URL(string: "https://sites.google.com/view/4patasfortaleza/quem-somos?authuser=0") {
                         let request = URLRequest(url: url)
                         navigator.navigate(to: .webView(request))
                     }
@@ -128,6 +131,13 @@ struct MenuCardFactory {
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal)
                 }, icon: .add)
+            case .apoiase:
+                return MenuCard(title: cardType.title, action: {
+                    if let url = URL(string: "https://apoia.se/quatropatasfortaleza") {
+                        let request = URLRequest(url: url)
+                        navigator.navigate(to: .webView(request))
+                    }
+                }, icon: .donate, isFocused: true)
             }
         }
     }
