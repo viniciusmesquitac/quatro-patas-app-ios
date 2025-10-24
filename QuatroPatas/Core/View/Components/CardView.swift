@@ -37,7 +37,7 @@ struct CardView: View {
                         Text(title)
                             .foregroundStyle(isFocused ? Color.customBackground : Color.customLabel)
                             .font(.headline)
-                            .fontWeight(.light)
+                            .fontWeight(isFocused ? .bold : .light)
                             .multilineTextAlignment(.leading)
                         Spacer()
                     }

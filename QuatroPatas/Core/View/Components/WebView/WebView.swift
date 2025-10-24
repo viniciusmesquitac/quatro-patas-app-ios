@@ -190,6 +190,47 @@ struct WebView: UIViewRepresentable {
                 if (header) header.style.display = 'none';
             """)
             
+            webView.evaluateJavaScript("""
+                const profileBar = document.querySelector('.profile-bar--fixed');
+                if (profileBar) profileBar.style.display = 'none';
+            """)
+            
+            webView.evaluateJavaScript("""
+                const profileBar = document.querySelector('.profile-bar--fixed');
+                if (profileBar) profileBar.style.display = 'none';
+            """)
+            
+            webView.evaluateJavaScript("""
+            const barBottom = document.querySelector('.profile-bar--fixed.profile-bar--bottom');
+            if (barBottom) barBottom.style.display = 'none';
+            """)
+
+            webView.evaluateJavaScript("""
+            document.querySelectorAll('footer.Footer, footer.jsx-3584095101, footer')
+              .forEach(el => el.style.display = 'none');
+            """)
+    
+            webView.evaluateJavaScript("""
+            const captcha = document.querySelector('iframe[title="reCAPTCHA"]');
+            if (captcha) captcha.style.display = 'none';
+            """)
+            
+            webView.evaluateJavaScript("""
+            const badge = document.querySelector('.grecaptcha-badge');
+            if (badge) badge.style.display = 'none';
+            """)
+            
+            webView.evaluateJavaScript("""
+            const widget = document.getElementById('launcher');
+            if (widget) widget.style.display = 'none';
+            """)
+            
+            
+            webView.evaluateJavaScript("""
+            document.querySelectorAll('#SMMuxb, .kesdnc')
+              .forEach(el => el.style.display = 'none');
+            """)
+    
             parent.state.goBack = false
             parent.state.canGoBack = webView.canGoBack
     
