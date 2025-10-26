@@ -7,9 +7,33 @@
 import SwiftUI
 import PhotosUI
 
-enum GridImage: Hashable {
-    case existing(String) // foto salva no servidor
-    case new(URL)         // foto adicionada localmente
+enum GridImage: Hashable, Transferable {
+    case existing(String)
+    case new(URL)
+    
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(contentType: .data) { image in
+            // Exportação (drag)
+            switch image {
+            case .existing(let urlString):
+                return Data(urlString.utf8) // Convertemos a string em Data
+            case .new(let url):
+                return try Data(contentsOf: url) // Lê o arquivo local
+            }
+        } importing: { data in
+            // Importação (drop)
+            // Aqui você decide como recriar o `GridImage`
+            if let urlString = String(data: data, encoding: .utf8),
+               urlString.starts(with: "http") {
+                return .existing(urlString)
+            } else {
+                // Se for arquivo, precisamos salvar localmente
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+                try data.write(to: tempURL)
+                return .new(tempURL)
+            }
+        }
+    }
 }
 
 struct ImagesGrid: View {
@@ -20,15 +44,13 @@ struct ImagesGrid: View {
     @State private var isLoading: [URL?: Bool] = [:]
     @State private var showPhotoPicker = false
     @State private var draggingItem: GridImage?
+    @State private var allImages: [GridImage] = []
 
     let maxPhotos: Int
+
     private let columns = [
         GridItem(.adaptive(minimum: 155), spacing: Spacing.medium.rawValue)
     ]
-
-    private var allImages: [GridImage] {
-        existingPhotos.map { .existing($0) } + newImages.map { .new($0) }
-    }
 
     private var remainingSlots: Int {
         maxPhotos - allImages.count
@@ -39,25 +61,34 @@ struct ImagesGrid: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: Spacing.xxLarge.rawValue) {
             ForEach(allImages, id: \.self) { item in
-                cell(for: item)
-                    .opacity(draggingItem == item ? 0.6 : 1.0)
-                    .onDrag ({
-                        self.draggingItem = item
-                        return NSItemProvider(object: item.idString as NSString)
-                    }, preview: {
-                        cell(for: item, preview: true)
-                            .clipShape(RoundedRectangle(cornerRadius: 32))
-                            .scaleEffect(1.05)
-                            .brightness(0.05)
-                            .shadow(radius: 8)
-                    })
-                    .onDrop(of: [.image],
-                            delegate: DropViewDelegate(
-                                current: item,
-                                items: allImages,
-                                draggingItem: $draggingItem,
-                                onMove: reorder
-                            ))
+                GeometryReader {
+                    let size = $0.size
+
+                    switch item {
+                    case .existing(_):
+                        cell(for: item)
+                            .draggable(item) {
+                                cell(for: item)
+                                    .background(.ultraThinMaterial)
+                                    .frame(width: 1, height: 1)
+                                    .onAppear {
+                                        draggingItem = item
+                                    }
+                            }
+                            .dropDestination(for: GridImage.self) { items, location in
+                                draggingItem = nil
+                                return false
+                            } isTargeted: { status in
+                                if let draggingItem, status, draggingItem != item {
+                                    handleDrag(draggingItem: draggingItem, item: item)
+                                }
+                            }
+                    case .new(_):
+                        cell(for: item)
+                    }
+                    
+                }
+                .frame(minHeight: 155)
             }
 
             if remainingSlots > 0 {
@@ -69,7 +100,6 @@ struct ImagesGrid: View {
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: allImages)
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedPhotos,
@@ -77,13 +107,35 @@ struct ImagesGrid: View {
             matching: .images,
             photoLibrary: .shared()
         )
+        .onAppear {
+            allImages = existingPhotos.map { .existing($0) } + newImages.map { .new($0) }
+        }
         .onChange(of: selectedPhotos) { _, newItems in
             handleSelectedPhotos(newItems)
         }
     }
+    
+    private func handleDrag(draggingItem: GridImage, item: GridImage) {
+        if let sourceIndex = allImages.firstIndex(of: draggingItem),
+           let destinationIndex = allImages.firstIndex(of: item) {
+            withAnimation(.bouncy) {
+                let sourceItem = allImages.remove(at: sourceIndex)
+                allImages.insert(sourceItem, at: destinationIndex)
+
+                existingPhotos = allImages.compactMap {
+                    if case .existing(let value) = $0 { return value }
+                    return nil
+                }
+                newImages = allImages.compactMap {
+                    if case .new(let value) = $0 { return value }
+                    return nil
+                }
+            }
+        }
+    }
 
     @ViewBuilder
-    private func cell(for item: GridImage, preview: Bool = false) -> some View {
+    private func cell(for item: GridImage, preview: Binding<Bool> = .constant(false)) -> some View {
         switch item {
         case .existing(let urlString):
             ExistingPhotoCell(
@@ -135,56 +187,10 @@ struct ImagesGrid: View {
         }
     }
 
-    private func reorder(from: GridImage, to: GridImage) {
-        var current = allImages
-        guard let fromIndex = current.firstIndex(of: from),
-              let toIndex = current.firstIndex(of: to),
-              fromIndex != toIndex else {
-            return
-        }
-
-        withAnimation(.easeInOut(duration: 0.25)) {
-            current.move(fromOffsets: IndexSet(integer: fromIndex),
-                         toOffset: toIndex > fromIndex ? toIndex + 1 : toIndex)
-        }
-
-        existingPhotos = current.compactMap {
-            if case let .existing(url) = $0 { return url }
-            return nil
-        }
-        newImages = current.compactMap {
-            if case let .new(url) = $0 { return url }
-            return nil
-        }
-    }
-
     func onRemoveImage(at fileURL: URL) async {
         if let index = newImages.firstIndex(of: fileURL) {
             newImages.remove(at: index)
         }
-    }
-}
-
-// MARK: - Drop Delegate
-struct DropViewDelegate: DropDelegate {
-    let current: GridImage
-    let items: [GridImage]
-    @Binding var draggingItem: GridImage?
-    let onMove: (GridImage, GridImage) -> Void
-
-    func performDrop(info: DropInfo) -> Bool {
-        draggingItem = nil
-        return true
-    }
-    
-    func dropUpdated(info: DropInfo) -> DropProposal? {
-        .init(operation: .cancel)
-    }
-
-    func dropEntered(info: DropInfo) {
-        guard let draggingItem = draggingItem,
-              draggingItem != current else { return }
-        onMove(draggingItem, current)
     }
 }
 
