@@ -26,6 +26,9 @@ struct MyAnimalDetailsView: View {
     @State private var isAdopted: Bool
     @State private var isMissing: Bool
     
+    @State private var selectedImageIndex = 0
+    @State private var showFullScreen = false
+
     let columns = [
         GridItem(.flexible(), spacing: Spacing.large.rawValue),
         GridItem(.flexible(), spacing: Spacing.large.rawValue)
@@ -58,6 +61,9 @@ struct MyAnimalDetailsView: View {
                     .frame(width: 160, height: 160)
                     .clipShape(Circle())
                     .padding(.top)
+                    .onTapGesture {
+                        showFullScreen = true
+                    }
             }
 
 
@@ -90,6 +96,10 @@ struct MyAnimalDetailsView: View {
 
         }
         .navigationBarBackButtonHidden()
+        .fullScreenCover(isPresented: $showFullScreen) {
+            ZoomableCarouselView(images: animal.photos,
+                                 selectedIndex: $selectedImageIndex)
+        }
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }

@@ -13,6 +13,7 @@ struct RegisterAdoption: View {
     @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var storageProvider: StorageProvider
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var userSession: UserSession
     
     var animalId: String
     
@@ -140,6 +141,11 @@ struct RegisterAdoption: View {
         )
 
         toast("fotos da identidade carregadas", .success)
+    
+        guard let ongId = userSession.user?.id else {
+            toast("Não foi possivel concluir essa requisição, tente novamente.", .error)
+            return
+        }
 
         let adoption = Adoption(
             animalId: animalId,
@@ -149,8 +155,7 @@ struct RegisterAdoption: View {
             status: .approved
         )
 
-        _ = try await databaseProvider.add(adoption, to: "adoptions")
-        let ongId = "rlt2rPJZOveXgqLs54o6lVrufC32"
+        _ = try await databaseProvider.add(adoption, to: "users/\(ongId)/adoptions")
         
         _ = try await databaseProvider.updateFields(
             in: "users/\(ongId)/animals",

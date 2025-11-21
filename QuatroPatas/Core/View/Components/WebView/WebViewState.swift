@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WebKit
 
 final class WebViewState: ObservableObject {
     @Published var isLoading = false
@@ -13,4 +14,6 @@ final class WebViewState: ObservableObject {
     @Published var goBack = false
     @Published var isFormSubmitted = false
     @Published var showPopup = false
+    
+    @Published var wkWebView: WKWebView? = nil
 }

@@ -18,7 +18,6 @@ struct QuatroPatasApp: App {
     @StateObject private var userSession = UserSession()
     @StateObject private var formSession = FormSessionManager()
 
-
     init() {
         FirebaseApp.configure()
     }
@@ -29,6 +28,9 @@ struct QuatroPatasApp: App {
                 TabView(selection: $navigator.selectedTab) {
                     TabItem(label: .animals, icon: .paw) {
                         AnimalsView()
+                    }
+                    TabItem(label: .adoption, icon: .heart) {
+                        AdoptionView()
                     }
                     TabItem(label: .menu, icon: .menu) {
                         MenuView()

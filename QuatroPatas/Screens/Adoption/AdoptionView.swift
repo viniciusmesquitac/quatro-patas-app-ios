@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AdoptionView: View {
+    
+    @EnvironmentObject var userSession: UserSession
 
     var body: some View {
         ScrollView {
