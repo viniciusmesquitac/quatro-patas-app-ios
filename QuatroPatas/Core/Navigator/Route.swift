@@ -22,7 +22,7 @@ enum Route: Identifiable, Hashable {
     case forgotPassword
     case profile
     case personalInformation(User)
-    case myAnimalDetails(Animal)
+    case animalWallet(Animal)
     case vaccineList(String)
     case medicationList(String)
     case annotationList(String)
@@ -31,6 +31,7 @@ enum Route: Identifiable, Hashable {
     case adoptionDetails(String)
     case weightChart(String)
     case reportMissingAnimal
+    case happyEndingDetails(imageUrl: String)
 
     var id: String { String(describing: self) }
 }

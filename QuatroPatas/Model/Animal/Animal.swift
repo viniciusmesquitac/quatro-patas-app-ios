@@ -7,7 +7,7 @@
 
 @preconcurrency import FirebaseFirestore
 
-struct Animal: Hashable, Identifiable, Sendable, Codable {
+struct Animal: Hashable, Identifiable, Sendable, Codable, Equatable {
     @DocumentID var id: String?
     var fileId: String?
     @ServerTimestamp var createdAt: Date?
@@ -30,7 +30,7 @@ struct Animal: Hashable, Identifiable, Sendable, Codable {
 }
 
 extension Animal {
-    static let empty = Animal(name: "", age: "", gender: "", type: "", breed: "", color: "", size: "", description: "")
+    static let empty = Animal(name: "", photos: ["https://via.placeholder.com/150"], age: "", gender: "", type: "", breed: "", color: "", size: "", description: "")
 }
 
 extension Animal {

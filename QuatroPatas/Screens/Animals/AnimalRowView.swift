@@ -27,14 +27,17 @@ struct AnimalRowView: View {
                     .font(.system(size: 24))
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
-                
+                    .shimmer(if: animal == .empty)
+
                 Text("\(animal.ageFormatted)")
                     .font(.system(size: 18))
                     .foregroundColor(.secondary)
-                
+                    .shimmer(if: animal == .empty)
+        
                 Text(animal.localized.gender)
                     .font(.system(size: 18))
                     .foregroundColor(.secondary)
+                    .shimmer(if: animal == .empty)
                 
                 TagsView(tags: loadTags())
             }

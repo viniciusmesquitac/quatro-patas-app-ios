@@ -34,24 +34,19 @@ struct EditPersonalInformationView: View {
         ScrollView {
             VStack(alignment: .center, spacing: Spacing.xLarge.rawValue) {
     
-                TextField("Nome", text: $name)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Nome", text: $name)
                 
-                TextField("Email", text: $email)
-                    .disabled(true)
-                    .foregroundStyle(Color.gray)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Email", disabled: true, text: $email)
                 
-                TextField("Instagram (Opcional)", text: $instagram)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Instagram (Opcional)", text: $instagram)
                 
                 if user.type == .ngo {
-                    TextField("Formulário do google", text: $form)
-                        .textFieldStyle(PrimaryTextFieldStyle())
+                    FloatingBorderLabelTextField(placeholder: "Formulário de adoção ( gatos )", text: $form)
+                    
+                    FloatingBorderLabelTextField(placeholder: "Formulário de adoção ( cachorros )", text: $form)
                 }
                 
-                TextField("Telefone (Opcional)", text: $phone)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Telefone (Opcional)", text: $phone)
                     .keyboardType(.numberPad)
                     .onChange(of: phone) { _, newValue in
                         var digits = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()

@@ -26,7 +26,7 @@ struct RouteDestinationView: View {
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
-        case .myAnimalDetails(let animal): MyAnimalDetailsView(animal: animal)
+        case .animalWallet(let animal): AnimalWalletView(animal: animal)
         case .vaccineList(let animalId): VaccineListView(animalId: animalId)
         case .medicationList(let animalId): MedicationListView(animalId: animalId)
         case .registerAdoption(let animalId): RegisterAdoption(animalId: animalId)
@@ -36,6 +36,7 @@ struct RouteDestinationView: View {
         case .annotationDetails(let annotation, let animalId): AnnotationDetailsView(annotation: annotation, animalId: animalId)
         case .reportMissingAnimal: ReportMissingAnimalView()
         case .forgotPassword: ForgotPasswordView()
+        case .happyEndingDetails(let imageUrl): HappyEndingDetails(imageUrl: imageUrl)
         }
     }
 }
