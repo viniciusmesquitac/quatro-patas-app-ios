@@ -37,10 +37,9 @@ struct PrimaryButtonStyle: ButtonStyle {
                     .cornerRadius(cornerRadius)
                     .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
                     .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
-                    .animation(.easeInOut(duration: 0.2), value: isEnabled) // ✅ animação suave de cor
+                    .animation(.easeInOut(duration: 0.2), value: isEnabled)
                     .opacity(isEnabled ? 1 : 0.7)
             }
         }
-        .disabled(!isEnabled || isLoading)
     }
 }

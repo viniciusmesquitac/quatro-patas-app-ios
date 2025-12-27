@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct AdoptionDetailsView: View {
     
     @EnvironmentObject var navigator: Navigator

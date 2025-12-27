@@ -19,7 +19,8 @@ struct EditPersonalInformationView: View {
     @State var email: String = ""
     @State var instagram: String = ""
     @State var phone: String = ""
-    @State var form: String = ""
+    @State var formCat: String = ""
+    @State var formDog: String = ""
     
     @State var isLoading: Bool = false
 
@@ -27,31 +28,27 @@ struct EditPersonalInformationView: View {
         name != user.name ||
         instagram != (user.instagram ?? "") ||
         phone != (user.phone ?? "") ||
-        form != (user.form ?? "")
+        formCat != (user.formCat ?? "") ||
+        formDog != (user.formDog ?? "")
     }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: Spacing.xLarge.rawValue) {
     
-                TextField("Nome", text: $name)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Nome", text: $name)
                 
-                TextField("Email", text: $email)
-                    .disabled(true)
-                    .foregroundStyle(Color.gray)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Email", disabled: true, text: $email)
                 
-                TextField("Instagram (Opcional)", text: $instagram)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Instagram (Opcional)", text: $instagram)
                 
                 if user.type == .ngo {
-                    TextField("Formulário do google", text: $form)
-                        .textFieldStyle(PrimaryTextFieldStyle())
+                    FloatingBorderLabelTextField(placeholder: "Formulário de adoção ( gatos )", text: $formCat)
+                    
+                    FloatingBorderLabelTextField(placeholder: "Formulário de adoção ( cachorros )", text: $formDog)
                 }
                 
-                TextField("Telefone (Opcional)", text: $phone)
-                    .textFieldStyle(PrimaryTextFieldStyle())
+                FloatingBorderLabelTextField(placeholder: "Telefone (Opcional)", text: $phone)
                     .keyboardType(.numberPad)
                     .onChange(of: phone) { _, newValue in
                         var digits = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
@@ -85,7 +82,8 @@ struct EditPersonalInformationView: View {
                 email = user.email
                 instagram = user.instagram ?? ""
                 phone = user.phone ?? ""
-                form = user.form ?? ""
+                formCat = user.formCat ?? ""
+                formDog = user.formDog ?? ""
             }
         }
         .safeAreaInset(edge: .bottom) {
@@ -97,7 +95,8 @@ struct EditPersonalInformationView: View {
                         updatedUser.name = name
                         updatedUser.instagram = instagram
                         updatedUser.phone = phone
-                        updatedUser.form = form
+                        updatedUser.formCat = formCat
+                        updatedUser.formDog = formDog
                         try await _ = databaseProvider.update(updatedUser, in: "users", withID: user.id)
                         isLoading = false
                         toast("Atualizado com sucesso!", .success)
@@ -106,6 +105,7 @@ struct EditPersonalInformationView: View {
                     }
                 }
             }
+            .disabled(!hasChanges)
             .padding(Padding.xxLarge.rawValue)
             .buttonStyle(PrimaryButtonStyle(isLoading: isLoading, isEnabled: hasChanges))
         }

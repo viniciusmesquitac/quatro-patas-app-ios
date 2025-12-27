@@ -94,6 +94,7 @@ struct WebView: UIViewRepresentable {
         webView.uiDelegate = context.coordinator
         webView.isInspectable = true
         webView.scrollView.pinchGestureRecognizer?.isEnabled = false
+        context.coordinator.webView = webView
 
         webView.load(request)
 
@@ -117,6 +118,7 @@ struct WebView: UIViewRepresentable {
     
     class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
         var parent: WebView
+        weak var webView: WKWebView?
         
         init(_ parent: WebView) {
             self.parent = parent

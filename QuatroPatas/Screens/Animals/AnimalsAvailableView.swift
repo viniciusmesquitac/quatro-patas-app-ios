@@ -78,6 +78,7 @@ struct AnimalsAvailableView: View {
         .onAppear {
             Task {
                 if animals.isEmpty {
+                    self.animals = [Animal.empty, Animal.empty, Animal.empty]
                     await fetchAllAnimals()
                 } else {
                     isLoading = false

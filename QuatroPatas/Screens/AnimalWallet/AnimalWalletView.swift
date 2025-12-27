@@ -1,5 +1,5 @@
 //
-//  MyAnimalDetailsView.swift
+//  AnimalWalletView.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 20/09/25.
@@ -7,14 +7,7 @@
 
 import SwiftUI
 
-enum AnimalDetailsSegment: String, CaseIterable, Identifiable {
-    case sheet = "Ficha"
-    case health = "Saúde"
-
-    var id: String { self.rawValue }
-}
-
-struct MyAnimalDetailsView: View {
+struct AnimalWalletView: View {
     
     @EnvironmentObject var navigator: Navigator
     @CacheProvider(type: .fileManager) var cacheProvider
@@ -26,12 +19,15 @@ struct MyAnimalDetailsView: View {
     @State private var isAdopted: Bool
     @State private var isMissing: Bool
     
+    @State private var selectedImageIndex = 0
+    @State private var showFullScreen = false
+
     let columns = [
         GridItem(.flexible(), spacing: Spacing.large.rawValue),
         GridItem(.flexible(), spacing: Spacing.large.rawValue)
     ]
     
-    @State private var selectedSegment: AnimalDetailsSegment = .sheet
+    @State private var selectedSegment: AnimalWalletSegment = .sheet
     
     
     init(animal: Animal) {
@@ -58,6 +54,9 @@ struct MyAnimalDetailsView: View {
                     .frame(width: 160, height: 160)
                     .clipShape(Circle())
                     .padding(.top)
+                    .onTapGesture {
+                        showFullScreen = true
+                    }
             }
 
 
@@ -69,7 +68,7 @@ struct MyAnimalDetailsView: View {
             
             // Segment Control
             Picker("Segment", selection: $selectedSegment) {
-                ForEach(AnimalDetailsSegment.allCases) { filter in
+                ForEach(AnimalWalletSegment.allCases) { filter in
                     Text(filter.rawValue).tag(filter)
                 }
             }
@@ -90,6 +89,10 @@ struct MyAnimalDetailsView: View {
 
         }
         .navigationBarBackButtonHidden()
+        .fullScreenCover(isPresented: $showFullScreen) {
+            ZoomableCarouselView(images: animal.photos,
+                                 selectedIndex: $selectedImageIndex)
+        }
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }

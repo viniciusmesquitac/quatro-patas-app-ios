@@ -25,7 +25,6 @@ enum MenuCardType: CaseIterable {
     case favorites
     case myAnimals
     case lostAnimal
-    case apoiase
 }
 
 extension MenuCardType {
@@ -40,7 +39,6 @@ extension MenuCardType {
         case .favorites: return "Meus Favoritos"
         case .myAnimals: return "Meus Animais"
         case .lostAnimal: return "Animal Perdido"
-        case .apoiase: return "Apoia-se"
         }
     }
 }
@@ -51,10 +49,10 @@ private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
         .addOngAnimal, .ongAnimalsList
     ],
     .adopter: [
-        .adoptionForm, .aboutShelter, .favorites, .apoiase, .lostAnimal, .myAnimals
+        .adoptionForm, .aboutShelter, .favorites, .lostAnimal, .myAnimals
     ],
     .anonymous: [
-        .adoptionForm, .aboutShelter, .favorites, .apoiase, .lostAnimal, .myAnimals
+        .adoptionForm, .aboutShelter, .favorites, .lostAnimal, .myAnimals
     ]
 ]
 
@@ -131,13 +129,6 @@ struct MenuCardFactory {
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .addAnimal)
                 }, icon: .add)
-            case .apoiase:
-                return MenuCard(title: cardType.title, action: {
-                    if let url = URL(string: "https://apoia.se/quatropatasfortaleza") {
-                        let request = URLRequest(url: url)
-                        navigator.navigate(to: .webView(request))
-                    }
-                }, icon: .donate, isFocused: true)
             }
         }
     }

@@ -34,3 +34,15 @@ struct ShimmerModifier: ViewModifier {
             }
     }
 }
+
+extension View {
+    @ViewBuilder
+    func shimmer(if condition: Bool) -> some View {
+        if condition {
+            self.modifier(ShimmerModifier())
+                .redacted(reason: .placeholder)
+        } else {
+            self
+        }
+    }
+}

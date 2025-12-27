@@ -12,7 +12,6 @@ struct Adoption: Identifiable, Codable, Hashable, Sendable {
     @ServerTimestamp var createdAt: Date?
 
     var animalId: String
-
     var termPhoto: String?
     var idPhotoFront: String?
     var idPhotoBack: String?
