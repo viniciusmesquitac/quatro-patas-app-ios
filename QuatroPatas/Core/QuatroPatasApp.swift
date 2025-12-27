@@ -31,9 +31,6 @@ struct QuatroPatasApp: App {
                         TabItem(label: .animals, icon: .paw) {
                             AnimalsView()
                         }
-                        TabItem(label: .adoption, icon: .heart) {
-                            AdoptionView()
-                        }
                         TabItem(label: .menu, icon: .menu) {
                             MenuView()
                         }
@@ -51,14 +48,13 @@ struct QuatroPatasApp: App {
                         .zIndex(1)
                 }
             }
-            // environments aplicados uma única vez no container
             .environmentObject(navigator)
             .environmentObject(requestProvider)
             .environmentObject(databaseProvider)
             .environmentObject(storageProvider)
             .environmentObject(userSession)
             .environmentObject(formSession)
-            .environmentObject(networkMonitor) // se quiser usar em outras views também
+            .environmentObject(networkMonitor)
             .animation(.spring(response: 0.4, dampingFraction: 0.8),
                        value: networkMonitor.isConnected)
         }

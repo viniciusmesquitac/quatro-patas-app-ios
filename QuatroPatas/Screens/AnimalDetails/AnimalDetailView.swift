@@ -19,6 +19,7 @@ struct AnimalDetailView: View {
     @State private var selectedImageIndex = 0
     @State private var showFullScreen = false
     @State private var isFavorite = false
+    @State private var isLoading = false
 
     let repository = FavoritesRepository()
     
@@ -91,7 +92,12 @@ struct AnimalDetailView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
-
+        .overlay {
+            if isLoading {
+                LoadingView()
+                    .transition(.opacity)
+            }
+        }
         .onAppear {
             isFavorite = repository.isFavorite(id: animal.id ?? String())
         }
@@ -175,14 +181,16 @@ struct AnimalDetailView: View {
             return
         }
         Task {
+            isLoading = true
             do {
                 let user: User? = try await databaseProvider.fetchDocument(from: "users", id: ownerId)
                 navigator.dismiss()
                 
                 let validGoogleFormsHosts = ["forms.gle", "docs.google.com"]
+                let form = animal.type == AnimalType.cat.caseName ? user?.formCat : user?.formDog
 
                 if
-                    let form = user?.form,
+                    let form = form,
                     let url = URL(string: form),
                     let host = url.host,
                     validGoogleFormsHosts.contains(host)
@@ -192,16 +200,19 @@ struct AnimalDetailView: View {
 
                     if isValid {
                         let request = URLRequest(url: url)
+                        isLoading = false
                         navigator.navigate(to: .webView(request))
                     } else {
                         toast("formulário indisponível ou inválido", .warning)
                     }
 
                 } else {
+                    isLoading = false
                     toast("formulário ainda não está disponível ou inválido", .warning)
                 }
 
             } catch {
+                isLoading = false
                 print(error.localizedDescription)
             }
         }
