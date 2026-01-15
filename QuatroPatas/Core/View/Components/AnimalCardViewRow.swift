@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AnimalCardViewRow: View {
     let animal: Animal
-    let action: () -> Void
-    
+    var action: (() -> Void)? = nil
+
     @CacheProvider(type: .fileManager)
     var cacheProvider
     
@@ -22,7 +22,7 @@ struct AnimalCardViewRow: View {
     }
     
     var body: some View {
-        Button(action: action) {
+        Button(action: action ?? { }) {
             HStack(spacing: Spacing.large.rawValue) {
                 if let firstURL = animal.photos.first, let url = URL(string: firstURL) {
                     CachedAsyncImage(url: url)

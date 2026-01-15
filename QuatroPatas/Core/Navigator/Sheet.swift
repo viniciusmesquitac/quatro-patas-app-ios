@@ -23,6 +23,7 @@ enum Sheet: Identifiable {
     case deleteAccount(onDelete: (DeleteAction) -> Void)
     case webView(URLRequest, onResult: ((URL) -> Void)? = nil)
     case confirmDelete(ConfirmDialogModel)
+    case addFolder(reload: Binding<Bool>)
 
     var id: String {  String(describing: self) }
 }

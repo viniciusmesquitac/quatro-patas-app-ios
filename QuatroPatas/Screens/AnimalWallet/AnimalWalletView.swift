@@ -171,6 +171,17 @@ struct AnimalWalletView: View {
                 }
                 .padding(.top, Padding.medium.rawValue)
             }
+            
+            if let folder = animal.folder {
+                VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
+                    Text("Pasta")
+                        .font(.headline)
+                    Text(folder)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, Padding.medium.rawValue)
+            }
         }
         .padding()
         .background(

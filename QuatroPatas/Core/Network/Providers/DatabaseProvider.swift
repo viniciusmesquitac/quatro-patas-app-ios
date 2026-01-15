@@ -207,4 +207,16 @@ extension DatabaseProvider {
             }
         }
     }
+    
+    func deleteField(
+        in collection: String,
+        id: String,
+        field: String
+    ) async throws {
+        _ = try await updateFields(
+            in: collection,
+            id: id,
+            fields: [field: FieldValue.delete()]
+        )
+    }
 }

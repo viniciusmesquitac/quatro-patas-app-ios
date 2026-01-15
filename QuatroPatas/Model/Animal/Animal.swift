@@ -27,6 +27,7 @@ struct Animal: Hashable, Identifiable, Sendable, Codable, Equatable {
     var ownerId: String?
     var adoptionTerm: String?
     var position: Int?
+    var folder: String?
 }
 
 extension Animal {

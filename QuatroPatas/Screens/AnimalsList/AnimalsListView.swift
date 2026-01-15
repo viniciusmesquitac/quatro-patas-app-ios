@@ -22,6 +22,9 @@ struct AnimalsListView: View {
     @State private var isLoading: Bool = false
     @State private var searchText: String = ""
     
+    @State private var selectedFolder: String = "Todos"
+    @State private var reloadAnimals: Bool = false
+
     var listType: AnimalListType
     
     var navigationBarTitle: String {
@@ -34,25 +37,56 @@ struct AnimalsListView: View {
     }
     
     var filteredAnimals: [Animal] {
-        if searchText.isEmpty {
-            return animals
-        } else {
-            return animals.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        animals.filter { animal in
+            let matchesSearch =
+                searchText.isEmpty ||
+                animal.name.localizedCaseInsensitiveContains(searchText)
+
+            let matchesFolder =
+                selectedFolder.lowercased() == "todos" ||
+                animal.folder == selectedFolder
+
+            return matchesSearch && matchesFolder
         }
+    }
+    
+    var folders: [String] {
+        Array(
+            Set(animals.compactMap { $0.folder })
+        ).sorted()
     }
     
     var body: some View {
         ScrollView {
+            if !folders.isEmpty {
+                Picker("Segment", selection: $selectedFolder) {
+                    ForEach(["Todos"] + folders, id: \.self) { folder in
+                        Text(folder)
+                    }
+                }
+                .padding(Padding.medium.rawValue)
+                .pickerStyle(.segmented)
+            }
             LazyVStack(spacing: Padding.medium.rawValue) {
                 ForEach(filteredAnimals, id: \.id) { animal in
-                    AnimalCardViewRow(animal: animal) {
+                    AnimalCardViewRow(animal: animal, action: {
                         switch listType {
                         case .myAnimals:
                             didSelectMyAnimal(animal: animal)
                         case .ongAnimals:
                             didSelectMyAnimal(animal: animal)
                         }
-                    }
+                    })
+                    .if(selectedFolder != "Todos", transform: { view in
+                        view.contextMenu(menuItems: {
+                            Button("Remover da Pasta") {
+                                Task {
+                                    await removeFromFolder(animal: animal)
+                                    reloadAnimals.toggle()
+                                }
+                            }
+                        })
+                    })
                     .padding(.horizontal, Padding.medium.rawValue)
                 }
                 
@@ -70,6 +104,16 @@ struct AnimalsListView: View {
         .if(animals.count >= 10) { view in
             view.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Buscar animal pelo nome")
         }
+        .onChange(of: reloadAnimals) {
+            Task {
+                await fetchAllAnimals()
+            }
+        }
+        .onChange(of: filteredAnimals) {
+            if filteredAnimals.isEmpty {
+                selectedFolder = "Todos"
+            }
+        }
         .task {
             await fetchAllAnimals()
         }
@@ -79,13 +123,46 @@ struct AnimalsListView: View {
         .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
         }
-        .toolbarItem(icon: .add, placement: .topBarTrailing) {
-            addAnimal()
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button(String(), systemImage: SFIcon.addFolder.rawValue) {
+                    addFolder()
+                }
+                Button(String(), systemImage: SFIcon.add.rawValue) {
+                    addAnimal()
+                }
+            } label: {
+                SFIcon.image(.add)
+            }
         }
     }
     
     func addAnimal() {
         navigator.navigate(to: .addAnimal)
+    }
+    
+    func addFolder() {
+        navigator.present(sheet: .addFolder(reload: $reloadAnimals))
+    }
+    
+    func removeFromFolder(animal: Animal) async {
+        do {
+            guard let path = animalPathBuilder(), let animalId = animal.id else {
+                throw EditAnimalError.pathError
+            }
+            _ = try await databaseProvider.deleteField(
+                in: path,
+                id: animalId,
+                field: "folder"
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func animalPathBuilder() -> String? {
+        guard let userId = userSession.user?.id else { return nil }
+        return "users/\(userId)/animals"
     }
     
     @MainActor
