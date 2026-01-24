@@ -879,6 +879,9 @@
     "Digite o nome" : {
 
     },
+    "Digite o nome da pasta" : {
+
+    },
     "Digite o seu endereço" : {
 
     },
@@ -1072,6 +1075,9 @@
     "Idade" : {
 
     },
+    "Incluir Animais" : {
+
+    },
     "Informações da Adoção" : {
 
     },
@@ -1133,6 +1139,9 @@
     "Nova nota" : {
 
     },
+    "Nova Pasta" : {
+
+    },
     "Olá, %@" : {
 
     },
@@ -1140,6 +1149,9 @@
 
     },
     "Outro" : {
+
+    },
+    "Pasta" : {
 
     },
     "Perdido" : {
@@ -1189,6 +1201,9 @@
 
     },
     "Registro de Adoção" : {
+
+    },
+    "Remover da Pasta" : {
 
     },
     "Repetir senha" : {

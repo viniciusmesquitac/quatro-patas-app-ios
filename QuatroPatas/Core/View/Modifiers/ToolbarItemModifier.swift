@@ -14,6 +14,8 @@ struct ToolbarItemModifier: ViewModifier {
     var color: Color
     var placement: ToolbarItemPlacement
     var action: (() -> Void)
+
+    @Binding var disabled: Bool
     
     func body(content: Content) -> some View {
         content
@@ -25,12 +27,14 @@ struct ToolbarItemModifier: ViewModifier {
                         }
                         .tint(color)
                         .foregroundStyle(color)
+                        .disabled(disabled)
                     } else {
                         Button(label ?? String()) {
                             action()
                         }
                         .tint(color)
                         .foregroundStyle(color)
+                        .disabled(disabled)
                     }
                 }
             }
@@ -38,8 +42,8 @@ struct ToolbarItemModifier: ViewModifier {
 }
 
 extension View {
-    func toolbarItem(label: String? = "", icon: SFIcon? = nil, color: Color = Color.primaryColor, placement: ToolbarItemPlacement = .automatic, action: @escaping () -> Void) -> some View {
-        self.modifier(ToolbarItemModifier(label: label, icon: icon, color: color, placement: placement, action: action))
+    func toolbarItem(label: String? = "", icon: SFIcon? = nil, color: Color = Color.primaryColor, disabled: Binding<Bool> = .constant(false), placement: ToolbarItemPlacement = .automatic,  action: @escaping () -> Void) -> some View {
+        self.modifier(ToolbarItemModifier(label: label, icon: icon, color: color, placement: placement, action: action, disabled: disabled))
     }
 }
 

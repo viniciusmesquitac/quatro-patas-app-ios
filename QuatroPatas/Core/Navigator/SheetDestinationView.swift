@@ -62,6 +62,8 @@ struct SheetDestinationView: View {
             }
         case .confirmDelete(let dialog):
             ConfirmDeleteView(model: dialog)
+        case .addFolder(let roload):
+            AddFolderView(reload: roload)
         }
     }
 }
