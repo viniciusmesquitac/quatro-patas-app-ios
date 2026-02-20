@@ -76,9 +76,9 @@ struct AnimalDetailView: View {
                                 adopt()
                             }
                         }) {
-                            Text(userSession.user?.type == .ngo ? "Cadastrar adoção" : "Adotar")
+                            Text(userSession.user?.type == .ngo ? "Cadastrar adoção" : "Quero Adotar")
                         }
-                        .buttonStyle(PrimaryButtonStyle())
+                        .buttonStyle(PrimaryButtonStyle(isLoading: isLoading))
                     }
                     .fullScreenCover(isPresented: $showFullScreen) {
                         ZoomableCarouselView(images: animal.photos,
@@ -92,12 +92,6 @@ struct AnimalDetailView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarHidden(true)
-        .overlay {
-            if isLoading {
-                LoadingView()
-                    .transition(.opacity)
-            }
-        }
         .onAppear {
             isFavorite = repository.isFavorite(id: animal.id ?? String())
         }
@@ -164,14 +158,7 @@ struct AnimalDetailView: View {
     }
     
     func adopt() {
-        navigator.present(sheet: .tip(
-            Tip(title: Tip.adoption.title,
-                description: Tip.adoption.description,
-                buttonText: "Entendi!",
-                buttonAction: {
-                    openForms()
-                })
-        ))
+        openForms()
     }
     
     func openForms() {
@@ -181,11 +168,9 @@ struct AnimalDetailView: View {
             return
         }
         Task {
-            isLoading = true
             do {
+                isLoading = true
                 let user: User? = try await databaseProvider.fetchDocument(from: "users", id: ownerId)
-                navigator.dismiss()
-                
                 let validGoogleFormsHosts = ["forms.gle", "docs.google.com"]
                 let form = animal.type == AnimalType.cat.caseName ? user?.formCat : user?.formDog
 
@@ -195,13 +180,11 @@ struct AnimalDetailView: View {
                     let host = url.host,
                     validGoogleFormsHosts.contains(host)
                 {
-                    // 🔎 2ª verificação: de fato existe online
                     let isValid = await validateGoogleForm(url: url)
 
                     if isValid {
-                        let request = URLRequest(url: url)
                         isLoading = false
-                        navigator.navigate(to: .webView(request))
+                        navigator.present(sheet: .safariView(url))
                     } else {
                         toast("formulário indisponível ou inválido", .warning)
                     }
@@ -221,7 +204,7 @@ struct AnimalDetailView: View {
     
     func validateGoogleForm(url: URL) async -> Bool {
         var request = URLRequest(url: url)
-        request.httpMethod = "HEAD" // mais leve que GET
+        request.httpMethod = "HEAD"
         request.timeoutInterval = 10
         
         do {

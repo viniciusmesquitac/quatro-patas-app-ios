@@ -28,10 +28,18 @@ struct QuatroPatasApp: App {
             ZStack(alignment: .top) {
                 Group {
                     TabView(selection: $navigator.selectedTab) {
-                        TabItem(label: .animals, icon: .paw) {
-                            AnimalsView()
+                        TabItem(label: .adopt, icon: .heart) {
+                            AdoptView()
                         }
-                        TabItem(label: .menu, icon: .menu) {
+                        TabItem(label: .myAnimals, icon: .paw) {
+                            userSession.isLoggedIn ?
+                            AnyView(AnimalsListView()) :
+                            AnyView(EmptyView().emptyState(.cat))
+                        }
+                        TabItem(label: .ongs, icon: .ongs) {
+                            EmptyView()
+                        }
+                        TabItem(label: .profile, icon: .person) {
                             MenuView()
                         }
                     }

@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum AnimalListType {
-    case ongAnimals
-    case myAnimals
-}
-
 struct AnimalsListView: View {
     
     @EnvironmentObject var navigator: Navigator
@@ -24,17 +19,7 @@ struct AnimalsListView: View {
     
     @State private var selectedFolder: String = "Todos"
     @State private var reloadAnimals: Bool = false
-
-    var listType: AnimalListType
     
-    var navigationBarTitle: String {
-        switch listType {
-        case .ongAnimals:
-            return "Animais"
-        case .myAnimals:
-            return "Meus Animais"
-        }
-    }
     
     var filteredAnimals: [Animal] {
         animals.filter { animal in
@@ -70,12 +55,7 @@ struct AnimalsListView: View {
             LazyVStack(spacing: Padding.medium.rawValue) {
                 ForEach(filteredAnimals, id: \.id) { animal in
                     AnimalCardViewRow(animal: animal, action: {
-                        switch listType {
-                        case .myAnimals:
-                            didSelectMyAnimal(animal: animal)
-                        case .ongAnimals:
-                            didSelectMyAnimal(animal: animal)
-                        }
+                        didSelectMyAnimal(animal: animal)
                     })
                     .if(selectedFolder != "Todos", transform: { view in
                         view.contextMenu(menuItems: {
@@ -118,11 +98,7 @@ struct AnimalsListView: View {
             await fetchAllAnimals()
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle(navigationBarTitle)
-        .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading) {
-            navigator.dismiss()
-        }
+        .navigationTitle("Meus Animais")
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button(String(), systemImage: SFIcon.addFolder.rawValue) {
@@ -169,10 +145,11 @@ struct AnimalsListView: View {
     func fetchAllAnimals() async {
         do {
             isLoading = true
-            let userId = userSession.user?.id ?? ""
-            let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
-            self.animals = items
-            isLoading = false
+            if let userId = userSession.user?.id {
+                let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
+                self.animals = items
+                isLoading = false
+            }
         } catch {
             print("❌ Fetch error: \(error.localizedDescription)")
         }

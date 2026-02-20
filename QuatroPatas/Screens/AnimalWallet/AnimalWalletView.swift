@@ -88,6 +88,7 @@ struct AnimalWalletView: View {
             }
 
         }
+        .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden()
         .fullScreenCover(isPresented: $showFullScreen) {
             ZoomableCarouselView(images: animal.photos,

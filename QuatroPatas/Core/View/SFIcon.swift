@@ -41,6 +41,7 @@ enum SFIcon: String {
     case report = "megaphone"
     case donate = "gift.fill"
     case addFolder = "folder.badge.plus"
+    case ongs = "building.2.fill"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)

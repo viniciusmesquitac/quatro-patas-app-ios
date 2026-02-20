@@ -10,12 +10,9 @@ import WebKit
 
 enum Route: Identifiable, Hashable {
     case details(Animal)
-    case adoption
-    case animalsList(AnimalListType)
     case favorites
     case addAnimal
     case edit(Animal)
-    case webView(URLRequest)
     case register
     case login
     case loginWithEmailAndPassword
@@ -31,7 +28,6 @@ enum Route: Identifiable, Hashable {
     case adoptionDetails(String)
     case weightChart(String)
     case reportMissingAnimal
-    case happyEndingDetails(imageUrl: String)
 
     var id: String { String(describing: self) }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 class Navigator: ObservableObject {
     @Published var path = NavigationPath()
     @Published var presentedSheet: Sheet? = nil
-    @Published var selectedTab: AppTab = .animals
+    @Published var selectedTab: AppTab = .adopt
     
     func navigate(to route: Route) {
         path.append(route)

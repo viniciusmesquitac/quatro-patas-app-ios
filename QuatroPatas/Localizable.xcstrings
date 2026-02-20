@@ -36,9 +36,6 @@
     "Adicionar" : {
 
     },
-    "Adicionar Animal" : {
-
-    },
     "Adicionar fotos" : {
 
     },
@@ -57,9 +54,6 @@
     "Adicionar Vacina" : {
 
     },
-    "Adoção" : {
-
-    },
     "Adoção registrada com sucesso!" : {
 
     },
@@ -67,6 +61,7 @@
 
     },
     "Adotar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -82,7 +77,7 @@
         }
       }
     },
-    "Animais" : {
+    "Adote" : {
 
     },
     "Animal Perdido" : {
@@ -873,9 +868,6 @@
     "Detalhes da Anotação" : {
 
     },
-    "Dicas" : {
-
-    },
     "Digite o nome" : {
 
     },
@@ -1015,12 +1007,6 @@
       }
     },
     "Filtrar Animais" : {
-
-    },
-    "Finais Felizes" : {
-
-    },
-    "Formulário de Adoção" : {
 
     },
     "Foto da Identidade (frente e verso)" : {
@@ -1179,6 +1165,9 @@
 
     },
     "Quando lembrar?" : {
+
+    },
+    "Quero Adotar" : {
 
     },
     "Raça" : {

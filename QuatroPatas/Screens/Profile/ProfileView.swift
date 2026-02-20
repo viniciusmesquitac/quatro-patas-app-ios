@@ -15,7 +15,6 @@ struct ProfileView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.xLarge.rawValue) {
-        
                 VStack {
                     if let photo = userSession.user?.photo, let url = URL(string: photo) {
                         CachedAsyncImage(
@@ -40,7 +39,7 @@ struct ProfileView: View {
                         .fontWeight(.semibold)
                         .padding(.top, 8)
                     
-                    Text(userSession.user?.type.localized ?? "")
+                    Text(userSession.user?.type.rawValue ?? "")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -64,12 +63,7 @@ struct ProfileView: View {
             }
             .padding(.horizontal, Padding.medium.rawValue)
         }
-        .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
-            navigator.dismiss()
-        })
         .navigationTitle("Perfil")
     }
     
