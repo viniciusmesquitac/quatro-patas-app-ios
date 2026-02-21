@@ -20,6 +20,7 @@ struct AnimalsListView: View {
     @State private var selectedFolder: String = "Todos"
     @State private var reloadAnimals: Bool = false
     
+    @Environment(\.toast) var toast
     
     var filteredAnimals: [Animal] {
         animals.filter { animal in
@@ -44,13 +45,11 @@ struct AnimalsListView: View {
     var body: some View {
         ScrollView {
             if !folders.isEmpty {
-                Picker("Segment", selection: $selectedFolder) {
-                    ForEach(["Todos"] + folders, id: \.self) { folder in
-                        Text(folder)
-                    }
-                }
-                .padding(Padding.medium.rawValue)
-                .pickerStyle(.segmented)
+                ScrollableSegmentedPicker(
+                    items: ["Todos"] + folders,
+                    selected: $selectedFolder
+                )
+                .padding(.top, Padding.medium.rawValue)
             }
             LazyVStack(spacing: Padding.medium.rawValue) {
                 ForEach(filteredAnimals, id: \.id) { animal in
@@ -63,6 +62,25 @@ struct AnimalsListView: View {
                                 Task {
                                     await removeFromFolder(animal: animal)
                                     reloadAnimals.toggle()
+                                }
+                            }
+                        })
+                    })
+                    .padding(.horizontal, Padding.medium.rawValue)
+                    
+                    .if(selectedFolder == "Todos", transform: { view in
+                        view.contextMenu(menuItems: {
+                            Text("Adicionar à pasta")
+                                   .font(.headline)
+                                   .foregroundColor(.secondary)
+                               
+                            Divider()
+                            
+                            ForEach(folders, id: \.self) { folder in
+                                Button(folder) {
+                                    Task {
+                                        await includeAnimalToFolder(animal: animal, folderName: folder)
+                                    }
                                 }
                             }
                         })
@@ -95,7 +113,9 @@ struct AnimalsListView: View {
             }
         }
         .task {
-            await fetchAllAnimals()
+            if userSession.isLoggedIn {
+                await fetchAllAnimals()
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Meus Animais")
@@ -120,6 +140,23 @@ struct AnimalsListView: View {
     func addFolder() {
         navigator.present(sheet: .addFolder(reload: $reloadAnimals))
     }
+
+    func includeAnimalToFolder(animal: Animal, folderName: String) async {
+        do {
+            guard let path = animalPathBuilder(), let animalId = animal.id else {
+                throw EditAnimalError.pathError
+            }
+            _ = try await databaseProvider.updateFields(
+                in: path,
+                id: animalId,
+                fields: ["folder": folderName]
+            )
+            toast("\(animal.name) adicionado a pasta: \(folderName)", .success)
+            reloadAnimals = true
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
     func removeFromFolder(animal: Animal) async {
         do {
@@ -131,6 +168,9 @@ struct AnimalsListView: View {
                 id: animalId,
                 field: "folder"
             )
+            
+            reloadAnimals = true
+            toast("\(animal.name) removido da pasta!", .success)
         } catch {
             print(error.localizedDescription)
         }

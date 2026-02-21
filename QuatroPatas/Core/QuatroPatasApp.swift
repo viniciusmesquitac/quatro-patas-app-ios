@@ -15,7 +15,6 @@ struct QuatroPatasApp: App {
     @StateObject private var databaseProvider = DatabaseProvider()
     @StateObject private var storageProvider = StorageProvider()
     @StateObject private var userSession = UserSession()
-    @StateObject private var formSession = FormSessionManager()
 
     init() {
         FirebaseApp.configure()
@@ -61,7 +60,6 @@ struct QuatroPatasApp: App {
             .environmentObject(databaseProvider)
             .environmentObject(storageProvider)
             .environmentObject(userSession)
-            .environmentObject(formSession)
             .environmentObject(networkMonitor)
             .animation(.spring(response: 0.4, dampingFraction: 0.8),
                        value: networkMonitor.isConnected)

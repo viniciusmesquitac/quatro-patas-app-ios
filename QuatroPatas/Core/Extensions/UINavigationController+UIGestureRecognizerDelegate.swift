@@ -1,5 +1,5 @@
 //
-//  Navigation.swift
+//  UINavigationController+UIGestureRecognizerDelegate.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 14/09/25.

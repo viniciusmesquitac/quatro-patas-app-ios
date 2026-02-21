@@ -17,7 +17,7 @@ struct MenuCard {
 
 enum MenuCardType: CaseIterable {
     case login
-    case aboutShelter
+    case aboutUs
     case favorites
     case lostAnimal
 }
@@ -26,7 +26,7 @@ extension MenuCardType {
     var title: String {
         switch self {
         case .login: return "Fazer Login"
-        case .aboutShelter: return "Quem Somos"
+        case .aboutUs: return "Quem Somos"
         case .favorites: return "Meus Favoritos"
         case .lostAnimal: return "Animal Perdido"
         }
@@ -36,13 +36,13 @@ extension MenuCardType {
 // Mapa de permissões
 private let allowedCardsByUserType: [UserType: [MenuCardType]] = [
     .ngo: [
-        .aboutShelter, .favorites, .aboutShelter
+        .aboutUs
     ],
     .adopter: [
-        .aboutShelter, .favorites, .lostAnimal
+        .aboutUs, .favorites, .lostAnimal
     ],
     .anonymous: [
-        .aboutShelter, .favorites, .lostAnimal
+        .aboutUs, .favorites, .lostAnimal
     ]
 ]
 
@@ -61,8 +61,7 @@ struct MenuCardFactory {
                 return MenuCard(title: cardType.title, action: {
                     navigator.navigate(to: .login)
                 })
-                
-            case .aboutShelter:
+            case .aboutUs:
                 return MenuCard(title: cardType.title, action: {
                     if let url = URL(string: "https://sites.google.com/view/4patasfortaleza/quem-somos?authuser=0") {
                         navigator.present(sheet: .safariView(url))
