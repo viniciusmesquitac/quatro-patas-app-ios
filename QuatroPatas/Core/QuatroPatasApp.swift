@@ -35,8 +35,8 @@ struct QuatroPatasApp: App {
                             AnyView(AnimalsListView()) :
                             AnyView(EmptyView().emptyState(.cat))
                         }
-                        TabItem(label: .ongs, icon: .ongs) {
-                            EmptyView()
+                        TabItem(label: .ngos, icon: .ngos) {
+                            NGOsView()
                         }
                         TabItem(label: .profile, icon: .person) {
                             MenuView()

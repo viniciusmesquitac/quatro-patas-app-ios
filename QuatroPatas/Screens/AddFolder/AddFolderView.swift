@@ -48,7 +48,10 @@ struct AddFolderView: View {
                 }
             }
             .onChange(of: folderName) {
-                disabled = folderName.isEmpty
+                disabled = folderName.isEmpty || includedAnimals.isEmpty
+            }
+            .onChange(of: includedAnimals) {
+                disabled = folderName.isEmpty || includedAnimals.isEmpty
             }
             .navigationTitle("Nova Pasta")
             .navigationBarTitleDisplayMode(.inline)

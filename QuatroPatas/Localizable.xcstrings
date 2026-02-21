@@ -492,6 +492,9 @@
     "Aplicação: %@" : {
 
     },
+    "Apoiar esta ONG" : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -824,6 +827,9 @@
     "Confirmar" : {
 
     },
+    "Copiar Pix" : {
+
+    },
     "Cor" : {
       "localizations" : {
         "en" : {
@@ -935,6 +941,9 @@
         }
       }
     },
+    "Doação" : {
+
+    },
     "Dose nº" : {
 
     },
@@ -996,6 +1005,9 @@
     "Ex: 1, 2, Reforço" : {
 
     },
+    "Faça uma doação para ajudar essa causa. Qualquer ajuda é bem vinda." : {
+
+    },
     "Fazer Login" : {
 
     },
@@ -1010,6 +1022,9 @@
       }
     },
     "Filtrar Animais" : {
+
+    },
+    "Formulários" : {
 
     },
     "Foto da Identidade (frente e verso)" : {
@@ -1073,9 +1088,6 @@
     "Informe o e-mail utilizado no cadastro para recuperar sua senha." : {
 
     },
-    "Instagram (Opcional)" : {
-
-    },
     "Key" : {
       "extractionState" : "manual"
     },
@@ -1134,6 +1146,9 @@
     "Olá, %@" : {
 
     },
+    "Ongs" : {
+
+    },
     "Opcional" : {
 
     },
@@ -1171,6 +1186,9 @@
 
     },
     "Quero Adotar" : {
+
+    },
+    "R$ %lld" : {
 
     },
     "Raça" : {
@@ -1235,9 +1253,6 @@
 
     },
     "Tamanho" : {
-
-    },
-    "Telefone (Opcional)" : {
 
     },
     "Tem certeza que deseja deletar sua conta?" : {

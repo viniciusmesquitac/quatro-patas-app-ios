@@ -24,6 +24,7 @@ enum Sheet: Identifiable {
     case safariView(URL)
     case confirmDelete(ConfirmDialogModel)
     case addFolder(reload: Binding<Bool>)
+    case donate(pixKey: String, merchantName: String, merchantCity: String)
 
     var id: String {  String(describing: self) }
 }

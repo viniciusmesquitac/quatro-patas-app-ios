@@ -19,17 +19,13 @@ struct EditPersonalInformationView: View {
     @State var email: String = ""
     @State var instagram: String = ""
     @State var phone: String = ""
-    @State var formCat: String = ""
-    @State var formDog: String = ""
     
     @State var isLoading: Bool = false
 
     private var hasChanges: Bool {
         name != user.name ||
         instagram != (user.instagram ?? "") ||
-        phone != (user.phone ?? "") ||
-        formCat != (user.formCat ?? "") ||
-        formDog != (user.formDog ?? "")
+        phone != (user.phone ?? "")
     }
 
     var body: some View {
@@ -40,15 +36,9 @@ struct EditPersonalInformationView: View {
                 
                 FloatingBorderLabelTextField(placeholder: "Email", disabled: true, text: $email)
                 
-                FloatingBorderLabelTextField(placeholder: "Instagram (Opcional)", text: $instagram)
+                FloatingBorderLabelTextField(placeholder: "Instagram", text: $instagram)
                 
-                if user.type == .ngo {
-                    FloatingBorderLabelTextField(placeholder: "Formulário de adoção ( gatos )", text: $formCat)
-                    
-                    FloatingBorderLabelTextField(placeholder: "Formulário de adoção ( cachorros )", text: $formDog)
-                }
-                
-                FloatingBorderLabelTextField(placeholder: "Telefone (Opcional)", text: $phone)
+                FloatingBorderLabelTextField(placeholder: "Telefone", text: $phone)
                     .keyboardType(.numberPad)
                     .onChange(of: phone) { _, newValue in
                         var digits = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
@@ -82,8 +72,6 @@ struct EditPersonalInformationView: View {
                 email = user.email
                 instagram = user.instagram ?? ""
                 phone = user.phone ?? ""
-                formCat = user.formCat ?? ""
-                formDog = user.formDog ?? ""
             }
         }
         .safeAreaInset(edge: .bottom) {
@@ -95,8 +83,6 @@ struct EditPersonalInformationView: View {
                         updatedUser.name = name
                         updatedUser.instagram = instagram
                         updatedUser.phone = phone
-                        updatedUser.formCat = formCat
-                        updatedUser.formDog = formDog
                         try await _ = databaseProvider.update(updatedUser, in: "users", withID: user.id)
                         isLoading = false
                         toast("Atualizado com sucesso!", .success)

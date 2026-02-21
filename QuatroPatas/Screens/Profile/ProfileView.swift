@@ -39,7 +39,7 @@ struct ProfileView: View {
                         .fontWeight(.semibold)
                         .padding(.top, 8)
                     
-                    Text(userSession.user?.type.rawValue ?? "")
+                    Text(userSession.user?.type.localized ?? "")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -50,6 +50,13 @@ struct ProfileView: View {
                     profileButton(title: "Informações Pessoais", icon: .person) {
                         if let user = userSession.user {
                             navigator.navigate(to: .personalInformation(user))
+                        }
+                    }
+                    if userSession.user?.type == .ngo {
+                        profileButton(title: "Formulários", icon: .form) {
+                            if let user = userSession.user {
+                                navigator.navigate(to: .formsInformation(user))
+                            }
                         }
                     }
                     profileButton(title: "Sair", icon: .signOut, isDestructive: true) {
@@ -63,6 +70,11 @@ struct ProfileView: View {
             }
             .padding(.horizontal, Padding.medium.rawValue)
         }
+        .navigationBarBackButtonHidden()
+        .toolbarItem(icon: .back, placement: .topBarLeading) {
+            navigator.dismiss()
+        }
+        .toolbar(.hidden, for: .tabBar)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Perfil")
     }

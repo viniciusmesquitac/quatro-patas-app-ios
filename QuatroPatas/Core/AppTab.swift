@@ -7,6 +7,6 @@
 enum AppTab: String {
     case adopt = "Adote"
     case myAnimals = "Meus Animais"
-    case ongs = "Ongs"
+    case ngos = "Ongs"
     case profile = "Perfil"
 }
