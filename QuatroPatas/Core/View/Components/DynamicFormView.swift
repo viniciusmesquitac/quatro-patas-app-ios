@@ -17,7 +17,7 @@ struct DynamicFormView: View {
         VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
             ForEach(elements) { element in
                 switch element {
-                case .textField(let title, let placeholder, let binding, let keyboard):
+                case .textField(let title, let placeholder, let binding, _):
                     FormField(title: title) {
                         NoDropTextField(text: binding, placeholder: placeholder)
                             .frame(height: 48)

@@ -14,6 +14,10 @@ struct User: Hashable, Identifiable, Codable {
     let email: String
     var phone: String?
     var instagram: String?
+    var cnpj: String?
+    var description: String?
+    var location: String?
+    var pixKey: String?
     var formCat: String?
     var formDog: String?
     let type: UserType

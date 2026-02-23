@@ -85,7 +85,7 @@ class UserSession: ObservableObject {
             email: "",
             type: .anonymous
         )
-        self.isLoggedIn = true
+        self.isLoggedIn = false
     }
 
     func logout() {

@@ -20,7 +20,7 @@ struct AddFolderView: View {
     @State var isLoading: Bool = false
     @State var includedAnimals: [Animal] = []
     
-    @Binding var reload: Bool
+    @Binding var reload: Int
 
     var body: some View {
         NavigationStack {
@@ -48,7 +48,10 @@ struct AddFolderView: View {
                 }
             }
             .onChange(of: folderName) {
-                disabled = folderName.isEmpty
+                disabled = folderName.isEmpty || includedAnimals.isEmpty
+            }
+            .onChange(of: includedAnimals) {
+                disabled = folderName.isEmpty || includedAnimals.isEmpty
             }
             .navigationTitle("Nova Pasta")
             .navigationBarTitleDisplayMode(.inline)
@@ -59,7 +62,7 @@ struct AddFolderView: View {
                     }
                 }
                 navigator.dismiss()
-                reload.toggle()
+                reload += 1
             }
             .toolbarItem(icon: .close, placement: .cancellationAction) {
                 navigator.dismiss()

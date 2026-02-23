@@ -27,7 +27,7 @@ struct TabItem<Content: View>: View {
         }
         .tag(tab)
         .tabItem {
-            Label(AppTab.localized(tab), systemImage: icon.rawValue)
+            Label(tab.rawValue, systemImage: icon.rawValue)
         }
     }
 }

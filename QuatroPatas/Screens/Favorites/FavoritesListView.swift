@@ -79,7 +79,7 @@ struct FavoritesListView: View {
                 withAnimation {
                     navigator.popToRoot()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        navigator.selectTab(.animals)
+                        navigator.selectTab(.adopt)
                     }
                 }
             }

@@ -1,0 +1,41 @@
+//
+//  PresetAmountSelectorView.swift
+//  QuatroPatas
+//
+//  Created by Vinicius Mesquita Coelho on 21/02/26.
+//
+
+import SwiftUI
+
+struct PresetAmountSelectorView: View {
+    
+    @Binding var selectedAmount: Double
+    
+    let values: [Double] = [20, 50, 100]
+    
+    var body: some View {
+        HStack(spacing: Spacing.medium.rawValue) {
+            ForEach(values, id: \.self) { value in
+                Button {
+                    selectedAmount = value
+                } label: {
+                    Text("R$ \(Int(value))")
+                        .font(.title)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Padding.medium.rawValue)
+                        .background(
+                            selectedAmount == value
+                            ? Color.primaryColor
+                            : Color.gray.opacity(0.15)
+                        )
+                        .foregroundColor(
+                            selectedAmount == value
+                            ? .white
+                            : .primary
+                        )
+                        .cornerRadius(CornerRadius.medium.rawValue)
+                }
+            }
+        }
+    }
+}

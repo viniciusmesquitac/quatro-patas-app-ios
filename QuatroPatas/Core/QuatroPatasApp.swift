@@ -15,7 +15,6 @@ struct QuatroPatasApp: App {
     @StateObject private var databaseProvider = DatabaseProvider()
     @StateObject private var storageProvider = StorageProvider()
     @StateObject private var userSession = UserSession()
-    @StateObject private var formSession = FormSessionManager()
 
     init() {
         FirebaseApp.configure()
@@ -28,10 +27,18 @@ struct QuatroPatasApp: App {
             ZStack(alignment: .top) {
                 Group {
                     TabView(selection: $navigator.selectedTab) {
-                        TabItem(label: .animals, icon: .paw) {
-                            AnimalsView()
+                        TabItem(label: .adopt, icon: .heart) {
+                            AdoptView()
                         }
-                        TabItem(label: .menu, icon: .menu) {
+                        TabItem(label: .myAnimals, icon: .paw) {
+                            userSession.isLoggedIn ?
+                            AnyView(AnimalsListView()) :
+                            AnyView(EmptyView().emptyState(.cat))
+                        }
+                        TabItem(label: .ngos, icon: .ngos) {
+                            NGOsView()
+                        }
+                        TabItem(label: .profile, icon: .person) {
                             MenuView()
                         }
                     }
@@ -53,7 +60,6 @@ struct QuatroPatasApp: App {
             .environmentObject(databaseProvider)
             .environmentObject(storageProvider)
             .environmentObject(userSession)
-            .environmentObject(formSession)
             .environmentObject(networkMonitor)
             .animation(.spring(response: 0.4, dampingFraction: 0.8),
                        value: networkMonitor.isConnected)

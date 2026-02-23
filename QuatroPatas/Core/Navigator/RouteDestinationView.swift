@@ -14,18 +14,17 @@ struct RouteDestinationView: View {
     var body: some View {
         switch route {
         case .details(let animal): AnimalDetailView(animal: animal)
-        case .adoption:  AdoptionView()
-        case .animalsList(let type): AnimalsListView(listType: type)
         case .favorites: FavoritesListView()
         case .addAnimal: AddAnimalView()
         case .edit(let animal):
             EditAnimalView(animal: animal)
-        case .webView(let url): WebViewContainer(request: url)
         case .register: RegisterView()
         case .login: LoginView()
         case .loginWithEmailAndPassword: LoginWithEmailAndPasswordView()
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
+        case .formsInformation(let user): EditFormsInformationView(user: user)
+        case .ngoInformation(let user): EditNGOInformationView(user: user)
         case .animalWallet(let animal): AnimalWalletView(animal: animal)
         case .vaccineList(let animalId): VaccineListView(animalId: animalId)
         case .medicationList(let animalId): MedicationListView(animalId: animalId)
@@ -36,7 +35,7 @@ struct RouteDestinationView: View {
         case .annotationDetails(let annotation, let animalId): AnnotationDetailsView(annotation: annotation, animalId: animalId)
         case .reportMissingAnimal: ReportMissingAnimalView()
         case .forgotPassword: ForgotPasswordView()
-        case .happyEndingDetails(let imageUrl): HappyEndingDetails(imageUrl: imageUrl)
+        case .ngoDetails(let ngo): NGODetailsView(ngo: ngo)
         }
     }
 }

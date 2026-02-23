@@ -56,14 +56,16 @@ struct SheetDestinationView: View {
             }
         case .deleteAccount(let onDelete):
             DeleteAccountView(onDelete: onDelete)
-        case .webView(let url, let result):
-            NavigationStack {
-                AuthWebViewContainerView(request: url, onCompletion: result)
-            }
         case .confirmDelete(let dialog):
             ConfirmDeleteView(model: dialog)
         case .addFolder(let roload):
             AddFolderView(reload: roload)
+        case .safariView(let url): SafariView(url: url).navigationBarBackButtonHidden()
+        case .donate(let pixKey, let name, let city):
+            DonateView(pixKey: pixKey, merchantName: name, merchantCity: city)
+        case .selectCityState(let location):
+            CityStateSearchView(location: location)
         }
+        
     }
 }

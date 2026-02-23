@@ -36,7 +36,7 @@
     "Adicionar" : {
 
     },
-    "Adicionar Animal" : {
+    "Adicionar à pasta" : {
 
     },
     "Adicionar fotos" : {
@@ -57,9 +57,6 @@
     "Adicionar Vacina" : {
 
     },
-    "Adoção" : {
-
-    },
     "Adoção registrada com sucesso!" : {
 
     },
@@ -67,6 +64,7 @@
 
     },
     "Adotar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -82,7 +80,7 @@
         }
       }
     },
-    "Animais" : {
+    "Adote" : {
 
     },
     "Animal Perdido" : {
@@ -494,6 +492,9 @@
     "Aplicação: %@" : {
 
     },
+    "Apoiar esta ONG" : {
+
+    },
     "apptab.adoption" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -775,6 +776,9 @@
     "Buscar animal pelo nome" : {
 
     },
+    "Buscar cidade ou UF" : {
+
+    },
     "Buscar todos" : {
       "localizations" : {
         "en" : {
@@ -823,7 +827,13 @@
     "Checklist de Verificação" : {
 
     },
+    "Cidade / UF" : {
+
+    },
     "Confirmar" : {
+
+    },
+    "Copiar Pix" : {
 
     },
     "Cor" : {
@@ -871,9 +881,6 @@
       }
     },
     "Detalhes da Anotação" : {
-
-    },
-    "Dicas" : {
 
     },
     "Digite o nome" : {
@@ -940,6 +947,9 @@
         }
       }
     },
+    "Doação" : {
+
+    },
     "Dose nº" : {
 
     },
@@ -1001,6 +1011,9 @@
     "Ex: 1, 2, Reforço" : {
 
     },
+    "Faça uma doação para ajudar essa causa. Qualquer ajuda é bem vinda." : {
+
+    },
     "Fazer Login" : {
 
     },
@@ -1017,10 +1030,7 @@
     "Filtrar Animais" : {
 
     },
-    "Finais Felizes" : {
-
-    },
-    "Formulário de Adoção" : {
+    "Formulários" : {
 
     },
     "Foto da Identidade (frente e verso)" : {
@@ -1084,9 +1094,6 @@
     "Informe o e-mail utilizado no cadastro para recuperar sua senha." : {
 
     },
-    "Instagram (Opcional)" : {
-
-    },
     "Key" : {
       "extractionState" : "manual"
     },
@@ -1100,6 +1107,9 @@
 
     },
     "Local seguro avaliado" : {
+
+    },
+    "Localização:" : {
 
     },
     "Mais Informações" : {
@@ -1145,6 +1155,9 @@
     "Olá, %@" : {
 
     },
+    "Ongs" : {
+
+    },
     "Opcional" : {
 
     },
@@ -1179,6 +1192,12 @@
 
     },
     "Quando lembrar?" : {
+
+    },
+    "Quero Adotar" : {
+
+    },
+    "R$ %lld" : {
 
     },
     "Raça" : {
@@ -1221,6 +1240,9 @@
     "Segment" : {
 
     },
+    "Selecionar cidade/UF" : {
+
+    },
     "Selecione" : {
 
     },
@@ -1239,13 +1261,13 @@
     "Sim, deletar conta" : {
 
     },
+    "Sobre:" : {
+
+    },
     "Status" : {
 
     },
     "Tamanho" : {
-
-    },
-    "Telefone (Opcional)" : {
 
     },
     "Tem certeza que deseja deletar sua conta?" : {

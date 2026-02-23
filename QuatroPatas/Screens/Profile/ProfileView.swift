@@ -15,7 +15,6 @@ struct ProfileView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.xLarge.rawValue) {
-        
                 VStack {
                     if let photo = userSession.user?.photo, let url = URL(string: photo) {
                         CachedAsyncImage(
@@ -48,9 +47,22 @@ struct ProfileView: View {
                 
                 // MARK: - Opções
                 VStack(spacing: Spacing.small.rawValue) {
-                    profileButton(title: "Informações Pessoais", icon: .person) {
+                    profileButton(title: "Informações Cadastrais", icon: .person) {
                         if let user = userSession.user {
                             navigator.navigate(to: .personalInformation(user))
+                        }
+                    }
+                    if userSession.user?.type == .ngo {
+                        profileButton(title: "Informações da ONG", icon: .lock) {
+                            if let user = userSession.user {
+                                navigator.navigate(to: .ngoInformation(user))
+                            }
+                        }
+                        
+                        profileButton(title: "Formulários", icon: .form) {
+                            if let user = userSession.user {
+                                navigator.navigate(to: .formsInformation(user))
+                            }
                         }
                     }
                     profileButton(title: "Sair", icon: .signOut, isDestructive: true) {
@@ -65,11 +77,11 @@ struct ProfileView: View {
             .padding(.horizontal, Padding.medium.rawValue)
         }
         .navigationBarBackButtonHidden()
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+        .toolbarItem(icon: .back, placement: .topBarLeading) {
             navigator.dismiss()
-        })
+        }
+        .toolbar(.hidden, for: .tabBar)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Perfil")
     }
     
