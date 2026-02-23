@@ -23,15 +23,8 @@
         }
       }
     },
-    "%lld de %lld animais" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld de %2$lld animais"
-          }
-        }
-      }
+    "%lld resultados" : {
+
     },
     "Adicionar" : {
 
@@ -55,6 +48,9 @@
 
     },
     "Adicionar Vacina" : {
+
+    },
+    "Adoção" : {
 
     },
     "Adoção registrada com sucesso!" : {
@@ -776,9 +772,6 @@
     "Buscar animal pelo nome" : {
 
     },
-    "Buscar cidade ou UF" : {
-
-    },
     "Buscar todos" : {
       "localizations" : {
         "en" : {
@@ -788,6 +781,9 @@
           }
         }
       }
+    },
+    "Buscar todos os animais" : {
+
     },
     "Cadastrar" : {
       "localizations" : {
@@ -821,13 +817,7 @@
         }
       }
     },
-    "Carregar mais" : {
-
-    },
     "Checklist de Verificação" : {
-
-    },
-    "Cidade / UF" : {
 
     },
     "Confirmar" : {
@@ -1027,6 +1017,9 @@
         }
       }
     },
+    "Filtrar animais" : {
+
+    },
     "Filtrar Animais" : {
 
     },
@@ -1130,6 +1123,9 @@
     "Meus Animais" : {
 
     },
+    "Não encontramos ninguém com essas características." : {
+
+    },
     "Nenhum registro de peso ainda" : {
 
     },
@@ -1214,6 +1210,9 @@
 
     },
     "Redefinir Senha" : {
+
+    },
+    "Região" : {
 
     },
     "Registrar Adoção" : {

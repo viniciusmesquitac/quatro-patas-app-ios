@@ -1,5 +1,5 @@
 //
-//  CityStateSearchView.swift
+//  SelectRegionView.swift
 //  QuatroPatas
 //
 //  Created by Vinicius Mesquita Coelho on 21/02/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CityStateSearchView: View {
+struct SelectRegionView: View {
     @Environment(\.dismiss) private var dismiss
     
     private let places: [Place] = [
@@ -55,8 +55,7 @@ struct CityStateSearchView: View {
             .toolbarItem(icon: .close, placement: .topBarTrailing) {
                 dismiss()
             }
-            .navigationTitle("Cidade / UF")
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Buscar cidade ou UF")
+            .navigationTitle("Região")
         }
     }
 }

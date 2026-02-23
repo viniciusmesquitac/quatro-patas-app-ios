@@ -8,35 +8,28 @@
 import SwiftUI
 
 struct AnimalsAvailableView: View {
-    // MARK: - Properties
-    
     @Binding var filter: AnimalFilter
+    @Binding var location: String
     @Binding var animals: [Animal]
 
     @State private var isLoading = true
-    @State private var isLoadingMore = false
-    @State private var visibleCount = 7
-    @State private var showMoreAnimalsCount = 7
     
     @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var navigator: Navigator
     @Environment(\.toast) var toast
-
+    
     var filteredAnimals: [Animal] {
         filter.apply(to: animals)
     }
-    
-    // MARK: - Body
-    
+
     var body: some View {
         VStack(spacing: Spacing.large.rawValue) {
             if !filter.isEmpty {
                 FilterView(filter: $filter)
                     .padding(.bottom, Padding.medium.rawValue)
             }
-            
-            // Lista de animais
-            ForEach(Array(filteredAnimals.prefix(visibleCount)), id: \.id) { animal in
+
+            ForEach(filteredAnimals, id: \.id) { animal in
                 AnimalRowView(animal: animal) {
                     navigator.navigate(to: .details(animal))
                 }
@@ -46,77 +39,45 @@ struct AnimalsAvailableView: View {
                 ))
                 .padding(.horizontal, Padding.large.rawValue)
             }
-            
-            // Botão "Carregar mais"
-            if filteredAnimals.count > visibleCount {
-                if !filteredAnimals.isEmpty {
-                    VStack(spacing: 8) {
-                        Text("\(min(visibleCount, filteredAnimals.count)) de \(filteredAnimals.count) animais")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .foregroundColor(.secondary)
-                        
-                        ProgressView(
-                            value: Double(min(visibleCount, filteredAnimals.count)),
-                            total: Double(filteredAnimals.count)
-                        )
-                        .tint(.primaryColor)
-                        .padding(.horizontal, 40)
-                    }
-                    .transition(.opacity)
-                }
-                
-                Button("Carregar mais") {
-                    Task { await loadMoreAnimals() }
-                }
-                .buttonStyle(TagButtonStyle(isLoading: isLoadingMore))
-                .padding(.vertical, Padding.medium.rawValue)
-                .padding(.horizontal, Padding.xxLarge.rawValue)
-                .animation(.spring(), value: isLoadingMore)
+        }
+        
+        .onChange(of: location) { oldValue, newValue in
+            Task {
+                await fetchNGOs(for: newValue)
             }
         }
         .onAppear {
             Task {
                 if animals.isEmpty {
                     self.animals = [Animal.empty, Animal.empty, Animal.empty]
-                    await fetchAllAnimals()
+                    await fetchNGOs(for: location)
                 } else {
                     isLoading = false
                 }
             }
         }
         .padding(.bottom, Padding.large.rawValue)
-        .if(!filteredAnimals.isEmpty) { view in
-            view.toolbarItem(icon: .filter, placement: .topBarTrailing) {
-                navigator.present(sheet: .animalFilter(animals, $filter))
-            }
-        }
-        .if(filteredAnimals.isEmpty && isLoading == false) { view in
-            view.emptyState(.cat, action: removeFilter, content: {
-                if !filter.isEmpty {
-                    FilterView(filter: $filter)
-                        .padding(.bottom, Padding.medium.rawValue)
-                }
-            })
-        }
     }
     
     @MainActor
-    private func fetchAllAnimals() async {
-        isLoading = true
+    private func fetchAllAnimals(ongIds: [String]) async {
         do {
-            // Busca apenas da ong quatro patas
-            let ongId = "7IicBiq4WcVD6VG5N6V32wPsE5Y2"
-            let animals: [Animal] = try await databaseProvider.fetch(from: "users/\(ongId)/animals") {
-                $0
-                    .whereField("isMissing", isEqualTo: false)
-                    .whereField("isAdopted", isEqualTo: false)
-                    .order(by: "position", descending: false)
+            var allAnimals: [Animal] = []
+
+            for id in ongIds {
+                let fetched: [Animal] = try await databaseProvider.fetch(from: "users/\(id)/animals") {
+                    $0
+                        .whereField("isMissing", isEqualTo: false)
+                        .whereField("isAdopted", isEqualTo: false)
+                        .order(by: "position", descending: false)
+                }
+                allAnimals.append(contentsOf: fetched)
             }
+
             withAnimation(.spring()) {
-                self.animals = animals
-                self.visibleCount = min(showMoreAnimalsCount, animals.count)
+                self.animals = allAnimals
             }
+
             isLoading = false
         } catch {
             toast(error.localizedDescription, .error)
@@ -125,14 +86,26 @@ struct AnimalsAvailableView: View {
     }
     
     @MainActor
-    private func loadMoreAnimals() async {
-        guard !isLoadingMore else { return }
-        isLoadingMore = true
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        withAnimation(.spring()) {
-            visibleCount = min(visibleCount + showMoreAnimalsCount, filteredAnimals.count)
+    private func fetchNGOs(for location: String) async {
+        do {
+            let items: [User] = try await databaseProvider.fetch(from: "users") { ref in
+                var query = ref.whereField("type", isEqualTo: "usertype.ngo")
+
+                if !location.isEmpty {
+                    query = query.whereField("location", isEqualTo: location)
+                }
+
+                return query
+            }
+
+            let ids = items.compactMap { $0.id }
+            await fetchAllAnimals(ongIds: ids)
+
+        } catch {
+            toast("Erro ao carregar as ONGs", .error)
+            print("❌ Fetch error: \(error.localizedDescription)")
+            isLoading = false
         }
-        isLoadingMore = false
     }
     
     
@@ -142,5 +115,6 @@ struct AnimalsAvailableView: View {
                 filter.remove(value: value)
             }
         }
+        location = ""
     }
 }

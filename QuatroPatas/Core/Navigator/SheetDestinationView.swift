@@ -64,7 +64,7 @@ struct SheetDestinationView: View {
         case .donate(let pixKey, let name, let city):
             DonateView(pixKey: pixKey, merchantName: name, merchantCity: city)
         case .selectCityState(let location):
-            CityStateSearchView(location: location)
+            SelectRegionView(location: location)
         }
         
     }
