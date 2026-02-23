@@ -29,12 +29,22 @@ struct NGOsView: View {
         }
         .overlay {
             if isLoading {
-                LoadingView()
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .transition(.opacity)
+                    .padding(.top, Padding.large.rawValue)
+            }
+        }
+        .refreshable {
+            Task {
+                await fetchNGOs()
             }
         }
         .navigationTitle("Ongs")
         .task {
-            await fetchNGOs()
+            if ngos.isEmpty {
+                await fetchNGOs()
+            }
         }
     }
 

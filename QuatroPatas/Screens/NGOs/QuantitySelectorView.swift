@@ -16,7 +16,7 @@ struct QuantitySelectorView: View {
             
             // Botão -
             Button(action: {
-                if value > 0 {
+                if value > 1 {
                     value -= 1
                 }
             }) {
@@ -26,14 +26,13 @@ struct QuantitySelectorView: View {
                     .overlay(
                         Image(systemName: "minus")
                             .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(.black)
+                            .foregroundColor(.customLabel)
                     )
             }
             
             // Valor
             Text(value, format: .currency(code: "BRL"))
                 .font(.system(size: 32, weight: .bold))
-                .foregroundColor(.black)
                 .minimumScaleFactor(0.5)
             
             // Botão +
@@ -46,7 +45,7 @@ struct QuantitySelectorView: View {
                     .overlay(
                         Image(systemName: "plus")
                             .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(.black)
+                            .foregroundColor(.customLabel)
                     )
             }
         }

@@ -28,6 +28,10 @@ struct NGORowView: View {
                     .font(.system(size: 24))
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
+                
+                Text(ngo.location ?? String())
+                    .font(.system(size: 16))
+                    .foregroundColor(.gray)
             }
             .padding(.horizontal, Padding.medium.rawValue)
             

@@ -20,6 +20,7 @@ enum Route: Identifiable, Hashable {
     case profile
     case personalInformation(User)
     case formsInformation(User)
+    case ngoInformation(User)
     case animalWallet(Animal)
     case vaccineList(String)
     case medicationList(String)

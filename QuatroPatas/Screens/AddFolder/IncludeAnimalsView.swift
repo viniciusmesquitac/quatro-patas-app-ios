@@ -13,6 +13,7 @@ struct IncludeAnimalsView: View {
 
     @State private var selectedRows: Set<Animal.ID> = []
     @State private var animals: [Animal] = []
+    @State private var isLoading: Bool = false
     
     @Binding var isPresented: Bool
     
@@ -29,6 +30,12 @@ struct IncludeAnimalsView: View {
                     ) {
                         toggleSelection(for: animal)
                     }
+                }
+            }
+            .overlay {
+                if isLoading {
+                    LoadingView()
+                        .ignoresSafeArea()
                 }
             }
             .task {
@@ -56,10 +63,13 @@ struct IncludeAnimalsView: View {
     @MainActor
     func fetchAllAnimals() async {
         do {
+            isLoading = true
             let userId = userSession.user?.id ?? ""
             let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
             self.animals = items
+            isLoading = false
         } catch {
+            isLoading = false
             print("❌ Fetch error: \(error.localizedDescription)")
         }
     }

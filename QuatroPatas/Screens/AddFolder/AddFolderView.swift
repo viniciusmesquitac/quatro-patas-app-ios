@@ -20,7 +20,7 @@ struct AddFolderView: View {
     @State var isLoading: Bool = false
     @State var includedAnimals: [Animal] = []
     
-    @Binding var reload: Bool
+    @Binding var reload: Int
 
     var body: some View {
         NavigationStack {
@@ -62,7 +62,7 @@ struct AddFolderView: View {
                     }
                 }
                 navigator.dismiss()
-                reload.toggle()
+                reload += 1
             }
             .toolbarItem(icon: .close, placement: .cancellationAction) {
                 navigator.dismiss()

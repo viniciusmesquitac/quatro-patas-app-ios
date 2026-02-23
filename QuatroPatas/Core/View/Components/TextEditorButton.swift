@@ -23,7 +23,6 @@ struct TextEditorButton: View {
                     Text(text)
                         .foregroundColor(.primary)
                         .multilineTextAlignment(.leading)
-                        .lineLimit(3)
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)

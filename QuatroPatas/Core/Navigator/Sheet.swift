@@ -23,8 +23,9 @@ enum Sheet: Identifiable {
     case deleteAccount(onDelete: (DeleteAction) -> Void)
     case safariView(URL)
     case confirmDelete(ConfirmDialogModel)
-    case addFolder(reload: Binding<Bool>)
+    case addFolder(reload: Binding<Int>)
     case donate(pixKey: String, merchantName: String, merchantCity: String)
+    case selectCityState(location: Binding<String>)
 
     var id: String {  String(describing: self) }
 }

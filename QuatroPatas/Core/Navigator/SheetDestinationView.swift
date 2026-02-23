@@ -63,6 +63,8 @@ struct SheetDestinationView: View {
         case .safariView(let url): SafariView(url: url).navigationBarBackButtonHidden()
         case .donate(let pixKey, let name, let city):
             DonateView(pixKey: pixKey, merchantName: name, merchantCity: city)
+        case .selectCityState(let location):
+            CityStateSearchView(location: location)
         }
         
     }

@@ -18,8 +18,8 @@ struct AnimalsListView: View {
     @State private var searchText: String = ""
     
     @State private var selectedFolder: String = "Todos"
-    @State private var reloadAnimals: Bool = false
-    
+    @State private var reloadAnimals = 0
+
     @Environment(\.toast) var toast
     
     var filteredAnimals: [Animal] {
@@ -61,7 +61,7 @@ struct AnimalsListView: View {
                             Button("Remover da Pasta") {
                                 Task {
                                     await removeFromFolder(animal: animal)
-                                    reloadAnimals.toggle()
+                                    reloadAnimals += 1
                                 }
                             }
                         })
@@ -152,7 +152,7 @@ struct AnimalsListView: View {
                 fields: ["folder": folderName]
             )
             toast("\(animal.name) adicionado a pasta: \(folderName)", .success)
-            reloadAnimals = true
+            reloadAnimals += 1
         } catch {
             print(error.localizedDescription)
         }
@@ -168,8 +168,7 @@ struct AnimalsListView: View {
                 id: animalId,
                 field: "folder"
             )
-            
-            reloadAnimals = true
+            reloadAnimals += 1
             toast("\(animal.name) removido da pasta!", .success)
         } catch {
             print(error.localizedDescription)
@@ -188,6 +187,7 @@ struct AnimalsListView: View {
             if let userId = userSession.user?.id {
                 let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
                 self.animals = items
+                
                 isLoading = false
             }
         } catch {

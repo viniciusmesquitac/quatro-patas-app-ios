@@ -47,12 +47,18 @@ struct ProfileView: View {
                 
                 // MARK: - Opções
                 VStack(spacing: Spacing.small.rawValue) {
-                    profileButton(title: "Informações Pessoais", icon: .person) {
+                    profileButton(title: "Informações Cadastrais", icon: .person) {
                         if let user = userSession.user {
                             navigator.navigate(to: .personalInformation(user))
                         }
                     }
                     if userSession.user?.type == .ngo {
+                        profileButton(title: "Informações da ONG", icon: .lock) {
+                            if let user = userSession.user {
+                                navigator.navigate(to: .ngoInformation(user))
+                            }
+                        }
+                        
                         profileButton(title: "Formulários", icon: .form) {
                             if let user = userSession.user {
                                 navigator.navigate(to: .formsInformation(user))

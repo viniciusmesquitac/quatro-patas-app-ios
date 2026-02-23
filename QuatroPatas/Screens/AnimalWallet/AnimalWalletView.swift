@@ -16,6 +16,7 @@ struct AnimalWalletView: View {
     @EnvironmentObject var userSession: UserSession
 
     @State private var animal: Animal
+    @State private var isAdoptedToggle: Bool
     @State private var isAdopted: Bool
     @State private var isMissing: Bool
     
@@ -33,6 +34,7 @@ struct AnimalWalletView: View {
     init(animal: Animal) {
         self._animal = State(initialValue: animal)
         self._isAdopted = State(initialValue: animal.isAdopted)
+        self._isAdoptedToggle = State(initialValue: animal.isAdopted)
         self._isMissing = State(initialValue: animal.isMissing)
     }
 
@@ -123,11 +125,16 @@ struct AnimalWalletView: View {
                     Text("Adotado")
                         .font(.headline)
                     Spacer()
-                    Toggle(String(), isOn: $isAdopted)
+                    Toggle(String(), isOn: $isAdoptedToggle)
                         .labelsHidden()
-                }.onChange(of: isAdopted) { _, newValue in
-                    Task {
-                        await updateAdoptionStatus(isAdopted: newValue)
+                }.onChange(of: isAdoptedToggle) { _, newValue in
+                    if newValue == true {
+                        guard let animalId = animal.id else { return }
+                        navigator.navigate(to: .registerAdoption(animalId))
+                    } else {
+                        Task {
+                            await updateAdoptionStatus(isAdopted: false)
+                        }
                     }
                 }
                 

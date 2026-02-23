@@ -11,7 +11,7 @@ struct DonateView: View {
     @EnvironmentObject var navigator: Navigator
     @Environment(\.toast) var toast
 
-    @State private var amount: Double = 1.0
+    @State private var amount: Double = 5.0
 
     let pixKey: String
     let merchantName: String

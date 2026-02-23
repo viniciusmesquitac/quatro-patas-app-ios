@@ -24,6 +24,7 @@ struct RouteDestinationView: View {
         case .profile: ProfileView()
         case .personalInformation(let user): EditPersonalInformationView(user: user)
         case .formsInformation(let user): EditFormsInformationView(user: user)
+        case .ngoInformation(let user): EditNGOInformationView(user: user)
         case .animalWallet(let animal): AnimalWalletView(animal: animal)
         case .vaccineList(let animalId): VaccineListView(animalId: animalId)
         case .medicationList(let animalId): MedicationListView(animalId: animalId)

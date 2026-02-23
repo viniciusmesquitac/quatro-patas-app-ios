@@ -14,15 +14,15 @@ struct PresetAmountSelectorView: View {
     let values: [Double] = [20, 50, 100]
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: Spacing.medium.rawValue) {
             ForEach(values, id: \.self) { value in
                 Button {
                     selectedAmount = value
                 } label: {
                     Text("R$ \(Int(value))")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.title)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, Padding.medium.rawValue)
                         .background(
                             selectedAmount == value
                             ? Color.primaryColor
@@ -33,7 +33,7 @@ struct PresetAmountSelectorView: View {
                             ? .white
                             : .primary
                         )
-                        .cornerRadius(12)
+                        .cornerRadius(CornerRadius.medium.rawValue)
                 }
             }
         }

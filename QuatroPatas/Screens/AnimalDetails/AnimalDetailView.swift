@@ -16,6 +16,8 @@ struct AnimalDetailView: View {
     
     @Environment(\.toast) private var toast
     
+    @Environment(\.colorScheme) private var systemScheme
+
     @State private var selectedImageIndex = 0
     @State private var showFullScreen = false
     @State private var isFavorite = false
@@ -34,8 +36,13 @@ struct AnimalDetailView: View {
             .onTapGesture {
                 showFullScreen = true
             }
+            
+            Rectangle()
+                .fill(Color.white.opacity(0.1))
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .stretchy()
         }
-        .background(Color(uiColor: .systemBackground))
     }
 
     var body: some View {
@@ -88,31 +95,17 @@ struct AnimalDetailView: View {
                 }
             }.ignoresSafeArea(edges: .top)
         }
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .navigationBarHidden(true)
+        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+            navigator.dismiss()
+        })
+        .toolbarItem(icon: .share, placement: .topBarTrailing, action: {
+            shareAnimal()
+        })
         .onAppear {
             isFavorite = repository.isFavorite(id: animal.id ?? String())
-        }
-        .safeAreaInset(edge: .top) {
-            HStack {
-                Button {
-                    navigator.dismiss()
-                } label: {
-                    SFIcon.image(.back, color: .primaryColor)
-                }
-                .buttonStyle(FloatingButtonStyle())
-                
-                Spacer()
-                
-                Button {
-                    shareAnimal()
-                } label: {
-                    SFIcon.image(.share, color: .primaryColor)
-                }
-                .buttonStyle(FloatingButtonStyle())
-            }.padding(.horizontal)
         }
     }
     
@@ -133,14 +126,6 @@ struct AnimalDetailView: View {
         isFavorite.toggle()
     }
     
-    func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-            return url.absoluteString
-        }
-        return token
-    }
-    
     func shareAnimal() {
         Task {
             var items: [Any] = []
@@ -148,7 +133,7 @@ struct AnimalDetailView: View {
             items.append(message)
             
             if let url = URL(string: animal.photos.first ?? String()),
-               let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
+               let imageData = cacheProvider.get(key: url.getImageToken()) as? Data,
                let uiImage = UIImage(data: imageData) {
                 items.append(uiImage)
             }
@@ -220,15 +205,7 @@ struct AnimalDetailView: View {
     }
     
     func registerAdoption() {
-        navigator.present(sheet: .tip(
-            Tip(title: Tip.registerAdoption.title,
-                description: Tip.registerAdoption.description,
-                buttonText: "Tudo certo!",
-                buttonAction: {
-                    guard let animalId = animal.id else { return }
-                    navigator.dismiss()
-                    navigator.navigate(to: .registerAdoption(animalId))
-                })
-        ))
+        guard let animalId = animal.id else { return }
+        navigator.navigate(to: .registerAdoption(animalId))
     }
 }

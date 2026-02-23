@@ -776,6 +776,9 @@
     "Buscar animal pelo nome" : {
 
     },
+    "Buscar cidade ou UF" : {
+
+    },
     "Buscar todos" : {
       "localizations" : {
         "en" : {
@@ -822,6 +825,9 @@
 
     },
     "Checklist de Verificação" : {
+
+    },
+    "Cidade / UF" : {
 
     },
     "Confirmar" : {
@@ -1103,6 +1109,9 @@
     "Local seguro avaliado" : {
 
     },
+    "Localização:" : {
+
+    },
     "Mais Informações" : {
 
     },
@@ -1231,6 +1240,9 @@
     "Segment" : {
 
     },
+    "Selecionar cidade/UF" : {
+
+    },
     "Selecione" : {
 
     },
@@ -1247,6 +1259,9 @@
 
     },
     "Sim, deletar conta" : {
+
+    },
+    "Sobre:" : {
 
     },
     "Status" : {

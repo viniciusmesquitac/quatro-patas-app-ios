@@ -66,16 +66,9 @@ struct ZoomableImageView: UIViewRepresentable {
         return scrollView
     }
 
-    func getToken(url: URL) -> String {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-              let token = components.queryItems?.first(where: { $0.name == "token" })?.value else {
-            return url.absoluteString
-        }
-        return token
-    }
 
     func updateUIView(_ scrollView: UIScrollView, context: Context) {
-        let key = getToken(url: imageURL)
+        let key = imageURL.getImageToken()
 
         if context.coordinator.currentKey == key, context.coordinator.imageView?.image != nil {
             return

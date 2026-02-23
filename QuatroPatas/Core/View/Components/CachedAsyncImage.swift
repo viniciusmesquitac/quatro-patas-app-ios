@@ -29,7 +29,7 @@ struct CachedAsyncImage: View {
                 .onAppear { isLoading = false }
         }
         else if let url,
-                let imageData = cacheProvider.get(key: getToken(url: url)) as? Data,
+                let imageData = cacheProvider.get(key: url.getImageToken()) as? Data,
                 let cachedImage = UIImage(data: imageData) {
             Image(uiImage: cachedImage)
                 .resizable()
@@ -44,7 +44,7 @@ struct CachedAsyncImage: View {
                         .onAppear {
                             isLoading = false
                             if let url = url {
-                                saveImageData(url: url)
+                                SaveImageProvider(provider: cacheProvider).saveImageData(url: url)
                             }
                         }
                 case .failure(_):
@@ -66,23 +66,5 @@ struct CachedAsyncImage: View {
             }
             .id(attempt)
         }
-    }
-
-    private func getToken(url: URL) -> String {
-        return url.lastPathComponent
-            .replacingOccurrences(of: "animals/", with: "")
-            .replacingOccurrences(of: ".jpg", with: "")
-            .split(separator: "/")
-            .last
-            .map(String.init) ?? ""
-    }
-
-    private func saveImageData(url: URL) {
-        let token = getToken(url: url)
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data {
-                try? cacheProvider.save(data, for: token)
-            }
-        }.resume()
     }
 }
