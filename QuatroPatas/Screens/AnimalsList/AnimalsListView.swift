@@ -56,6 +56,7 @@ struct AnimalsListView: View {
                     AnimalCardViewRow(animal: animal, action: {
                         didSelectMyAnimal(animal: animal)
                     })
+                    .allowsHitTesting(!isLoading)
                     .if(selectedFolder != "Todos", transform: { view in
                         view.contextMenu(menuItems: {
                             Button("Remover da Pasta") {
@@ -107,8 +108,8 @@ struct AnimalsListView: View {
                 await fetchAllAnimals()
             }
         }
-        .onChange(of: filteredAnimals) {
-            if filteredAnimals.isEmpty {
+        .onChange(of: folders) { _, newFolders in
+            if selectedFolder != "Todos" && !newFolders.contains(selectedFolder) {
                 selectedFolder = "Todos"
             }
         }
@@ -117,6 +118,7 @@ struct AnimalsListView: View {
                 await fetchAllAnimals()
             }
         }
+        .disabled(isLoading)
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Meus Animais")
         .toolbar {
@@ -187,8 +189,9 @@ struct AnimalsListView: View {
             if let userId = userSession.user?.id {
                 let items: [Animal] = try await databaseProvider.fetch(from: "users/\(userId)/animals")
                 self.animals = items
-                
-                isLoading = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                    self.isLoading = false
+                })
             }
         } catch {
             print("❌ Fetch error: \(error.localizedDescription)")
@@ -196,7 +199,7 @@ struct AnimalsListView: View {
     }
 
     func didSelectMyAnimal(animal: Animal) {
-        navigator.navigate(to: .animalWallet(animal.localized))
+        navigator.navigate(to: .animalWallet(animal))
     }
 
 }

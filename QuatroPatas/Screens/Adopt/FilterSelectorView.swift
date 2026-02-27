@@ -20,6 +20,13 @@ struct FilterSelectorView: View {
 
     var body: some View {
         HStack {
+            Text("\(filteredAnimals.count) resultados")
+                .font(.system(size: 17))
+                .padding(.trailing, 4)
+                .foregroundColor(.secondary)
+            
+            Spacer()
+            
             Button {
                 navigator.present(sheet: .animalFilter(animals, $filter))
             } label: {
@@ -33,13 +40,6 @@ struct FilterSelectorView: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-
-            Spacer()
-
-            Text("\(filteredAnimals.count) resultados")
-                .font(.system(size: 17))
-                .padding(.trailing, 4)
-                .foregroundColor(.secondary)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)

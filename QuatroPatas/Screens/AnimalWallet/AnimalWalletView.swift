@@ -38,14 +38,6 @@ struct AnimalWalletView: View {
         self._isMissing = State(initialValue: animal.isMissing)
     }
 
-    private var cards: [MenuCard] {
-        if let userId = userSession.user?.id, let animalId = animal.id {
-            return AnimalDetailsCardFactory(animalId: animalId, userId: userId).allCases(
-                navigator: navigator
-            )
-        }
-        return []
-    }
 
     var body: some View {
         ScrollView {
@@ -201,7 +193,8 @@ struct AnimalWalletView: View {
     }
     
     var cardsView: some View {
-        LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
+        let cards = buildCards()
+        return LazyVGrid(columns: columns, spacing: Spacing.xLarge.rawValue) {
             ForEach(cards, id: \.title) { card in
                 CardView(title: card.title, icon: card.icon) {
                     card.action()
@@ -210,6 +203,14 @@ struct AnimalWalletView: View {
             }
         }
         .padding()
+    }
+    
+    private func buildCards() -> [MenuCard] {
+        guard let userId = userSession.user?.id,
+              let animalId = animal.id else { return [] }
+
+        return AnimalDetailsCardFactory(animalId: animalId, userId: userId)
+            .allCases(navigator: navigator)
     }
     
     

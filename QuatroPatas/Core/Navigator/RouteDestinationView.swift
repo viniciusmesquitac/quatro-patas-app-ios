@@ -10,6 +10,7 @@ import SwiftUI
 struct RouteDestinationView: View {
     let route: Route
     @EnvironmentObject var navigator: Navigator
+    @EnvironmentObject var userSession: UserSession
 
     var body: some View {
         switch route {

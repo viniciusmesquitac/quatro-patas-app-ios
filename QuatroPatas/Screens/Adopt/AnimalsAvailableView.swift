@@ -12,7 +12,7 @@ struct AnimalsAvailableView: View {
     @Binding var location: String
     @Binding var animals: [Animal]
 
-    @State private var isLoading = true
+    @Binding var isLoading: Bool
     
     @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var navigator: Navigator
@@ -40,7 +40,11 @@ struct AnimalsAvailableView: View {
                 .padding(.horizontal, Padding.large.rawValue)
             }
         }
-        
+        .overlay {
+            if isLoading {
+                LoadingView()
+            }
+        }
         .onChange(of: location) { oldValue, newValue in
             Task {
                 await fetchNGOs(for: newValue)
@@ -49,7 +53,6 @@ struct AnimalsAvailableView: View {
         .onAppear {
             Task {
                 if animals.isEmpty {
-                    self.animals = [Animal.empty, Animal.empty, Animal.empty]
                     await fetchNGOs(for: location)
                 } else {
                     isLoading = false

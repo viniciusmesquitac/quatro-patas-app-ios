@@ -51,6 +51,7 @@ struct DonateView: View {
         }
         .interactiveDismissDisabled(false)
         .presentationDetents([.fraction(0.5)])
+        .presentationBackground(Color.customBackground)
         .presentationCornerRadius(24)
         .padding()
     }

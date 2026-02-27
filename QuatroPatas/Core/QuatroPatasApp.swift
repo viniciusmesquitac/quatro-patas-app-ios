@@ -31,9 +31,11 @@ struct QuatroPatasApp: App {
                             AdoptView()
                         }
                         TabItem(label: .myAnimals, icon: .paw) {
-                            userSession.isLoggedIn ?
-                            AnyView(AnimalsListView()) :
-                            AnyView(EmptyView().emptyState(.cat))
+                            if userSession.isLoggedIn {
+                                AnimalsListView()
+                            } else {
+                                EmptyView().emptyState(.cat)
+                            }
                         }
                         TabItem(label: .ngos, icon: .ngos) {
                             NGOsView()

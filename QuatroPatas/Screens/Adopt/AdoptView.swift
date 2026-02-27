@@ -13,6 +13,7 @@ struct AdoptView: View {
     @State var animals: [Animal] = []
     @EnvironmentObject var navigator: Navigator
     @State private var location: String = String()
+    @State private var isLoading: Bool = false
     
     var filteredAnimals: [Animal] {
         filter.apply(to: animals)
@@ -20,17 +21,29 @@ struct AdoptView: View {
     
     var body: some View {
         ScrollView {
+            VStack(alignment: .leading) {
+                Text("Adoção")
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 24, weight: .bold))
+            }
             FilterSelectorView(animals: $animals, filter: $filter, location: $location)
-            AnimalsAvailableView(filter: $filter, location: $location, animals: $animals)
+            AnimalsAvailableView(filter: $filter, location: $location, animals: $animals, isLoading: $isLoading)
             
-            if filteredAnimals.isEmpty {
+            if filteredAnimals.isEmpty && !isLoading {
                 buildEmptyStateView()
             }
         }
-        .toolbarItem(label: location.isEmpty ? "Mudar região" : location, placement: .topBarLeading) {
-            navigator.present(sheet: .selectCityState(location: $location))
+        .toolbarBackground(.clear, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                LocationSelectorView(title: location.isEmpty ? "Mudar região" : location) {
+                    navigator.present(sheet: .selectCityState(location: $location))
+                }
+                .tint(Color.primary)
+            }
         }
-        .navigationTitle("Adoção")
     }
     
     @ViewBuilder
