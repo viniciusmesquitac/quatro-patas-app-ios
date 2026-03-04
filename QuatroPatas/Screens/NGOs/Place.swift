@@ -7,8 +7,12 @@
 
 import SwiftUI
 
-struct Place: Identifiable, Hashable {
+struct Place: Identifiable, Equatable {
     let id = UUID()
     let city: String
     let state: String
+
+    var isDefault: Bool {
+        city == "Default" && state == "Default"
+    }
 }

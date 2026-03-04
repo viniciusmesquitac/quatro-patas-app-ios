@@ -95,6 +95,10 @@ struct VaccineListView: View {
     func deleteVaccine(_ vaccine: Vaccine) async {
         guard let path = vaccinePath, let id = vaccine.id else { return }
         
+        if let ids = vaccine.notificationIds {
+            LocalNotificationService.shared.cancel(ids: ids)
+        }
+        
         do {
             _ = try await databaseProvider.delete(from: path, id: id)
             vaccines.removeAll { $0.id == vaccine.id }

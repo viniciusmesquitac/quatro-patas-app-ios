@@ -11,6 +11,8 @@ struct FullScreenImageView: View {
     let imageURL: URL
     var onDismiss: () -> Void
     
+    @Environment(\.toast) var toast
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color.black.ignoresSafeArea()
@@ -53,8 +55,9 @@ struct FullScreenImageView: View {
                 if let uiImage = UIImage(data: data) {
                     UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
                 }
+                toast("Iamgem salva com sucesso!", .success)
             } catch {
-                print("Erro ao salvar imagem: \(error)")
+                toast("Error ao salvar com sucesso!", .error)
             }
         }
     }

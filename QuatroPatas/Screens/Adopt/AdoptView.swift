@@ -34,8 +34,7 @@ struct AdoptView: View {
                 buildEmptyStateView()
             }
         }
-        .toolbarBackground(.clear, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbarBackground(Color.customBackground, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 LocationSelectorView(title: location.isEmpty ? "Mudar região" : location) {

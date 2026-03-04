@@ -27,7 +27,7 @@ struct LoginWithEmailAndPasswordView: View {
 
     var body: some View {
         ScrollView {
-            Image("logo")
+            Image("icon")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 64, height: 64)

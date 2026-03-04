@@ -11,6 +11,7 @@ struct AdoptionDetailsView: View {
     
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var databaseProvider: DatabaseProvider
+    @EnvironmentObject var userSession: UserSession
     
     var animalId: String
     
@@ -22,45 +23,41 @@ struct AdoptionDetailsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.xLarge.rawValue) {
-                
-                if let adoption {
-                    VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
-                        Text("Foto da Identidade (frente e verso)")
-                            .font(.headline)
+            if let adoption {
+                VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
+                    Text("Foto da Identidade (frente e verso)")
+                        .font(.headline)
+                    
+                    HStack(spacing: Spacing.medium.rawValue) {
+                        if let stringURL = adoption.idPhotoFront,
+                           let idPhotoFrontURL = URL(string: stringURL) {
+                            imageThumbnail(idPhotoFrontURL)
+                        }
                         
-                        HStack {
-                            if let stringURL = adoption.idPhotoFront,
-                               let idPhotoFrontURL = URL(string: stringURL) {
-                                imageThumbnail(idPhotoFrontURL)
-                            }
-                            
-                            if let stringURL = adoption.idPhotoBack,
-                               let idPhotoBackURL = URL(string: stringURL) {
-                                imageThumbnail(idPhotoBackURL)
-                            }
+                        if let stringURL = adoption.idPhotoBack,
+                           let idPhotoBackURL = URL(string: stringURL) {
+                            imageThumbnail(idPhotoBackURL)
                         }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
-                        Text("Foto do Termo de Adoção Assinado")
-                            .font(.headline)
-                        if let stringURL = adoption.termPhoto,
-                           let imageUrl = URL(string: stringURL) {
-                            imageThumbnail(imageUrl)
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
-                        Text("Status")
-                            .font(.headline)
-                        Text(adoption.status.rawValue.capitalized)
-                            .font(.body)
-                            .foregroundColor(.secondary)
                     }
                 }
+                
+                VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
+                    Text("Foto do Termo de Adoção Assinado")
+                        .font(.headline)
+                    if let stringURL = adoption.termPhoto,
+                       let imageUrl = URL(string: stringURL) {
+                        imageThumbnail(imageUrl)
+                    }
+                }
+                
+                VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
+                    Text("Status")
+                        .font(.headline)
+                    Text(adoption.status.rawValue.capitalized)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                }
             }
-            .padding()
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Informações da Adoção")
@@ -83,9 +80,12 @@ struct AdoptionDetailsView: View {
     }
     
     private func loadAdoption() async {
+        guard let userId = userSession.user?.id else { return }
+        let path = "users/\(userId)/adoptions"
+
         do {
             let adoptions: [Adoption] = try await databaseProvider.fetch(
-                from: "adoptions",
+                from: path,
                 query: { ref in
                     ref.whereField("animalId", isEqualTo: animalId)
                 }
@@ -100,9 +100,9 @@ struct AdoptionDetailsView: View {
     @ViewBuilder
     private func imageThumbnail(_ url: URL) -> some View {
         CachedAsyncImage(url: url)
+            .frame(width: 100, height: 150)
             .scaledToFill()
             .clipped()
-            .frame(width: 100, height: 150)
             .onTapGesture {
                 selectedImageURL = url
                 showImageFullScreen = true

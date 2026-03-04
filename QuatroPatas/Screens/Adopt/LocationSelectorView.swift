@@ -14,18 +14,20 @@ struct LocationSelectorView: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 8) {
+            HStack(spacing: Spacing.small.rawValue) {
                 
                 // Ícone esquerdo
-                Image(systemName: "mappin.and.ellipse")
-                    .font(.system(size: 18))
+                Image("pin")
+                    .resizable()
+                    .frame(width: 16, height: 18)
+                    .tint(Color.customLabel)
                 
                 // Texto
                 Text(title)
                     .font(.system(size: 18, weight: .medium))
                 
                 // Ícone direito
-                Image(systemName: "chevron.down")
+                SFIcon.image(.arrow_down, color: .gray)
                     .font(.system(size: 14, weight: .semibold))
                 
             }

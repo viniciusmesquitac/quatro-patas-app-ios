@@ -120,6 +120,7 @@ struct AnimalsListView: View {
         }
         .disabled(isLoading)
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Meus Animais")
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
@@ -199,7 +200,7 @@ struct AnimalsListView: View {
     }
 
     func didSelectMyAnimal(animal: Animal) {
-        navigator.navigate(to: .animalWallet(animal))
+        navigator.navigate(to: .animalWallet(animal.localized))
     }
 
 }

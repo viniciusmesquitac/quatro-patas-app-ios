@@ -559,6 +559,9 @@
         }
       }
     },
+    "Autorizar uso de GPS" : {
+
+    },
     "breed.beagle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -989,6 +992,9 @@
         }
       }
     },
+    "Escolher da galeria" : {
+
+    },
     "Espaço de descanso apropriado" : {
 
     },
@@ -1242,6 +1248,9 @@
     "Selecionar cidade/UF" : {
 
     },
+    "Selecionar imagem" : {
+
+    },
     "Selecione" : {
 
     },
@@ -1270,6 +1279,9 @@
 
     },
     "Tem certeza que deseja deletar sua conta?" : {
+
+    },
+    "Tirar foto" : {
 
     },
     "usertype.adopter" : {
@@ -1322,6 +1334,9 @@
           }
         }
       }
+    },
+    "Utilizar localização atual" : {
+
     },
     "Vacina" : {
 

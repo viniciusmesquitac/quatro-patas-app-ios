@@ -92,8 +92,6 @@ struct RegisterAdoption: View {
     
     // MARK: - Registrar
     private func registerAdoption() {
-        isLoading = true
-        
         Task {
             do {
                 try await sendAdoption()
@@ -112,7 +110,7 @@ struct RegisterAdoption: View {
             isLoading = false
             return
         }
-
+        isLoading = true
         let termPath = "adoptions/terms/\(UUID().uuidString).jpg"
         let idFrontPath = "adoptions/rg/\(UUID().uuidString).jpg"
         let idBackPath = "adoptions/rg/\(UUID().uuidString).jpg"
