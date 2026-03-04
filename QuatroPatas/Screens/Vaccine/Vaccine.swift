@@ -18,7 +18,6 @@ struct Vaccine: Codable, Identifiable {
     let nextDate: String?
     let sendNotification: Bool
     let notificationOption: NotificationOption?
-    // ✅ novo
     var notificationIds: [String]?
 }
 
