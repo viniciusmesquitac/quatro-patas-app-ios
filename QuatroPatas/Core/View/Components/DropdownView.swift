@@ -87,7 +87,7 @@ struct DropdownView: View {
                 
                 if case .multiple = mode, isSelected(option) {
                     Image(systemName: "checkmark")
-                        .foregroundColor(Color.secondaryColor)
+                        .foregroundColor(Color.primaryColor)
                 }
             }
             .padding()

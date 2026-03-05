@@ -25,6 +25,10 @@ struct AnimalDetailView: View {
 
     let repository = FavoritesRepository()
     
+    var colorNavBar: Color {
+        colorScheme == .dark ? Color(UIColor(hex: "#FFCB1B")!) : Color(UIColor(hex: "#AC1B7D")!)
+    }
+    
     @Environment(\.colorScheme) var colorScheme
     
     var image: some View {
@@ -88,13 +92,13 @@ struct AnimalDetailView: View {
                 }
             }.ignoresSafeArea(edges: .top)
         }
-        .toolbarColorScheme(colorScheme, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+        .toolbarItem(icon: .back, color: colorNavBar, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
-        .toolbarItem(icon: .share, placement: .topBarTrailing, action: {
+        .toolbarItem(icon: .share,color: colorNavBar,  placement: .topBarTrailing, action: {
             shareAnimal()
         })
         .onAppear {
@@ -200,5 +204,45 @@ struct AnimalDetailView: View {
     func registerAdoption() {
         guard let animalId = animal.id else { return }
         navigator.navigate(to: .registerAdoption(animalId))
+    }
+}
+
+
+
+import SwiftUI
+
+struct StatusBarStyleController: UIViewControllerRepresentable {
+    let style: UIStatusBarStyle
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        Controller(style: style)
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        (uiViewController as? Controller)?.style = style
+        uiViewController.setNeedsStatusBarAppearanceUpdate()
+    }
+
+    final class Controller: UIViewController {
+        var style: UIStatusBarStyle
+
+        init(style: UIStatusBarStyle) {
+            self.style = style
+            super.init(nibName: nil, bundle: nil)
+            view.backgroundColor = .clear
+        }
+
+        required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            style
+        }
+    }
+}
+
+extension View {
+    /// Força o estilo da Status Bar sem mexer no colorScheme da tela toda.
+    func statusBarStyle(_ style: UIStatusBarStyle) -> some View {
+        background(StatusBarStyleController(style: style).frame(width: 0, height: 0))
     }
 }
