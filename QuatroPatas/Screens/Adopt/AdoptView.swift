@@ -34,14 +34,8 @@ struct AdoptView: View {
                 buildEmptyStateView()
             }
         }
-        .toolbarBackground(Color.customBackground, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                LocationSelectorView(title: location.isEmpty ? "Mudar região" : location) {
-                    navigator.present(sheet: .selectCityState(location: $location))
-                }
-                .tint(Color.primary)
-            }
+        .toolbarItem(label: location.isEmpty ? "Mudar região" : location, icon: .arrow_down, iconPosition: .trailing, placement: .principal) {
+            navigator.present(sheet: .selectCityState(location: $location))
         }
     }
     

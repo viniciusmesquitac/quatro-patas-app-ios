@@ -92,10 +92,7 @@ struct MapPickerSheet: View {
                 InteractiveMap(region: $region, selectedCoordinate: $selectedCoordinate, pinAnimation: $pinAnimation)
 
                 if isLoading {
-                    ProgressView("Buscando endereço...")
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(12)
+                    LoadingView()
                 }
             }
             .toolbar {

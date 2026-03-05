@@ -90,7 +90,7 @@ struct SelectRegionView: View {
                         Spacer()
 
                         if item.isDefault && isResolvingCurrentLocation {
-                            ProgressView()
+                            LoadingView()
                         }
                     }
                     .contentShape(Rectangle()) // deixa a linha inteira clicável

@@ -16,12 +16,6 @@ struct LocationSelectorView: View {
         Button(action: action) {
             HStack(spacing: Spacing.small.rawValue) {
                 
-                // Ícone esquerdo
-                Image("pin")
-                    .resizable()
-                    .frame(width: 16, height: 18)
-                    .tint(Color.customLabel)
-                
                 // Texto
                 Text(title)
                     .font(.system(size: 18, weight: .medium))

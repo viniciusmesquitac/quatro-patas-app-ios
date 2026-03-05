@@ -12,13 +12,8 @@ struct LoadingView: View {
     var size: CGFloat = 64
 
     var body: some View {
-        ZStack {
-            Rectangle().fill(Color.customBackground)
-            ProgressView()
-                .tint(Color.primaryColor)
-                .frame(width: size, height: size)
-                .background(.background, in: .rect(cornerRadius: CornerRadius.medium.rawValue))
-            
-        }.ignoresSafeArea()
+        ProgressView()
+            .tint(Color.primaryColor)
+            .frame(width: size, height: size)
     }
 }

@@ -90,10 +90,7 @@ struct AnimalsListView: View {
                 }
                 
                 if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .transition(.opacity)
-                        .padding(.top, Padding.large.rawValue)
+                    LoadingView()
                 }
             }.padding(Padding.medium.rawValue)
         }

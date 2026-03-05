@@ -26,7 +26,7 @@ struct LocationPickerView: View {
                     fetchCurrentLocation()
                 } label: {
                     if isLoading {
-                        ProgressView()
+                        LoadingView()
                     } else {
                         Image(systemName: "location.fill")
                             .foregroundColor(.primaryColor)

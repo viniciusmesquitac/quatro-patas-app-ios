@@ -27,14 +27,6 @@ struct NGOsView: View {
                 .padding(Padding.medium.rawValue)
             }
         }
-        .overlay {
-            if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .transition(.opacity)
-                    .padding(.top, Padding.large.rawValue)
-            }
-        }
         .refreshable {
             Task {
                 await fetchNGOs()

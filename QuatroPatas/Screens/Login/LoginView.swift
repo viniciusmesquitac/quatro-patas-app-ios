@@ -15,9 +15,7 @@ struct LoginView: View {
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject private var userSession: UserSession
     @Environment(\.toast) var toast
-    
-    @State private var isLoading: Bool = false
-    
+
     var body: some View {
         ScrollView {
             animation
@@ -27,22 +25,9 @@ struct LoginView: View {
         .navigationBarBackButtonHidden()
         .scrollIndicators(.hidden)
         .ignoresSafeArea(edges: .top)
-        .safeAreaInset(edge: .top) {
-            HStack {
-                Button {
-                    navigator.dismiss()
-                } label: {
-                    SFIcon.image(.back, color: .primaryColor)
-                }
-                .buttonStyle(FloatingButtonStyle())
-                
-                Spacer()
-            }.padding(.horizontal)
-        }
-        .overlay {
-            if isLoading {
-                LoadingView()
-            }
+        .toolbarBackground(.clear, for: .navigationBar)
+        .toolbarItem(icon: .back, placement: .topBarLeading) {
+            navigator.dismiss()
         }
     }
     
