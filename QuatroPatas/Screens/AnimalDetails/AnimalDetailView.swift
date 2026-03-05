@@ -26,7 +26,7 @@ struct AnimalDetailView: View {
     let repository = FavoritesRepository()
     
     var colorNavBar: Color {
-        colorScheme == .dark ? Color(UIColor(hex: "#FFCB1B")!) : Color(UIColor(hex: "#AC1B7D")!)
+        colorScheme == .dark ? Color(UIColor.goldenYellow) : Color(UIColor.magicPurple)
     }
     
     @Environment(\.colorScheme) var colorScheme

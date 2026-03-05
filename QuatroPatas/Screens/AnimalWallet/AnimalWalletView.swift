@@ -189,6 +189,14 @@ struct AnimalWalletView: View {
                 .fill(Color(.systemBackground))
                 .stroke(Color.gray.opacity(0.2), style: .init(lineWidth: 1))
         )
+        .onAppear {
+            Task {
+                guard let animalId = animal.id else {
+                    return
+                }
+                await fetchAnimal(animalId: animalId)
+            }
+        }
         .padding(.horizontal)
     }
     
@@ -259,6 +267,21 @@ struct AnimalWalletView: View {
             )
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    @MainActor
+    private func fetchAnimal(animalId: String) async {
+        do {
+            if let userId = userSession.user?.id {
+                guard let item: Animal = try await databaseProvider.fetchDocument(from: "users/\(userId)/animals", id: animalId) else {
+                    return
+                }
+                animal = item.localized
+                isAdoptedToggle = item.isAdopted
+            }
+        } catch {
+            print("❌ Fetch error: \(error.localizedDescription)")
         }
     }
 }
