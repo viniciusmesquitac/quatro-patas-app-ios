@@ -25,23 +25,16 @@ struct AnimalDetailView: View {
 
     let repository = FavoritesRepository()
     
+    @Environment(\.colorScheme) var colorScheme
     
     var image: some View {
-        ZStack(alignment: .bottom) {
-            ImageCarousel(
-                images: animal.photos.compactMap { URL(string: $0) },
-                selectedIndex: $selectedImageIndex
-            )
-            .stretchy()
-            .onTapGesture {
-                showFullScreen = true
-            }
-            
-            Rectangle()
-                .fill(Color.white.opacity(0.1))
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
-                .stretchy()
+        ImageCarousel(
+            images: animal.photos.compactMap { URL(string: $0) },
+            selectedIndex: $selectedImageIndex
+        )
+        .stretchy()
+        .onTapGesture {
+            showFullScreen = true
         }
     }
 
@@ -95,7 +88,7 @@ struct AnimalDetailView: View {
                 }
             }.ignoresSafeArea(edges: .top)
         }
-        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbarColorScheme(colorScheme, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .toolbarItem(icon: .back, placement: .topBarLeading, action: {
