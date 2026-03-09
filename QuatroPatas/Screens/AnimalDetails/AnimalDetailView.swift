@@ -92,6 +92,7 @@ struct AnimalDetailView: View {
                 }
             }.ignoresSafeArea(edges: .top)
         }
+        .environmentObject(navigator)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)

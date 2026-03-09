@@ -27,8 +27,7 @@ struct SelectableAnimalRow: View {
             Spacer()
 
             if isSelected {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.blue)
+                SFIcon.image(.success)
             }
         }
         .padding()

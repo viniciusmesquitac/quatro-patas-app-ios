@@ -30,11 +30,11 @@ struct PasswordField: View {
             }
 
             Button(action: { isVisible.toggle() }) {
-                Image(systemName: isVisible ? "eye.slash.fill" : "eye.fill")
+                SFIcon.image( isVisible ? .eye_close : .eye_open)
                     .foregroundColor(.gray.opacity(0.8))
-                    .frame(width: 44, height: height)   // área clicável consistente
+                    .frame(width: 44, height: height)
             }
-            .padding(.trailing, 4) // opcional, só pra não encostar na borda
+            .padding(.trailing, 4)
         }
     }
 }

@@ -13,7 +13,7 @@ struct NetworkBannerView: View {
     var body: some View {
         if isVisible {
             HStack(spacing: 12) {
-                Image(systemName: "wifi.slash")
+                SFIcon.image(.wifi)
                     .imageScale(.medium)
 
                 Text("Sem conexão com a internet")
@@ -26,7 +26,7 @@ struct NetworkBannerView: View {
                         isVisible = false
                     }
                 } label: {
-                    Image(systemName: "xmark")
+                    SFIcon.image(.close)
                         .font(.system(size: 14, weight: .bold))
                         .padding(6)
                 }

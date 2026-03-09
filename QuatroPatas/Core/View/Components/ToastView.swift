@@ -12,8 +12,7 @@ struct ToastView: View {
 
     var body: some View {
         HStack {
-            Image(systemName: iconName(for: toast?.type))
-                .foregroundColor(.white)
+            SFIcon.image(icon(for: toast?.type), color: .white)
                 .font(.title2)
 
             Text(toast?.message ?? "")
@@ -47,12 +46,12 @@ struct ToastView: View {
         }
     }
 
-    private func iconName(for type: ToastType?) -> String {
+    private func icon(for type: ToastType?) -> SFIcon {
         switch type {
-        case .success: return "checkmark.circle.fill"
-        case .error: return "xmark.octagon.fill"
-        case .warning: return "exclamationmark.triangle.fill"
-        case .none: return "info.circle"
+        case .success: return .success
+        case .error: return .failure
+        case .warning: return .warning
+        case .none: return .about
         }
     }
 }
