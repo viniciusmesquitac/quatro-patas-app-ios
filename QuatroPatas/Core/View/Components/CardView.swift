@@ -27,7 +27,7 @@ struct CardView: View {
 
                 VStack {
                     HStack {
-                        Image(systemName: icon.rawValue)
+                        SFIcon.image(icon)
                             .font(.system(size: 22))
                             .foregroundStyle(isFocused ? Color.customBackground : Color.primaryColor)
                         Spacer()

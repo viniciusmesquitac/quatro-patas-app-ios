@@ -41,6 +41,7 @@ struct SelectRegionView: View {
 
     var body: some View {
         NavigationStack {
+            Spacer()
             List(filtered) { item in
                 Button {
                     if item.isDefault {
@@ -50,24 +51,16 @@ struct SelectRegionView: View {
                         dismiss()
                     }
                 } label: {
-                    HStack(spacing: 12) {
-
-                        // Ícone à esquerda
+                    HStack(spacing: Spacing.medium.rawValue) {
                         if item.isDefault {
-                            Image(systemName: "location.fill")
-                                .font(.system(size: 18, weight: .semibold))
+                            SFIcon.image(.location)
                                 .foregroundStyle(item.isDefault ? .blue : .secondary)
-                                .frame(width: 26)
                         } else {
-                            Image(systemName: "pin")
-                                .resizable()
-                                .frame(width: 16, height: 18)
-                                .font(.system(size: 18, weight: .semibold))
+                            SFIcon.image(.pin)
                                 .foregroundStyle(item.isDefault ? .blue : .secondary)
-                                .frame(width: 26)
                         }
 
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading) {
                             if item.isDefault {
                                 Text("Utilizar localização atual")
                                     .font(.body)
@@ -93,19 +86,16 @@ struct SelectRegionView: View {
                             LoadingView()
                         }
                     }
-                    .contentShape(Rectangle()) // deixa a linha inteira clicável
+                    .contentShape(Rectangle())
                 }
                 .disabled(item.isDefault && isResolvingCurrentLocation)
             }
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .listStyle(.plain)
             .toolbarTitleDisplayMode(.inline)
             .scrollContentBackground(.hidden)
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
             .background(Color.customBackground)
-            .toolbarItem(icon: .close, placement: .topBarTrailing) {
-                dismiss()
-            }
-            .navigationTitle("Região")
         }
     }
 

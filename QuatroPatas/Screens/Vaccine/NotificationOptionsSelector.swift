@@ -55,7 +55,7 @@ private struct MultipleSelectionRow: View {
                     .foregroundColor(.primary)
                 Spacer()
                 if isSelected {
-                    Image(systemName: "checkmark")
+                    SFIcon.image(.checkmark)
                         .foregroundColor(.accentColor)
                 }
             }

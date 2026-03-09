@@ -53,8 +53,7 @@ struct AnimalImagesCarousel: View {
                             onRemoveNew?(index - existingPhotos.count)
                         }
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .resizable()
+                        SFIcon.image(.close)
                             .scaledToFill()
                             .frame(width: 48, height: 48)
                             .foregroundStyle(Color.primaryColor.opacity(0.5))
@@ -69,7 +68,7 @@ struct AnimalImagesCarousel: View {
                     showPhotoPicker = true
                 } label: {
                     VStack {
-                        Image(systemName: "plus")
+                        SFIcon.image(.add)
                             .font(.largeTitle)
                         Text("Adicionar")
                             .font(.caption)

@@ -95,7 +95,7 @@ struct ProfileView: View {
     ) -> some View {
         Button(action: action) {
             HStack {
-                Image(systemName: icon.rawValue)
+                SFIcon.image(icon)
                     .foregroundColor(isDestructive ? .red : .primary)
                     .frame(width: 24, height: 24)
                 
@@ -106,7 +106,7 @@ struct ProfileView: View {
                 Spacer()
                 
                 if !isDestructive {
-                    Image(systemName: "chevron.right")
+                    SFIcon.image(.next)
                         .foregroundColor(.gray)
                 }
             }

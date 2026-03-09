@@ -24,7 +24,7 @@ struct QuantitySelectorView: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: 70, height: 70)
                     .overlay(
-                        Image(systemName: "minus")
+                        SFIcon.image(.decrease)
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(.customLabel)
                     )
@@ -43,7 +43,7 @@ struct QuantitySelectorView: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: 70, height: 70)
                     .overlay(
-                        Image(systemName: "plus")
+                        SFIcon.image(.add)
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(.customLabel)
                     )

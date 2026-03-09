@@ -86,7 +86,7 @@ struct DropdownView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 if case .multiple = mode, isSelected(option) {
-                    Image(systemName: "checkmark")
+                    SFIcon.image(.checkmark)
                         .foregroundColor(Color.primaryColor)
                 }
             }

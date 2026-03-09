@@ -28,7 +28,7 @@ struct LocationPickerView: View {
                     if isLoading {
                         LoadingView()
                     } else {
-                        Image(systemName: "location.fill")
+                        SFIcon.image(.location)
                             .foregroundColor(.primaryColor)
                     }
                 }
@@ -40,7 +40,7 @@ struct LocationPickerView: View {
                 navigator.present(sheet: .map(address: $address))
             } label: {
                 HStack(spacing: 6) {
-                    Image(systemName: "map.fill")
+                    SFIcon.image(.map)
                     Text("Procurar no mapa")
                 }
                 .font(.system(size: 15, weight: .medium))

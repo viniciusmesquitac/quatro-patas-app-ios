@@ -26,8 +26,7 @@ struct FullScreenImageView: View {
             VStack {
                 HStack {
                     Button(action: onDismiss) {
-                        Image(systemName: "xmark.circle.fill")
-                            .resizable()
+                        SFIcon.image(.close)
                             .frame(width: 30, height: 30)
                             .foregroundColor(.white)
                             .padding()
@@ -36,8 +35,7 @@ struct FullScreenImageView: View {
                     Spacer()
 
                     Button(action: saveImage) {
-                        Image(systemName: "arrow.down.circle.fill")
-                            .resizable()
+                        SFIcon.image(.download)
                             .frame(width: 30, height: 30)
                             .foregroundColor(.white)
                             .padding()

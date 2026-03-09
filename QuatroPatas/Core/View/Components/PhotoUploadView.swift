@@ -71,15 +71,15 @@ struct PhotoUploadView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 120, height: 120)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue))
             } else {
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue)
                     .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [6]))
                     .foregroundStyle(.gray)
                     .frame(width: 120, height: 120)
                     .overlay(
-                        VStack(spacing: 6) {
-                            Image(systemName: "camera")
+                        VStack(spacing: Spacing.medium.rawValue) {
+                            SFIcon.image(.camera)
                             Text(title).font(.caption)
                         }
                         .foregroundStyle(.gray)

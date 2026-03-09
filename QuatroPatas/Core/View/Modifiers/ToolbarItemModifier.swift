@@ -37,13 +37,13 @@ struct ToolbarItemModifier: ViewModifier {
         if let label, !label.isEmpty, let icon {
             HStack(spacing: 6) {
                 if iconPosition == .leading {
-                    Image(systemName: icon.rawValue)
+                    SFIcon.image(icon)
                 }
 
                 Text(label)
 
                 if iconPosition == .trailing {
-                    Image(systemName: icon.rawValue)
+                    SFIcon.image(icon)
                 }
             }
             .font(.body.weight(.semibold))
@@ -53,7 +53,7 @@ struct ToolbarItemModifier: ViewModifier {
             Text(label)
 
         } else if let icon {
-            Image(systemName: icon.rawValue)
+            SFIcon.image(icon)
 
         } else {
             EmptyView()

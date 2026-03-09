@@ -27,6 +27,7 @@ enum SFIcon: String {
     case failure = "xmark.octagon.fill"
     case menu = "square.grid.2x2"
     case add = "plus.circle"
+    case decrease =  "minus"
     case arrow_down = "chevron.down"
     case form = "text.page"
     case about = "info.circle"
@@ -42,6 +43,15 @@ enum SFIcon: String {
     case donate = "gift.fill"
     case addFolder = "folder.badge.plus"
     case ngos = "building.2.fill"
+    case location = "location.fill"
+    case pin = "pin"
+    case warning = "exclamationmark.triangle.fill"
+    case download = "arrow.down.circle.fill"
+    case map = "map.fill"
+    case wifi = "wifi.slash"
+    case camera =  "camera"
+    case eye_open = "eye.slash.fill"
+    case eye_close = "eye.fill"
 
     static func image(_ value: SFIcon, scale: Image.Scale = .large, color: Color = Color.primaryColor) -> some View {
         Image(systemName: value.rawValue)

@@ -4,19 +4,20 @@
 //
 //  Created by Vinicius Mesquita Coelho on 10/10/25.
 //
-
 import SwiftUI
 
 struct AnimalsAvailableView: View {
     @Binding var filter: AnimalFilter
     @Binding var location: String
     @Binding var animals: [Animal]
-
     @Binding var isLoading: Bool
     
     @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var navigator: Navigator
     @Environment(\.toast) var toast
+    
+    @State private var isInteractionEnabled = false
+    @State private var enableInteractionTask: Task<Void, Never>?
     
     var filteredAnimals: [Animal] {
         filter.apply(to: animals)
@@ -31,12 +32,14 @@ struct AnimalsAvailableView: View {
 
             ForEach(filteredAnimals, id: \.id) { animal in
                 AnimalRowView(animal: animal) {
+                    guard isInteractionEnabled else { return }
                     navigator.navigate(to: .details(animal))
                 }
                 .transition(.asymmetric(
                     insertion: .move(edge: .bottom).combined(with: .opacity),
                     removal: .opacity
                 ))
+                .allowsHitTesting(isInteractionEnabled)
                 .padding(.horizontal, Padding.large.rawValue)
             }
         }
@@ -45,12 +48,19 @@ struct AnimalsAvailableView: View {
                 LoadingView()
             }
         }
-        .onChange(of: location) { oldValue, newValue in
+        .onChange(of: location) { _, newValue in
             Task {
                 await fetchNGOs(for: newValue)
             }
         }
+        .onChange(of: isLoading) { _, newValue in
+            if !newValue {
+                startInteractionDelay()
+            }
+        }
         .onAppear {
+            startInteractionDelay()
+            
             Task {
                 if animals.isEmpty {
                     await fetchNGOs(for: location)
@@ -58,6 +68,9 @@ struct AnimalsAvailableView: View {
                     isLoading = false
                 }
             }
+        }
+        .onDisappear {
+            enableInteractionTask?.cancel()
         }
         .padding(.bottom, Padding.large.rawValue)
     }
@@ -90,6 +103,10 @@ struct AnimalsAvailableView: View {
     
     @MainActor
     private func fetchNGOs(for location: String) async {
+        enableInteractionTask?.cancel()
+        isInteractionEnabled = false
+        isLoading = true
+
         do {
             let items: [User] = try await databaseProvider.fetch(from: "users") { ref in
                 var query = ref.whereField("type", isEqualTo: "usertype.ngo")
@@ -111,13 +128,18 @@ struct AnimalsAvailableView: View {
         }
     }
     
-    
-    private func removeFilter() {
-        for value in filter.values() {
-            withAnimation(.bouncy) {
-                filter.remove(value: value)
+    private func startInteractionDelay() {
+        enableInteractionTask?.cancel()
+        
+        isInteractionEnabled = false
+        
+        enableInteractionTask = Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            guard !Task.isCancelled else { return }
+            
+            await MainActor.run {
+                isInteractionEnabled = true
             }
         }
-        location = ""
     }
 }

@@ -25,7 +25,7 @@ struct AnnotationDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.large.rawValue) {
                 HStack {
-                    Image(systemName: "calendar")
+                    SFIcon.image(.camera)
                         .foregroundColor(.primaryColor)
                     Text(formatDate(annotation.date))
                         .font(.subheadline)

@@ -53,6 +53,6 @@ enum AnimalTag: String, Localizable, Codable, CaseIterable {
         default:
             action = {}
         }
-        return TagItem(tag: self, action: action)
+        return TagItem(tag: self, action: nil)
     }
 }

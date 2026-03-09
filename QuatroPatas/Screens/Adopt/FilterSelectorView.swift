@@ -30,8 +30,8 @@ struct FilterSelectorView: View {
             Button {
                 navigator.present(sheet: .animalFilter(animals, $filter))
             } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
+                HStack(spacing: Spacing.medium.rawValue) {
+                    SFIcon.image(.filter, color: .customLabel)
                         .font(.system(size: 18, weight: .medium))
                     
                     Text("Filtrar animais")

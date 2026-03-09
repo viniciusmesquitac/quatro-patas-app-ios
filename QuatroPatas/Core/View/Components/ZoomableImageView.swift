@@ -193,7 +193,7 @@ struct ZoomableCarouselView: View {
             Button {
                 dismiss()
             } label: {
-                Image(systemName: "xmark.circle.fill")
+                SFIcon.image(.close)
                     .font(.system(size: 30))
                     .foregroundColor(.white)
                     .padding()
