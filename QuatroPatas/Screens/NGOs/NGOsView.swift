@@ -6,39 +6,42 @@
 //
 
 import SwiftUI
+import SwiftUI
 
 struct NGOsView: View {
-    
+
     @EnvironmentObject var navigator: Navigator
     @EnvironmentObject var userSession: UserSession
     @EnvironmentObject var databaseProvider: DatabaseProvider
-    
+
     @Environment(\.toast) var toast
 
-    @State var ngos: [User] = []
-    @State var isLoading: Bool = false
+    @State private var ngos: [User] = []
+    @State private var isLoading: Bool = false
+
+    // ✅ igual ao MenuView
+    @State private var animate = false
+    @State private var didAnimate = false
 
     var body: some View {
         ScrollView {
-            ForEach(ngos, id: \.self) { ngo in
+            ForEach(ngos.indices, id: \.self) { index in
+                let ngo = ngos[index]
+
                 NGORowView(ngo: ngo) {
                     navigator.navigate(to: .ngoDetails(ngo))
                 }
-                .padding(Padding.medium.rawValue)
-            }
-        }
-        .overlay {
-            if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .transition(.opacity)
-                    .padding(.top, Padding.large.rawValue)
+                .padding(Padding.small.rawValue)
+                .opacity(animate ? 1 : 0)
+                .offset(y: animate ? 0 : 30)
+                .animation(
+                    .spring().delay(Double(index) * 0.08),
+                    value: animate
+                )
             }
         }
         .refreshable {
-            Task {
-                await fetchNGOs()
-            }
+            await fetchNGOs()
         }
         .navigationTitle("Ongs")
         .task {
@@ -46,17 +49,39 @@ struct NGOsView: View {
                 await fetchNGOs()
             }
         }
+        .onAppear {
+            guard !didAnimate else { return }
+
+            animate = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                animate = true
+                didAnimate = true
+            }
+        }
     }
 
     @MainActor
     func fetchNGOs() async {
         do {
-            isLoading = true
+            if ngos.isEmpty {
+                isLoading = true
+            } else {
+                isLoading = true
+            }
+
             let items: [User] = try await databaseProvider.fetch(from: "users", query: { ref in
                 ref.whereField("type", isEqualTo: "usertype.ngo")
             })
-            self.ngos = items
+
+            animate = false
+            ngos = items
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                animate = true
+            }
+
             isLoading = false
+
         } catch {
             isLoading = false
             toast("Erro ao carregar as ONGs", .error)

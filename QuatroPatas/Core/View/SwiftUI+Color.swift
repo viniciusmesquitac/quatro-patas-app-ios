@@ -9,10 +9,8 @@ import SwiftUI
 
 extension Color {
     static let primaryColor = Color(UIColor.primaryColor)
-    static let secondaryColor = Color(UIColor.secondaryColor)
     static let customLabel = Color(UIColor.customLabel)
     static let customBackground = Color(UIColor.customBackground)
-    static let primaryBackground = Color(UIColor.primaryBackground)
     static let neutralWhite = Color(hex: "#FAFAFA")
 }
 

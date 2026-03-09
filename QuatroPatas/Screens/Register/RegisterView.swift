@@ -104,6 +104,12 @@ struct RegisterView: View {
             toast("Preencha todos os campos e confirme a senha corretamente.", .error)
             return
         }
+        
+        guard !email.isValidEmail else {
+            toast("Email inválido", .error)
+            return
+        }
+
         isLoading = true
 
         Auth.auth().createUser(withEmail: email, password: password) { result, error in

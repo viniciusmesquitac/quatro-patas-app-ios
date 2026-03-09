@@ -96,6 +96,7 @@ struct AddVaccineView: View {
         .navigationTitle("Adicionar Vacina")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .tint(Color.primaryColor)
         .toolbarItem(label: "Fechar") {
             navigator.dismiss()
         }

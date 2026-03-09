@@ -16,6 +16,7 @@ struct EditPersonalInformationView: View {
     @State var user: User
 
     @State var name: String = ""
+    @State var cnpj: String = ""
     @State var email: String = ""
     @State var instagram: String = ""
     @State var phone: String = ""
@@ -34,6 +35,8 @@ struct EditPersonalInformationView: View {
     
                 FloatingBorderLabelTextField(placeholder: "Nome", text: $name)
                 
+                FloatingBorderLabelTextField(placeholder: "CNPJ", disabled: true, text: $cnpj)
+
                 FloatingBorderLabelTextField(placeholder: "Email", disabled: true, text: $email)
                 
                 FloatingBorderLabelTextField(placeholder: "Instagram", text: $instagram)
@@ -70,6 +73,7 @@ struct EditPersonalInformationView: View {
             .onAppear {
                 name = user.name
                 email = user.email
+                cnpj = user.cnpj ?? ""
                 instagram = user.instagram ?? ""
                 phone = user.phone ?? ""
             }

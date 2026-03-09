@@ -32,6 +32,7 @@ struct IncludeAnimalsView: View {
                     }
                 }
             }
+            .tint(Color.primaryColor)
             .overlay {
                 if isLoading {
                     LoadingView()

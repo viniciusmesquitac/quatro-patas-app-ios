@@ -12,11 +12,6 @@
 		813F3D852E6B75A2001F4BD2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D842E6B75A2001F4BD2 /* FirebaseFirestore */; };
 		813F3D872E6B75A2001F4BD2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 813F3D862E6B75A2001F4BD2 /* FirebaseStorage */; };
 		817EEF0A2E7EFA0600A03C6B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 817EEF092E7EFA0600A03C6B /* Lottie */; };
-		81FEB16D2EA2AD4A00488C31 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB16C2EA2AD4A00488C31 /* Storage */; };
-		81FEB1712EA2ADD800488C31 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB1702EA2ADD800488C31 /* Auth */; };
-		81FEB1732EA2ADD800488C31 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB1722EA2ADD800488C31 /* Functions */; };
-		81FEB1752EA2ADD800488C31 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB1742EA2ADD800488C31 /* PostgREST */; };
-		81FEB1772EA2ADD800488C31 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 81FEB1762EA2ADD800488C31 /* Realtime */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,13 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81FEB16D2EA2AD4A00488C31 /* Storage in Frameworks */,
 				817EEF0A2E7EFA0600A03C6B /* Lottie in Frameworks */,
-				81FEB1732EA2ADD800488C31 /* Functions in Frameworks */,
-				81FEB1772EA2ADD800488C31 /* Realtime in Frameworks */,
-				81FEB1752EA2ADD800488C31 /* PostgREST in Frameworks */,
 				813F3D342E650EBF001F4BD2 /* FirebaseAuth in Frameworks */,
-				81FEB1712EA2ADD800488C31 /* Auth in Frameworks */,
 				813F3D852E6B75A2001F4BD2 /* FirebaseFirestore in Frameworks */,
 				813F3D382E650EBF001F4BD2 /* FirebaseFirestore in Frameworks */,
 				813F3D872E6B75A2001F4BD2 /* FirebaseStorage in Frameworks */,
@@ -161,11 +151,6 @@
 				813F3D842E6B75A2001F4BD2 /* FirebaseFirestore */,
 				813F3D862E6B75A2001F4BD2 /* FirebaseStorage */,
 				817EEF092E7EFA0600A03C6B /* Lottie */,
-				81FEB16C2EA2AD4A00488C31 /* Storage */,
-				81FEB1702EA2ADD800488C31 /* Auth */,
-				81FEB1722EA2ADD800488C31 /* Functions */,
-				81FEB1742EA2ADD800488C31 /* PostgREST */,
-				81FEB1762EA2ADD800488C31 /* Realtime */,
 			);
 			productName = QuatroPatas;
 			productReference = 81DF06BB2D8DED82007D23D1 /* QuatroPatas.app */;
@@ -254,7 +239,6 @@
 			packageReferences = (
 				813F3D812E6B75A2001F4BD2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				817EEDED2E7EF7F600A03C6B /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 81DF06BC2D8DED82007D23D1 /* Products */;
@@ -453,7 +437,7 @@
 				CODE_SIGN_ENTITLEMENTS = QuatroPatas/QuatroPatas.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"QuatroPatas/Preview Content\"";
 				DEVELOPMENT_TEAM = 3A46XCK2VP;
 				ENABLE_PREVIEWS = YES;
@@ -478,7 +462,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.viniciuscoelho.quatropatas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -500,7 +484,7 @@
 				CODE_SIGN_ENTITLEMENTS = QuatroPatas/QuatroPatas.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"QuatroPatas/Preview Content\"";
 				DEVELOPMENT_TEAM = 3A46XCK2VP;
 				ENABLE_PREVIEWS = YES;
@@ -525,7 +509,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.viniciuscoelho.quatropatas;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -682,14 +666,6 @@
 				minimumVersion = 4.5.2;
 			};
 		};
-		81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase/supabase-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -715,31 +691,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 817EEDED2E7EF7F600A03C6B /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		81FEB16C2EA2AD4A00488C31 /* Storage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Storage;
-		};
-		81FEB1702EA2ADD800488C31 /* Auth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Auth;
-		};
-		81FEB1722EA2ADD800488C31 /* Functions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Functions;
-		};
-		81FEB1742EA2ADD800488C31 /* PostgREST */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = PostgREST;
-		};
-		81FEB1762EA2ADD800488C31 /* Realtime */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FEB16B2EA2AD4A00488C31 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Realtime;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

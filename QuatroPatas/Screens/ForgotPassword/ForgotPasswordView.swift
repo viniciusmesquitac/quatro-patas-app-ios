@@ -57,14 +57,14 @@ struct ForgotPasswordView: View {
                 triggerReset()
             } label: {
                 if isLoading {
-                    ProgressView()
+                    LoadingView()
                 } else {
                     Text("Redefinir Senha")
                 }
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .padding(.bottom, Padding.medium.rawValue)
-            .disabled(isLoading || !isValidEmail(email))
+            .disabled(isLoading || !email.isValidEmail)
             .buttonStyle(PrimaryButtonStyle())
         }
         .animation(.default, value: isLoading)
@@ -73,7 +73,7 @@ struct ForgotPasswordView: View {
     private func triggerReset() {
         focusedField = nil
 
-        guard isValidEmail(email) else {
+        guard email.isValidEmail else {
             toast("Digite um e-mail válido.", .warning)
             return
         }
@@ -102,12 +102,6 @@ struct ForgotPasswordView: View {
                 navigator.dismiss()
             }
         }
-    }
-
-    private func isValidEmail(_ value: String) -> Bool {
-        // Regex simples e suficiente para UI
-        let pattern = #"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"#
-        return value.range(of: pattern, options: [.regularExpression, .caseInsensitive]) != nil
     }
 
     // MARK: - Opcional: deep link para abrir o fluxo no app

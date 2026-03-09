@@ -23,15 +23,8 @@
         }
       }
     },
-    "%lld de %lld animais" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld de %2$lld animais"
-          }
-        }
-      }
+    "%lld resultados" : {
+
     },
     "Adicionar" : {
 
@@ -55,6 +48,9 @@
 
     },
     "Adicionar Vacina" : {
+
+    },
+    "Adoção" : {
 
     },
     "Adoção registrada com sucesso!" : {
@@ -563,6 +559,9 @@
         }
       }
     },
+    "Autorizar uso de GPS" : {
+
+    },
     "breed.beagle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -767,16 +766,10 @@
         }
       }
     },
-    "Buscando endereço..." : {
-
-    },
     "Buscar Animais" : {
 
     },
     "Buscar animal pelo nome" : {
-
-    },
-    "Buscar cidade ou UF" : {
 
     },
     "Buscar todos" : {
@@ -788,6 +781,9 @@
           }
         }
       }
+    },
+    "Buscar todos os animais" : {
+
     },
     "Cadastrar" : {
       "localizations" : {
@@ -821,13 +817,7 @@
         }
       }
     },
-    "Carregar mais" : {
-
-    },
     "Checklist de Verificação" : {
-
-    },
-    "Cidade / UF" : {
 
     },
     "Confirmar" : {
@@ -999,6 +989,9 @@
         }
       }
     },
+    "Escolher da galeria" : {
+
+    },
     "Espaço de descanso apropriado" : {
 
     },
@@ -1026,6 +1019,9 @@
           }
         }
       }
+    },
+    "Filtrar animais" : {
+
     },
     "Filtrar Animais" : {
 
@@ -1130,6 +1126,9 @@
     "Meus Animais" : {
 
     },
+    "Não encontramos ninguém com essas características." : {
+
+    },
     "Nenhum registro de peso ainda" : {
 
     },
@@ -1216,6 +1215,9 @@
     "Redefinir Senha" : {
 
     },
+    "Região" : {
+
+    },
     "Registrar Adoção" : {
 
     },
@@ -1241,6 +1243,9 @@
 
     },
     "Selecionar cidade/UF" : {
+
+    },
+    "Selecionar imagem" : {
 
     },
     "Selecione" : {
@@ -1271,6 +1276,9 @@
 
     },
     "Tem certeza que deseja deletar sua conta?" : {
+
+    },
+    "Tirar foto" : {
 
     },
     "usertype.adopter" : {
@@ -1323,6 +1331,9 @@
           }
         }
       }
+    },
+    "Utilizar localização atual" : {
+
     },
     "Vacina" : {
 

@@ -6,42 +6,85 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct PhotoUploadView: View {
     let title: String
     @Binding var image: UIImage?
 
     @State private var showCamera = false
+    @State private var showOptions = false
+
+    @State private var showGallery = false
+    @State private var selectedItem: PhotosPickerItem?
 
     var body: some View {
         VStack {
             Button {
-                showCamera = true
+                showOptions = true
             } label: {
-                if let image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 120, height: 120)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                } else {
-                    RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [6]))
-                        .foregroundStyle(.gray)
-                        .frame(width: 120, height: 120)
-                        .overlay(
-                            VStack {
-                                Image(systemName: "camera")
-                                Text(title)
-                                    .font(.caption)
-                            }
-                            .foregroundStyle(.gray)
-                        )
+                contentView
+            }
+        }
+        .confirmationDialog(
+            "Selecionar imagem",
+            isPresented: $showOptions,
+            titleVisibility: .visible
+        ) {
+            Button("Tirar foto") {
+                showCamera = true
+            }
+
+            Button("Escolher da galeria") {
+                showGallery = true
+            }
+
+            Button("Cancelar", role: .cancel) {}
+        }
+        .photosPicker(
+            isPresented: $showGallery,
+            selection: $selectedItem,
+            matching: .images,
+            photoLibrary: .shared()
+        )
+        .onChange(of: selectedItem) { newItem in
+            Task {
+                guard let newItem else { return }
+                if let data = try? await newItem.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    await MainActor.run {
+                        self.image = uiImage
+                    }
                 }
             }
         }
-        .sheet(isPresented: $showCamera) {
+        .fullScreenCover(isPresented: $showCamera) {
             CameraView(image: $image)
+                .ignoresSafeArea()
+        }
+    }
+
+    private var contentView: some View {
+        Group {
+            if let image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 120, height: 120)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            } else {
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [6]))
+                    .foregroundStyle(.gray)
+                    .frame(width: 120, height: 120)
+                    .overlay(
+                        VStack(spacing: 6) {
+                            Image(systemName: "camera")
+                            Text(title).font(.caption)
+                        }
+                        .foregroundStyle(.gray)
+                    )
+            }
         }
     }
 }

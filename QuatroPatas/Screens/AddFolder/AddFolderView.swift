@@ -39,10 +39,7 @@ struct AddFolderView: View {
                             AnimalCardViewRow(animal: animal, action: nil)
                         }
                         if isLoading {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle())
-                                .transition(.opacity)
-                                .padding(.top, Padding.large.rawValue)
+                            LoadingView()
                         }
                     }.padding(Padding.medium.rawValue)
                 }

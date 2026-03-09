@@ -25,23 +25,20 @@ struct AnimalDetailView: View {
 
     let repository = FavoritesRepository()
     
+    var colorNavBar: Color {
+        colorScheme == .dark ? Color(UIColor.goldenYellow) : Color(UIColor.magicPurple)
+    }
+    
+    @Environment(\.colorScheme) var colorScheme
     
     var image: some View {
-        ZStack(alignment: .bottom) {
-            ImageCarousel(
-                images: animal.photos.compactMap { URL(string: $0) },
-                selectedIndex: $selectedImageIndex
-            )
-            .stretchy()
-            .onTapGesture {
-                showFullScreen = true
-            }
-            
-            Rectangle()
-                .fill(Color.white.opacity(0.1))
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
-                .stretchy()
+        ImageCarousel(
+            images: animal.photos.compactMap { URL(string: $0) },
+            selectedIndex: $selectedImageIndex
+        )
+        .stretchy()
+        .onTapGesture {
+            showFullScreen = true
         }
     }
 
@@ -98,10 +95,10 @@ struct AnimalDetailView: View {
         .toolbarColorScheme(.dark, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, placement: .topBarLeading, action: {
+        .toolbarItem(icon: .back, color: colorNavBar, placement: .topBarLeading, action: {
             navigator.dismiss()
         })
-        .toolbarItem(icon: .share, placement: .topBarTrailing, action: {
+        .toolbarItem(icon: .share,color: colorNavBar,  placement: .topBarTrailing, action: {
             shareAnimal()
         })
         .onAppear {
@@ -207,5 +204,45 @@ struct AnimalDetailView: View {
     func registerAdoption() {
         guard let animalId = animal.id else { return }
         navigator.navigate(to: .registerAdoption(animalId))
+    }
+}
+
+
+
+import SwiftUI
+
+struct StatusBarStyleController: UIViewControllerRepresentable {
+    let style: UIStatusBarStyle
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        Controller(style: style)
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        (uiViewController as? Controller)?.style = style
+        uiViewController.setNeedsStatusBarAppearanceUpdate()
+    }
+
+    final class Controller: UIViewController {
+        var style: UIStatusBarStyle
+
+        init(style: UIStatusBarStyle) {
+            self.style = style
+            super.init(nibName: nil, bundle: nil)
+            view.backgroundColor = .clear
+        }
+
+        required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            style
+        }
+    }
+}
+
+extension View {
+    /// Força o estilo da Status Bar sem mexer no colorScheme da tela toda.
+    func statusBarStyle(_ style: UIStatusBarStyle) -> some View {
+        background(StatusBarStyleController(style: style).frame(width: 0, height: 0))
     }
 }

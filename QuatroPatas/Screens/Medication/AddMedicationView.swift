@@ -83,6 +83,7 @@ struct AddMedicationView: View {
         .navigationTitle("Adicionar Medicação")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .tint(Color.primaryColor)
         .toolbarItem(label: "Fechar") {
             navigator.dismiss()
         }

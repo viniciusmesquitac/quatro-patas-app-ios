@@ -16,8 +16,16 @@ struct QuatroPatasApp: App {
     @StateObject private var storageProvider = StorageProvider()
     @StateObject private var userSession = UserSession()
 
+    private let notificationDelegate = NotificationDelegate()
+
     init() {
+        UNUserNotificationCenter.current().delegate = notificationDelegate
         FirebaseApp.configure()
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        // Garante que não existe blur/material aplicado
+        appearance.backgroundEffect = nil
     }
     
     @StateObject private var networkMonitor = NetworkMonitor.shared
@@ -31,9 +39,11 @@ struct QuatroPatasApp: App {
                             AdoptView()
                         }
                         TabItem(label: .myAnimals, icon: .paw) {
-                            userSession.isLoggedIn ?
-                            AnyView(AnimalsListView()) :
-                            AnyView(EmptyView().emptyState(.cat))
+                            if userSession.isLoggedIn {
+                                AnimalsListView()
+                            } else {
+                                EmptyView().emptyState(.cat)
+                            }
                         }
                         TabItem(label: .ngos, icon: .ngos) {
                             NGOsView()

@@ -92,10 +92,7 @@ struct MapPickerSheet: View {
                 InteractiveMap(region: $region, selectedCoordinate: $selectedCoordinate, pinAnimation: $pinAnimation)
 
                 if isLoading {
-                    ProgressView("Buscando endereço...")
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(12)
+                    LoadingView()
                 }
             }
             .toolbar {
@@ -150,38 +147,94 @@ struct MapPinItem: Identifiable {
     let coordinate: CLLocationCoordinate2D
 }
 
-final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+@MainActor
+final class LocationManager: NSObject, ObservableObject, @MainActor CLLocationManagerDelegate {
+    
     private let manager = CLLocationManager()
+    private let geocoder = CLGeocoder()
+    
     @Published var lastLocation: CLLocation?
+    @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
     
     override init() {
         super.init()
         manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        authorizationStatus = manager.authorizationStatus
     }
     
+    // MARK: - Public
+    
     func requestLocation() {
-        let status = manager.authorizationStatus
-        if status == .notDetermined {
+        errorMessage = nil
+        authorizationStatus = manager.authorizationStatus
+        
+        switch authorizationStatus {
+        case .notDetermined:
             manager.requestWhenInUseAuthorization()
-        } else if status == .authorizedWhenInUse || status == .authorizedAlways {
-            manager.startUpdatingLocation()
+            
+        case .authorizedWhenInUse, .authorizedAlways:
+            isLoading = true
+            manager.requestLocation() // one-shot
+            
+        case .denied, .restricted:
+            errorMessage = "Permissão de localização negada. Ative em Ajustes > Privacidade."
+            
+        @unknown default:
+            errorMessage = "Status de localização desconhecido."
         }
     }
     
+    /// Retorna "Cidade, UF" usando a última localização disponível.
+    /// Se ainda não tiver, você pode chamar `requestLocation()` antes e aguardar `lastLocation`.
+    func getCityStateString() async throws -> String {
+        guard let lastLocation else {
+            throw NSError(domain: "Location", code: 0, userInfo: [
+                NSLocalizedDescriptionKey: "Localização ainda não disponível."
+            ])
+        }
+        
+        let placemarks = try await geocoder.reverseGeocodeLocation(lastLocation)
+        let pm = placemarks.first
+        
+        let city = pm?.locality ?? pm?.subAdministrativeArea ?? "Cidade"
+        let state = pm?.administrativeArea ?? "UF"
+        
+        return "\(city), \(state)"
+    }
+    
+    // MARK: - CLLocationManagerDelegate
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways {
-            manager.startUpdatingLocation()
+        authorizationStatus = manager.authorizationStatus
+        
+        switch authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            isLoading = true
+            manager.requestLocation()
+            
+        case .denied, .restricted:
+            isLoading = false
+            errorMessage = "Permissão de localização negada. Ative em Ajustes > Privacidade."
+            
+        case .notDetermined:
+            break
+            
+        @unknown default:
+            isLoading = false
+            errorMessage = "Status de localização desconhecido."
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        lastLocation = location
-        manager.stopUpdatingLocation()
+        isLoading = false
+        lastLocation = locations.last
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Erro ao obter localização: \(error.localizedDescription)")
+        isLoading = false
+        errorMessage = "Erro ao obter localização: \(error.localizedDescription)"
     }
 }

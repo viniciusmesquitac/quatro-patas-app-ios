@@ -24,10 +24,14 @@ struct LoginWithEmailAndPasswordView: View {
     @FocusState private var focusedField: Field?
 
     @State var isLoading: Bool = false
+    
+    var isEnabled: Bool {
+        !isLoading && !email.isEmpty && !password.isEmpty
+    }
 
     var body: some View {
         ScrollView {
-            Image("logo")
+            Image("icon")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 64, height: 64)
@@ -70,24 +74,12 @@ struct LoginWithEmailAndPasswordView: View {
             }
             .padding(.horizontal, Padding.xxLarge.rawValue)
             .padding(.bottom, Padding.medium.rawValue)
-            .disabled(isLoading)
-            .buttonStyle(PrimaryButtonStyle())
-        }
-        .overlay {
-            if isLoading {
-                LoadingView()
-                    .ignoresSafeArea()
-            }
+            .buttonStyle(PrimaryButtonStyle(isLoading: isLoading, isEnabled: isEnabled))
         }
     }
     
     
     func login() {
-        guard !email.isEmpty,
-              !password.isEmpty else {
-            toast("Preencha seu email e senha", .error)
-            return
-        }
         isLoading = true
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if error != nil {
@@ -95,8 +87,8 @@ struct LoginWithEmailAndPasswordView: View {
                 isLoading = false
                 return
             }
-            isLoading = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isLoading = false
                 navigator.popToRoot()
             }
         }

@@ -9,19 +9,16 @@
 
 struct Vaccine: Codable, Identifiable {
     @DocumentID var id: String?
-    
-    var name: String
-    var customName: String?
-    var laboratory: String?
-    
-    var doseNumber: Int?
-    var totalDoses: Int?
-    
-    var date: String
-    var nextDate: String?
-    
-    var sendNotification: Bool?
-    var notificationOption: NotificationOption?
+    let name: String
+    let customName: String?
+    let laboratory: String?
+    let doseNumber: Int?
+    let totalDoses: Int?
+    let date: String
+    let nextDate: String?
+    let sendNotification: Bool
+    let notificationOption: NotificationOption?
+    var notificationIds: [String]?
 }
 
 enum NotificationOption: String, Codable, CaseIterable, Identifiable {

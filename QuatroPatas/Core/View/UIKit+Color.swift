@@ -12,14 +12,7 @@ extension UIColor {
     static var primaryColor: UIColor {
         return UIColor { traitCollection in
             (traitCollection.userInterfaceStyle == .dark ?
-             UIColor(hex: "#FFCB1B") : UIColor(hex: "#AC1B7D"))!
-        }
-    }
-
-    static var secondaryColor: UIColor {
-        return UIColor { traitCollection in
-            (traitCollection.userInterfaceStyle == .dark ?
-             UIColor(hex: "#AC1B7D") : UIColor(hex: "#AC1B7D"))!
+             UIColor.goldenYellow : UIColor.magicPurple)
         }
     }
 
@@ -32,12 +25,6 @@ extension UIColor {
     static var customBackground: UIColor {
         return UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? .systemGray6 : .white
-        }
-    }
-
-    static var primaryBackground: UIColor {
-        return UIColor { traitCollection in
-            traitCollection.userInterfaceStyle == .dark ? .black : UIColor(hex: "#FAFAF0")!
         }
     }
 }
@@ -70,4 +57,10 @@ extension UIColor {
                       lroundf(Float(green * 255)),
                       lroundf(Float(blue * 255)))
     }
+}
+
+
+extension UIColor {
+    static let goldenYellow = UIColor(hex: "#FFCB1B")!
+    static let magicPurple = UIColor(hex: "#AC1B7D")!
 }

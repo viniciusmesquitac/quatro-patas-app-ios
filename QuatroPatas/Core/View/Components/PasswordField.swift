@@ -11,10 +11,14 @@ struct PasswordField: View {
     let title: String
     @Binding var text: String
 
+    var isInvalid: Bool = false
+    var height: CGFloat = 52
+
     @State private var isVisible: Bool = false
 
     var body: some View {
         ZStack(alignment: .trailing) {
+
             Group {
                 if isVisible {
                     TextField(title, text: $text)
@@ -28,8 +32,9 @@ struct PasswordField: View {
             Button(action: { isVisible.toggle() }) {
                 Image(systemName: isVisible ? "eye.slash.fill" : "eye.fill")
                     .foregroundColor(.gray.opacity(0.8))
-                    .padding(.trailing, Padding.large.rawValue)
+                    .frame(width: 44, height: height)   // área clicável consistente
             }
+            .padding(.trailing, 4) // opcional, só pra não encostar na borda
         }
     }
 }
