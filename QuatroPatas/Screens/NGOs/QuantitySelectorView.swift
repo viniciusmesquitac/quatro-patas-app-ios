@@ -24,9 +24,8 @@ struct QuantitySelectorView: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: 70, height: 70)
                     .overlay(
-                        SFIcon.image(.decrease)
+                        SFIcon.image(.decrease, color: .customLabel)
                             .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(.customLabel)
                     )
             }
             
@@ -43,9 +42,8 @@ struct QuantitySelectorView: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: 70, height: 70)
                     .overlay(
-                        SFIcon.image(.add)
+                        SFIcon.image(.add, color: .customLabel)
                             .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(.customLabel)
                     )
             }
         }

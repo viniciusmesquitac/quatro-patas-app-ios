@@ -31,6 +31,32 @@ struct AgeHelper {
         default: return "\(years) anos e \(months) meses"
         }
     }
+    
+    static func formatAgeYearsOrMonths(from timestampString: String) -> String {
+        guard let timestamp = TimeInterval(timestampString) else {
+            return "Idade desconhecida"
+        }
+
+        let birthDate = Date(timeIntervalSince1970: timestamp)
+        let now = Date()
+        let calendar = Calendar.current
+
+        let components = calendar.dateComponents([.year, .month], from: birthDate, to: now)
+        let years = components.year ?? 0
+        let months = components.month ?? 0
+
+        if years > 0 {
+            return years == 1 ? "1 ano" : "\(years) anos"
+        } else {
+            if months <= 0 {
+                return "Menos de 1 mês"
+            } else if months == 1 {
+                return "1 mês"
+            } else {
+                return "\(months) meses"
+            }
+        }
+    }
 
     static func toAgeComponents(from timestampString: String) -> (years: Int, months: Int)? {
         guard let timestamp = TimeInterval(timestampString) else { return nil }

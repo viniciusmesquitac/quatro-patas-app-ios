@@ -95,9 +95,7 @@ struct ProfileView: View {
     ) -> some View {
         Button(action: action) {
             HStack {
-                SFIcon.image(icon)
-                    .foregroundColor(isDestructive ? .red : .primary)
-                    .frame(width: 24, height: 24)
+                SFIcon.image(icon, color: isDestructive ? .red : .primaryColor)
                 
                 Text(title)
                     .foregroundColor(isDestructive ? .red : .primary)

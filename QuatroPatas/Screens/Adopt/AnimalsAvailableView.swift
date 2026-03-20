@@ -1,9 +1,3 @@
-//
-//  AnimalsAvailableView.swift
-//  QuatroPatas
-//
-//  Created by Vinicius Mesquita Coelho on 10/10/25.
-//
 import SwiftUI
 
 struct AnimalsAvailableView: View {
@@ -11,41 +5,58 @@ struct AnimalsAvailableView: View {
     @Binding var location: String
     @Binding var animals: [Animal]
     @Binding var isLoading: Bool
-    
+
     @EnvironmentObject var databaseProvider: DatabaseProvider
     @EnvironmentObject var navigator: Navigator
     @Environment(\.toast) var toast
-    
+
     @State private var isInteractionEnabled = false
     @State private var enableInteractionTask: Task<Void, Never>?
-    
+
+    private let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
+
     var filteredAnimals: [Animal] {
         filter.apply(to: animals)
     }
 
     var body: some View {
-        VStack(spacing: Spacing.large.rawValue) {
-            if !filter.isEmpty {
-                FilterView(filter: $filter)
-                    .padding(.bottom, Padding.medium.rawValue)
-            }
-
-            ForEach(filteredAnimals, id: \.id) { animal in
-                AnimalRowView(animal: animal) {
-                    guard isInteractionEnabled else { return }
-                    navigator.navigate(to: .details(animal))
+        ZStack {
+            VStack(spacing: Spacing.large.rawValue) {
+                if !filter.isEmpty {
+                    FilterView(filter: $filter)
+                        .padding(.horizontal, Padding.large.rawValue)
+                        .padding(.bottom, Padding.medium.rawValue)
                 }
-                .transition(.asymmetric(
-                    insertion: .move(edge: .bottom).combined(with: .opacity),
-                    removal: .opacity
-                ))
-                .allowsHitTesting(isInteractionEnabled)
+
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(filteredAnimals, id: \.id) { animal in
+                        AnimalCardViewV2(animal: animal) {
+                            guard isInteractionEnabled else { return }
+                            navigator.navigate(to: .details(animal))
+                        }
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .bottom).combined(with: .opacity),
+                            removal: .opacity
+                        ))
+                        .allowsHitTesting(isInteractionEnabled)
+                    }
+                }
                 .padding(.horizontal, Padding.large.rawValue)
             }
-        }
-        .overlay {
+            .padding(.bottom, Padding.large.rawValue)
+            .allowsHitTesting(!isLoading)
+
             if isLoading {
-                LoadingView()
+                ZStack {
+                    Color.clear
+                        .ignoresSafeArea()
+
+                    LoadingView()
+                }
+                .transition(.opacity)
             }
         }
         .onChange(of: location) { _, newValue in
@@ -60,7 +71,7 @@ struct AnimalsAvailableView: View {
         }
         .onAppear {
             startInteractionDelay()
-            
+
             Task {
                 if animals.isEmpty {
                     await fetchNGOs(for: location)
@@ -74,7 +85,7 @@ struct AnimalsAvailableView: View {
         }
         .padding(.bottom, Padding.large.rawValue)
     }
-    
+
     @MainActor
     private func fetchAllAnimals(ongIds: [String]) async {
         do {
@@ -100,7 +111,7 @@ struct AnimalsAvailableView: View {
             isLoading = false
         }
     }
-    
+
     @MainActor
     private func fetchNGOs(for location: String) async {
         enableInteractionTask?.cancel()
@@ -127,16 +138,16 @@ struct AnimalsAvailableView: View {
             isLoading = false
         }
     }
-    
+
     private func startInteractionDelay() {
         enableInteractionTask?.cancel()
-        
+
         isInteractionEnabled = false
-        
+
         enableInteractionTask = Task {
             try? await Task.sleep(nanoseconds: 1_000_000_000)
             guard !Task.isCancelled else { return }
-            
+
             await MainActor.run {
                 isInteractionEnabled = true
             }

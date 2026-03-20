@@ -35,20 +35,20 @@ struct QuatroPatasApp: App {
             ZStack(alignment: .top) {
                 Group {
                     TabView(selection: $navigator.selectedTab) {
-                        TabItem(label: .adopt, icon: .heart) {
+                        TabItem(label: .adopt) {
                             AdoptView()
                         }
-                        TabItem(label: .myAnimals, icon: .paw) {
+                        TabItem(label: .myAnimals) {
                             if userSession.isLoggedIn {
                                 AnimalsListView()
                             } else {
                                 EmptyView().emptyState(.cat)
                             }
                         }
-                        TabItem(label: .ngos, icon: .ngos) {
+                        TabItem(label: .ngos) {
                             NGOsView()
                         }
-                        TabItem(label: .profile, icon: .person) {
+                        TabItem(label: .profile) {
                             MenuView()
                         }
                     }

@@ -22,20 +22,45 @@ struct AdoptView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Adoção")
+                Text("Disponiveis para adoção")
                     .padding(.horizontal, Padding.large.rawValue)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.system(size: 24, weight: .bold))
+                    .font(.system(size: 18, weight: .medium))
             }
-            FilterSelectorView(animals: $animals, filter: $filter, location: $location)
-            AnimalsAvailableView(filter: $filter, location: $location, animals: $animals, isLoading: $isLoading)
-            
+            FilterSelectorView(
+                animals: $animals,
+                filter: $filter,
+                location: $location
+            )
+            AnimalsAvailableView(
+                filter: $filter,
+                location: $location,
+                animals: $animals,
+                isLoading: $isLoading
+            )
             if filteredAnimals.isEmpty && !isLoading {
                 buildEmptyStateView()
             }
         }
-        .toolbarItem(label: location.isEmpty ? "Mudar região" : location, icon: .arrow_down, iconPosition: .trailing, placement: .principal) {
-            navigator.present(sheet: .selectCityState(location: $location))
+        .toolbarItem(icon: .notification) {
+            
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: {
+                    navigator.present(sheet: .selectCityState(location: $location))
+                }) {
+                    HStack(spacing: Spacing.small.rawValue) {
+
+//                        SFIcon.image(.pin, scale: .medium, color: .customLabel)
+    
+                        Text(location.isEmpty ? "Mudar região" : location)
+                            .foregroundColor(.customLabel)
+
+                        SFIcon.image(.arrow_down, scale: .medium, color: .primaryColor)
+                    }
+                }
+            }
         }
     }
     
@@ -55,6 +80,5 @@ struct AdoptView: View {
             }
         }
     }
-    
 }
 
