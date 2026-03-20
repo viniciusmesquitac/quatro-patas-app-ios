@@ -51,6 +51,10 @@ extension Animal {
     var ageFormatted: String {
         AgeHelper.formatAge(from: age)
     }
+    
+    var simplifiedAge: String {
+        AgeHelper.formatAgeYearsOrMonths(from: age)
+    }
 }
 
 extension Animal {

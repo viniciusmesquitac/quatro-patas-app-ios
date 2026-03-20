@@ -8,12 +8,41 @@
 import SwiftUI
 
 struct LoadingView: View {
-
-    var size: CGFloat = 64
-
+    
+    @State private var rotation: Double = 0
+    
     var body: some View {
-        ProgressView()
-            .tint(Color.primaryColor)
-            .frame(width: size, height: size)
+        ZStack {
+            Color.clear
+                .ignoresSafeArea()
+            
+            ZStack {
+                Circle()
+                    .stroke(lineWidth: 4)
+                    .opacity(0.3)
+                    .foregroundColor(.gray)
+                
+                Circle()
+                    .trim(from: 0, to: 0.25)
+                    .stroke(
+                        style: StrokeStyle(
+                            lineWidth: 4,
+                            lineCap: .round,
+                            lineJoin: .round
+                        )
+                    )
+                    .foregroundColor(Color.primaryColor)
+                    .rotationEffect(.degrees(rotation))
+                    .animation(
+                        .linear(duration: 1)
+                            .repeatForever(autoreverses: false),
+                        value: rotation
+                    )
+                    .onAppear {
+                        rotation = 360
+                    }
+            }
+            .frame(width: 64, height: 64)
+        }
     }
 }

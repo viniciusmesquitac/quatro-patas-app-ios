@@ -193,9 +193,8 @@ struct ZoomableCarouselView: View {
             Button {
                 dismiss()
             } label: {
-                SFIcon.image(.close)
-                    .font(.system(size: 30))
-                    .foregroundColor(.white)
+                SFIcon.image(.close_filled, color: .white)
+                    .font(.system(size: 24))
                     .padding()
             }
         }

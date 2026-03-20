@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct TabItem<Content: View>: View {
-
     let content: Content
     let tab: AppTab
-    let icon: SFIcon
 
     @EnvironmentObject var navigator: Navigator
 
-    init(label: AppTab, icon: SFIcon, @ViewBuilder content: () -> Content) {
+    init(
+        label: AppTab,
+        @ViewBuilder content: () -> Content
+    ) {
         self.tab = label
-        self.icon = icon
         self.content = content()
     }
 
@@ -27,7 +27,11 @@ struct TabItem<Content: View>: View {
         }
         .tag(tab)
         .tabItem {
-            Label(tab.rawValue, systemImage: icon.rawValue)
+            Label {
+                Text(tab.rawValue)
+            } icon: {
+                SFIcon.image(navigator.selectedTab == tab ? tab.selectedIcon : tab.icon)
+            }
         }
     }
 }

@@ -53,11 +53,9 @@ struct SelectRegionView: View {
                 } label: {
                     HStack(spacing: Spacing.medium.rawValue) {
                         if item.isDefault {
-                            SFIcon.image(.location)
-                                .foregroundStyle(item.isDefault ? .blue : .secondary)
+                            SFIcon.image(.location, color: .primaryColor)
                         } else {
-                            SFIcon.image(.pin)
-                                .foregroundStyle(item.isDefault ? .blue : .secondary)
+                            SFIcon.image(.pin, color: .secondary)
                         }
 
                         VStack(alignment: .leading) {
@@ -90,11 +88,13 @@ struct SelectRegionView: View {
                 }
                 .disabled(item.isDefault && isResolvingCurrentLocation)
             }
+            .toolbarItem(icon: .close, placement: .topBarTrailing) {
+                dismiss()
+            }
+            .navigationTitle("Região")
             .listStyle(.plain)
             .toolbarTitleDisplayMode(.inline)
             .scrollContentBackground(.hidden)
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.visible)
             .background(Color.customBackground)
         }
     }
