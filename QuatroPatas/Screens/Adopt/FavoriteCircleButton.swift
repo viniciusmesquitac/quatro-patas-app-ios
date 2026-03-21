@@ -21,7 +21,7 @@ struct FavoriteCircleButton: View {
         Button(action: {
             toggleFavorite()
         }) {
-            SFIcon.image(isFavorite ? .heart_filled: .heart)
+            SFIcon.image(isFavorite ? .heart_filled: .heart, color: isFavorite ? .primaryColor : Color.customLabel.opacity(0.3))
                 .font(.system(size: 18, weight: .medium))
                 .foregroundStyle(.white)
                 .frame(width: 44, height: 44)

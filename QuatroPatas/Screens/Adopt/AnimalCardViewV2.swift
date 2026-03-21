@@ -74,7 +74,7 @@ struct AnimalCardViewV2: View {
     }
 
     private var animalLocation: String {
-        "Fortaleza-CE"
+        animal.location ?? "Fortaleza-CE"
     }
 }
 

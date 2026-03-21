@@ -15,21 +15,23 @@ struct QuatroPatasApp: App {
     @StateObject private var databaseProvider = DatabaseProvider()
     @StateObject private var storageProvider = StorageProvider()
     @StateObject private var userSession = UserSession()
+    @StateObject private var networkMonitor = NetworkMonitor.shared
 
     private let notificationDelegate = NotificationDelegate()
 
     init() {
         UNUserNotificationCenter.current().delegate = notificationDelegate
         FirebaseApp.configure()
+
         let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        
-        // Garante que não existe blur/material aplicado
+        appearance.configureWithTransparentBackground()
         appearance.backgroundEffect = nil
+        appearance.backgroundColor = .clear
+
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
-    @StateObject private var networkMonitor = NetworkMonitor.shared
-
     var body: some Scene {
         WindowGroup {
             ZStack(alignment: .top) {
