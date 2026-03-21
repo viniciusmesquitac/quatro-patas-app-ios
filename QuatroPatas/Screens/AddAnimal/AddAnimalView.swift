@@ -261,7 +261,8 @@ struct AddAnimalView: View {
                     status: animal.status,
                     tags: animal.tags.compactMap { AnimalTag.fromLocalized($0)?.caseName
                     },
-                    ownerId: userId
+                    ownerId: userId,
+                    location: userSession.user?.location ?? ""
                 )
                 
                 let path = "users/\(userId)/animals"
