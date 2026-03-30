@@ -37,11 +37,6 @@ struct ProfileView: View {
             .padding(.bottom, 40)
         }
         .background(Color(.systemGroupedBackground))
-        .navigationBarBackButtonHidden()
-        .toolbarItem(icon: .back, placement: .topBarLeading) {
-            navigator.dismiss()
-        }
-        .toolbar(.hidden, for: .tabBar)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Perfil")
     }

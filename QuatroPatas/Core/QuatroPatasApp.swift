@@ -51,7 +51,7 @@ struct QuatroPatasApp: App {
                             NGOsView()
                         }
                         TabItem(label: .profile) {
-                            MenuView()
+                            ProfileView()
                         }
                     }
                     .tint(Color.primaryColor)
