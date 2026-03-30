@@ -42,6 +42,8 @@ struct AdoptView: View {
                 buildEmptyStateView()
             }
         }
+        .safeAreaPadding(.bottom)
+        .padding(.bottom, 4)
         .toolbarItem(icon: .notification) {
             
         }
@@ -51,9 +53,6 @@ struct AdoptView: View {
                     navigator.present(sheet: .selectCityState(location: $location))
                 }) {
                     HStack(spacing: Spacing.small.rawValue) {
-
-//                        SFIcon.image(.pin, scale: .medium, color: .customLabel)
-    
                         Text(location.isEmpty ? "Mudar região" : location)
                             .foregroundColor(.customLabel)
 

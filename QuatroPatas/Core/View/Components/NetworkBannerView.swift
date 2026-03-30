@@ -12,8 +12,8 @@ struct NetworkBannerView: View {
 
     var body: some View {
         if isVisible {
-            HStack(spacing: 12) {
-                SFIcon.image(.wifi)
+            HStack(spacing: Spacing.medium.rawValue) {
+                SFIcon.image(.wifi, color: .white)
                     .imageScale(.medium)
 
                 Text("Sem conexão com a internet")
@@ -26,23 +26,22 @@ struct NetworkBannerView: View {
                         isVisible = false
                     }
                 } label: {
-                    SFIcon.image(.close)
+                    SFIcon.image(.close, color: .white)
                         .font(.system(size: 14, weight: .bold))
-                        .padding(6)
+                        .padding(Padding.medium.rawValue)
                 }
             }
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(Padding.large.rawValue)
             .background {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue, style: .continuous)
                     .fill(Color.red.opacity(0.85))
                     .background(
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue, style: .continuous)
                             .fill(.ultraThinMaterial)
                     )
             }
             .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                RoundedRectangle(cornerRadius: CornerRadius.medium.rawValue, style: .continuous)
                     .stroke(Color.white.opacity(0.25), lineWidth: 1)
             )
             .foregroundColor(.white)

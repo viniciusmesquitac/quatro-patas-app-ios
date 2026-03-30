@@ -53,13 +53,10 @@ struct AddFolderView: View {
             .navigationTitle("Nova Pasta")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarItem(icon: .checkmark, disabled: $disabled, placement: .confirmationAction) {
-                for animal in includedAnimals {
-                    Task {
-                        await addFolderToAnimal(animal: animal)
-                    }
+                Task {
+                    isLoading = true
+                    await saveFolderAndAnimals()
                 }
-                navigator.dismiss()
-                reload += 1
             }
             .toolbarItem(icon: .close, placement: .cancellationAction) {
                 navigator.dismiss()
@@ -69,20 +66,34 @@ struct AddFolderView: View {
             }
         }
     }
-    
-    func addFolderToAnimal(animal: Animal) async {
+    func saveFolderAndAnimals() async {
+        guard let userId = userSession.user?.id else { return }
         do {
-            guard let path = animalPathBuilder(), let animalId = animal.id else {
-                throw EditAnimalError.pathError
+            let newFolder = AnimalFolder(name: folderName, createdAt: Date())
+            let folderId = try await databaseProvider.add(newFolder, to: "users/\(userId)/folders")
+
+            for animal in includedAnimals {
+                try await addFolderToAnimal(animal: animal, folderId: folderId)
             }
-            _ = try await databaseProvider.updateFields(
-                in: path,
-                id: animalId,
-                fields: ["folder": folderName]
-            )
+
+            isLoading = false
+            reload += 1
+            navigator.dismiss()
         } catch {
             print(error.localizedDescription)
+            isLoading = false
         }
+    }
+
+    func addFolderToAnimal(animal: Animal, folderId: String) async throws {
+        guard let path = animalPathBuilder(), let animalId = animal.id else {
+            throw EditAnimalError.pathError
+        }
+        _ = try await databaseProvider.updateFields(
+            in: path,
+            id: animalId,
+            fields: ["folder": folderId]
+        )
     }
     
     func animalPathBuilder() -> String? {

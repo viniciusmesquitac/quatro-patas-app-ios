@@ -22,23 +22,154 @@ struct AnimalDetailView: View {
     @State private var showFullScreen = false
     @State private var isFavorite = false
     @State private var isLoading = false
+    @State private var owner: User?
 
     let repository = FavoritesRepository()
     
     var colorNavBar: Color {
-        colorScheme == .dark ? Color(UIColor.goldenYellow) : Color(UIColor.magicPurple)
+        colorScheme == .dark ? Color(UIColor.goldenYellow) : Color(UIColor.magicYellow)
     }
     
     @Environment(\.colorScheme) var colorScheme
     
-    var image: some View {
-        ImageCarousel(
-            images: animal.photos.compactMap { URL(string: $0) },
-            selectedIndex: $selectedImageIndex
-        )
-        .stretchy()
-        .onTapGesture {
-            showFullScreen = true
+    @ViewBuilder
+    var imageGallery: some View {
+        let imageUrls = animal.photos.compactMap { URL(string: $0) }
+        
+        VStack(spacing: 0) {
+            ZStack(alignment: .top) {
+                // Main image carousel
+                TabView(selection: $selectedImageIndex) {
+                    ForEach(imageUrls.indices, id: \.self) { index in
+                        GeometryReader { proxy in
+                            CachedAsyncImage(url: imageUrls[index])
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: proxy.size.width, height: 400)
+                                .clipped()
+                        }
+                        .tag(index)
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: 400)
+                .onTapGesture {
+                    showFullScreen = true
+                }
+                
+                // Overlays
+                
+                // Top Action Bar
+                VStack {
+                    HStack {
+                        // Back Button
+                        Button(action: {
+                            navigator.dismiss()
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.primary)
+                                .frame(width: 40, height: 40)
+                                .background(.ultraThinMaterial, in: Circle())
+                        }
+                        
+                        Spacer()
+                        
+                        // Action buttons
+                        HStack(spacing: 8) {
+                            Button(action: {
+                                shareAnimal()
+                            }) {
+                                Image(systemName: "square.and.arrow.up")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(.primary)
+                                    .frame(width: 40, height: 40)
+                                    .background(.ultraThinMaterial, in: Circle())
+                            }
+                            
+                            Button(action: {
+                                toggleFavorite()
+                            }) {
+                                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(isFavorite ? .red : .primary)
+                                    .frame(width: 40, height: 40)
+                                    .background(.ultraThinMaterial, in: Circle())
+                            }
+                        }
+                    }
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .padding(.top, Padding.xxLarge.rawValue + Padding.xLarge.rawValue) // Account for safe area
+                    
+                    Spacer()
+                }
+                
+                // Counter
+                if imageUrls.count > 1 {
+                    Text("\(selectedImageIndex + 1) / \(imageUrls.count)")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.primary)
+                        .padding(.horizontal, Padding.large.rawValue)
+                        .padding(.vertical, Padding.medium.rawValue)
+                        .background(.ultraThinMaterial, in: Capsule())
+                        .padding(.top, Padding.xxLarge.rawValue * 2)
+                }
+                
+                // Navigation Chevrons
+                if imageUrls.count > 1 {
+                    HStack {
+                        Button(action: {
+                            withAnimation { selectedImageIndex = max(0, selectedImageIndex - 1) }
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.primary)
+                                .frame(width: 36, height: 36)
+                                .background(.ultraThinMaterial, in: Circle())
+                        }
+                        .opacity(selectedImageIndex > 0 ? 1 : 0)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            withAnimation { selectedImageIndex = min(imageUrls.count - 1, selectedImageIndex + 1) }
+                        }) {
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.primary)
+                                .frame(width: 36, height: 36)
+                                .background(.ultraThinMaterial, in: Circle())
+                        }
+                        .opacity(selectedImageIndex < imageUrls.count - 1 ? 1 : 0)
+                    }
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .padding(.top, 182) // Roughly centered vertically in a 400pt frame
+                }
+            }
+            
+            // Thumbnails
+            if imageUrls.count > 1 {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(imageUrls.indices, id: \.self) { index in
+                            Button(action: {
+                                withAnimation { selectedImageIndex = index }
+                            }) {
+                                CachedAsyncImage(url: imageUrls[index])
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 64, height: 64)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(selectedImageIndex == index ? colorNavBar : Color.clear, lineWidth: 2)
+                                    )
+                                    .opacity(selectedImageIndex == index ? 1.0 : 0.6)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, Padding.large.rawValue)
+                    .padding(.vertical, Padding.large.rawValue)
+                }
+            }
         }
     }
 
@@ -47,17 +178,7 @@ struct AnimalDetailView: View {
             ScrollView {
                 VStack(spacing: Spacing.small.rawValue) {
                     
-                    ZStack(alignment: .bottomTrailing) {
-                        image
-
-                        Button(action: {
-                            toggleFavorite()
-                        }) {
-                            SFIcon.image(isFavorite ? .heart_filled : .heart, scale: .large, color: isFavorite ? .red : .customBackground)
-                        }
-                        .buttonStyle(CircleButtonStyle())
-                        .offset(x: -25, y: 25)
-                    }
+                    imageGallery
 
                     // conteúdo abaixo da imagem
                     VStack(alignment: .leading, spacing: Spacing.medium.rawValue) {
@@ -69,7 +190,44 @@ struct AnimalDetailView: View {
                         TagsView(tags: loadTags())
 
                         Text(animal.description)
-                            .padding(.top)
+                            .padding(.top, Padding.large.rawValue)
+                            
+                        if let owner = owner {
+                            VStack(alignment: .leading, spacing: Spacing.small.rawValue) {
+                                Text("Responsável")
+                                    .font(.headline)
+                                
+                                HStack(spacing: 12) {
+                                    if let photo = owner.photo, let url = URL(string: photo) {
+                                        CachedAsyncImage(url: url)
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(Circle())
+                                    } else {
+                                        Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+                                            .foregroundColor(.gray)
+                                    }
+                                    
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(owner.name)
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                        if let location = owner.location {
+                                            Text(location)
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                                .padding(Padding.large.rawValue)
+                                .background(Color(UIColor.secondarySystemBackground))
+                                .cornerRadius(12)
+                            }
+                            .padding(.top, Padding.medium.rawValue)
+                        }
 
                         Spacer()
 
@@ -88,22 +246,18 @@ struct AnimalDetailView: View {
                         ZoomableCarouselView(images: animal.photos,
                                              selectedIndex: $selectedImageIndex)
                     }
-                    .padding()
+                    .padding(Padding.large.rawValue)
                 }
             }.ignoresSafeArea(edges: .top)
         }
         .environmentObject(navigator)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarItem(icon: .back, color: colorNavBar, placement: .topBarLeading, action: {
-            navigator.dismiss()
-        })
-        .toolbarItem(icon: .share,color: colorNavBar,  placement: .topBarTrailing, action: {
-            shareAnimal()
-        })
         .onAppear {
             isFavorite = repository.isFavorite(id: animal.id ?? String())
+            fetchOwner()
         }
     }
     
@@ -111,6 +265,20 @@ struct AnimalDetailView: View {
         animal.tags
             .compactMap { AnimalTag(rawValue: $0) }
             .map { $0.makeTagItem(using: navigator) }
+    }
+    
+    private func fetchOwner() {
+        guard let ownerId = animal.ownerId else { return }
+        Task {
+            do {
+                let user: User? = try await databaseProvider.fetchDocument(from: "users", id: ownerId)
+                await MainActor.run {
+                    self.owner = user
+                }
+            } catch {
+                print("Failed to fetch owner: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func toggleFavorite() {
