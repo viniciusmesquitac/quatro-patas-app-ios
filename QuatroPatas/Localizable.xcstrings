@@ -13,6 +13,16 @@
     "%lld" : {
 
     },
+    "%lld / %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
     "%lld anos, %lld meses" : {
       "localizations" : {
         "en" : {
@@ -24,6 +34,12 @@
       }
     },
     "%lld resultados" : {
+
+    },
+    "🐱" : {
+
+    },
+    "🐶" : {
 
     },
     "Adicionar" : {
@@ -1224,6 +1240,9 @@
 
     },
     "Repetir senha" : {
+
+    },
+    "Responsável" : {
 
     },
     "Rotas de fuga verificadas" : {

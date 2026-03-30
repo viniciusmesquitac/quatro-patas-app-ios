@@ -12,7 +12,7 @@ extension UIColor {
     static var primaryColor: UIColor {
         return UIColor { traitCollection in
             (traitCollection.userInterfaceStyle == .dark ?
-             UIColor.goldenYellow : UIColor.magicPurple)
+             UIColor.goldenYellow : UIColor.magicYellow)
         }
     }
 
@@ -62,5 +62,5 @@ extension UIColor {
 
 extension UIColor {
     static let goldenYellow = UIColor(hex: "#FFCB1B")!
-    static let magicPurple = UIColor(hex: "#AC1B7D")!
+    static let magicYellow = UIColor(hex: "#F6B100")!
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 enum SFIcon: String {
     case filter = "sliders_horizontal"
-    case back = "chevron.left"
+    case back = "arrow-left"
     case next = "chevron.right"
     case share = "square.and.arrow.up"
     case checkmark
